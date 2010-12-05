@@ -1,7 +1,8 @@
 % extra packages and tweakings of their parameters
 
 \usepackage{color}
-
+\usepackage{graphicx}
+\input{Qcircuit}
 % For code listings
 \usepackage{listings}
 \usepackage{amssymb,amsmath}
