@@ -4,6 +4,7 @@
 
 % For code listings
 \usepackage{listings}
+\usepackage{amssymb,amsmath}
 \lstloadlanguages{[LaTeX]TeX}
 \lstset{%
   language=[LaTeX]TeX,%
