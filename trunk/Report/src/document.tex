@@ -47,9 +47,9 @@ The realisation of Feynman indicates this is not so and implies the statement do
 
 
 
-In classical computers the computation is performed using the discrete values of 0 and 1.
-These values are indicated by +5V and 0V signals propergatating round circuits.
-A signal can only be 0 or 1, there is no in between value.
+In classical computers the computation is performed using the discrete values of $0$ and $1$.
+These values are indicated by +$5$V and $0$V signals propergatating round circuits.
+A signal can only be $0$ or $1$, there is no in between value.
 Each signal can indicate the value of a single 'bit' of data.
 A combination of n bits can be used to represent a number from $0$ to $2^n-1$, an n-bit number.
 Classical computation works through the manipulation of these n-bit numbers.
@@ -57,29 +57,166 @@ Classical computation works through the manipulation of these n-bit numbers.
 
 
 The power of quantum computers come from the use of particles in superpositions as described by quantum mechanics.
-This can be seen as the partical being both a 0 and 1 simultaneously.
+This can be seen as the partical being both a $0$ and $1$ simultaneously.
 The partical in this superposition represents a qubit, the quantum computers equivalent to a classical computers bit.
 Just as classical computers manipulate bits to perform computation, quantum computers manipulate qubits and their superpositions to perform computation.
 The power of these superpositions is not obviously apparent.
 
 It is not possible to observe the superposition of a particle.
-When observed the superposition 'collapses' to either logical 0 or 1.
-The probability the the superposition collapses to 0 is determined by the superposition's properties.
+When observed the superposition 'collapses' to either logical $0$ or $1$.
+The probability the the superposition collapses to $0$ is determined by the superposition's properties.
 
+%Explanation of Bra-Ket notation
 To write the state of a superposition it is usual to use the 'Ket' notation.
-A ket is mathematical notation which look as follows, |a$\rangle$.
-This is used to indicate a state, for example |0$\rangle$ is the state of a logical 0 whereas |1$\rangle$ is the state of logical 1.
-Using this notation the state of the superposition can be expressed.
+A ket is mathematical notation, $\vert$a$\rangle$, which represents a basis function the respective Hilbert space, $\mathcal{H}$, as a column vector.
+\begin{equation}
+\vert
+a
+\rangle = 
+\begin{pmatrix}
+a_1\\
+a_2\\
+a_3\\
+\vdots
+\end{pmatrix}
+\end{equation}
+Hilbert spaces extend the simple Euclidean vector space into a potential infinite dimension function space.  
+In quantum mechanics, Kets are used to indicate a state, for example $\vert$0$\rangle$ is the state of a logical $0$ whereas $\vert$1$\rangle$ is the state of logical $1$.
+Using this notation and the inclusion of proablities, the state of the superposition can be expressed.
 
-As with all probablities, the overall probability of a superposition collapsing to any of the states it contains must equal 1.
-$\alpha|0\rangle+\beta|1\rangle$ is how the combination of the logical 0 and 1 states can be combined for a single particle.
-The probability of this state collapsing to 0 can be calculated by $|\alpha|^2$.
-Similarly, the probability of this state collapsing to 1 can be calculated by $|\beta|^2$.
-It follows that $\frac{1}{\sqrt{2}}|0\rangle+\frac{1}{\sqrt{2}}|1\rangle$ is an equal superposition where the collapse to 0 is just as likely as collapsing to 1.
+A dual to the Ket notation is the 'Bra' notation, $\langle$a$\vert$.
+This notation is used to denote the 'dual vector' of the corresponding ket.
+For a state vector represented by
+\begin{equation}\label{ket_explanation_example}
+\vert
+a
+\rangle = 
+\begin{pmatrix}
+a_1\\
+a_2\\
+a_3\\
+\vdots
+\end{pmatrix}
+\end{equation}
+there is a dual vector representing its Hermitian conjugate
+\begin{equation}\label{bra_explanation_example}
+\langle
+a
+\vert = 
+\begin{pmatrix}
+a_1^*$$
+a_2^*$$
+a_3^*$$
+\cdots
+\end{pmatrix}
+\end{equation}
+
+Combining the two vectors $\langle$a$\vert$ and $\vert$b$\rangle$, written $\langle$a$\vert\vert$b$\rangle$, represents the inner product of the two vectors.
+If a and b are unit vectors and $a == b$, $\langle$a$\vert\vert$b$\rangle == 1$.
+If a and b are orthogonal, $\langle$a$\vert\vert$b$\rangle == 0$.
+
+The outer product of two vectors, a and b, can be represented by $\vert$a$\rangle$$\langle$b$\vert$.
+This represents the transformation from a to b.
+It can also be represented in matrix form.
+
+With
+$\vert
+0
+\rangle
+== 
+\begin {pmatrix}
+1\\
+0\\
+\end{pmatrix}
+$
+and
+$\vert
+1
+\rangle
+==  
+\begin {pmatrix}
+0\\
+1\\
+\end{pmatrix}
+$
+it is possible to represent $1$-qubit operations in the bra-ket notation.
+For example, the NOT gate performs a simple negation of a qubit's value.
+This can be written as $\vert0\rangle\langle1\vert + \vert1\rangle\langle0\vert$.
+Subsituting in the vector values we have
+\begin{equation}
+\begin{tabular}{ r c l }
+\(\begin {pmatrix}
+1\\
+0
+\end{pmatrix}
+\begin {pmatrix}
+0&&
+1
+\end{pmatrix}
+ + 
+\begin {pmatrix}
+0\\
+1
+\end{pmatrix}
+\begin {pmatrix}
+1&&
+0
+\end{pmatrix}\)
+& \(=\)
+& \( 
+\begin{pmatrix}
+0 && 1 \\
+0 && 0
+\end{pmatrix}
+ + 
+\begin{pmatrix}
+0 && 0\\
+1 && 0
+\end{pmatrix}
+\) \\
+& \(=\)
+& \( 
+\begin{pmatrix}
+0 && 1 \\
+1 && 0
+\end{pmatrix}
+\)
+\end{tabular}
+\end{equation}
+
+This matrix can be seen as a transformation matrix for the NOT operation.
+In quantum computation, the NOT gate is one of the $4$ gates known as the Pauli gates, more specifically the Pauli-X gate.
+
+% Definition of Unitary
+The matricies representing the Pauli-X gate and all other quantum logic gates are unitary.
+A unitary matrix, U, is one which adheres to
+\begin{equation}
+U*{\dagger}
+U == UU*{\dagger} = I_N
+\end{equation}
+where $I_N$ is the identity matrix in N dimensions and $U*{\dagger}$ is the complex conjugate of $U$.
+% Reversible logic
+The implication of all quantum logic operations being unitary is that they are reversible, this is a difference to classical computation.
+With many classical logic gates irreversible, there is not a set of quantum logic gates which is as computationally powerful as the set of classical logic gates.
+This seems like a major issue, quite the contrary.
+The set of classical logic gates can be replaced by reversible equivalents and therefore it is possible to produce a set of quantum logic gates with the equivalent computational power as the classical logic gates.
+
+% Sample quantum gates
+As I have mentioned the Pauli gates are a set of $4$ 1-qubit operations.
+The Pauli-X gate has previously been introduced. The Pauli-Y gate
+%superposition
+As with all probablities, the overall probability of a superposition collapsing to any of the states it contains must equal $1$.
+\begin{equation}\label{superposition_explanaiton}
+\alpha\vert0\rangle+\beta\vert1\rangle
+\end{equation}
+Equation \eqref{superposition_explanaiton} is how the combination of the logical $0$ and $1$ states can be combined for a single particle.
+The probability of this state collapsing to $0$ can be calculated by $\vert\alpha\vert^2$ where $\alpha$ is a complex number.
+Similarly, the probability of this state collapsing to $1$ can be calculated by $\vert\beta\vert^2$.
+It follows that $\frac{1}{\sqrt{2}}\vert0\rangle+\frac{1}{\sqrt{2}}\vert1\rangle$ is an equal superposition where the collapse to 0 is just as likely as collapsing to $1$.
 This provides the first glimpse of where a single qubit has the ability to perform a function not currently possible on a classical computer.
-With n-qubits in the equal superposition, we have n binary values which have an equal probability of taking the value 0 as the value 1.
+With n-qubits in the equal superposition, we have n binary values which have an equal probability of taking the value $0$ as the value $1$.
 With an ordering decided of these qubits, collapsing the superposition of each qubit will result in a binary value of length n.
-With all probabilities being $\frac{1}{2}$ this binary value takes a truely random value between 0 and $2^n-1$.
+With all probabilities being $\frac{1}{2}$ this binary value takes a truely random value between $0$ and $2^n-1$.
 It is not possible to produce a truely random number using a classical computer.
 
 A second indication of the power held within the idea of superposition becomes clear if we look at the n-qubits in their equal superposition.
@@ -90,8 +227,8 @@ After sealing the box the state of the cat is not known.
 The cat could be alive if the vile has not broken but could just as likely be dead.
 Only by looking inside the box will the state of the cat be known.
 Until this time the cat could be thought of as both alive and dead at the same time.
-If we assign 'dead' to the state $|0\rangle$ and 'alive' to the state $|1\rangle$ the situation looks very similar to the state we have previously seen.
-Therefore, just as the cat can be thought of as both dead and alive at the same time, a qubit in the superposition $\frac{1}{\sqrt{2}}|0\rangle+\frac{1}{\sqrt{2}}|1\rangle$ can be thought of as both 0 and 1 at the same time.
+If we assign 'dead' to the state $\vert0\rangle$ and 'alive' to the state $\vert1\rangle$ the situation looks very similar to the state we have previously seen.
+Therefore, just as the cat can be thought of as both dead and alive at the same time, a qubit in the superposition $\frac{1}{\sqrt{2}}\vert0\rangle+\frac{1}{\sqrt{2}}\vert1\rangle$ can be thought of as both 0 and 1 at the same time.
 This leads to a very powerful property of quantum computers.
 With n classical bits, a single number in the range 0 to $2^n-1$ can be expressed at any one time.
 With n quantum qubits, every number in the range 0 to $2^n-1$ can be expressed at any one time.
@@ -103,12 +240,11 @@ As mentioned previously the superposition cannot itself be observed or measured.
 When observed the superposition collapses with respect to the probabilities of states.
 This means that even though $2^n$ calculations can be performed in parallel, only a single answer can be observed.
 
-% Reversible logic
-% Sample quantum gates
+
+
+
 % mathematic examples of matracies and the application
-% Definition of Unitary
-% explanation of Density matracies
-% explanation of Bra-Ket notation
+
 
 %Known Quantum Algorithms
 
