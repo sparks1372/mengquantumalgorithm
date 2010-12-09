@@ -399,14 +399,34 @@ The Dirac notaion of the CNOT gate is $\vert00\rangle\langle00\vert + \vert01\ra
 \section{An Introduction to Quantum Algorithms}
 %Known Quantum Algorithms
 
-Currently there are very few quantum algorithms known.
-The problems that have been the focus of quantum algorithm researchare those which, appear to be highly parallelisable and have only a single answer.
+Just as with classical computers, the computation to produce the required output given inputs is given in the form of an algorithm.
+Quantum algorithms can be constructed in several ways. These definitions are based on those provided by Massey\cite{masseythesis}.
 
+\begin{itemize}
+\item A quantum circuit can be used to represent an algorithm at the level of quantum logic gates.
+This is similar to a specific purpose circuit diagram for classical systems.
+\item A quantum program is a representation of the algorithm in some higher level quantum 'programming' language which would generate the required circuit.
+The circuit generated is not defined in this method, just it's behaviour.
+This could be seen as slightly more flexible that the quantum circuit model as the 'compiler' can be updated to reflect the findings of future research.
+\item A parameterisable quantum algorithm is a representation in pure Psudo-code.
+It proves the flexibility of changing some value n, which is used to indicate the number of input qubits, to produce quantum circuits or programs with the desired behaviour on n qubits.
+This is the most flexible construction of quantum algorithms.
+It can cope with the changing in input size and can use findings of research just like in the 'compliation' of a quantum program.
+\end{itemize}
+
+Currently there are very few quantum algorithms known.
+Peter Shor has carried out, and published, a discussion on the progress made `in discovering algorithms for computation on a quantum computer`\cite{Shor:2004:PQA:1032132.1032149}.
+
+\subsubsection{Deutsch-Jozsa Algorithm}
+%Deutsch-Jozsa Algorithm
+
+\subsubsection{Shor's Factorisation Algorithm}
 %Shors Algorithm
 In 1994, Peter Shor astonished the computer science community with a factorisation algorithm to run on a quantum computer.
 This allowed the factorisation of interger numbers into their consitiuent primes in polynomial time
 (READ PAPER) 
-	
+
+\subsubsection{Grover's Search Algorithm}	
 %Grovers Database search algorithm
 (READ PAPER)
 
