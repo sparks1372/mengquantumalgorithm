@@ -14,7 +14,7 @@
 %    along with this program; if not, write to the Free Software
 %    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-\usepackage[matrix,frame,arrow]{xy}
+\usepackage{xy}
 \usepackage{amsmath}
 \newcommand{\bra}[1]{\left\langle{#1}\right\vert}
 \newcommand{\ket}[1]{\left\vert{#1}\right\rangle}
@@ -90,9 +90,11 @@
     % Centers the bottom of #1 in the cell.  Intended for lining up wire labels.  Note that non-gates have default size zero.
 \newcommand{\dstick}[1]{*!U!<0em,.5em>=<0em>{#1}}
     % Centers the top of #1 in the cell.  Intended for lining up wire labels.  Note that non-gates have default size zero.
+    
 \newcommand{\Qcircuit}[1][0em]{\xymatrix @*[o] @*=<#1>}
     % Defines \Qcircuit as an \xymatrix with entries of default size 0em.  The optional argument, #1, is for use with clusters, and allows you
     % to fix the size of the nodes.  I would not advise using it with normal circuits.
+    
 \newcommand{\node}[2][]{{\begin{array}{c} \ _{#1}\  \\ {#2} \\ \ \end{array}}\drop\frm{o} }
     % When Qcircuit has been passed the optional argument for cluster states, this command produces a round node of the size specified in that
     % argument.  The optional argument #2 specifies the contents of a node, while optional argument #1 is a secondary label.  
