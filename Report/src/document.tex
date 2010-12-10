@@ -1,4 +1,96 @@
 \documentclass[authoryearcitations]{UoYCSproject}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{xy}
+\usepackage{amsmath}
+\newcommand{\bra}[1]{\left\langle{#1}\right\vert}
+\newcommand{\ket}[1]{\left\vert{#1}\right\rangle}
+    % Defines Dirac notation.
+\newcommand{\qw}[1][-1]{\ar @{-} [0,#1]}
+    % Defines a wire that connects horizontally.  By default it connects to the object on the left of the current object.
+    % WARNING: Wire commands must appear after the gate in any given entry.
+\newcommand{\qwx}[1][-1]{\ar @{-} [#1,0]}
+    % Defines a wire that connects vertically.  By default it connects to the object above the current object.
+    % WARNING: Wire commands must appear after the gate in any given entry.
+\newcommand{\cw}[1][-1]{\ar @{=} [0,#1]}
+    % Defines a classical wire that connects horizontally.  By default it connects to the object on the left of the current object.
+    % WARNING: Wire commands must appear after the gate in any given entry.
+\newcommand{\cwx}[1][-1]{\ar @{=} [#1,0]}
+    % Defines a classical wire that connects vertically.  By default it connects to the object above the current object.
+    % WARNING: Wire commands must appear after the gate in any given entry.
+\newcommand{\gate}[1]{*{\xy *+<.6em>{#1};p\save+LU;+RU **\dir{-}\restore\save+RU;+RD **\dir{-}\restore\save+RD;+LD **\dir{-}\restore\POS+LD;+LU **\dir{-}\endxy} \qw}
+    % Boxes the argument, making a gate.
+\newcommand{\meter}{\gate{\xy *!<0em,1.1em>h\cir<1.1em>{ur_dr},!U-<0em,.4em>;p+<.5em,.9em> **h\dir{-} \POS <-.6em,.4em> *{},<.6em,-.4em> *{} \endxy}}
+    % Inserts a measurement meter.
+\newcommand{\measure}[1]{*+[F-:<.9em>]{#1} \qw}
+    % Inserts a measurement bubble with user defined text.
+\newcommand{\measuretab}[1]{*{\xy *+<.6em>{#1};p\save+LU;+RU **\dir{-}\restore\save+RU;+RD **\dir{-}\restore\save+RD;+LD **\dir{-}\restore\save+LD;+LC-<.5em,0em> **\dir{-} \restore\POS+LU;+LC-<.5em,0em> **\dir{-} \endxy} \qw}
+    % Inserts a measurement tab with user defined text.
+\newcommand{\measureD}[1]{*{\xy*+=+<.5em>{\vphantom{\rule{0em}{.1em}#1}}*\cir{r_l};p\save*!R{#1} \restore\save+UC;+UC-<.5em,0em>*!R{\hphantom{#1}}+L **\dir{-} \restore\save+DC;+DC-<.5em,0em>*!R{\hphantom{#1}}+L **\dir{-} \restore\POS+UC-<.5em,0em>*!R{\hphantom{#1}}+L;+DC-<.5em,0em>*!R{\hphantom{#1}}+L **\dir{-} \endxy} \qw}
+    % Inserts a D-shaped measurement gate with user defined text.
+\newcommand{\multimeasure}[2]{*+<1em,.9em>{\hphantom{#2}} \qw \POS[0,0].[#1,0];p !C *{#2},p \drop\frm<.9em>{-}}
+    % Draws a multiple qubit measurement bubble starting at the current position and spanning #1 additional gates below.
+    % #2 gives the label for the gate.
+    % You must use an argument of the same width as #2 in \ghost for the wires to connect properly on the lower lines.
+\newcommand{\multimeasureD}[2]{*+<1em,.9em>{\hphantom{#2}}\save[0,0].[#1,0];p\save !C *{#2},p+LU+<0em,0em>;+RU+<-.8em,0em> **\dir{-}\restore\save +LD;+LU **\dir{-}\restore\save +LD;+RD-<.8em,0em> **\dir{-} \restore\save +RD+<0em,.8em>;+RU-<0em,.8em> **\dir{-} \restore \POS !UR*!UR{\cir<.9em>{r_d}};!DR*!DR{\cir<.9em>{d_l}}\restore \qw}
+    % Draws a multiple qubit D-shaped measurement gate starting at the current position and spanning #1 additional gates below.
+    % #2 gives the label for the gate.
+    % You must use an argument of the same width as #2 in \ghost for the wires to connect properly on the lower lines.
+\newcommand{\control}{*!<0em,.025em>-=-{\bullet}}
+    % Inserts an unconnected control.
+\newcommand{\controlo}{*-<.21em,.21em>{\xy *=<.59em>!<0em,-.02em>[o][F]{}\POS!C\endxy}}
+    % Inserts a unconnected control-on-0.
+\newcommand{\ctrl}[1]{\control \qwx[#1] \qw}
+    % Inserts a control and connects it to the object #1 wires below.
+\newcommand{\ctrlo}[1]{\controlo \qwx[#1] \qw}
+    % Inserts a control-on-0 and connects it to the object #1 wires below.
+\newcommand{\targ}{*!<0em,.019em>=<.79em,.68em>{\xy {<0em,0em>*{} \ar @{ - } +<.4em,0em> \ar @{ - } -<.4em,0em> \ar @{ - } +<0em,.36em> \ar @{ - } -<0em,.36em>},<0em,-.019em>*+<.8em>\frm{o}\endxy} \qw}
+    % Inserts a CNOT target.
+\newcommand{\qswap}{*=<0em>{\times} \qw}
+    % Inserts half a swap gate. 
+    % Must be connected to the other swap with \qwx.
+\newcommand{\multigate}[2]{*+<1em,.9em>{\hphantom{#2}} \qw \POS[0,0].[#1,0];p !C *{#2},p \save+LU;+RU **\dir{-}\restore\save+RU;+RD **\dir{-}\restore\save+RD;+LD **\dir{-}\restore\save+LD;+LU **\dir{-}\restore}
+    % Draws a multiple qubit gate starting at the current position and spanning #1 additional gates below.
+    % #2 gives the label for the gate.
+    % You must use an argument of the same width as #2 in \ghost for the wires to connect properly on the lower lines.
+\newcommand{\ghost}[1]{*+<1em,.9em>{\hphantom{#1}} \qw}
+    % Leaves space for \multigate on wires other than the one on which \multigate appears.  Without this command wires will cross your gate.
+    % #1 should match the second argument in the corresponding \multigate. 
+\newcommand{\push}[1]{*{#1}}
+    % Inserts #1, overriding the default that causes entries to have zero size.  This command takes the place of a gate.
+    % Like a gate, it must precede any wire commands.
+    % \push is useful for forcing columns apart.
+    % NOTE: It might be useful to know that a gate is about 1.3 times the height of its contents.  I.e. \gate{M} is 1.3em tall.
+    % WARNING: \push must appear before any wire commands and may not appear in an entry with a gate or label.
+\newcommand{\gategroup}[6]{\POS"#1,#2"."#3,#2"."#1,#4"."#3,#4"!C*+<#5>\frm{#6}}
+    % Constructs a box or bracket enclosing the square block spanning rows #1-#3 and columns=#2-#4.
+    % The block is given a margin #5/2, so #5 should be a valid length.
+    % #6 can take the following arguments -- or . or _\} or ^\} or \{ or \} or _) or ^) or ( or ) where the first two options yield dashed and
+    % dotted boxes respectively, and the last eight options yield bottom, top, left, and right braces of the curly or normal variety.
+    % \gategroup can appear at the end of any gate entry, but it's good form to pick one of the corner gates.
+    % BUG: \gategroup uses the four corner gates to determine the size of the bounding box.  Other gates may stick out of that box.  See \prop. 
+\newcommand{\rstick}[1]{*!L!<-.5em,0em>=<0em>{#1}}
+    % Centers the left side of #1 in the cell.  Intended for lining up wire labels.  Note that non-gates have default size zero.
+\newcommand{\lstick}[1]{*!R!<.5em,0em>=<0em>{#1}}
+    % Centers the right side of #1 in the cell.  Intended for lining up wire labels.  Note that non-gates have default size zero.
+\newcommand{\ustick}[1]{*!D!<0em,-.5em>=<0em>{#1}}
+    % Centers the bottom of #1 in the cell.  Intended for lining up wire labels.  Note that non-gates have default size zero.
+\newcommand{\dstick}[1]{*!U!<0em,.5em>=<0em>{#1}}
+    % Centers the top of #1 in the cell.  Intended for lining up wire labels.  Note that non-gates have default size zero.
+    
+\newcommand{\Qcircuit}[1][0em]{\xymatrix @*[o] @*=<#1>}
+    % Defines \Qcircuit as an \xymatrix with entries of default size 0em.  The optional argument, #1, is for use with clusters, and allows you
+    % to fix the size of the nodes.  I would not advise using it with normal circuits.
+    
+\newcommand{\node}[2][]{{\begin{array}{c} \ _{#1}\  \\ {#2} \\ \ \end{array}}\drop\frm{o} }
+    % When Qcircuit has been passed the optional argument for cluster states, this command produces a round node of the size specified in that
+    % argument.  The optional argument #2 specifies the contents of a node, while optional argument #1 is a secondary label.  
+\newcommand{\link}[2]{\ar @{-} [#1,#2]}
+    % Draws a wire or connecting line to the element #1 rows down and #2 columns forward.
+\newcommand{\pureghost}[1]{*+<1em,.9em>{\hphantom{#1}}}
+    % Same as \ghost except it omits the wire leading to the left. 
+
+%%%%%%%%%%%%%%%%%%%%%
 \author{Sam Ratcliff}
 \title{Quantum Algorithm Synthesis Workbench}
 \date{\today}
@@ -429,11 +521,63 @@ Quantum mechanics is seen by many as a comfusing and mystical subject.
 Even prize winning mathematician and physicist Roger Penrose is attributed to the remark `Quantum mechanics makes absolutely no sense`.
 Statements like this and the atmosphere surrounding quantum mechanics makes the potential of its study more than some what daughnting.
 As computer scientists, the exposure to and therefore our understanding of quantum mechanics is limited, in general.
-With this in mind it is unreasonable to expect the discovery of algorithms which exploit the finer details of this complex and subtle theory.
+With this in mind it is, currently, unreasonable to expect the discovery of algorithms that exploit the finer details of this complex and subtle theory to become an everyday occurance.
+
+The following few sections outline a selection of the currently known quantum algorithms.
 
 \subsubsection{Deutsch-Jozsa Algorithm}
 %Deutsch-Jozsa Algorithm
+The Deutsch-Jozsa algorithm\cite{1992-deutsch} is a generalisation and improvement over an earlier algorithm propsed by David Deutsch\cite{Deutsch1985}.
+The algorithm described here will be the algorithm including the improvements published in \cite{Macchiavello97quantumalgorithms}, the resulting algorithm is still reffered to as the Deutsch-Jozsa algorithm.
 
+The original Deutsch algorithm\cite{Deutsch1985} was proposed to solve the following problem:
+\begin{quote}
+Given a function f:{0,1}$\to${0,1}, decide whether it is either a balanced, or constant function.
+The function f is guarenteed to be either constant or balanced.
+\end{quote}
+The algorithm proposed was not deterministic, but provided the correct answer with probability $\frac{1}{2}$.
+The algorithm's major breakthrough was that it only required a single invocation of the function f to decide on which category it belonged.
+This is compared to the best classical approach requiring two invocations to the function.
+This was the first algorithm that it was possible to compute the solution to a problem more efficiently than a classical computer by exploiting quantum mechanics.
+The uncertainty of the result was obviously a problem but the principle was a large break through.
+
+In 1992, David Deutsch and Richard Jozsa\cite{1992-deutsch} presented an improvement and extenstion which allowed for functions $f:{0,1}^{2n}\to{0,1}$ to be categorised as constant of balanced.
+The algorithm was again probablistic but also required 2 invocations to the function f.
+This means that in the worst case, with $f_1:{0,1}\to{0,1}$, the algorithm will perform worst than both the original Deutsch algorithm\cite{Deutsch1985} and the classical algorithm due to the probablistic nature of its result.
+This is a very limited case and does improve as the value of n increases.
+As with the original algorithm, the number of invactions of f is constant, truely independent of both n and f.
+This again is an improvement over the classical algorithm which requires in the worst case $2^n+1$ to be certain of the function's category.
+
+% \xymatrix  {
+% & \qw & \gate{H} & \multigate{3}{\mathcal{F}} & \gate{H} & \qw \\
+% & \qw & \gate{H} & \ghost{f} & \gate{h} & \qw \\
+% & \qw & \gate{H} & \ghost{f} & \gate{h} & \qw \\
+% & \qw & \gate{H} & \ghost{f} \ctrl{1} & \gate{h} & \qw \\
+% & \ket{1}& \gate{H} & \targ & \qw & \qw
+% }
+\begin{figure}
+\centering
+\includegraphics{Deutsch-Jozsa}
+\caption{Deutsch-Jozsa Circuit}
+\label{Deutsch-Jozsa-Cir}
+\end{figure}
+
+The algorithm requires n input qubits and a single control qubit.
+The n input qubits are initialised to $\ket{0}$
+The control qubit is initialised to $\ket{1}$.
+The n-fold Hadamard gates are then used to produce the superposition of all $2^n-1$ possible inputs, $x = (\ket{0}+\ket{1})^n)$.
+The Hadamard gate on the control qubit is used to produce the superposition $\ket{0}-\ket{1}$.
+The difference in superpositions between the input and control qubits is inportant to the way in which the algorithm classifies a function.
+This produces a state  $(\ket{0}+\ket{1})^n)(\ket{0}-\ket{1})$.
+
+The n input qubits are then passed to the function we was to classify, f.
+The result of f for the x input is used as the control for a CNOT gate acting on the control qubit.
+Remember at this point that the input x is in effect all possible inputs to f, and as such the output is all the respective outputs.
+This means that each of the factors of the input are transformed, based on the action of f.
+
+This is simpler to see with a an actual example.
+Take a 2 qubit input function $f_1$ defined in Dirac notation as .. 
+ 
 \subsubsection{Shor's Factorisation Algorithm}
 %Shors Algorithm
 In 1994, Peter Shor astonished the computer science community with a factorisation algorithm to run on a quantum computer.
