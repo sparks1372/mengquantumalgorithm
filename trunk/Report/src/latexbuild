@@ -1,0 +1,5 @@
+pdflatex document
+bibtex document
+pdflatex document
+pdflatex document
+acroread document.pdf
