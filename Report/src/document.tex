@@ -1,6 +1,10 @@
 \documentclass[authoryearcitations]{UoYCSproject}
 
 \usepackage[margin=2cm]{geometry}
+\usepackage[matrix,frame,arrow]{xypic}
+\input{Qcircuit}
+
+\vfuzz2pt % Don't report over-full v-boxes if over-edge is small
 
 \author{Sam Ratcliff}
 \title{Quantum Algorithm Synthesis Workbench}
@@ -73,7 +77,7 @@ a_3\\
 Hilbert spaces extend the simple Euclidean vector space into a potential infinite dimension function space.
 \begin{figure}
 \centering
-\includegraphics[scale=0.5]{Bloch}
+\includegraphics[scale=0.5]{Bloch.png}
 \caption{The 1-Qubit Bloch Sphere \cite{QuantikiBlochSphereImage}}
 \label{BlochSphere}
 \end{figure}
@@ -464,19 +468,18 @@ This means that in the worst case, with $f_1:{0,1}\to{0,1}$, the algorithm will 
 This is a very limited case and does improve as the value of n increases.
 As with the original algorithm, the number of invactions of f is constant, truely independent of both n and f.
 This again is an improvement over the classical algorithm which requires in the worst case $2^n+1$ to be certain of the function's category.
-
-% \xymatrix  {
-% & \qw & \gate{H} & \multigate{3}{\mathcal{F}} & \gate{H} & \qw \\
-% & \qw & \gate{H} & \ghost{f} & \gate{h} & \qw \\
-% & \qw & \gate{H} & \ghost{f} & \gate{h} & \qw \\
-% & \qw & \gate{H} & \ghost{f} \ctrl{1} & \gate{h} & \qw \\
-% & \ket{1}& \gate{H} & \targ & \qw & \qw
-% }
 \begin{figure}
-\centering
-\includegraphics{Deutsch-Jozsa}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+& \lstick{\ket{0}} & \gate{H} & \multigate{3}{\mathcal{F}} & \gate{H} & \qw \\
+& \lstick{\ket{0}} & \gate{H} & \ghost{\mathcal{F}} & \gate{H} & \qw \\
+& \lstick{\ket{0}} & \gate{H} & \ghost{\mathcal{F}} & \gate{H} & \qw \\
+& \lstick{\ket{0}} & \gate{H} & \ghost{\mathcal{F}}  & \gate{H} & \qw \\
+& \lstick{\ket{1}} & \gate{H} & \targ\qwx & \qw &  \rstick{\ket{0}-\ket{1}}\qw 
+}
+\]
 \caption{Deutsch-Jozsa Circuit}
-\label{Deutsch-Jozsa-Cir}
+ \label{Deutsch-Jozsa-Cir}
 \end{figure}
 
 The algorithm requires n input qubits and a single control qubit.
@@ -558,10 +561,17 @@ The complexity is measured by the number of elements which need to be queried in
 The Grover Search algorithm has the complexiy $O(\sqrt{N})$ and so `is within a constant factor of the fastest possible quantum mechanical algorithm`\cite{Grover:1996rk}.
 
 \begin{figure}
-\centering
-\includegraphics[scale=0.5]{Grovers-Search}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+& \qw & \qw & \multigate{3}{f} &\qw &  \gate{H} &\qw & \multigate{3}{f_0} &\qw &  \gate{H}  &\qw &\qw\\
+& \vdots & &  \ghost{f} & \qw & \vdots & & \ghost{f_0} &\qw &  \vdots & &\qw\\
+& \vdots & & \ghost{f} & \qw & \vdots & & \ghost{f_0} &\qw &  \vdots & &\qw\\
+& \qw &\qw &  \ghost{f} & \qw & \gate{H} &\qw & \ghost{f_0} &\qw &  \gate{H} &\qw &\qw\\
+& \qw &\qw &  \targ \qwx &\qw &  \qw &\qw & \targ \qwx &\qw &  \gate{X} &\qw &\qw 
+}
+\]
 \caption{Grover's Search Circuit}
-\label{Grovers-Search-Cir}
+ \label{Grovers-Search-Cir}
 \end{figure}
 
 
