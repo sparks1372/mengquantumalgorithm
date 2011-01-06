@@ -1,5 +1,5 @@
-pdflatex document
-bibtex document
-pdflatex document
-pdflatex document
-acroread document.pdf
+pdflatex mengreport
+bibtex mengreport
+pdflatex mengreport
+pdflatex mengreport
+acroread mengreport.pdf
