@@ -3,6 +3,7 @@
 \usepackage[margin=2cm]{geometry}
 \usepackage[matrix,frame,arrow]{xypic}
 \usepackage{graphicx}
+\usepackage{qtree}
 \input{Qcircuit}
 
 \vfuzz2pt % Don't report over-full v-boxes if over-edge is small
@@ -24,11 +25,11 @@
 \begin{document}
 \maketitle
 %PUT THESE BACK IN
-%\listoffigures
-%\listoftables
-%\renewcommand*{\lstlistlistingname}{List of Listings}
-%\lstlistoflistings
- 
+\listoffigures
+\listoftables
+% \renewcommand*{\lstlistlistingname}{List of Listings}
+% \lstlistoflistings
+
 \chapter{Introduction}
 \chapter{Literature Review}
 \section{Introduction to Quantum Computation}
@@ -727,9 +728,100 @@ For more complex gates, such as the Hadamard gate, the matrix manipulation is mu
 
 The representation used in Q-PACE II is not able to express a Toffoli, Controlled-Controlled-Not, gate as a single gate.
 This makes evolving a half-adder circuit more than a trivial test.
-When Q-PACE II is tested against producing a circuit with the specification $\ket{x, y, z}\rightarrow\ket{x,x \oplus y, x \wedge y}$
+When Q-PACE II is tested against producing a circuit with the specification $\ket{x, y, z}\rightarrow\ket{x,x \oplus y, x \wedge y}$ it is able to produce several exact solutions.
+One of which was claimed, at the time, to be the `best known solution to the problem`\cite{masseythesis} with the restricted gate set.
+Q-PACE II was also challenged to produce a circuit to implement $\ket{c, a, b, z}\rightarrow\ket{c, a, (a+b)_0, (a+b)_1}$ and again produced `the most efficient solution to this particular problem`\cite{masseythesis}.
+
+\begin{equation}
+\begin{pmatrix}
+a\\
+b\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0
+\end{pmatrix}
+\label{masseyprobref}
+\end{equation}
+
+Both tests of Q-PACE outlined were carried out to produce a deterministic solution, would always present the correct answer after measurement.
+Further tests were performed on more complicated problems, however deterministic solutions were not found.
+Following on from the work carried out by Spector et al\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112}, Massey changed to a probabilistic approach.
+The definition, referring to \ref{masseyprobref}, of a probabilistic solution used by Massey is:
+
+\begin{quote}
+The probability of measuring $\ket{000}$ is at least $0.5 \times a\bar{a}$, and the probability of measuring $\ket{001}$ is at least $0.5 \times b\bar{b}$.\cite{masseythesis}
+\end{quote}
+
+With this new, relaxed, requirement of probabilistic correctness, the Q-PACE II software was used to `evolve a quantum circuit to implement the specification 
+\begin{equation*}
+ \ket{a_1, a_0, b_1, b_0, z_1, z_0} \rightarrow \ket{a_1, a_0, (a+b)_2, (a+b)_1, (a+b)_0, z_0}'
+\end{equation*}
+The result was, despite the requirement of only probabilistic correctness, a deterministic solution to the problem\cite{masseythesis}.
+The evolved circuit was not as efficient by that presented in \cite{Vedral:1995ga} but was still deterministic.
+
+\begin{figure}
+\Tree [.Create\_CN [.Create\_N 1 ] [.Create\_H 2 ]]
+\caption{Q-PACE III Example Solution Tree}
+\label{QPACEIIIEXTREE}
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+& \qw & \gate{N} & \qw &  \ctrl{1} & \qw \\
+& \qw & \qw & \gate{H} & \targ & \qw
+}
+\]
+\caption{Q-PACE III Example Program Output}
+\label{QPACEIIIEX}
+\end{figure}
+
+Both Q-PACE and Q-PACE II evolved quantum circuits.
+The next generation, Q-PACE III, evolved quantum programs, inspired by the work of Spector et al\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112}.
+Just as with Q-PACE II, Q-PACE III was a Genetic Programming suite.
+The solutions evolved by Q-PACE III were executable programs, 'second order' solutions, which produce as an output a quantum circuit.
+An additional difference between the two suites is the representation.
+Q-PACE III represents programs as trees, rather than lists.
+The execution of the solutions is performed by a pre-order traversal of the solutions tree representation.
+The tree in \ref{QPACEIIIEXTREE} produces the circuit in \ref{QPACEIIIEX}.
+
+Due to the change in representation, the evolutionary operations, mutation and crossover, occur at the second order level.
+As shown in \ref{QPACEIIIEXTREE}, the different non-terminal nodes were of different arrity, allowing for more expressive trees.
+Whereas in Q-PACE I and II the fitness of an individual could be calculated directly from the individual, in Q-PACE III the individuals have to be `executed` to produce the quantum circuit before the fitness can be evaluated.
+With this additional step, the fitness evaluation requires more computational resources.
+
+Massey defines the PF Max problem as
+\begin{quote}
+ You are given a permutation function f(x) which operates over the integer range [0..3].
+Using a suitable encoding, evolve a quantum program U which returns the value of x that gives the maximum value of f(x).\cite{masseythesis}
+\end{quote}
+Q-PACE III was used to try find a probabilistic solution to the PF Max problem.
+The experiment was successful.
+When tested against the 8 permutations used as fitness cases, the correct result was the probabilistic result in each case.
+When tested against the 24 possible permutations, the correct result was the probabilistic result in 20 of the 24 cases.
+
+It was found that if the acceptance requirement was reduced to 0.4, from 0.5, a quantum program was evolved which returns the correct value for all 24 possible permutation exactly $50\%$ of the time.
+This result was quite remarkable, this probability is twice that of the best classical approach, guessing.
+
+\begin{equation}
+ y_k = \frac{1}{\sqrt{N}} \sum_{j=0}^{N-1}{x_j}e^{\frac{2\pi{ijk}}{N}}
+\label{QFTeqn}
+\end{equation}
+
+Q-PACE III was also used to evolve an solution which, when run, produced the circuit for the Quantum Fourier Transform on 3 qubits.
+The Quantum Fourier Transform is an operation defined by equation \ref{QFTeqn} where x, $(x_0, x_1, \ldots, x_{N-1})$ where $N = 2^n$, is the input state and y, $(y_0, y_1, \ldots, y_{N-1})$, is the resulting state.
+It is fundamental for Shor's factorisation algorithm.
+The problem was approached both deterministically and probabilistically, both were successful.
+The results of the probabilistic experiments were unexpected.
+The definition of the acceptance requirement had to be generalised.
+Whereas for the PF Max problem the correct answer was a single value, the correct answer for the Quantum Fourier Transform is a state vector.
+An acceptance level of $x\%$ was redefined as the requirement that for all fitness cases, each state has a probability of being measured of at least $x\%$ of the probability for the respective state after running a `perfect` Quantum Fourier Transform.
+It was found that for acceptance levels of $75\%$, $50\%$ and even $25\%$, the evolved circuits often had an acceptance value in excess of $99\%$.
 
 \section{The Focus of this Project}
 
-\bibliography{document}
+\bibliography{mengreport}
 \end{document}

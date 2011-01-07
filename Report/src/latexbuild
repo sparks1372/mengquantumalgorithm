@@ -2,4 +2,4 @@ pdflatex mengreport
 bibtex mengreport
 pdflatex mengreport
 pdflatex mengreport
-acroread mengreport.pdf
+evince mengreport.pdf
