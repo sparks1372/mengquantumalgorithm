@@ -540,16 +540,16 @@ As we have noted, $\Psi_{const}$ is orthogonal to $\Psi_{bal}$ so when the n Had
 This gives us a clear way of distinguishing between whether f is constant of balanced with certainty and only a single invocation of f.
 If the measurement returns $0$ then f is constant, if the measurement returns anything else f is balanced  
 
-\subsection{Shor's Factorisation Algorithm}
-%Shors Algorithm
-In 1994, Peter Shor astonished the computer science community with a quantum factorisation algorithm.
-This allowed the factorisation of integer numbers into their constituent primes in polynomial time.
-This algorithm is not a pure quantum algorithm, but a hybrid algorithm.
-It has both a quantum and classical portion.
+% \subsection{Shor's Factorisation Algorithm}
+% %Shors Algorithm
+% In 1994, Peter Shor astonished the computer science community with a quantum factorisation algorithm.
+% This allowed the factorisation of integer numbers into their constituent primes in polynomial time.
+% This algorithm is not a pure quantum algorithm, but a hybrid algorithm.
+% It has both a quantum and classical portion.
 
 
 
-(READ PAPER) 
+% (READ PAPER) 
 
 \subsection{Grover's Search Algorithm}	
 %Grovers Database search algorithm
@@ -660,19 +660,19 @@ Taking into account the vast Hilbert space when assessing the power of this circ
 
 However, even though the power can now be appreciated, the way in which it solves the problem is still not clear. 
 
-\section{The Current State of Quantum Computing}
---Problems with current algorithms
-
-	--Scalability
-	
-	--Require many more Qubits than are available with current hardware implementations
-
- 
---Current State of QC
-	
-	--Latest hardware
-	
-	--Latest algorithms
+% \section{The Current State of Quantum Computing}
+% --Problems with current algorithms
+% 
+% 	--Scalability
+% 	
+% 	--Require many more Qubits than are available with current hardware implementations
+% 
+%  
+% --Current State of QC
+% 	
+% 	--Latest hardware
+% 	
+% 	--Latest algorithms
 
 \section{The Use of Evolutionary Computation in the Synthesis of Quantum Algorithms}
 %Need to read a lot more
@@ -688,7 +688,7 @@ The each cycle of evaluate, selection and mutation and/or crossover produces a '
 The process repeats until a required 'fitness' is found or a resource limit is reached, time or number of generations produced for example.
 As the process progresses, with the a reasonable representation and fitness function, the average 'fitness' of each generation should improve.
 
-The use of evolutionary techniques to try synthesise quantum algorithms is not new.
+The use of evolutionary techniques to try synthesize quantum algorithms is not new.
 There are many examples of successes in producing solutions to problems already solved by a manual approach and some producing novel solutions to previously quantumly unsolved problems.
 The techniques used vary from Genetic Algorithms to Genetic Programming with varying success.
 
@@ -698,11 +698,11 @@ Due to the exponential increase in resources required for simulation with an inc
 
 Massey\cite{masseythesis,masseymeng} explores both Genetic Algorithms and Genetic Programming as search techniques.
 The software suites presented, Q-PACE I - IV, have varying success and increase in search power.
-Q-PACE I\cite{masseymeng} is described as solving `a number of basic proof of concept problems`\cite{masseythesis} and `proves the concept that evolutionare search techniques can be used to evolve quantum software`\cite{masseythesis}.
-Q-PACE I uses a fixed length array of quantum gates and is based on a simple Genetic Algoritm found in \cite{1989goldberg}.
+Q-PACE I\cite{masseymeng} is described as solving `a number of basic proof of concept problems`\cite{masseythesis} and `proves the concept that evolutionary search techniques can be used to evolve quantum software`\cite{masseythesis}.
+Q-PACE I uses a fixed length array of quantum gates and is based on a simple Genetic Algorithm found in \cite{1989goldberg}.
 
 Q-PACE II\cite{masseythesis} is a suite based on Q-PACE I but uses Genetic Programming instead.
-In contrast to Q-PACE I, Q-PACE II is able to handle variable length solutions as individuals are represented as a list of quantum gates parameterised with the label, target and control bits and phase factor.
+In contrast to Q-PACE I, Q-PACE II is able to handle variable length solutions as individuals are represented as a list of quantum gates parameterized with the label, target and control bits and phase factor.
 It also includes the inclusion of vector manipulation rather than matrix manipulation to improve efficiency.
 Matrix manipulation is a simple concept, however it is very computationally expensive.
 Operators are just one to one functions acting on state vectors.
@@ -820,6 +820,56 @@ The definition of the acceptance requirement had to be generalised.
 Whereas for the PF Max problem the correct answer was a single value, the correct answer for the Quantum Fourier Transform is a state vector.
 An acceptance level of $x\%$ was redefined as the requirement that for all fitness cases, each state has a probability of being measured of at least $x\%$ of the probability for the respective state after running a `perfect` Quantum Fourier Transform.
 It was found that for acceptance levels of $75\%$, $50\%$ and even $25\%$, the evolved circuits often had an acceptance value in excess of $99\%$.
+
+With Q-PACE IV, Massey once again raised the level at which the solutions were represented.
+Q-PACE IV was a Genetic Programming suite to evole quantum algorithms, parameterisable with the system size.
+To reduce the complexity of the representation, all non-terminals were made to be the same arrity, 3.
+This was to remove the restrictions on the mutation operators while ensuring only syntactically correct algorithms were developed.
+As not all gates require 3 parameters, the excess parameters were ignored during evaluation.
+
+The desire to produce quantum algorithms required the inclusion of an iteration construct, numerical arithmetic and a store of variables so loop variables can be used.
+Several issues were encountered.
+An issue with the numerical arithmetic inclusion was with the posibility to specify a qubit which does not exist.
+In a system of 3 qubits, there is no sixth qubit so the syntactically correct `\emph{Create\_H(MULTIPLY(3, 2, X), X, X)}`\cite{masseythesis}, where X is a don't care symbol, is syntactically correct depending on the system size.
+It was decided that any number above the system size would be interpreted as the system size.
+This is a solution but as is stated in \cite{Stepney07searchingfor}, this means that the system size is over represented in the search space.
+Also due to the limitations of quantum simulation, a number larger than the upper limit on system size efficiently able to be simulated may need to be the system size.
+However, it may need to be that specific value but until simulation or production of adequately large quantum computers is possible the algorithm cannot be finalise.
+Due to this, if the value is assumed to be the system size it may make analysis of the algorithm, and therefore the resulting understanding, much harder and possibly misleading.
+The comment made in \cite{Stepney07searchingfor} was in reference to representing gates as the numbers between 0 and 7, but only needing to represent 5 gates.
+Using modulo 5 represents two gates with a single value but three with two values, potentially leading to favouring the over represented gates.
+Therefore the two potential solutions to the indexing of a non-existant qubit both have their potentially undesireable behaviours but the approach taken by Massey does appear to be the option which is unlikely to interfere with the evolution of solutions, only potentially with analysis.
+
+It would seem that there is the posibility of using individuals containing such nodes to spawn two separate individuals, one with the numerical value and one with the variable holding the system size.
+Protection would have to be added into the operator carrying out this operation to ensure the individual with the numerical value is not duplicated each generation. 
+If the evaluation of numerical nodes was altered to use the modulo of the system size the combination of the two individuals would cover both of the proposed solutions while compensating for the failings of both.
+
+The first test for Q-PACE IV was to try and evolve an algorithm to produce an n-qubit Quantum Fourier Transform with 100\% fidelity.
+There is a known algorithm to produce these circuits, provided as Figure 32 in \cite{masseythesis}, so the test was quantifiable.
+It was also shown that the gate set available to Q-PACE IV was indeed able to express the algorithm.
+Q-PACE IV was unsuccessful using the same fitness function as used by Q-PACE III in its evolution of the 3-qubit Quantum Fourier Transform.
+The fitness function was subsequently changed so that it used the polar representation of the complex numbers indicating the probability amplitude of each state rather than their Cartesian form.
+This was more successful and managed to produce an algorithm capable of producing a circuit with 100\% fidelity for 1, 2 and 3 qubits.
+
+However, this algorithm was not entirely system-size independent.
+The problem was due to the requirement of Quantum Fourier Transform to reverse the order of the qubits.
+This required the use of swap gates but the inclusion of these gates have a large effect on the fitness of individuals which include the phase rotation gates, another critical gate for the Quantum Fourier Transform.
+The fitness was once again altered, however this alteration guided the search in the direction of using swap gates.
+A solution was found that was system size independent and produced 100\% fidelity.
+
+Both of these Quantum Fourier Transform examples show the importance of the fitness function.
+Even though the Cartesian and polar form of complex numbers are mathematically equivalent, they produced drastically different results.
+The Cartesian form restricted the search and no solution was found whereas the equivalent polar form had no such restriction.
+It appears to me that the reverse will be true in the search for other problems where the relative phases are not as fundamental as they are in the Quantum Fourier Transform.
+This gives an indication that the search for currently unknown quantum algorithms may require a series of parallel evolution streams using different representation within the fitness function.
+It may also prove helpful to use a series of fitness functions in a colaborative approach.
+
+Evolutionary approaches are commonly used for multi-objective optimisation problems where the multiple objectives are in conflict.
+The use of different representations in fitness funcitons could be seen in a similar way to these approaches.
+However, different representations of the fitness function would not be a set of conflicting objectives but colaborating objectives.
+This would allow the search to be free from selecting the correct representation of the complex probability amplitudes.
+This would however require several fitness functions which give comparable values as well as a mechanism to chose the `best` fitness value for the individual being evaluated.
+The representation of this also leads to numerous choices, using just a MAX function or an average function or to represent the fitness as an n-dimensional point to optimise for n fitness functions.
 
 \section{The Focus of this Project}
 
