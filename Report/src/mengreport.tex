@@ -37,7 +37,7 @@
 In 1980, Richard Feynman noted `it is impossible to represent the results of quantum mechanics with a classical universal device`\cite{Feynman82simulatingphysics}.
 This statement was a seed for interest in the field of Quantum Computation.
 The true power of quantum computation was not initially realised.
-The discovery of a quantum algorithm by David Deutsch\cite{Deutsch1985} in 1985 that performed better than a classical computer was the first glimpse of the potential power provided by harnessing quantum mechanics.
+-The discovery of a quantum algorithm by David Deutsch\cite{Deutsch1985} in 1985 that performed better than a classical computer was the first glimpse of the potential power provided by harnessing quantum mechanics.
 However, with slow progress of research into both their implementation and algorithms, the energy behind the research started to decrease.
 It would take a discovery by Peter Shor\cite{Shor:1994jg} to reignite the excitement surrounding the subject.  
 
@@ -448,36 +448,92 @@ With this in mind it is, currently, unreasonable to expect the discovery of algo
 
 The following few sections outline a selection of the currently known quantum algorithms.
 
-\subsection{Deutsch-Jozsa Algorithm}
-%Deutsch-Jozsa Algorithm
-The Deutsch-Jozsa algorithm\cite{1992-deutsch} is a generalisation and improvement over an earlier algorithm proposed by David Deutsch\cite{Deutsch1985}.
-The algorithm described here will be the algorithm including the improvements published in \cite{Macchiavello97quantumalgorithms}, the resulting algorithm is still refereed to as the Deutsch-Jozsa algorithm.
-
+\subsection{Deutsch Algorithms}
+\label{sec:DeutAlg}
 The original Deutsch algorithm\cite{Deutsch1985} was proposed to solve the following problem:
 \begin{quote}
-Given a function f:{0,1}$\to${0,1}, decide whether it is either a balanced, or constant function.
-The function f is guaranteed to be either constant or balanced.
+Given a function $f:\{0,1\}\to\{0,1\}$, decide whether it is either a balanced, or constant function.
+The function $f(x)$ is guaranteed to be either constant or balanced.
 \end{quote}
-The algorithm proposed was not deterministic, but provided the correct answer with probability $\frac{1}{2}$.
-The algorithm's major breakthrough was that it only required a single invocation of the function f to decide on which category it belonged.
-This is compared to the best classical approach requiring two invocations to the function.
-This was the first algorithm that it was possible to compute the solution to a problem more efficiently than a classical computer by exploiting quantum mechanics.
-The uncertainty of the result was obviously a problem but the principle was a large break through.
+The algorithm's major breakthrough was that it only required a single invocation of the function $f(x)$ to decide on which category it belonged.
+This is compared to the best classical approach requiring $2$ invocations to the function.
+This was the first algorithm that it was possible to compute the solution to a problem, provably, more efficiently than a classical computer by exploiting quantum mechanics.
 
-In 1992, David Deutsch and Richard Jozsa\cite{1992-deutsch} presented an improvement and extension which allowed for functions $f:{0,1}^{2n}\to{0,1}$ to be categorised as constant of balanced.
-The algorithm was again probabilistic but also required 2 invocations to the function f.
-This means that in the worst case, with $f_1:{0,1}\to{0,1}$, the algorithm will perform worst than both the original Deutsch algorithm\cite{Deutsch1985} and the classical algorithm due to the probabilistic nature of its result.
-This is a very limited case and does improve as the value of n increases.
-As with the original algorithm, the number of invocations of f is constant, truly independent of both n and f.
-This again is an improvement over the classical algorithm which requires in the worst case $2^n+1$ to be certain of the function's category.
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-& \lstick{\ket{0}} & \gate{H} & \multigate{3}{\mathcal{F}} & \gate{H} & \qw \\
-& \lstick{\ket{0}} & \gate{H} & \ghost{\mathcal{F}} & \gate{H} & \qw \\
-& \lstick{\ket{0}} & \gate{H} & \ghost{\mathcal{F}} & \gate{H} & \qw \\
-& \lstick{\ket{0}} & \gate{H} & \ghost{\mathcal{F}}  & \gate{H} & \qw \\
-& \lstick{\ket{1}} & \gate{H} & \targ\qwx & \qw &  \rstick{\ket{0}-\ket{1}}\qw 
+& \lstick{\ket{0}} & \gate{H} & \gate{\mathcal{F}} & \gate{H} & \measure{meas} \\
+& \lstick{\ket{1}} & \gate{H} & \targ\qwx & \rstick{\ket{0}-\ket{1}}\qw  
+}
+\]
+\caption{Deutsch Circuit}
+ \label{Deutsch-Cir}
+\end{figure}
+
+The circuit for this algorithm is presented in Figure \ref{Deutsch-Cir}.
+The maths for the way in which the state evolves is below
+\begin{equation}
+\ket{01} \xrightarrow{H\otimes{H}} \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\end{equation}
+
+ Using the identity $(\ket{b}-\ket{a})\equiv-1(\ket{a}-\ket{b})$, if $f(x)$ evalues to $0$ the state transformation is
+\begin{equation*}
+ \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\end{equation*}
+Wheras if $f(x)$ evaluates to $1$ the state transformation is
+\begin{equation*}
+ \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} -\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\end{equation*}
+These two equations can be generalised to give
+\begin{equation*}
+ \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} (-1)^{f(x)}\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\end{equation*}
+This is due to $(-1)^0=1$ and $(-1)^1=-1$ which is the way the state evolves with the outputs of $f(x)$.
+Using this we can continue to analyse how the state evolves for the superposition $\frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+\begin{equation*}
+ \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} \frac{1}{\sqrt{2}}((-1)^{f(0)}\ket{0}+(-1)^{f(1)}\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\end{equation*}
+\begin{equation*}
+ \frac{1}{\sqrt{2}}((-1)^{f(0)}\ket{0}+(-1)^{f(1)}\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \equiv (-1)^{f(0)}\frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\end{equation*}
+This penultimate state, before the last hadamard, can be simplified.
+Global phase factors cannot be observed so the $(-1)^{f(0)}$ can be ignored.
+The second qubit can also be ignored as it is not entangled with the first, nor is it ever measured.
+\begin{equation}
+ \frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1})
+\label{Deutsch_final_state}
+\end{equation}
+This results in the penultimate state being able to be represented as \ref{Deutsch_final_state}.
+With this as the state we can reason about the output if the function $f(x)$ is balanced and if it is constant.
+If f were balanced, $f(0) \oplus f(1) = 1$ due to either $f(0)$ or $f(1)$ evaluating to $1$ but not both.
+If f were constant, $f(0) \oplus f(1) = 0$ due to either $f(0)$ and $f(1)$ both evaluating to $0$ or both evaluating to $1$.
+Using these two observations we can see the penultimate state, \ref{Deutsch_final_state}, when f is constant and when f is balanced.
+When f is balanced $\frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1}) \equiv \frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+When this is passed through the final hadamard $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{H} \ket{1}$.
+When f is constant $\frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1}) \equiv \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})$.
+However, when this is passed through the final hadamard $\frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) \xrightarrow{H} \ket{0}$.
+This means that using just a single query to the function $f(x)$, the algorithm can provide an answer to the problem.
+
+
+\subsection{Deutsch-Jozsa Algorithm}
+%Deutsch-Jozsa Algorithm
+The Deutsch-Jozsa algorithm\cite{1992-deutsch} is a generalisation and improvement over an earlier Deutsch algorithm\cite{Deutsch1985}.
+The algorithm described here will be the algorithm including the improvements published in \cite{Macchiavello97quantumalgorithms}, the resulting algorithm is still referred to as the Deutsch-Jozsa algorithm.
+
+In 1992, David Deutsch and Richard Jozsa\cite{1992-deutsch} presented an extension to the Deutsch algorithm, Section \ref{sec:DeutAlg}, that allowed for functions $f:\{0,1\}^{2n}\to\{0,1\}$ to be categorised as constant or balanced.
+The algorithm was probabilistic but also required 2 invocations to the function $f(x)$.
+This means that in the worst case, with $f_1:\{0,1\}\to\{0,1\}$, the algorithm will perform worst than both the original Deutsch algorithm\cite{Deutsch1985} and the classical algorithm due to the probabilistic nature of its result.
+This is a very limited case and performance improves as the value of n increases.
+As with the original algorithm, the number of invocations of $f(x)$ is constant, truly independent of both $n$ and $f(x)$.
+This is again an improvement over the classical algorithm which requires in the worst case $2^{n-1}+1$ to be certain of the function's classification.
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+& \lstick{\ket{0}} & \gate{H} & \multigate{3}{\mathcal{F}} & \gate{H} & \measure{meas} \\
+& \lstick{\ket{0}} & \gate{H} & \ghost{\mathcal{F}} & \gate{H} & \measure{meas} \\
+& \lstick{\ket{0}} & \gate{H} & \ghost{\mathcal{F}} & \gate{H} & \measure{meas} \\
+& \lstick{\ket{0}} & \gate{H} & \ghost{\mathcal{F}}  & \gate{H} & \measure{meas} \\
+& \lstick{\ket{1}} & \gate{H} & \targ\qwx & \rstick{\ket{0}-\ket{1}}\qw   
 }
 \]
 \caption{Deutsch-Jozsa Circuit}
@@ -487,27 +543,22 @@ This again is an improvement over the classical algorithm which requires in the 
 The algorithm requires n input qubits and a single control qubit.
 The n input qubits are initialised to $\ket{0}$.
 The control qubit is initialised to $\ket{1}$.
-The n-fold Hadamard gates are then used to produce the superposition of all $2^n-1$ possible inputs, $x = (\ket{0}+\ket{1})^n)$.
+The n-fold Hadamard gates are then used to produce the superposition of all $0..2^n-1$ possible inputs, $x=(\ket{0}+\ket{1})^n$.
 The Hadamard gate on the control qubit is used to produce the superposition $\ket{0}-\ket{1}$.
 The difference in superpositions between the input and control qubits is important to the way in which the algorithm classifies a function.
 This produces a state  $(\ket{0}+\ket{1})^n(\ket{0}-\ket{1})$.
 
-The n input qubits are then passed to the function we was to classify, f.
-The result of f for the x input is used as the control for a CNOT gate acting on the control qubit.
-Remember at this point that the input x is in effect all possible inputs to f, and as such the output is all the respective outputs.
-This means that each of the factors of the input are transformed, based on the action of f.
-This can be formalised as $U_f(\ket{x},\ket{y})=(\ket{x},\ket{f(x)\otimes{y}})$.
-Using the final Hadamard gates we can use the transformation to categorise f.
+% The n input qubits, in the superposition $(\ket{0}+\ket{1})^n$, are then passed to the function we wish to classify, $f(x)$.
+The result of $f(x)$ is used as the control for a CNOT gate acting on the control qubit.
+Remember at this point that the input x is in effect all possible inputs to $f(x)$, and as such the output is all the respective outputs.
+This means that each of the factors of the input are transformed, based on the action of $f(x)$.
+This can be formalised as $U_f(\ket{x},\ket{y})=(\ket{x},\ket{f(x)\oplus{y}})$.
+Using the final Hadamard gates we can use the transformation to categorise $f(x)$.
 
-If we assume n to be equal to 4, then after the initial Hadamard gates we have the superposition:
-\begin{equation}
+If we assume n to be equal to 2, then after the initial Hadamard gates we have the superposition:
+\begin{equation*}
 \frac{1}{2}\ket{\Psi_{init}}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})=\frac{1}{2}(\ket{00}+\ket{01}+\ket{10}+\ket{11})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-\end{equation}
-At this point it is worth mentioning an identity which will be used in this explanations.
-\begin{equation}
-(\ket{b}-\ket{a})\equiv-1(\ket{a}-\ket{b})
-\end{equation}
-and by linearity
+\end{equation*}
 \begin{equation}
 \ket{a}(\ket{c}-\ket{b})\equiv\ket{a}(-1(\ket{b}-\ket{c}))\equiv-1\ket{a}(\ket{b}-\ket{c})
 \label{target_qubit_identity}
@@ -515,30 +566,30 @@ and by linearity
 The CNOT on the target qubit is only activated if $f(x)=1$ which, using the equivalent above, produces the superposition $-1(\ket{0}-\ket{1})$.
 This can also be generalised as $(-1)^{f(x)}(\ket{0}-\ket{1})$ where $-1^1=-1$ and $-1^0=1$ by definition.
 By linearity the superposition after the CNOT controlled by f(x) on the target qubit becomes
-\begin{equation}
+\begin{equation*}
 \frac{1}{2}((-1)^{f(00)}\ket{00}+(-1)^{f(01)}\ket{01}+(-1)^{f(10)}\ket{10}+(-1)^{f(11)}\ket{11})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-\end{equation}
+\end{equation*}
 
-After the application of f, the target bit has served it purpose and is neither measured nor entangled with any of the qubits from the n qubit input.
+After the application of $f(x)$, the target bit has served it purpose and is neither measured nor entangled with any of the qubits from the n qubit input.
 To simplify the equations I will now ignore the $(\frac{1}{\sqrt{2}}\ket{0}-\ket{1})$ contributed by the target qubit, the remaining state will be refereed to as $\Psi$.
-If the function f is constant:
-\begin{equation}
-\ket{\Psi_{const}}=\pm\frac{1}{2}(\ket{00}+\ket{01}+\ket{10}+\ket{11})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-\end{equation}
-Whereas if f is balanced then:
-\begin{equation}
+If the function $f(x)$ is constant:
+\begin{equation*}
+\ket{\Psi_{const}}=\pm\frac{1}{2}(\ket{00}+\ket{01}+\ket{10}+\ket{11})
+\end{equation*}
+Whereas if $f(x)$ is balanced then:
+\begin{equation*}
 \ket{\Psi_{bal}}=(-1)^{f(00)}\ket{00}+(-1)^{f(01)}\ket{01}+(-1)^{f(10)}\ket{10}+(-1)^{f(11)}\ket{11}
-\end{equation}
+\end{equation*}
 However,as $\ket{\Psi_{const}}$ and $\ket{\Psi_{bal}}$ are orthogonal we can use this to detect if the function is balanced or constant.
-\begin{equation}
-\ket{\Psi_{bal}}\bullet\ket{\Psi_{const}} = 0
-\end{equation}
+\begin{equation*}
+\bra{\Psi_{bal}}\ket{\Psi_{const}} = 0
+\end{equation*}
 
 Applying the n Hadamard gates to the state $\Psi_{const}$ produces the state $\pm\ket{0}^n$.
-When measured this will return the result $0$ as the global phase factor $\pm'$ cannot be observed.
-As we have noted, $\Psi_{const}$ is orthogonal to $\Psi_{bal}$ so when the n Hadamard gates are applied the measured result will be anything orthogonal to $0$.
+When measured this will return the result $0$ as the global phase factor $\pm$ cannot be observed.
+As we have noted, $\Psi_{const}$ is orthogonal to $\Psi_{bal}$ so when the n Hadamard gates are applied, as they preserve orthogonality, the measured result will be anything orthogonal to $0$.
 This gives us a clear way of distinguishing between whether f is constant of balanced with certainty and only a single invocation of f.
-If the measurement returns $0$ then f is constant, if the measurement returns anything else f is balanced  
+If the measurement returns $0$ then $f(x)$ is constant, if the measurement returns anything else $f(x)$ is balanced.
 
 % \subsection{Shor's Factorisation Algorithm}
 % %Shors Algorithm
@@ -582,67 +633,64 @@ The algorithm does not perform the computation in a single step.
 The algorithm requires $O(\sqrt{N})$ steps.
 The section of circuit which is repeated is that shown in Figure \ref{Grovers-Search-Cir}.
 
-The algorithm is to initialise the state, $\Psi$, using n Hadamard gates.
-\begin{equation}
+The algorithm is to initialise the state, $\Psi_1$, using n Hadamard gates.
+\begin{equation*}
 \Psi_1=\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i}(\ket{0}-\ket{1})
-\end{equation}
-The application of f is used in an analogous way to in the Deutsch-Jozsa algorithm.
-It can again be written as $U_f(\ket{x},\ket{y})=(\ket{x},\ket{f(x)\otimes{y}})$ and remember
-\begin{equation}
-x_i\epsilon\{x_0,x_1,\ldots,x_{n-1}\}
-\end{equation}
-\begin{equation}
-f(x_i)=1
-\end{equation}
-\begin{equation}
+\end{equation*}
+The application of $f(x)$ is used in an analogous way to in the Deutsch-Jozsa algorithm.
+It can again be written as $U_f(\ket{x},\ket{y})=(\ket{x},\ket{f(x)\oplus{y}})$ and remember
+\begin{equation*}
+ \exists{x_i}\epsilon\{x_0,x_1,\ldots,x_{n-1}\}|f(x_i)=1
+\end{equation*}
+\begin{equation*}
 \forall{x_j} : i\neq{j} : f(x_j)=0
-\end{equation}
+\end{equation*}
 Just as in the Deutsch-Jozsa algorithm, the result of a $1$ produces a bit flip on the target qubit.
-Using the identity in Equation \ref{target_qubit_identity} this flips the sign on the amplitude associated with $x_i$, a simple phase flip in the computational basis.
+Using the identity in Equation \ref{target_qubit_identity} this flips the sign on the amplitude associated with $x_i$, where $f(x_i)=1$.
 The state $\Psi_1$ is transformed by $U_f$ to $\Psi_2$.
-\begin{equation}
+\begin{equation*}
 \Psi_2=\frac{1}{2^{\frac{1}{n}}}\sum\limits_{j=0\wedge{j}\neq{i}}^N \ket{x_j}(\ket{0}-\ket{1}) - \frac{1}{2^{\frac{1}{n}}} \ket{x_i}(\ket{0}-\ket{1})
-\end{equation}
-The second function, $f_0$, in the circuit is a fixed function.
-It is not dependant on f but is a function which evaluates to $1$ only when the input is $\ket{0}$.
+\end{equation*}
+The second function in the circuit, $f_0(x)$, is a fixed function.
+It is not dependant on $f(x)$ but is a function which evaluates to $1$ only when the input is $\ket{0}$.
 This means that given a simple state $(\alpha\ket{0}+\beta\ket{1}+\ldots)$ the result is the state $(-\alpha\ket{0}+\beta\ket{1}+\ldots)$.
 The action of both these function can be written in the shorter and much simpler Dirac notation.
-\begin{equation}
+\begin{equation*}
 U_f=I-2\ket{x_i}\bra{x_i}
-\end{equation}
+\end{equation*}
 \begin{equation}
 U_0=I-2\ket{0}\bra{0}
 \label{Grover:U_0_dirac}
 \end{equation}
 
-Functions f and $f_0$ seem relatively unimpressive and don't appear to solve the problem.
-The importance of the two sets of n Hadamard gates, one each side of $f_0$, is paramount.
-The effect they have on the action of $f_0$ is shown below, the action of $f_0$ and the Hadamard gates will be represented as V.
-\begin{equation}
+Functions $f(x)$ and $f_0(x)$ seem relatively unimpressive and don't appear to solve the problem.
+The importance of the two sets of n Hadamard gates, one each side of $f_0(x)$, is paramount.
+The effect they have on the action of $f_0(x)$ is shown below, the action of $f_0(x)$ and the Hadamard gates will be represented as V.
+\begin{equation*}
 V=H^{\otimes{n}}U_0{H}^{\otimes{n}}
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
 V=H^{\otimes{n}}(I_n-2\ket{0}\bra{0}){H}^{\otimes{n}}
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
 V=H^{\otimes{n}}I_n{H}^{\otimes{n}}-H^{\otimes{n}}(2\ket{0}\bra{0}){H}^{\otimes{n}}
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
 V=I_n-2(H^{\otimes{n}}\ket{0})(\bra{0}{H}^{\otimes{n}})
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
 V=I_n-2(H^{\otimes{n}}\ket{0})({H}^{\otimes{n}}\ket{0})^\dagger
-\end{equation}
+\end{equation*}
 The application of Hadamard gates to the $\ket{0}$ state is the method of creating the superposition of all $2^n-1$ possible states.
-\begin{equation}
+\begin{equation*}
 V=I_n-2(\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i})(\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i})^\dagger
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
 V=I_n-2(\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i})(\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \bra{x_i})
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
 V=I_n-2\ket{\Psi}\bra{\Psi}
-\end{equation}
+\end{equation*}
 Just as with $U_f$, V can be seen as a simple phase flip.
 However, the subtlety of this operator is that the flip is not in the computational basis, but in the basis described by $\ket{\Psi}$.
 
@@ -650,13 +698,13 @@ The last gate in Figure \ref{Grovers-Search-Cir} is the Pauli-X operator.
 This is not functional but for convenience of mathematics as produces a global phase flip of $\ket{\Psi}$ which makes the mathematics simpler.
 
 That is Grovers algorithm.
-Looking at the circuit and the mathematics of the operators it represents doesn't provide an obvious answer as to how it solves the search problem.
-This is partly due to the fact the circuit in Figure \ref{Grovers-Search-Cir} has to be repeated $\sqrt{N}$ times and partly due to the effect of the circuit being hidden in implementation.
+Looking at the circuit and the mathematics of the operators it doesn't provide an obvious answer as to how it solves the search problem.
+This is partly due to the fact the circuit in Figure \ref{Grovers-Search-Cir} has to be repeated roughly $\frac{\pi\sqrt{N}}{4}$ times and partly due to the effect of the circuit being hidden in implementation.
 The circuit is actually little more than a complex rotation gate.
 It is however more sophisticated than a standard rotation gate as it computes the direction to rotate the state so as to solve the problem.
 The power of this does not initially appear as immense as it possibly should.
 The Hilbert space in which this circuit is operating is of the order $N$, we as humans can only accurately imagine a maximum of a $3$ dimensional space as it the most dimensions we can observe directly.
-Taking into account the vast Hilbert space when assessing the power of this circuit produces a much better appreciation.
+Taking into account the vast Hilbert space when assessing this circuit produces a much better appreciation its power.
 
 However, even though the power can now be appreciated, the way in which it solves the problem is still not clear. 
 
@@ -696,6 +744,7 @@ Not only is the technique varied, the desired solution is also varied.
 Some research focuses on the evolution of quantum circuits or programs, whereas some focus on more general quantum algorithms which take a parameter representing the number of input qubits.
 Due to the exponential increase in resources required for simulation with an increase in qubits the generality of the quantum algorithms is not usually tested on large systems.
 
+\subsection{Q-PACE I}
 Massey\cite{masseythesis,masseymeng} explores both Genetic Algorithms and Genetic Programming as search techniques.
 The software suites presented, Q-PACE I - IV, have varying success and increase in search power.
 Q-PACE I\cite{masseymeng} is described as solving `a number of basic proof of concept problems`\cite{masseythesis} and `proves the concept that evolutionary search techniques can be used to evolve quantum software`\cite{masseythesis}.
@@ -726,6 +775,7 @@ Operators are just one to one functions acting on state vectors.
 The operation of the Pauli-X gate on the first qubit in a two qubit system can be represented as Equation \ref{vectormanipulation}.
 For more complex gates, such as the Hadamard gate, the matrix manipulation is much more expensive than the equivalent vector manipulation.
 
+\subsection{Q-PACE II}
 The representation used in Q-PACE II is not able to express a Toffoli, Controlled-Controlled-Not, gate as a single gate.
 This makes evolving a half-adder circuit more than a trivial test.
 When Q-PACE II is tested against producing a circuit with the specification $\ket{x, y, z}\rightarrow\ket{x,x \oplus y, x \wedge y}$ it is able to produce several exact solutions.
@@ -779,8 +829,31 @@ The evolved circuit was not as efficient by that presented in \cite{Vedral:1995g
 \label{QPACEIIIEX}
 \end{figure}
 
-Both Q-PACE and Q-PACE II evolved quantum circuits.
-The next generation, Q-PACE III, evolved quantum programs, inspired by the work of Spector et al\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112}.
+
+\subsection{Spector \emph{et al}, Deutsch's Problem}
+Lee Spector \emph{et al}\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} published a paper which used a different evolutionary approach.
+They used Genetic Programming to produce a better than classical solution to the original Deutsch\cite{Deutsch1985} problem.
+This was not an unsolved problem as explained in Section \ref{sec:DeutAlg}, however it was an example of where quantum computation was known to be more efficient than any possible classical approaches.
+
+The genetic programming approach taken was the traditional tree based representation.
+The level at which the solution was represented was higher than that of both Q-PACE I and Q-PACE II.
+Both Q-PACE and Q-PACE II evolved quantum circuits whereas Spector represent solutions as ``classical programs which, when executed, construct quantum gate arrays''.
+This is the quantum program representation as defined earlier.
+
+The best solution produced a quantum gate array which did compute the answer to the Deutsch problem but was different to the Deutsch circuit\ref{Deutsch-Cir}.
+However, it was still provably more efficient than any classical algorithm.
+
+As well as fixed size solutions, the function set, non-terminal set for the Genetic Programming tree, included the control structures required to produce parameterisable quantum algorithms.
+These were not used to attempt a solution to the Deutsch Jozsa problem, which would have seemed the more obvious progression, but the \emph{majority-on} problem.
+The majority-on problem it to decide whether the output of a function has a majority of outputs being $1$.
+
+The best solution was a parameterisable algorithm which, for functions with a large variation from $2^{n-1}$ of $1$'s the solution performed well.
+However, when tested on functions with $2^{n-1}$ inputs evaluating to $1$ the solution ends up with an output error of $0.5$.
+
+Both the solution for the Deutsch problem and the \emph{majority-on} problem were searched for with a probabilistic approach, looking for solutions with an output error of lower than 0.48 rather than for deterministic solutions.
+
+\subsection{Q-PACE III}
+Massey's third generation, Q-PACE III, evolved quantum programs, inspired by the Spector\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} results and taking on one of the suggested ``Future Work'' topics.
 Just as with Q-PACE II, Q-PACE III was a Genetic Programming suite.
 The solutions evolved by Q-PACE III were executable programs, 'second order' solutions, which produce as an output a quantum circuit.
 An additional difference between the two suites is the representation.
@@ -821,6 +894,7 @@ Whereas for the PF Max problem the correct answer was a single value, the correc
 An acceptance level of $x\%$ was redefined as the requirement that for all fitness cases, each state has a probability of being measured of at least $x\%$ of the probability for the respective state after running a `perfect` Quantum Fourier Transform.
 It was found that for acceptance levels of $75\%$, $50\%$ and even $25\%$, the evolved circuits often had an acceptance value in excess of $99\%$.
 
+\subsection{Q-PACE IV}
 With Q-PACE IV, Massey once again raised the level at which the solutions were represented.
 Q-PACE IV was a Genetic Programming suite to evole quantum algorithms, parameterisable with the system size.
 To reduce the complexity of the representation, all non-terminals were made to be the same arrity, 3.
