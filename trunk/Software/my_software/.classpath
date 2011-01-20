@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="Jama/examples/|Jama/test/|Jama/CholeskyDecomposition.java|Jama/EigenvalueDecomposition.java|Jama/LUDecomposition.java|Jama/QRDecomposition.java|Jama/SingularValueDecomposition.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="ecj"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="ecj/libraries/itext-1.2.jar"/>
+	<classpathentry kind="lib" path="ecj/libraries/jcommon-1.0.0.jar"/>
+	<classpathentry kind="lib" path="ecj/libraries/jfreechart-1.0.1.jar"/>
+	<classpathentry kind="lib" path="ecj/libraries/jzlib-1.0.7.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1/commons-logging-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
