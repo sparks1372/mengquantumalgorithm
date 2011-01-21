@@ -11,7 +11,7 @@ import ec.gp.GPData;
 
 public class QPaceIVQuantumState extends GPData {
 	public Matrix x; // return value
-	public int in;
+	public double in;
 	public int NUM_OF_QUBITS;
 
 	public void copyTo(final GPData gpd) // copy my stuff to another DoubleData
