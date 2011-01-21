@@ -43,9 +43,11 @@ public class Pauli_Z extends NonTerminalSuper {
 	public void eval(final EvolutionState state, final int thread,
 			final GPData input, final ADFStack stack,
 			final GPIndividual individual, final Problem problem) {
-		QPaceIVQuantumState rd = ((QPaceIVQuantumState) (input));
-		children[0].eval(state, thread, input, stack, individual, problem);
-		apply_operation(rd);
+		/*
+		 * QPaceIVQuantumState rd = ((QPaceIVQuantumState) (input));
+		 * children[0].eval(state, thread, input, stack, individual, problem);
+		 * apply_operation(rd);
+		 */
 	}
 
 	public QPaceIVQuantumState apply_operation(QPaceIVQuantumState state_0) {

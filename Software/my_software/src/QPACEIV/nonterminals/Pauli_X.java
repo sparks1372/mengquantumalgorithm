@@ -17,7 +17,10 @@ import ec.gp.GPIndividual;
 import ec.util.Parameter;
 
 public class Pauli_X extends NonTerminalSuper {
-	public Pauli_X() {
+	// private int qubit;
+
+	public Pauli_X(/* int q_in */) {
+		// qubit = q_in;
 		// [row][column]
 		Complex[][] pauli_x = new Complex[2][2];
 		pauli_x[0][0] = new Complex(0, 0);
@@ -43,9 +46,20 @@ public class Pauli_X extends NonTerminalSuper {
 	public void eval(final EvolutionState state, final int thread,
 			final GPData input, final ADFStack stack,
 			final GPIndividual individual, final Problem problem) {
-		QPaceIVQuantumState rd = ((QPaceIVQuantumState) (input));
-		children[0].eval(state, thread, input, stack, individual, problem);
-		apply_operation(rd);
+		/*
+		 * QPaceIVQuantumState rd = ((QPaceIVQuantumState) (input));
+		 * children[0].eval(state, thread, input, stack, individual, problem);
+		 * current_operation = operation; if (qubit != 0) { current_operation =
+		 * Tensor_Matrix.tensor_prod( Matrix.identity((int) Math.pow(2, qubit),
+		 * (int) Math.pow(2, qubit)), current_operation); }
+		 * 
+		 * if (qubit != rd.NUM_OF_QUBITS - 1) { current_operation =
+		 * Tensor_Matrix.tensor_prod(current_operation, Matrix.identity( (int)
+		 * Math.pow(2, (rd.NUM_OF_QUBITS - 1) - qubit), (int) Math.pow(2,
+		 * (rd.NUM_OF_QUBITS - 1) - qubit))); }
+		 * 
+		 * apply_operation(rd);
+		 */
 	}
 
 	public QPaceIVQuantumState apply_operation(QPaceIVQuantumState state_0) {

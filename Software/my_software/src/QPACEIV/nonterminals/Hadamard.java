@@ -17,8 +17,10 @@ import ec.gp.GPIndividual;
 import ec.util.Parameter;
 
 public class Hadamard extends NonTerminalSuper {
+	private int qubit;
 
-	public Hadamard() {
+	public Hadamard(/* int q_in */) {
+		/* qubit = q_in; */
 		Complex[][] hadamard = new Complex[2][2];
 		hadamard[0][0] = new Complex(1 / Math.sqrt(2), 0);
 		hadamard[0][1] = new Complex(1 / Math.sqrt(2), 0);
@@ -29,7 +31,7 @@ public class Hadamard extends NonTerminalSuper {
 	}
 
 	public String toString() {
-		return "\\gate{h}&";
+		return "\\gate{H}&";
 	}
 
 	public void checkConstraints(final EvolutionState state, final int tree,
@@ -43,10 +45,22 @@ public class Hadamard extends NonTerminalSuper {
 	public void eval(final EvolutionState state, final int thread,
 			final GPData input, final ADFStack stack,
 			final GPIndividual individual, final Problem problem) {
-		double result;
-		QPaceIVQuantumState rd = ((QPaceIVQuantumState) (input));
-		children[0].eval(state, thread, input, stack, individual, problem);
-		apply_operation(rd);
+		/*
+		 * double result; QPaceIVQuantumState rd = ((QPaceIVQuantumState)
+		 * (input)); children[0].eval(state, thread, input, stack, individual,
+		 * problem);
+		 * 
+		 * if (qubit != 0) { operation = Tensor_Matrix.tensor_prod(
+		 * Matrix.identity((int) Math.pow(2, qubit), (int) Math.pow(2, qubit)),
+		 * operation); }
+		 * 
+		 * if (qubit != rd.NUM_OF_QUBITS - 1) { operation =
+		 * Tensor_Matrix.tensor_prod(operation, Matrix.identity( (int)
+		 * Math.pow(2, (rd.NUM_OF_QUBITS - 1) - qubit), (int) Math.pow(2,
+		 * (rd.NUM_OF_QUBITS - 1) - qubit))); }
+		 * 
+		 * apply_operation(rd);
+		 */
 	}
 
 	public QPaceIVQuantumState apply_operation(QPaceIVQuantumState state_0) {

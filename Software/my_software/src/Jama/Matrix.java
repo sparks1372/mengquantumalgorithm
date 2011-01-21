@@ -1126,6 +1126,10 @@ public class Matrix implements Cloneable, java.io.Serializable {
 		print(new PrintWriter(System.out, true), w, d);
 	}
 
+	public void print_state(int w, int d) {
+		print_state(new PrintWriter(System.out, true), w, d);
+	}
+
 	/**
 	 * Print the matrix to the output stream. Line the elements up in columns
 	 * with a Fortran-like 'Fw.d' style format.
@@ -1148,6 +1152,16 @@ public class Matrix implements Cloneable, java.io.Serializable {
 		print(output, format, w + 2);
 	}
 
+	public void print_state(PrintWriter output, int w, int d) {
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
+		format.setMinimumIntegerDigits(1);
+		format.setMaximumFractionDigits(d);
+		format.setMinimumFractionDigits(d);
+		format.setGroupingUsed(false);
+		print_state(output, format, w + 2);
+	}
+
 	/**
 	 * Print the matrix to stdout. Line the elements up in columns. Use the
 	 * format object, and right justify within columns of width characters. Note
@@ -1162,6 +1176,10 @@ public class Matrix implements Cloneable, java.io.Serializable {
 	 */
 
 	public void print(NumberFormat format, int width) {
+		print(new PrintWriter(System.out, true), format, width);
+	}
+
+	public void print_state(NumberFormat format, int width) {
 		print(new PrintWriter(System.out, true), format, width);
 	}
 
@@ -1215,6 +1233,41 @@ public class Matrix implements Cloneable, java.io.Serializable {
 				output.print(s);
 			}
 			output.println();
+		}
+		output.println(); // end with blank line.
+	}
+
+	public void print_state(PrintWriter output, NumberFormat format, int width) {
+		output.println(); // start on new line.
+		for (int i = 0; i < m; i++) {
+			String s = Integer.toBinaryString(i);
+			while (Math.pow(2, s.length()) != m) {
+				s = ("0").concat(s);
+			}
+			s = ("|").concat(s.concat("> "));
+
+			if (A[i][0].imag() >= 0) {
+				if (A[i][0].imag() == 0) {
+					s = s.concat("" + Double.toString(A[i][0].real()));
+				} else if (A[i][0].real() == 0) {
+					s = s.concat("" + Double.toString(A[i][0].imag()) + "i");
+				} else {
+					s = s.concat("" + Double.toString(A[i][0].real()) + "+"
+							+ Double.toString(A[i][0].imag()) + "i");
+				}
+			} else {
+				if (A[i][0].real() == 0) {
+					s = s.concat("" + Double.toString(A[i][0].imag()) + "i");
+				} else {
+					s = s.concat("" + Double.toString(A[i][0].real())
+							+ Double.toString(A[i][0].imag()) + "i");
+				}
+			}
+			int padding = Math.max(1, width - s.length()); // At _least_ 1
+															// space
+			for (int k = 0; k < padding; k++)
+				output.print(' ');
+			output.println(s);
 		}
 		output.println(); // end with blank line.
 	}

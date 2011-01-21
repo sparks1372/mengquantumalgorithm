@@ -6,12 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import Jama.Matrix;
+import QPACEIV.QuantumProblem;
 import QPACEIV.DataRepresentation.QPaceIVQuantumState;
 import QPACEIV.nonterminals.CU;
 import QPACEIV.nonterminals.Pauli_X;
-import QPACEIV.terminals.Qubit;
 import Utils.Complex;
-import ec.gp.GPNode;
 
 public class CU_JUnit {
 
@@ -71,12 +70,8 @@ public class CU_JUnit {
 
 	@Test
 	public void testapply_operation() {
-		CU to_test = new CU();
-		to_test.children = new GPNode[3];
-		to_test.children[0] = new Qubit(0);
-		to_test.children[1] = new Qubit(1);
-		to_test.children[2] = new Pauli_X();
-		to_test.eval(null, 0, state_0, null, null, null);
+		QuantumProblem qprob = new QuantumProblem(3);
+		CU to_test = new CU(0, 1, new Pauli_X(), qprob);
 
 		if (!(to_test.apply_operation(state_0)).equals(result_state_0)) {
 			fail("Pauli CU gate fails on 0 input");
