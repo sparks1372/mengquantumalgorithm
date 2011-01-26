@@ -2,7 +2,7 @@
 
 \usepackage[margin=2cm]{geometry}
 \usepackage[matrix,frame,arrow]{xypic}
-\usepackage{graphicx}
+\usepackage{graphicx,array}
 \usepackage{qtree}
 \input{Qcircuit}
 
@@ -591,17 +591,6 @@ As we have noted, $\Psi_{const}$ is orthogonal to $\Psi_{bal}$ so when the n Had
 This gives us a clear way of distinguishing between whether f is constant of balanced with certainty and only a single invocation of f.
 If the measurement returns $0$ then $f(x)$ is constant, if the measurement returns anything else $f(x)$ is balanced.
 
-% \subsection{Shor's Factorisation Algorithm}
-% %Shors Algorithm
-% In 1994, Peter Shor astonished the computer science community with a quantum factorisation algorithm.
-% This allowed the factorisation of integer numbers into their constituent primes in polynomial time.
-% This algorithm is not a pure quantum algorithm, but a hybrid algorithm.
-% It has both a quantum and classical portion.
-
-
-
-% (READ PAPER) 
-
 \subsection{Grover's Search Algorithm}	
 %Grovers Database search algorithm
 The Grover Search algorithm\cite{Grover:1996rk} is an unstructured search problem.
@@ -616,11 +605,11 @@ The Grover Search algorithm has the complexity $O(\sqrt{N})$ and so `is within a
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-& \qw & \qw & \multigate{3}{f} &\qw &  \gate{H} &\qw & \multigate{3}{f_0} &\qw &  \gate{H}  &\qw &\qw\\
-& \vdots & &  \ghost{f} & \qw & \vdots & & \ghost{f_0} &\qw &  \vdots & &\qw\\
-& \vdots & & \ghost{f} & \qw & \vdots & & \ghost{f_0} &\qw &  \vdots & &\qw\\
-& \qw &\qw &  \ghost{f} & \qw & \gate{H} &\qw & \ghost{f_0} &\qw &  \gate{H} &\qw &\qw\\
-& \qw &\qw &  \targ \qwx &\qw &  \qw &\qw & \targ \qwx &\qw &  \gate{X} &\qw &\qw 
+& \qw 		& \qw 	& \multigate{3}{f} 	&\qw 	&  \gate{H} 	&\qw 	& \multigate{3}{f_0} 	&\qw &  \gate{H}  	&\qw 	&\qw\\
+& \vdots 	& 	&  \ghost{f} 		& \qw 	& \vdots 	& 	& \ghost{f_0} 		&\qw &  \vdots 		& 	&\qw\\
+& \vdots 	& 	& \ghost{f} 		& \qw 	& \vdots 	& 	& \ghost{f_0} 		&\qw &  \vdots 		& 	&\qw\\
+& \qw 		&\qw 	&  \ghost{f} 		& \qw 	& \gate{H} 	&\qw 	& \ghost{f_0} 		&\qw &  \gate{H} 	&\qw 	&\qw\\
+& \qw 		&\qw 	&  \targ \qwx 		&\qw 	&  \qw 		&\qw 	& \targ \qwx 		&\qw &  \gate{X} 	&\qw	&\qw 
 }
 \]
 \caption{Grover's Search Circuit}
@@ -708,6 +697,240 @@ Taking into account the vast Hilbert space when assessing this circuit produces 
 
 However, even though the power can now be appreciated, the way in which it solves the problem is still not clear. 
 
+\subsection{Shor's Factorisation Algorithm}
+%Shors Algorithm
+In 1994, Peter Shor astonished the computer science community with a quantum factorisation algorithm\cite{Shor:1994jg}.
+This allowed the factorisation of integers into their constituent primes in polynomial time.
+This algorithm is not a pure quantum algorithm, but a hybrid algorithm.
+It has both a quantum and classical portion.
+
+The algorithm utilises the complex nature of the probability amplitudes.
+This means that the relative phase of the states is important.
+To explain Shors algorithm it is necessary to introduce the sum of complex roots of unity.
+
+\begin{equation}
+ \sum_{j=0}^{N-1}z^j=\frac{1-z^N}{1-z}
+\label{sumofpowers}
+\end{equation}
+
+Equation \ref{sumofpowers} provides a simplification of the sum of the geometric series $\sum_{j=0}^{N-1}z^j$.
+This simplification can be applied to both real and complex values of z, including the roots of unity.
+Taking $w=e^{\frac{2\pi{i}}{N}}$ to be the N-th root of unity, the geometric series $\sum_{i=0}^{N-1}w^{xy}$ can be simplified using Equation \ref{sumofpowers}.
+
+When $x=0$
+\begin{equation}
+ \sum_{y=0}^{N-1}w^{xy}=\sum_{y=0}^{N-1}w^{0}=\sum_{y=0}^{N-1}1 = N
+\end{equation}
+However, when $x\neq{0}$
+\begin{equation}
+ \sum_{y=0}^{N-1}w^{xy}=\sum_{y=0}^{N-1}(w^x)^y=(\frac{1-w^N}{1-w})^y=0^y=0
+\end{equation}
+The result of this is generally described using a Kronecker delta
+\begin{equation}
+ \sum_{y=0}^{N-1}w^{xy}=N\times\delta_{x,y}=N\times
+\left\{
+  \begin{array}{cc} 1, & \mbox{if } x={0}\\ 
+  0, & \mbox{if } x\neq{0}\end{array}
+\right.
+\label{krondelt}
+\end{equation}
+
+This produces a very neat and convenient explanation of such a series.
+As the sum is of a root of unity raised to a power, it is a periodic function $w^0=w^N=1$.
+This holds true in Equation \ref{krondelt} when $x=0,\pm{N},\pm{2N},\dots$.
+With this the Kronecker delta can be expressed in terms of modular arithmetic.
+\begin{equation}
+ \sum_{y=0}^{N-1}e^{\frac{2\pi{i}xy}{N}}=N\times\delta_{x,y (mod N)}=N\times
+\left\{
+  \begin{array}{cc} 1, & \mbox{if } x={0}\\ 
+  0, & \mbox{if } x\neq{0}\end{array}
+\right.
+\label{krondelt}
+\end{equation}
+
+The quantum section of Shor's algorithm is a period finding function.
+The classical part then uses this period and number theory to deduce the factors.
+In the explaination below, the value that is trying to be factorised is $N$ and the value $M$ is a value which is larger than $N$.
+The use of the Kronecker delta, and understanding on the effect it has is vital to the explanation of the quantum section of Shor's algorithm.
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+&\ket{0}&	& \qw	&\multigate{3}{\mathcal{F}^{-1}_M}	& \qw 	&\multigate{3}{f}	&\qw &\multigate{3}{\mathcal{F}_M}	&\qw	& \qw 	& \qw 	&\qw\\
+&\vdots	&	&	&\ghost{\mathcal{F}^{-1}_M} 		&\qw 	&\ghost{f}		&\qw &\ghost{\mathcal{F}_M}		&	&\vdots & 	&\qw\\
+&\vdots	&	&	&\ghost{\mathcal{F}^{-1}_M} 		&\qw 	&\ghost{f}		&\qw &\ghost{\mathcal{F}_M}		&	&\vdots & 	&\qw\\
+&\ket{0}&	&\qw	&\ghost{\mathcal{F}^{-1}_M} 		&\qw 	&\ghost{f}		&\qw &\ghost{\mathcal{F}_M}		&\qw	&\qw 	&\qw	&\qw\\
+&\ket{0}&	&\qw	&\qw 					&\qw 	&\multigate{3}{+}\qwx	&\qw &\qw 				&\qw	&\qw 	&\qw	&\qw\\
+&\vdots	&	&	&\vdots 				&	&\ghost{+}		&\qw &\vdots 				&	&\vdots	&	&\\
+&\vdots	&	&	&\vdots 				&	&\ghost{+}		&\qw &\vdots 				&	&\vdots	&	&\\
+&\ket{0}&	&\qw	&\qw 					&\qw	&\ghost{+}		&\qw &\qw 				&\qw	&\qw	&\qw 	&\qw    
+}
+\]
+\label{shorcirc}
+\caption{The circuit of Shor's algorithm}
+\end{figure}
+
+The circuit in Figure \ref{shorcirc} is the period finding section of Shor's Algorithm.
+The function $f$ is a periodic function, whose period we want to find.
+$\mathcal{F}$ and $\mathcal{F}^{-1}$ are the Quantum Fourier Transform and the inverse, respectively.
+\begin{equation}
+ \mathcal{F}_N\ket{x}=\frac{1}{\sqrt{N}}\sum_{y=0}^{N-1}e^{\frac{2\pi{i}xy}{N}}\ket{y}
+\label{QFTeq}
+\end{equation}
+\begin{equation}
+ \mathcal{F}^{-1}_N\ket{y}=\frac{1}{\sqrt{N}}\sum_{z=0}^{N-1}e^{\frac{-2\pi{i}xy}{N}}\ket{z}
+\label{QFTInveq}
+\end{equation}
+
+The action of applying the Quantum Fourier Transform and the inverse can be seen in Equations \ref{QFTeq} and \ref{QFTInveq} respectively.
+
+The way in which this circuit computes the period is not initially apparent.
+The central section of the circuit, involving the periodic function, performs the operation $U_f\ket{x}\ket{y}=\ket{x}\ket{f(x)+y}$ in the computaional basis.
+However, it is preceded by the inverse Quantum Fourier Transform.
+The application of the inverse Quantum Fourier Transform on the initial state is as follows:
+
+\begin{equation*}
+ \ket{0}\ket{0} \rightarrow \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1}e^{\frac{-2\pi{i}x.0}{M}\ket{x}\ket{0}}
+\end{equation*}
+\begin{equation*}
+ \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1}\ket{x}\ket{0}
+\end{equation*}
+
+This produces a uniform superposition, just as a series of Hadamard gates would have produced.
+The application of $f(x)$ to this superposition produces the state:
+\begin{equation*}
+ \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1}\ket{x}\ket{f(x)}
+\end{equation*}
+Applying the final Quantum Fourier Transform manipulates this state quite substantially.
+\begin{equation}
+ \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1}\ket{x}\ket{f(x)} \rightarrow \frac{1}{M}\sum_{y=0}^{M-1}\sum_{x=0}^{M-1}e^{\frac{2\pi{i}xy}{M}}\ket{y}\ket{f(x)}
+\label{QFTfinstate}
+\end{equation}
+The final state is Equation \ref{QFTfinstate}.
+This does not initially appear particularly useful or interesting.
+However, remembering that $f(x)$ is periodic, we can separate and analyse a single branch of the superposition.
+With $f(x)=f(x+r)=f(x+2r)\dots$ where $r$ is the period of $f(x)$ the amplitude of the branch $\ket{y}\ket{f(x)}$ , with $x=x_0+mr for x=0,1,\dots,\frac{M}{r}-1$, can be written as:
+\begin{equation*}
+ \frac{1}{M}\sum_{m=0}^{\frac{M}{r}-1}e^{\frac{2\pi{i}(x_0+mr)y}{M}}\ket{y}\ket{f(x_0)}
+\end{equation*}
+
+This initially still does not look particularly interesting or useful when we are trying to find the period of $f(x)$.
+However, with some rearragement this state can be expressed as:
+\begin{equation}
+ \frac{1}{M}e^{\frac{2\pi{i}x_0y}{M}}\sum_{m=0}^{\frac{M}{r}-1}e^{\frac{2\pi{i}my}{\frac{M}{r}}}\ket{y}\ket{f(x_0)}
+\end{equation}
+This contains a structure which was introduced with the sumation of roots of unity, \ref{sumofpowers}.
+Using this observation, the $\sum_{m=0}^{\frac{M}{r}-1}e^{\frac{2\pi{i}my}{\frac{M}{r}}}$ section of the amplitude for the state $\ket{y}\ket{f(x_0)}$ is simplified to:
+\begin{equation}
+ \sum_{m=0}^{\frac{M}{r}-1}e^{\frac{2\pi{i}my}{\frac{M}{r}}}=\frac{M}{r}\delta_{y,0 (Mon\frac{M}{r})}=\frac{M}{r}
+\left\{
+  \begin{array}{cc} 1, & \mbox{if } y={0} (mod\frac{M}{r})\\ 
+  0, & \mbox{otherwise}\end{array}
+\right.
+\end{equation}
+With this simplifcation in place it can be seen that the probability amplitude of any branch where $y\neq{x}(mod\frac{M}{r})$ will be zero simply due to the Kronecker delta.
+This results in the only branches with non-zero amplitudes being where $y=0,\frac{M}{r},\frac{2M}{r},\dots$ and so when the first input register is measured the state observed will be $\ket{\frac{kM}{r}}$.
+After several repeats of the algorithm the value of $r$ can be deduced from the observed states.
+
+To see how knowing the period can help factorise the number $N$ we analyse the function $f(x)=a^x(mod N)$.
+This function is obviously periodic as it is modulo N.
+With the period r, $a^r=1(mod N)$.
+The value of $r$ will depend on the value of $a$.
+Only the even values of $r$ are useful, if an odd value is found the value of $a$ should be changed and the new $r$ found.
+
+When $r$ is even, $a^r=1(mod N) \rightarrow a^r-1=0(mod N) \rightarrow (a^r+1)(a^r-1)=0(mod N)$.
+Once we have the equation in this form, we can use the values of $a^r+1)$ and $(a^r-1)$ separately as one of them, possibly both, with have a factor in common with $N$.
+This can simply be found using the Chinese remainder theorm.
+
+The advantage of Shor's algorithm is that the value of $r$ can be found much faster with all values of $x$ up to the limit of $M-1$ tested simultaneously.
+
+\subsection{Quantum Teleportation Protocol}
+
+The quantum teleportation protocol provides a solution to the problems
+\begin{center}
+Alice has a quantum state, $\ket{\Psi}$, which she wishes to send to Bob.
+There is only a classical communication channel by which Alica and Bob can communicate.
+\end{center}
+
+With a classical state this would not be an issue.
+Measurements on the different parts of that state Alice want to sent to Bob would be made, and these would then be communicated down the channel for Bob to replicate.
+Unfortunately this is not possible for quantum states.
+Quantum computation exploits the power of quantum mechanics, however quantum mechanics has its own caveats.
+
+The ``No Cloning Theorm'' in the field of quantum computation is the results of quantum mechanic's ``Uncertainty Principle''.
+The ``Uncertainty Principle'' states that ``that
+the values of a pair of canonically conjugate observables such as position and momentum cannot both
+be precisely determined in any quantum state''\cite{uncerth}.
+Essentially this means that an unknown quantum state cannot be reproduced.
+
+The classical approach is also halted by Holevo's Theorem.
+This theorem states that from any $n$ qubit state, at most $n$ bits of classical information can be observed.
+With a one qubit state, $\alpha\ket{0}+\beta\ket{1}$, the value of $\alpha$ and $\beta$ are required for the state to be reproduced.
+The each of these require 2 values as they are complex numbers, 4 values in total.
+The state can be rewriten to give $|\alpha|e^{i\theta_0}\ket{0}+|\beta|e^{i\theta_1}\ket{1}$.
+As global phase factors cannot be observed it can be simplified to $|\alpha|\ket{0}+|\beta|e^{i\phi}\ket{1}$
+This leaves the real values $|\alpha|, |\beta| and \psi$, down to 3 values.
+We know that $|\alpha|^2+|\beta|^2=1$ so the value of $|beta|$ is can be calculated from the value of $|\alpha|$.
+This leave just two values to specify.
+However, both of these two values can be specified to any arbitary precision, requiring an arbitary number of bits of data.
+As Holevo's Theorem limits the observable information to just a single bit, for the one qubit state, the measure and recreate approach is impossible.
+
+After stating these two theorems, the problem Alice and Bob face seems impossible.
+However, there are subtleties to the laws governing quantum mechanics which actually make it possible, with a few concessions.
+
+For Alice to sent the state $\ket{Phi}$, $\alpha\ket{0}+\beta\ket{1}$, the protocol is as follows:
+\begin{itemize}
+ \item Alice and Bob share the entangled state $\frac{1}{\sqrt{2}}\ket{00}+\frac{1}{\sqrt{2}}\ket{11}$.
+This results in the state, the subscript letters are to show who is in possession of which qubits:
+\begin{equation}
+ \frac{1}{\sqrt{2}}(\alpha\ket{00}_A\ket{0}_B+\beta\ket{10}_A\ket{0}_B+\alpha\ket{01}_A\ket{1}_B+beta\ket{11}_A\ket{1}_B)
+\end{equation}
+\item Alice takes a measurement in the Bell Basis.
+The Bell basis is a basis set which are not orthogonal to the computational basis.
+This means that the measurement does not collapse the state.
+The Bell basis vectors are $\ket{00}+\ket{11}, \ket{00}-\ket{11}, \ket{01}+\ket{10} and \ket{01}-\ket{10}$.
+\begin{center}
+\begin{tabular}{cc}
+Alice measures & Remaining state\\
+$\ket{00}_A+\ket{11}_A$ & $\alpha\ket{0}_B+\beta\ket{1}$\\
+$\ket{00}_A-\ket{11}_A$ & $\alpha\ket{0}_B-\beta\ket{1}_B$\\
+$\ket{01}_A+\ket{10}_A$ & $\alpha\ket{1}_B+\beta\ket{0}_B$\\
+$\ket{01}_A-\ket{10}_A$ & $\alpha\ket{1}_B-\beta\ket{0}_B$
+\end{tabular}
+\end{center}
+
+\item Based on the measurement Alice make she can instruct Bob, using the classical communication channel, to perform certain operations to change the remaining state into the original state $\ket{\Psi}$.
+\begin{center}
+\begin{tabular}{cc}
+Remaining state & Bob applies to produce $\ket{\Psi}$\\
+$\alpha\ket{0}_B+\beta\ket{1}_B$ & Nothing\\
+$\alpha\ket{0}_B-\beta\ket{1}_B$ & Phase Flip\\
+$\alpha\ket{1}_B+\beta\ket{0}_B$ & Bit Flip\\
+$\alpha\ket{1}_B-\beta\ket{0}_B$ & Bit Flip followed by a Phase Flip
+\end{tabular}
+\end{center}
+\end{itemize}
+
+At the end of this protocol, the state $\ket{\Psi}$ has be teleported to Bob.
+However, this must not violate either the No Cloning Theorem or Holevo's Theorem.
+The No Cloning Theorem is not violated as to teleport the state to Bob, Alice must destroy her copy of $\ket{\Psi}$.
+This means that at no point are there two copies of $\ket{\Psi}$, therefore does not violate the No Cloning Theorm.
+The protocol does not violate Holevo's Theorem as at no point is any data observed from the state.
+The true identity and nature, the probability amplitues, of the state $\ket{\Psi}$ is never known.
+
+The circuit to implement the quantum teleportation protocol can be seel in Figure \ref{quantelcir}.
+
+\begin{figure}
+\[
+\Qcircuit @C=.7em @R=.4em @! {
+\lstick{\ket{\psi}} & \qw & \qw & \ctrl{1} & \gate{H} & \meter & \control \cw\\
+\lstick{\ket{0}} & \qw & \targ & \targ & \qw &\meter & \cwx\\
+\lstick{\ket{0}} & \gate{H} & \ctrl{-1} & \qw &\qw & \gate{X} \cwx & \gate{Z} \cwx &\rstick{\ket{\psi}} \qw
+}
+\]
+\label{quantelcir}
+\caption{The Quantum Teleportation Circuit\cite{qcirtut}}
+\end{figure}
 % \section{The Current State of Quantum Computing}
 % --Problems with current algorithms
 % 
@@ -946,6 +1169,23 @@ This would however require several fitness functions which give comparable value
 The representation of this also leads to numerous choices, using just a MAX function or an average function or to represent the fitness as an n-dimensional point to optimise for n fitness functions.
 
 \section{The Focus of this Project}
+In the first stage of this project I aim to produce a graphical toolkit which will allow users to search for quantum algorithms.
+The toolkit will allow for various different search methods and be fully extendable so additional search techniques can be added.
+These techniques will include, but not be limited to, evolutionary algorithms.
+The first evolutionary algorithm that will be included in the toolkit will be a reimplementation of the Q-Pace IV suite presented by Massey\cite{masseythesis}.
+
+The toolkit will allow the user to provide a fitness measure and to alter the parameters used for the search algorithm.
+A graphical display of the search progress will be available.
+The solution produced by the search will produce a Q-Circuit representation of the circuit found.
+This output will be able to be copied straight into a latex document for the circuit to be seen.
+Internally a simulation will be produced for fitness evalution.
+
+The toolkit will provide and API so that the core search engine can be accessed by other programs.
+If accessed through this API the internal representation used for the simulation will be provided alongside the Q-Circuit circuit specifications.
+
+As a second stage I intend to produce a new Genetic Programming suite to construct quantum algorithms.
+$\dots$
+
 
 \bibliography{mengreport}
 \end{document}
