@@ -18,12 +18,36 @@ import ec.gp.GPData;
 import ec.gp.GPIndividual;
 import ec.util.Parameter;
 
+/**
+ * @author  sam
+ */
 public class CU extends NonTerminalSuper {
-	int targ, ctrl;
+	int targ;
+	int ctrl;
+	/**
+	 * @uml.property  name="u_node"
+	 * @uml.associationEnd  
+	 */
 	NonTerminalSuper U_node;
+	/**
+	 * @uml.property  name="a"
+	 * @uml.associationEnd  
+	 */
 	Matrix A = Matrix.identity(2, 2);
+	/**
+	 * @uml.property  name="b"
+	 * @uml.associationEnd  
+	 */
 	Matrix B = Matrix.identity(2, 2);
+	/**
+	 * @uml.property  name="c"
+	 * @uml.associationEnd  
+	 */
 	Matrix C = Matrix.identity(2, 2);
+	/**
+	 * @uml.property  name="d"
+	 * @uml.associationEnd  
+	 */
 	Matrix D = Matrix.identity(2, 2);
 
 	public CU(int t, int c, NonTerminalSuper u, QuantumProblem rd) {

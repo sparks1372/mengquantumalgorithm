@@ -22,6 +22,9 @@ import ec.gp.koza.KozaFitness;
 import ec.simple.SimpleProblemForm;
 import ec.util.Parameter;
 
+/**
+ * @author  sam
+ */
 public class QuantumProblem extends GPProblem implements SimpleProblemForm {
 	public double currentX;
 	public double currentY;
@@ -29,6 +32,10 @@ public class QuantumProblem extends GPProblem implements SimpleProblemForm {
 	@SuppressWarnings("unchecked")
 	public LinkedList<NonTerminalSuper>[] circuit;
 
+	/**
+	 * @uml.property  name="input"
+	 * @uml.associationEnd  
+	 */
 	public QPaceIVQuantumState input;
 
 	public QuantumProblem(int qbits) {

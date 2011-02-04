@@ -9,7 +9,14 @@ package QPACEIV.DataRepresentation;
 import Jama.Matrix;
 import ec.gp.GPData;
 
+/**
+ * @author  sam
+ */
 public class QPaceIVQuantumState extends GPData {
+	/**
+	 * @uml.property  name="x"
+	 * @uml.associationEnd  
+	 */
 	public Matrix x; // return value
 	public double in;
 	public int NUM_OF_QUBITS;

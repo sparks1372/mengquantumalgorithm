@@ -18,11 +18,31 @@ import ec.gp.GPData;
 import ec.gp.GPIndividual;
 import ec.util.Parameter;
 
+/**
+ * @author  sam
+ */
 public class SwapGate extends NonTerminalSuper {
-	int targ1, targ2;
+	int targ1;
+	int targ2;
+	/**
+	 * @uml.property  name="a"
+	 * @uml.associationEnd  
+	 */
 	Matrix A = Matrix.identity(2, 2);
+	/**
+	 * @uml.property  name="b"
+	 * @uml.associationEnd  
+	 */
 	Matrix B = Matrix.identity(2, 2);
+	/**
+	 * @uml.property  name="c"
+	 * @uml.associationEnd  
+	 */
 	Matrix C = Matrix.identity(2, 2);
+	/**
+	 * @uml.property  name="d"
+	 * @uml.associationEnd  
+	 */
 	Matrix D = Matrix.identity(2, 2);
 
 	public SwapGate(int t, int c, QuantumProblem rd) {

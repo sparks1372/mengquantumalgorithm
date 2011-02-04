@@ -10,11 +10,30 @@ import QPACEIV.DataRepresentation.QPaceIVQuantumState;
 import QPACEIV.nonterminals.Hadamard;
 import Utils.Complex;
 
+/**
+ * @author  sam
+ */
 public class Hadamard_JUnit {
 
+	/**
+	 * @uml.property  name="state_0"
+	 * @uml.associationEnd  
+	 */
 	QPaceIVQuantumState state_0 = new QPaceIVQuantumState();
+	/**
+	 * @uml.property  name="state_1"
+	 * @uml.associationEnd  
+	 */
 	QPaceIVQuantumState state_1 = new QPaceIVQuantumState();
+	/**
+	 * @uml.property  name="result_state_0"
+	 * @uml.associationEnd  
+	 */
 	QPaceIVQuantumState result_state_0 = new QPaceIVQuantumState();
+	/**
+	 * @uml.property  name="result_state_1"
+	 * @uml.associationEnd  
+	 */
 	QPaceIVQuantumState result_state_1 = new QPaceIVQuantumState();
 
 	@Before

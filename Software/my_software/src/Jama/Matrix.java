@@ -12,9 +12,8 @@ import Utils.Complex;
 
 /**
  * This class is an adaptation of the original JAMA class. This adaptation
- * produces a matrix of complex numbers rather than doubles.
- * 
- * Jama = Java Matrix class.
+ * produces a matrix of complex numbers rather than doubles. Jama = Java Matrix
+ * class.
  * <P>
  * The Java Matrix Class provides the fundamental operations of numerical linear
  * algebra. Various constructors create Matrices from two dimensional arrays of
@@ -73,6 +72,8 @@ public class Matrix implements Cloneable, java.io.Serializable {
 	 * Array for internal storage of elements.
 	 * 
 	 * @serial internal array storage.
+	 * @uml.property name="a"
+	 * @uml.associationEnd multiplicity="(0 -1)"
 	 */
 	private Complex[][] A;
 
@@ -82,7 +83,15 @@ public class Matrix implements Cloneable, java.io.Serializable {
 	 * @serial row dimension.
 	 * @serial column dimension.
 	 */
-	private int m, n;
+	private int m;
+
+	/**
+	 * Row and column dimensions.
+	 * 
+	 * @serial row dimension.
+	 * @serial column dimension.
+	 */
+	private int n;
 
 	/*
 	 * ------------------------ Constructors ------------------------
@@ -1332,6 +1341,19 @@ public class Matrix implements Cloneable, java.io.Serializable {
 		Complex[][] A = new Complex[m][];
 		v.copyInto(A); // copy the rows out of the vector
 		return new Matrix(A);
+	}
+
+	public static double euclid(Matrix A, Matrix B) {
+		if (A.n != 1) {
+			throw new IllegalArgumentException("Matrix dimensions must agree.");
+		}
+		A.checkMatrixDimensions(B);
+		double sum = 0;
+		for (int i = 0; i < A.getRowDimension(); i++) {
+			sum += Math.pow(A.get(i, 0).minus(B.get(i, 0)).mod(), 2);
+		}
+		return Math.sqrt(sum);
+
 	}
 
 	/*
