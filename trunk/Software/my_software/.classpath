@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="Jama/examples/|Jama/test/|Jama/CholeskyDecomposition.java|Jama/EigenvalueDecomposition.java|Jama/LUDecomposition.java|Jama/QRDecomposition.java|Jama/SingularValueDecomposition.java" kind="src" path="src"/>
+	<classpathentry excluding="Jama/examples/|Jama/test/|Jama/CholeskyDecomposition.java|Jama/EigenvalueDecomposition.java|Jama/LUDecomposition.java|Jama/QRDecomposition.java|Jama/SingularValueDecomposition.java|QPACEIV/" kind="src" path="src"/>
 	<classpathentry kind="src" path="ecj"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="ecj/libraries/itext-1.2.jar"/>
@@ -11,5 +11,10 @@
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.1/commons-logging-api-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/resolver.jar"/>
+	<classpathentry kind="lib" path="lib/serializer.jar"/>
+	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
+	<classpathentry kind="con" path="com.soyatec.uml.CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

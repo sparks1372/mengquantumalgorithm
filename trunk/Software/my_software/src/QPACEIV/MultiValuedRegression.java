@@ -15,11 +15,18 @@ import ec.gp.koza.KozaFitness;
 import ec.simple.SimpleProblemForm;
 import ec.util.Parameter;
 
+/**
+ * @author sam
+ */
 public class MultiValuedRegression extends GPProblem implements
 		SimpleProblemForm {
 	public double currentX;
 	public double currentY;
 
+	/**
+	 * @uml.property name="input"
+	 * @uml.associationEnd
+	 */
 	public QPaceIVQuantumState input;
 
 	public Object clone() {
@@ -34,8 +41,9 @@ public class MultiValuedRegression extends GPProblem implements
 
 		// set up our input -- don't want to use the default base, it's unsafe
 		// here
-		input = (QPaceIVQuantumState) state.parameters.getInstanceForParameterEq(
-				base.push(P_DATA), null, QPaceIVQuantumState.class);
+		input = (QPaceIVQuantumState) state.parameters
+				.getInstanceForParameterEq(base.push(P_DATA), null,
+						QPaceIVQuantumState.class);
 		input.setup(state, base.push(P_DATA));
 	}
 
@@ -55,10 +63,10 @@ public class MultiValuedRegression extends GPProblem implements
 				((GPIndividual) ind).trees[0].child.eval(state, threadnum,
 						input, stack, ((GPIndividual) ind), this);
 
-				result = Math.abs(expectedResult - input.x);
-				if (result <= 0.01)
-					hits++;
-				sum += result;
+				// result = Math.abs(expectedResult - input.x);
+				// if (result <= 0.01)
+				// hits++;
+				// sum += result;
 			}
 
 			// the fitness better be KozaFitness!

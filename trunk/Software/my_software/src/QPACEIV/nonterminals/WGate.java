@@ -19,17 +19,17 @@ import ec.util.Parameter;
 public class WGate extends NonTerminalSuper {
 	public WGate() {
 		// [row][column]
-		Complex[][] v = new Complex[2][2];
-		v[0][0] = new Complex(1, 0);
-		v[0][1] = new Complex(0, 0);
-		v[1][0] = new Complex(0, 0);
-		v[1][1] = new Complex(0, 1);
+		Complex[][] w = new Complex[2][2];
+		w[0][0] = new Complex(1, 0);
+		w[0][1] = new Complex(0, 0);
+		w[1][0] = new Complex(0, 0);
+		w[1][1] = new Complex(0, -1);
 
-		operation = new Matrix(v);
+		operation = new Matrix(w);
 	}
 
 	public String toString() {
-		return "\\gate{V}&";
+		return "\\gate{W}&";
 	}
 
 	public void checkConstraints(final EvolutionState state, final int tree,

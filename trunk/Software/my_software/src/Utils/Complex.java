@@ -9,7 +9,8 @@ package Utils;
  */
 public class Complex extends Object {
 
-	protected double x, y;
+	protected double x;
+	protected double y;
 
 	/**
 	 * Constructs the complex number z = u + i*v
