@@ -1,0 +1,28 @@
+package Core.Circuit;
+
+import java.util.Iterator;
+
+public interface Circuit {
+
+	public abstract String toLatex(int qubits);
+
+	/**
+	 * @return Returns the circuitlayout.
+	 * @uml.property name="circuitlayout" readOnly="true" multiplicity="(0 -1)"
+	 *               dimension="1"
+	 */
+	public Iterator<quantumgate> getCircuitlayout();
+
+	/**
+			 */
+	public abstract int getSize();
+
+	/**
+		 */
+	public abstract void addGate(int builder_id, quantumgate quantumgate);
+
+	/**
+		 */
+	public abstract void addCircuit(int builder_id, Circuit circuit);
+
+}
