@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<searchengine  xmlns="http://www.w3schools.com"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.w3schools.com searchengine_spec.xsd">
+	<se>
+	  <Name>name1</Name>
+	  <Class>seclass1</Class>
+	</se>
+	<se>
+	  <Name>name2</Name>
+	  <Class>seclass2</Class>
+	</se>
+	<se>
+	  <Name>name3</Name>
+	  <Class>seclass3</Class>
+	</se>
+</searchengine>
+
