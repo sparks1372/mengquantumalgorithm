@@ -1,0 +1,115 @@
+parent.0 = ../../ec/gp/koza/koza.params
+
+state = Core.CircuitEvolution.QPace4.State.QPaceEvoState
+stat = Core.CircuitEvolution.QPace4.Stats.QPACE_stats
+pop.subpop.0.species.ind = Core.CircuitEvolution.QPace4.Individual.QPace_Ind
+
+pop.subpop.0.species.pipe.num-sources = 3
+
+pop.subpop.0.species.pipe.source.0.prob = 0.8
+pop.subpop.0.species.pipe.source.1.prob = 0.1
+pop.subpop.0.species.pipe.source.2.prob = 0.1
+
+pop.subpop.0.species.pipe.source.1 = ec.gp.breed.MutateOneNodePipeline
+pop.subpop.0.species.pipe.source.2 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionReductionMutation
+
+gp.breed.instruction-reduction.source.0 = ec.select.FitProportionateSelection
+gp.breed.instruction-reduction.ns.0 = ec.gp.koza.KozaNodeSelector
+
+generations =				1024
+quit-on-run-complete =			true
+breed.elite.0 = 			32
+
+gp.koza.mutate.tries = 100
+gp.koza.xover.tries = 5
+
+pop.subpop.0.size 		= 1024
+breedthreads	= 1
+evalthreads	= 1
+seed.0		= 100
+seed.1		= 20
+seed.2		= 300
+seed.3		= 40
+seed.4		= 500
+seed.5		= 60
+seed.6		= 700
+seed.7		= 80
+
+#Types
+#Atomic
+gp.type.a.size = 6
+gp.type.a.1.name = inst
+gp.type.a.2.name = int
+gp.type.a.3.name = double
+gp.type.a.4.name = quantum_algorithm
+gp.type.a.5.name = root
+
+#tree must return boolean
+gp.tc.0.returns = int
+
+gp.nc.size = 14
+
+#Terminal Node Constraints
+gp.nc.7 = ec.gp.GPNodeConstraints
+gp.nc.7.name = terminaldouble
+gp.nc.7.returns = double
+gp.nc.7.size = 0
+
+gp.nc.8 = ec.gp.GPNodeConstraints
+gp.nc.8.name = terminalint
+gp.nc.8.returns = int
+gp.nc.8.size = 0
+
+gp.nc.9 = ec.gp.GPNodeConstraints
+gp.nc.9.name = terminalinst
+gp.nc.9.returns = int
+gp.nc.9.size = 0
+
+gp.nc.10 = ec.gp.GPNodeConstraints
+gp.nc.10.name = nonterminalroot
+gp.nc.10.returns = root
+gp.nc.10.size = 8
+gp.nc.10.child.0 = int
+gp.nc.10.child.1 = int
+gp.nc.10.child.2 = int
+gp.nc.10.child.3 = int
+gp.nc.10.child.4 = int
+gp.nc.10.child.5 = int
+gp.nc.10.child.6 = int
+gp.nc.10.child.7 = int
+
+gp.nc.11 = ec.gp.GPNodeConstraints
+gp.nc.11.name = nonterminalbody
+gp.nc.11.returns = int
+gp.nc.11.size = 8
+gp.nc.11.child.0 = int
+gp.nc.11.child.1 = int
+gp.nc.11.child.2 = int
+gp.nc.11.child.3 = int
+gp.nc.11.child.4 = int
+gp.nc.11.child.5 = int
+gp.nc.11.child.6 = int
+gp.nc.11.child.7 = int
+
+gp.nc.12 = ec.gp.GPNodeConstraints
+gp.nc.12.name = nonterminalgateanditeration
+gp.nc.12.returns = int
+gp.nc.12.size = 4
+gp.nc.12.child.0 = int
+gp.nc.12.child.1 = int
+gp.nc.12.child.2 = int
+gp.nc.12.child.3 = double
+
+gp.nc.13 = ec.gp.GPNodeConstraints
+gp.nc.13.name = nonterminalarithmetic
+gp.nc.13.returns = int
+gp.nc.13.size = 2
+gp.nc.13.child.0 = int
+gp.nc.13.child.1 = int
+
+eval.problem = Core.CircuitEvolution.QPace4.Problem.QPace_Problem
+eval.problem.data = Core.CircuitEvolution.QPace4.Data.QPaceData
+# The following should almost *always* be the same as eval.problem.data
+# For those who are interested, it defines the data object used internally
+# inside ADF stack contexts
+eval.problem.stack.context.data = Core.CircuitEvolution.QPace4.Data.QPaceData
