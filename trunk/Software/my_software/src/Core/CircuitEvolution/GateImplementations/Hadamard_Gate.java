@@ -72,25 +72,27 @@ public class Hadamard_Gate implements quantumgate {
 		result = test.apply(test_state);
 		result.print_state(0, 0);
 
-		System.out.println("3 qubits state 000, Hadamard Gate Qubit 2");
+		test = new Hadamard_Gate(3);
+
+		System.out.println("3 qubits state 000, Hadamard Gate Qubit 3");
 		test_state = predefined_states.get_3q_0();
 		test_state.print_state(0, 0);
 		result = test.apply(test_state);
 		result.print_state(0, 0);
 
-		System.out.println("3 qubits state 001, Hadamard Gate Qubit 2");
+		System.out.println("3 qubits state 001, Hadamard Gate Qubit 3");
 		test_state = predefined_states.get_3q_1();
 		test_state.print_state(0, 0);
 		result = test.apply(test_state);
 		result.print_state(0, 0);
 
-		System.out.println("3 qubits state 010, Hadamard Gate Qubit 2");
+		System.out.println("3 qubits state 010, Hadamard Gate Qubit 3");
 		test_state = predefined_states.get_3q_3();
 		test_state.print_state(0, 0);
 		result = test.apply(test_state);
 		result.print_state(0, 0);
 
-		System.out.println("3 qubits state 100, Hadamard Gate Qubit 2");
+		System.out.println("3 qubits state 100, Hadamard Gate Qubit 3");
 		test_state = predefined_states.get_3q_5();
 		test_state.print_state(0, 0);
 		result = test.apply(test_state);

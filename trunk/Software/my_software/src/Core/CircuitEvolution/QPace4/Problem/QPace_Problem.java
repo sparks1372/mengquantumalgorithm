@@ -50,6 +50,9 @@ public class QPace_Problem extends GPProblem implements SimpleProblemForm {
 			f.setStandardizedFitness(state, (float) fit.getFitness());
 			f.hits = fit.getPerfectcount();
 			ind.evaluated = true;
+			// KozaFitness test = new KozaFitness();
+			// test.setStandardizedFitness(state, (float) fit.getFitness() * 2);
+			// System.out.println(f.compareTo(test));
 
 		} else {
 			// System.out.println("Not evaluated");

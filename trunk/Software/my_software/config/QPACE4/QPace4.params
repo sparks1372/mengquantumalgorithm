@@ -4,30 +4,39 @@ state = Core.CircuitEvolution.QPace4.State.QPaceEvoState
 #stat = Core.CircuitEvolution.QPace4.Stats.QPACE_stats
 pop.subpop.0.species.ind = Core.CircuitEvolution.QPace4.Individual.QPace_Ind
 
-#pop.subpop.0.species.pipe.num-sources = 3
+#pop.subpop.0.species.pipe.num-sources = 4
 
-#pop.subpop.0.species.pipe.source.0.prob = 0.75
-#pop.subpop.0.species.pipe.source.1.prob = 0
-#pop.subpop.0.species.pipe.source.2.prob = 0.25
+pop.subpop.0.species.pipe.source.0.prob = 0.9
+pop.subpop.0.species.pipe.source.1.prob = 0.75
+pop.subpop.0.species.pipe.source.2.prob = 0.25
+pop.subpop.0.species.pipe.source.3.prob = 0.1
 
 pop.subpop.0.species.pipe.source.1 = ec.gp.breed.MutateOneNodePipeline
-#pop.subpop.0.species.pipe.source.2 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionMutation
+pop.subpop.0.species.pipe.source.2 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionMutation
+pop.subpop.0.species.pipe.source.3 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionReductionMutation
 
-#gp.breed.instruction-reduction.source.0 = ec.select.FitProportionateSelection
-#gp.breed.instruction-reduction.ns.0 = ec.gp.koza.KozaNodeSelector
+gp.breed.instruction-reduction.source.0 = ec.select.FitProportionateSelection
+gp.breed.instruction-reduction.ns.0 = ec.gp.koza.KozaNodeSelector
 
 gp.breed.instruction-mutation.source.0 = ec.select.FitProportionateSelection
 gp.breed.instruction-mutation.ns.0 = ec.gp.koza.KozaNodeSelector
 pop.subpop.0.species.pipe.generate-max = true
 
-generations =				128
+generations =				1024
 quit-on-run-complete =			true
-breed.elite.0 = 			2
+breed.elite.0 = 			8
+
+#select.tournament.size = 2
+
+
+pop.subpop.0.species.pipe.source.1.ns.terminals = 0.9
+pop.subpop.0.species.pipe.source.1.ns.nonterminals = 0.1
+pop.subpop.0.species.pipe.source.1.ns.root = 0.0
 
 gp.koza.mutate.tries = 100
 gp.koza.xover.tries = 100
 
-pop.subpop.0.size 		= 64
+pop.subpop.0.size 		= 128
 breedthreads	= 8
 evalthreads	= 8
 #seed.0		= 100

@@ -17,9 +17,9 @@ import Core.CircuitEvaluator.circuitevaluator;
 import Jama.Matrix;
 
 public class basiccircuitevaluator implements circuitevaluator {
-	private quantumproblem quantprob;
-	private FitnessFunction ff;
-	private final circuitBuilder cb;
+	private quantumproblem			quantprob;
+	private FitnessFunction			ff;
+	private final circuitBuilder	cb;
 
 	public basiccircuitevaluator(circuitBuilder cirbui) {
 		cb = cirbui;
@@ -29,6 +29,7 @@ public class basiccircuitevaluator implements circuitevaluator {
 	public Fitness Evaluate(QuantumAlgorithm alg) {
 		double fitness_to_return = 0;
 		int count = 0;
+		int possiblecount = 0;
 
 		if (alg.getSize() == 0) {
 
@@ -52,33 +53,71 @@ public class basiccircuitevaluator implements circuitevaluator {
 			while (tciter.hasNext()) {
 				tc = tciter.next();
 				qgate_iter = cir.getCircuitlayout();
-				Matrix state = tc.getStartingstate();
+				cir.getSize();
+				Matrix state = tc.getStartingstate().copy();
 				while (qgate_iter.hasNext()) {
 					qg = qgate_iter.next();
 					state = qg.apply(state);
 				}
-				boolean same = true;
-				for (int i = 0; same && (i < state.getRowDimension()); i++) {
-					if ((state.get(i, 0).real() != tc.getStartingstate()
-							.get(i, 0).real())
-							&& (state.get(i, 0).imag() != tc.getStartingstate()
-									.get(i, 0).imag())) {
-						same = false;
-					}
-				}
-				if (same) {
-					return new Fitness(Float.MAX_VALUE, 0);
-				}
+				// boolean same = true;
+				// for (int i = 0; same && (i < state.getRowDimension()); i++) {
+				// if (((state.get(i, 0).real() != tc.getStartingstate()
+				// .get(i, 0).real()) && (tc.getStartingstate()
+				// .get(i, 0).real() != tc.getFinalstate().get(i, 0)
+				// .real()))
+				// || ((state.get(i, 0).imag() != tc
+				// .getStartingstate().get(i, 0).imag()) && (tc
+				// .getStartingstate().get(i, 0).imag() != tc
+				// .getFinalstate().get(i, 0).imag()))) {
+				// same = false;
+				// }
+				// }
+
 				temp = ff.evaluate(tc.getStartingstate(), state,
 						tc.getFinalstate(), cir, alg);
 				fitness_to_return += temp.getFitness();
 				count += temp.getPerfectcount();
+				possiblecount += state.getRowDimension();
+				// if (same) {
+				// fitness_to_return = fitness_to_return < 1 ? 1
+				// : fitness_to_return;
+				// fitness_to_return *= 2;
+				// System.out.println("HERE!!!!!! count = " + count
+				// + " possible count = " + possiblecount);
+				// }
 			}
 
 		}
 		if (fitness_to_return > Float.MAX_VALUE) {
 			return new Fitness(Float.MAX_VALUE, 0);
 		}
+		fitness_to_return = count != 0 ? fitness_to_return
+				/ ((double) count / possiblecount) : Float.MAX_VALUE;
+		// if (fitness_to_return < 15.701) {
+		// keys = ts.getKeys();
+		//
+		// kiter = keys.iterator();
+		//
+		// while (kiter.hasNext()) {
+		// int numofqubits = kiter.next();
+		// testset tempts = ts.getTestcases(numofqubits);
+		// cir = cb.Build(alg, numofqubits);
+		// Iterator<testcase> tciter = tempts.getTestcases();
+		// quantumgate qg;
+		// while (tciter.hasNext()) {
+		// tc = tciter.next();
+		// qgate_iter = cir.getCircuitlayout();
+		// Matrix state = tc.getStartingstate();
+		// while (qgate_iter.hasNext()) {
+		// qg = qgate_iter.next();
+		// state = qg.apply(state);
+		// }
+		// }
+		//
+		// }
+		// }
+		// System.out.println("Percentage correct = "
+		// + ((double) count / possiblecount) * 100);
 
 		return new Fitness(fitness_to_return, count);
 	}

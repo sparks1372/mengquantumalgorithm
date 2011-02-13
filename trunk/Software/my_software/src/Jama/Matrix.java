@@ -351,6 +351,13 @@ public class Matrix implements Cloneable, java.io.Serializable {
 		this.m = m;
 		this.n = n;
 		A = new Complex[m][n];
+		Complex def = new Complex(0, 0);
+
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				set(i, j, def);
+			}
+		}
 	}
 
 	/**

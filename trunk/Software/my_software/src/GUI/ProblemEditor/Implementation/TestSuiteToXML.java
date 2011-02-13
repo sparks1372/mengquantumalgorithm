@@ -13,7 +13,7 @@ import Jama.Matrix;
 
 public class TestSuiteToXML {
 
-	static String zero_string = "0";
+	static String	zero_string	= "0";
 
 	public static void TestSuiteToXML(testsuite testsuite, File f) {
 		String filename = f.getAbsolutePath();
@@ -59,7 +59,7 @@ public class TestSuiteToXML {
 
 					out.write("<final_state>\n");
 					fs = tc.getFinalstate();
-					for (index = 0; index < ss.getRowDimension(); index++) {
+					for (index = 0; index < fs.getRowDimension(); index++) {
 						String b_str = Integer.toBinaryString(index);
 						while (b_str.length() != num_of_qubits) {
 							b_str = zero_string.concat(b_str);

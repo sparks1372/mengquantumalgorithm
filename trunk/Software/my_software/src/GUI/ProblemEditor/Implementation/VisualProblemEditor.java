@@ -22,16 +22,46 @@ import GUI.ProblemEditor.problemeditor;
 
 public class VisualProblemEditor extends JPanel implements problemeditor,
 		ActionListener {
-	static private final String newline = "\n";
-	JButton newButton, openButton, saveButton, saveAsButton;
-	JButton addTestSetButton;
-	JFileChooser fc;
-	Component parent;
-	File selected_file;
-	JLabel filename;
-	JPanel upperPanel;
-	JPanel midPanel;
-	XMLEditor xmled;
+	static private final String	newline	= "\n";
+
+	private static void createAndShowGUI() {
+		// Create and set up the window.
+		JFrame frame = new JFrame("VisualProblemEditor");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		// Add content to the window.
+		frame.add(new VisualProblemEditor(frame));
+		frame.setSize(800, 550);
+
+		// Display the window.
+		// frame.pack();
+		frame.setVisible(true);
+	}
+
+	public static void main(String[] args) {
+		// Schedule a job for the event dispatch thread:
+		// creating and showing this application's GUI.
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				// Turn off metal's use of bold fonts
+				UIManager.put("swing.boldMetal", Boolean.FALSE);
+				createAndShowGUI();
+			}
+		});
+	}
+
+	JButton			newButton, openButton, saveButton, saveAsButton;
+	JButton			addTestSetButton;
+	JFileChooser	fc;
+	Component		parent;
+	File			selected_file;
+	JLabel			filename;
+	JPanel			upperPanel;
+
+	JPanel			midPanel;
+
+	XMLEditor		xmled;
 
 	public VisualProblemEditor(Component p) {
 		super(new BorderLayout());
@@ -84,16 +114,6 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 	}
 
 	@Override
-	public void edit(quantumproblem quantumproblem) {
-		xmled.setTestSuite(quantumproblem.getTestSuite());
-	}
-
-	@Override
-	public void loadFile(File file) {
-		xmled.load(file);
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Handle open button action.
 		if (e.getSource() == openButton) {
@@ -117,6 +137,9 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
 				saveFile(file);
+				if (selected_file == null) {
+					selected_file = file;
+				}
 			}
 		} else if (e.getSource() == addTestSetButton) {
 			int s = Integer
@@ -138,33 +161,17 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 	}
 
 	@Override
+	public void edit(quantumproblem quantumproblem) {
+		xmled.setTestSuite(quantumproblem.getTestSuite());
+	}
+
+	@Override
+	public void loadFile(File file) {
+		xmled.load(file);
+	}
+
+	@Override
 	public void saveFile(File file) {
 		TestSuiteToXML.TestSuiteToXML(xmled.getTsuite(), file);
-	}
-
-	private static void createAndShowGUI() {
-		// Create and set up the window.
-		JFrame frame = new JFrame("VisualProblemEditor");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		// Add content to the window.
-		frame.add(new VisualProblemEditor(frame));
-		frame.setSize(800, 550);
-
-		// Display the window.
-		// frame.pack();
-		frame.setVisible(true);
-	}
-
-	public static void main(String[] args) {
-		// Schedule a job for the event dispatch thread:
-		// creating and showing this application's GUI.
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				// Turn off metal's use of bold fonts
-				UIManager.put("swing.boldMetal", Boolean.FALSE);
-				createAndShowGUI();
-			}
-		});
 	}
 }
