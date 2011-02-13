@@ -40,10 +40,10 @@ public class QPACE_stats extends SimpleStatistics {
 				}
 				if (avfit[x] == null) {
 					avfit[x] = ((KozaFitness) state.population.subpops[x].individuals[y].fitness)
-							.adjustedFitness();
+							.standardizedFitness();
 				} else {
 					avfit[x] += ((KozaFitness) state.population.subpops[x].individuals[y].fitness)
-							.adjustedFitness();
+							.standardizedFitness();
 
 				}
 				count++;
@@ -66,6 +66,7 @@ public class QPACE_stats extends SimpleStatistics {
 			state.output.message("Subpop " + x
 					+ " best fitness of generation: "
 					+ best_i[x].fitness.fitnessToStringForHumans());
+			best_i[x].evaluated = false;
 
 			state.output.message("Subpop " + x
 					+ " mean fitness of generation: " + avfit[x]);

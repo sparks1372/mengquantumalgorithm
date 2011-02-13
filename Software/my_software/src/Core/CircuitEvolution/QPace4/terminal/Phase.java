@@ -49,7 +49,7 @@ public class Phase extends GPNode {
 	 */
 	@Override
 	public String toString() {
-		return "";
+		return "Phase pi/" + index;
 	}
 
 }

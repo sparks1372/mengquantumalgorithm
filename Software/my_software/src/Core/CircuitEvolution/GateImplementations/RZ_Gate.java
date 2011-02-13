@@ -2,10 +2,34 @@ package Core.CircuitEvolution.GateImplementations;
 
 import Core.Circuit.quantumgate;
 import Jama.Matrix;
+import Testing.predefined_states;
 import Utils.Complex;
 import Utils.Tensor_Matrix;
 
 public class RZ_Gate implements quantumgate {
+	public static void main(String[] args) {
+
+		RZ_Gate test = new RZ_Gate(1, Math.PI / 2);
+
+		System.out.println("2 qubits state 00, Pauli X Qubit 1");
+		Matrix test_state = predefined_states.get_2q_0();
+		test_state.print_state(0, 0);
+		Matrix result = test.apply(test_state);
+		result.print_state(0, 0);
+
+		System.out.println("2 qubits state 01, Pauli X Qubit 1");
+		test_state = predefined_states.get_2q_1();
+		test_state.print_state(0, 0);
+		result = test.apply(test_state);
+		result.print_state(0, 0);
+
+		System.out.println("2 qubits state 10, Pauli X Qubit 1");
+		test_state = predefined_states.get_2q_3();
+		test_state.print_state(0, 0);
+		result = test.apply(test_state);
+		result.print_state(0, 0);
+	}
+
 	private final int		targ;
 	private final double	theta;
 	private final Matrix	unitary;
@@ -17,13 +41,20 @@ public class RZ_Gate implements quantumgate {
 		this.targ = Math.abs(target);
 		this.theta = th;
 		// [row][column]
-		Complex[][] rz_theta = new Complex[2][2];
-		rz_theta[0][0] = new Complex(0, -Math.exp(theta / 2));
-		rz_theta[0][1] = new Complex(0, 0);
-		rz_theta[1][0] = new Complex(0, 0);
-		rz_theta[1][1] = new Complex(0, Math.exp(theta / 2));
 
-		unitary = new Matrix(rz_theta);
+		Complex[][] I = new Complex[2][2];
+		I[0][0] = new Complex(1, 0);
+		I[1][1] = new Complex(1, 0);
+		I[0][1] = new Complex(0, 0);
+		I[1][0] = new Complex(0, 0);
+		Matrix iden = new Matrix(I);
+
+		Matrix X = new Pauli_Z(1).getUnitary_operation();
+
+		iden = iden.times(new Complex(Math.cos(th / 2), 0));
+		X = X.times(new Complex(0, 1).times(new Complex(Math.sin(th / 2), 0)));
+
+		unitary = iden.minus(X);
 	}
 
 	@Override
@@ -61,7 +92,7 @@ public class RZ_Gate implements quantumgate {
 
 	@Override
 	public String toLatex() {
-		return "\\gate{RZ(" + Math.PI / theta + ")}&";
+		return "\\gate{RZ(" + theta + ")}&";
 	}
 
 }

@@ -49,6 +49,6 @@ public class Div extends GPNode {
 
 	@Override
 	public String toString() {
-		return "*";
+		return "/";
 	}
 }

@@ -23,7 +23,19 @@ public class RX_Gate implements quantumgate {
 		rx_theta[1][0] = new Complex(0, -Math.sin(theta / 2));
 		rx_theta[1][1] = new Complex(Math.cos(theta / 2), 0);
 
-		unitary = new Matrix(rx_theta);
+		Complex[][] I = new Complex[2][2];
+		I[0][0] = new Complex(1, 0);
+		I[1][1] = new Complex(1, 0);
+		I[0][1] = new Complex(0, 0);
+		I[1][0] = new Complex(0, 0);
+		Matrix iden = new Matrix(I);
+
+		Matrix X = new Pauli_X(1).getUnitary_operation();
+
+		iden = iden.times(new Complex(Math.cos(th / 2), 0));
+		X = X.times(new Complex(0, 1).times(new Complex(Math.sin(th / 2), 0)));
+
+		unitary = iden.minus(X);
 	}
 
 	@Override
@@ -61,7 +73,7 @@ public class RX_Gate implements quantumgate {
 
 	@Override
 	public String toLatex() {
-		return "\\gate{RX(" + Math.PI / theta + ")}&";
+		return "\\gate{RX(" + theta + ")}&";
 	}
 
 }

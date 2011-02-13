@@ -63,7 +63,7 @@ public class Iterate extends GPNode {
 	 */
 	@Override
 	public String toString() {
-		return "";
+		return "Iterate";
 	}
 
 }

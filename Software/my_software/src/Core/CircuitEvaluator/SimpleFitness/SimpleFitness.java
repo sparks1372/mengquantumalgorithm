@@ -27,17 +27,29 @@ public class SimpleFitness implements FitnessFunction {
 	@Override
 	public Fitness evaluate(Matrix start_state, Matrix final_state,
 			Matrix expected_state, Circuit circuit, QuantumAlgorithm algo) {
-		if (Matrix.euclid(start_state, expected_state).getFitness() == 0) {
-			return new Fitness(0, 0);
+		double fit = 0.0;
+		int count = 0;
+		for (int i = 0; i < final_state.getRowDimension(); i++) {
+			double s = start_state.get(i, 0)
+					.times(start_state.get(i, 0).conj()).mod();
+			double f = final_state.get(i, 0)
+					.times(final_state.get(i, 0).conj()).mod();
+			double e = expected_state.get(i, 0)
+					.times(expected_state.get(i, 0).conj()).mod();
+			if (f != e) {
+				// System.out.println("f = " + f + " e = " + e + " fit + "
+				// + Math.abs(f - e));
+				fit += Math.abs(f - e);
+			} else if (s != f) {
+				// System.out.println(" f==e f = " + f + " e = " + e);
+				count++;
+			}
 		}
-		if (Matrix.euclid(start_state, final_state).getFitness() == 0) {
-			return new Fitness((Float.MAX_VALUE / 128), 0);
-		}
-		if (Matrix.euclid(final_state, expected_state).getFitness() == 0) {
-			return new Fitness(0, Matrix.euclid(final_state, expected_state)
-					.getPerfectcount());
-		}
-		return Matrix.euclid(expected_state, final_state);
+
+		// System.out.println("fit  = " + fit + "\ncircuit \n"
+		// + circuit.toLatex(3) + "algo " + algo.print() + "\nAlgoSum "
+		// + algo.getValSum());
+		return new Fitness(fit * fit + algo.getValSum(), count);
 	}
 
 	@Override

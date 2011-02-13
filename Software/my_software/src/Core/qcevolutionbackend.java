@@ -29,7 +29,7 @@ public class qcevolutionbackend {
 
 		qcevolutionbackend be = new qcevolutionbackend();
 		be.setQproblem(new simpleqcproblem("Hadamard"));
-		test_UML_parser tup = new test_UML_parser("config/testset.xml");
+		test_UML_parser tup = new test_UML_parser("config/firstpaulix.xml");
 		be.getQproblem().setTestSuite(tup.parse());
 
 		circuitBuilder cirbui = new basiccircuitbuilder();
