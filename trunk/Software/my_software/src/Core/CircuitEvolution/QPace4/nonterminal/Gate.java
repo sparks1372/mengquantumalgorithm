@@ -8,6 +8,7 @@ import Core.Algorithms.QuantumAlgorithm;
 import Core.Algorithms.QuantumInstructionEnum;
 import Core.Algorithms.Implementation.basicquantumalgorithm;
 import Core.CircuitEvolution.QPace4.Data.QPaceData;
+import Core.CircuitEvolution.QPace4.terminal.Variables.SystemSize;
 import ec.EvolutionState;
 import ec.Problem;
 import ec.gp.ADFStack;
@@ -61,6 +62,9 @@ public class Gate extends GPNode {
 			// Produce the "Control" Qubit ID
 			children[2].eval(state, thread, input, stack, individual, problem);
 			int2 = rd.i;
+			if (int2 > 100) {
+				int2 = SystemSize.SYSTEM_SIZE_FLAG;
+			}
 		} else if (qins == QuantumInstructionEnum.Iterate) {
 
 			int2 = 0;
@@ -79,10 +83,16 @@ public class Gate extends GPNode {
 					problem);
 			rd.i = secinput.i;
 			int1 = rd.i;
+			if (int1 > 100) {
+				int1 = SystemSize.SYSTEM_SIZE_FLAG;
+			}
 		} else {
 			// Produce the "Target Qubit ID
 			children[1].eval(state, thread, input, stack, individual, problem);
 			int1 = rd.i;
+			if (int1 > 100) {
+				int1 = SystemSize.SYSTEM_SIZE_FLAG;
+			}
 		}
 
 		if (QuantumInstructionEnum.hasPhase(qins)) {
@@ -92,6 +102,14 @@ public class Gate extends GPNode {
 		} else {
 			double1 = 0;
 		}
+		if (int1 == 0) {
+			int1 = int1;
+			secinput = new QPaceData();
+			// Produce the "Target Qubit ID
+			children[1].eval(state, thread, secinput, stack, individual,
+					problem);
+		}
+		rd.i = int1;
 
 		rd.qa.addInstruction(qins, int1, int2, double1, subalg);
 
@@ -104,7 +122,7 @@ public class Gate extends GPNode {
 	 */
 	@Override
 	public String toString() {
-		return "";
+		return "Gate";
 	}
 
 }

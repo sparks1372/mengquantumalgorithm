@@ -33,7 +33,7 @@ public class basiccircuitbuilder implements circuitBuilder {
 
 	@Override
 	public Circuit Build(QuantumAlgorithm quantumAlgorithm, int num_qubits) {
-		return Build(quantumAlgorithm, num_qubits, 0);
+		return Build(quantumAlgorithm, num_qubits, SystemSize.SYSTEM_SIZE_FLAG);
 	}
 
 	@Override
@@ -52,15 +52,15 @@ public class basiccircuitbuilder implements circuitBuilder {
 		QuantumInstruction next_instruction;
 		while (iter.hasNext()) {
 			next_instruction = iter.next();
-			Int1 = Math.abs(next_instruction.getInteger1());
-			Int2 = Math.abs(next_instruction.getInteger2());
+			Int1 = next_instruction.getInteger1();
+			Int2 = next_instruction.getInteger2();
 			Double1 = next_instruction.getDouble1();
-
-			Int1 = (Int1 == SystemSize.SYSTEM_SIZE_FLAG) ? num_qubits : Int1;
-			Int2 = (Int2 == SystemSize.SYSTEM_SIZE_FLAG) ? num_qubits : Int2;
 
 			Int1 = (Int1 == LoopVar.LOOP_VARIABLE) ? loopvar : Int1;
 			Int2 = (Int2 == LoopVar.LOOP_VARIABLE) ? loopvar : Int2;
+
+			Int1 = (Int1 == SystemSize.SYSTEM_SIZE_FLAG) ? num_qubits : Int1;
+			Int2 = (Int2 == SystemSize.SYSTEM_SIZE_FLAG) ? num_qubits : Int2;
 
 			// If the requested Qubit number is greater than the number of
 			// Qubits available then set it to the System Size, final Qubit
@@ -154,7 +154,7 @@ public class basiccircuitbuilder implements circuitBuilder {
 					to_return.addGate(Builder_ID, new ControlledU_Gate(
 							(new W_Gate(1)), Int1, Int2));
 					break;
-				case Root:
+				// case Root:
 				case Body:
 					qcarray = next_instruction.getSubalg();
 
@@ -166,7 +166,7 @@ public class basiccircuitbuilder implements circuitBuilder {
 				case Iterate:
 					qcarray = next_instruction.getSubalg();
 
-					for (int i = 0; (qcarray.length > 0) && (i < Int1); i++) {
+					for (int i = 1; (qcarray.length > 0) && (i <= Int1); i++) {
 						try {
 							temp = internal_builder.Build(qcarray[0],
 									num_qubits, i);

@@ -49,7 +49,7 @@ public class Qubit extends GPNode {
 	 */
 	@Override
 	public String toString() {
-		return "";
+		return "Qubit " + value;
 	}
 
 }

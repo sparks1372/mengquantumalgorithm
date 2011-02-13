@@ -49,6 +49,6 @@ public class Instruction extends GPNode {
 	 */
 	@Override
 	public String toString() {
-		return "";
+		return "Instruction " + value;
 	}
 }

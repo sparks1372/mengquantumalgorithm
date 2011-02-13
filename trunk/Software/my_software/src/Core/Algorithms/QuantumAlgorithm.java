@@ -13,5 +13,7 @@ public interface QuantumAlgorithm {
 
 	public abstract int getSize();
 
+	public abstract int getValSum();
+
 	public abstract String print();
 }

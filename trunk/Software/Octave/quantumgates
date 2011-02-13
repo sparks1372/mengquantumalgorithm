@@ -1,0 +1,30 @@
+# Created by Octave 3.2.4, Sun Feb 13 14:16:40 2011 GMT <sam@sam-Vostro-430>
+# name: ans
+# type: string
+# elements: 1
+# length: 30
+/usr/share/octave/packages/3.2
+# name: hadamard
+# type: matrix
+# rows: 2
+# columns: 2
+ 0.7071067811865475 0.7071067811865475
+ 0.7071067811865475 -0.7071067811865475
+# name: paulix
+# type: matrix
+# rows: 2
+# columns: 2
+ 0 1
+ 1 0
+# name: pauliy
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (0,0) (-0,-1)
+ (0,1) (0,0)
+# name: pauliz
+# type: matrix
+# rows: 2
+# columns: 2
+ 1 0
+ 0 -1

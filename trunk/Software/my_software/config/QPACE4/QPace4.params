@@ -1,30 +1,30 @@
 parent.0 = ../../ec/gp/koza/koza.params
 
 state = Core.CircuitEvolution.QPace4.State.QPaceEvoState
-stat = Core.CircuitEvolution.QPace4.Stats.QPACE_stats
+#stat = Core.CircuitEvolution.QPace4.Stats.QPACE_stats
 pop.subpop.0.species.ind = Core.CircuitEvolution.QPace4.Individual.QPace_Ind
 
-pop.subpop.0.species.pipe.num-sources = 3
+#pop.subpop.0.species.pipe.num-sources = 3
 
-pop.subpop.0.species.pipe.source.0.prob = 0.8
-pop.subpop.0.species.pipe.source.1.prob = 0.1
-pop.subpop.0.species.pipe.source.2.prob = 0.1
+#pop.subpop.0.species.pipe.source.0.prob = 0.8
+#pop.subpop.0.species.pipe.source.1.prob = 0.1
+#pop.subpop.0.species.pipe.source.2.prob = 0.1
 
 pop.subpop.0.species.pipe.source.1 = ec.gp.breed.MutateOneNodePipeline
-pop.subpop.0.species.pipe.source.2 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionReductionMutation
+#pop.subpop.0.species.pipe.source.2 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionReductionMutation
 
-gp.breed.instruction-reduction.source.0 = ec.select.FitProportionateSelection
-gp.breed.instruction-reduction.ns.0 = ec.gp.koza.KozaNodeSelector
+#gp.breed.instruction-reduction.source.0 = ec.select.FitProportionateSelection
+#gp.breed.instruction-reduction.ns.0 = ec.gp.koza.KozaNodeSelector
 
-generations =				1024
+generations =				128
 quit-on-run-complete =			true
-breed.elite.0 = 			32
+breed.elite.0 = 			2
 
-gp.koza.mutate.tries = 100
-gp.koza.xover.tries = 5
+#gp.koza.mutate.tries = 100
+#gp.koza.xover.tries = 3
 
 pop.subpop.0.size 		= 1024
-breedthreads	= 1
+breedthreads	= 8
 evalthreads	= 1
 seed.0		= 100
 seed.1		= 20
@@ -62,7 +62,7 @@ gp.nc.8.size = 0
 
 gp.nc.9 = ec.gp.GPNodeConstraints
 gp.nc.9.name = terminalinst
-gp.nc.9.returns = int
+gp.nc.9.returns = inst
 gp.nc.9.size = 0
 
 gp.nc.10 = ec.gp.GPNodeConstraints
@@ -95,7 +95,7 @@ gp.nc.12 = ec.gp.GPNodeConstraints
 gp.nc.12.name = nonterminalgateanditeration
 gp.nc.12.returns = int
 gp.nc.12.size = 4
-gp.nc.12.child.0 = int
+gp.nc.12.child.0 = inst
 gp.nc.12.child.1 = int
 gp.nc.12.child.2 = int
 gp.nc.12.child.3 = double
@@ -112,4 +112,4 @@ eval.problem.data = Core.CircuitEvolution.QPace4.Data.QPaceData
 # The following should almost *always* be the same as eval.problem.data
 # For those who are interested, it defines the data object used internally
 # inside ADF stack contexts
-eval.problem.stack.context.data = Core.CircuitEvolution.QPace4.Data.QPaceData
+#eval.problem.stack.context.data = Core.CircuitEvolution.QPace4.Data.QPaceData

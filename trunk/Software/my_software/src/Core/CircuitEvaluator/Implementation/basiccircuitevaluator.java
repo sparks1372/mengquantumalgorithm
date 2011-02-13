@@ -30,6 +30,10 @@ public class basiccircuitevaluator implements circuitevaluator {
 		double fitness_to_return = 0;
 		int count = 0;
 
+		if (alg.getSize() == 0) {
+
+			return new Fitness(Float.MAX_VALUE, 0);
+		}
 		Circuit cir;
 		Iterator<quantumgate> qgate_iter;
 		testsuite ts = quantprob.getTestSuite();
@@ -53,6 +57,18 @@ public class basiccircuitevaluator implements circuitevaluator {
 					qg = qgate_iter.next();
 					state = qg.apply(state);
 				}
+				boolean same = true;
+				for (int i = 0; same && (i < state.getRowDimension()); i++) {
+					if ((state.get(i, 0).real() != tc.getStartingstate()
+							.get(i, 0).real())
+							&& (state.get(i, 0).imag() != tc.getStartingstate()
+									.get(i, 0).imag())) {
+						same = false;
+					}
+				}
+				if (same) {
+					return new Fitness(Float.MAX_VALUE, 0);
+				}
 				temp = ff.evaluate(tc.getStartingstate(), state,
 						tc.getFinalstate(), cir, alg);
 				fitness_to_return += temp.getFitness();
@@ -60,7 +76,9 @@ public class basiccircuitevaluator implements circuitevaluator {
 			}
 
 		}
-
+		if (fitness_to_return > Float.MAX_VALUE) {
+			return new Fitness(Float.MAX_VALUE, 0);
+		}
 		return new Fitness(fitness_to_return, count);
 	}
 

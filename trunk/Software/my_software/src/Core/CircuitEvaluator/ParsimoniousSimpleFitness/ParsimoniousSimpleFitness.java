@@ -27,27 +27,29 @@ public class ParsimoniousSimpleFitness implements FitnessFunction {
 	@Override
 	public Fitness evaluate(Matrix start_state, Matrix final_state,
 			Matrix expected_state, Circuit circuit, QuantumAlgorithm algo) {
-		if (Matrix.euclid(start_state, expected_state).getFitness() == 0) {
-			return new Fitness(0, 0);
+
+		double fit = 0.0;
+		int count = 0;
+		for (int i = 0; i < final_state.getRowDimension(); i++) {
+			double f = final_state.get(i, 0)
+					.times(final_state.get(i, 0).conj()).mod();
+			double e = expected_state.get(i, 0)
+					.times(expected_state.get(i, 0).conj()).mod();
+			if (f != e) {
+				System.out.println("f = " + f + " e = " + e + " fit + "
+						+ Math.abs(f - e));
+				fit += Math.abs(f - e);
+			} else {
+				System.out.println(" f==e f = " + f + " e = " + e);
+				count++;
+			}
 		}
-		if (Matrix.euclid(start_state, final_state).getFitness() == 0) {
-			return new Fitness((Float.MAX_VALUE / 128), 0);
-		}
-		Double fitness = Matrix.euclid(expected_state, final_state)
-				.getFitness();
-		int count = Matrix.euclid(expected_state, final_state)
-				.getPerfectcount();
-		fitness *= 1024;
-		if (circuit.getSize() != 0) {
-			int size = circuit.getSize() + algo.getSize();
-			fitness = size + fitness;
-		} else {
-			fitness = (double) (Float.MAX_VALUE / 128);
-		}
-		if (Matrix.euclid(final_state, expected_state).getFitness() == 0) {
-			return new Fitness(fitness, count);
-		}
-		return new Fitness(fitness, count);
+		int size = circuit.getSize() + algo.getSize();
+		fit = size + fit;
+		System.out.println("fit  = " + fit + "\ncircuit \n"
+				+ circuit.toLatex(3) + "algo " + algo.print() + "\nAlgoSum "
+				+ algo.getValSum());
+		return new Fitness(fit * fit + algo.getValSum(), count);
 	}
 
 	@Override

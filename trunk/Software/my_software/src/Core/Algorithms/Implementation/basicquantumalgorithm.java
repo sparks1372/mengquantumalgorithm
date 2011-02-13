@@ -11,6 +11,7 @@ import Core.Algorithms.QuantumInstructionEnum;
 public class basicquantumalgorithm implements QuantumAlgorithm {
 	private final LinkedList<QuantumInstruction>	inst_list;
 	private int										size	= 0;
+	private int										val_sum	= 0;
 
 	public basicquantumalgorithm() {
 		inst_list = new LinkedList<QuantumInstruction>();
@@ -24,13 +25,15 @@ public class basicquantumalgorithm implements QuantumAlgorithm {
 		switch (inst) {
 			case Body:
 			case Iterate:
-			case Root:
+				// case Root:
 				size = size + 5;
 				break;
 			default:
 				size = size + 1;
 				break;
 		}
+		val_sum += Math.abs(gate1);
+		val_sum += Math.abs(gate2);
 		to_add.setInstruction(inst);
 		to_add.setInteger1(gate1);
 		to_add.setInteger2(gate2);
@@ -42,6 +45,8 @@ public class basicquantumalgorithm implements QuantumAlgorithm {
 		}
 		for (int i = 0; i < to_add.getSubalg().length; i++) {
 			size = size + to_add.getSubalg()[i].getSize();
+
+			val_sum += to_add.getSubalg()[i].getValSum();
 		}
 
 		inst_list.add(to_add);
@@ -60,6 +65,17 @@ public class basicquantumalgorithm implements QuantumAlgorithm {
 	@Override
 	public int getSize() {
 		return size;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.Algorithms.QuantumAlgorithm#getValSum()
+	 */
+	@Override
+	public int getValSum() {
+		// TODO Auto-generated method stub
+		return val_sum;
 	}
 
 	/*

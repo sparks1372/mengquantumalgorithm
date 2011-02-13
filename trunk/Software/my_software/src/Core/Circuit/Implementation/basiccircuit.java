@@ -126,13 +126,14 @@ public class basiccircuit implements Circuit {
 		}
 
 		String to_return = new String();
-		String new_line = "\\\\\n";
+		int qubit = 1;
+		String new_line = "\\\\%" + qubit + "\n";
 		to_return = to_return
 				.concat("\\begin{figure}\n\\[\n\\Qcircuit @C=1.0em @R=.7em {\n");
-
 		for (String element : cir_diag) {
 			to_return = to_return.concat(element);
 			to_return = to_return.concat(new_line);
+			new_line = "\\\\%" + ++qubit + "\n";
 		}
 
 		to_return = to_return.concat("}\n\\]\n\\end{figure}\n");

@@ -65,7 +65,7 @@ public class Control extends GPNode {
 	 */
 	@Override
 	public String toString() {
-		return "";
+		return "Body";
 	}
 
 }

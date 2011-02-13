@@ -2,10 +2,34 @@ package Core.CircuitEvolution.GateImplementations;
 
 import Core.Circuit.quantumgate;
 import Jama.Matrix;
+import Testing.predefined_states;
 import Utils.Complex;
 import Utils.Tensor_Matrix;
 
 public class W_Gate implements quantumgate {
+	public static void main(String[] args) {
+
+		W_Gate test = new W_Gate(1);
+
+		System.out.println("2 qubits state 00, Pauli X Qubit 1");
+		Matrix test_state = predefined_states.get_2q_0();
+		test_state.print_state(0, 0);
+		Matrix result = test.apply(test_state);
+		result.print_state(0, 0);
+
+		System.out.println("2 qubits state 01, Pauli X Qubit 1");
+		test_state = predefined_states.get_2q_1();
+		test_state.print_state(0, 0);
+		result = test.apply(test_state);
+		result.print_state(0, 0);
+
+		System.out.println("2 qubits state 10, Pauli X Qubit 1");
+		test_state = predefined_states.get_2q_3();
+		test_state.print_state(0, 0);
+		result = test.apply(test_state);
+		result.print_state(0, 0);
+	}
+
 	private final int		targ;
 	private final Matrix	unitary;
 

@@ -13,7 +13,7 @@ public enum QuantumInstructionEnum {
 	// Control instructions
 	Iterate,
 	Body,
-	Root,
+	// Root,
 	Create_CH,
 	Create_CX,
 	Create_CY,
