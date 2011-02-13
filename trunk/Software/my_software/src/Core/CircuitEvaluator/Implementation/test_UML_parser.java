@@ -31,9 +31,9 @@ public class test_UML_parser implements testparser {
 		tup.parse();
 	}
 
-	Document	dom;
+	Document dom;
 
-	testsuite	ts;
+	testsuite ts;
 
 	/**
  * 
@@ -181,7 +181,7 @@ public class test_UML_parser implements testparser {
 
 						// get the employee element
 						Element tcel = (Element) tcnl.item(j);
-						tc = new testcase();
+						tc = new testcase(j, Integer.toBinaryString(j));
 						tc.setStartingstate(getStartState(tcel, syssize));
 						tc.setFinalstate(getFinalState(tcel, syssize));
 
