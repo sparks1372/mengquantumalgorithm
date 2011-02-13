@@ -40,10 +40,10 @@ public class QPACE_stats extends SimpleStatistics {
 				}
 				if (avfit[x] == null) {
 					avfit[x] = ((KozaFitness) state.population.subpops[x].individuals[y].fitness)
-							.standardizedFitness();
+							.adjustedFitness();
 				} else {
 					avfit[x] += ((KozaFitness) state.population.subpops[x].individuals[y].fitness)
-							.standardizedFitness();
+							.adjustedFitness();
 
 				}
 				count++;

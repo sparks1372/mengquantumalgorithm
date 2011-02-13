@@ -1,9 +1,10 @@
-# Created by Octave 3.2.4, Sun Feb 13 14:16:40 2011 GMT <sam@sam-Vostro-430>
+# Created by Octave 3.2.4, Sun Feb 13 23:03:17 2011 GMT <sam@sam-Vostro-430>
 # name: ans
-# type: string
-# elements: 1
-# length: 30
-/usr/share/octave/packages/3.2
+# type: matrix
+# rows: 2
+# columns: 1
+ 0
+ -1
 # name: hadamard
 # type: matrix
 # rows: 2
@@ -28,3 +29,93 @@
 # columns: 2
  1 0
  0 -1
+# name: rx1
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (0.8775825618903728,-0) (-0,-0.479425538604203)
+ (-0,-0.479425538604203) (0.8775825618903728,-0)
+# name: rxpi
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (6.123031769111886e-17,-0) (-0,-1)
+ (-0,-1) (6.123031769111886e-17,-0)
+# name: rxpi2
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (0.7071067811865476,-0) (-0,-0.7071067811865475)
+ (-0,-0.7071067811865475) (0.7071067811865476,-0)
+# name: rxpi4
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (0.9238795325112867,-0) (-0,-0.3826834323650898)
+ (-0,-0.3826834323650898) (0.9238795325112867,-0)
+# name: ry1
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (0.8775825618903728,-0) (-0.479425538604203,0)
+ (0.479425538604203,-0) (0.8775825618903728,-0)
+# name: rypi
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (6.123031769111886e-17,-0) (-1,0)
+ (1,-0) (6.123031769111886e-17,-0)
+# name: rypio2
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (0.7071067811865476,-0) (-0.7071067811865475,0)
+ (0.7071067811865475,-0) (0.7071067811865476,-0)
+# name: rypio4
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (0.9238795325112867,-0) (-0.3826834323650898,0)
+ (0.3826834323650898,-0) (0.9238795325112867,-0)
+# name: rz1
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (0.8775825618903728,-0.479425538604203) (-0,-0)
+ (-0,-0) (0.8775825618903728,0.479425538604203)
+# name: rzpi
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (6.123031769111886e-17,-1) (-0,-0)
+ (-0,-0) (6.123031769111886e-17,1)
+# name: rzpio2
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (0.7071067811865476,-0.7071067811865475) (-0,-0)
+ (-0,-0) (0.7071067811865476,0.7071067811865475)
+# name: rzpio4
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (0.9238795325112867,-0.3826834323650898) (-0,-0)
+ (-0,-0) (0.9238795325112867,0.3826834323650898)
+# name: sate
+# type: matrix
+# rows: 2
+# columns: 1
+ 1
+ 0
+# name: state
+# type: matrix
+# rows: 2
+# columns: 1
+ 1
+ 0
+# name: temp
+# type: complex matrix
+# rows: 2
+# columns: 2
+ (0,-0.7071067811865475) (-0,-0.7071067811865476)
+ (0,0.7071067811865476) (0,-0.7071067811865475)

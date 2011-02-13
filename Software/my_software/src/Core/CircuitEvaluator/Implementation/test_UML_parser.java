@@ -26,14 +26,16 @@ import Utils.Complex;
  * 
  */
 public class test_UML_parser implements testparser {
+	static String	zero_string	= "0";
+
 	public static void main(String[] args) {
 		test_UML_parser tup = new test_UML_parser("config/testset.xml");
 		tup.parse();
 	}
 
-	Document dom;
+	Document	dom;
 
-	testsuite ts;
+	testsuite	ts;
 
 	/**
  * 
@@ -178,10 +180,13 @@ public class test_UML_parser implements testparser {
 				NodeList tcnl = tsel.getElementsByTagName("testcase");
 				if ((tcnl != null) && (tcnl.getLength() > 0)) {
 					for (int j = 0; j < tcnl.getLength(); j++) {
-
+						String b_str = Integer.toBinaryString(j);
+						while (b_str.length() != syssize) {
+							b_str = zero_string.concat(b_str);
+						}
 						// get the employee element
 						Element tcel = (Element) tcnl.item(j);
-						tc = new testcase(j, Integer.toBinaryString(j));
+						tc = new testcase(j, b_str);
 						tc.setStartingstate(getStartState(tcel, syssize));
 						tc.setFinalstate(getFinalState(tcel, syssize));
 

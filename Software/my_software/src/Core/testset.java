@@ -43,6 +43,16 @@ public class testset {
 	}
 
 	/**
+	 * Getter of the property <tt>testcases.size()</tt>
+	 * 
+	 * @return Returns the number of testcases.
+	 * @uml.property name="testcases"
+	 */
+	public int getNumberOfTestcases() {
+		return testcases.size();
+	}
+
+	/**
 	 * Getter of the property <tt>testcases</tt>
 	 * 
 	 * @return Returns the testcases.

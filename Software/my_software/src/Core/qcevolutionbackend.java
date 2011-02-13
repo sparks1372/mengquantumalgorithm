@@ -7,7 +7,7 @@ import Core.CircuitEvaluator.circuitevaluator;
 import Core.CircuitEvaluator.fitnessfunctionmanager;
 import Core.CircuitEvaluator.Implementation.basiccircuitevaluator;
 import Core.CircuitEvaluator.Implementation.test_UML_parser;
-import Core.CircuitEvaluator.SimpleFitness.SimpleFitness;
+import Core.CircuitEvaluator.PhaseSensitiveParsimoniousSimpleFitness.PhaseSensitiveParsimoniousSimpleFitness;
 import Core.CircuitEvolution.circuitsearchengine;
 import Core.CircuitEvolution.searchenginemanager;
 import Core.CircuitEvolution.QPace4.QPace4_Imp;
@@ -29,25 +29,26 @@ public class qcevolutionbackend {
 
 		qcevolutionbackend be = new qcevolutionbackend();
 		be.setQproblem(new simpleqcproblem("Hadamard"));
-		test_UML_parser tup = new test_UML_parser("config/firstpaulix.xml");
+		test_UML_parser tup = new test_UML_parser(args[0]);
 		be.getQproblem().setTestSuite(tup.parse());
 
 		circuitBuilder cirbui = new basiccircuitbuilder();
 		circuitevaluator cireval = new basiccircuitevaluator(cirbui);
+		cireval.setQfitnessfunction(new PhaseSensitiveParsimoniousSimpleFitness());
 		// cireval.setQfitnessfunction(new ParsimoniousSimpleFitness());
-		cireval.setQfitnessfunction(new SimpleFitness());
+		// cireval.setQfitnessfunction(new SimpleFitness());
 		cireval.setQproblem(be.getQproblem());
 		boolean[] temp = new boolean[QuantumInstructionEnum.values().length];
 		for (int i = 0; i < temp.length; i++) {
-			if ((i == QuantumInstructionEnum.Create_Zero.ordinal())
-					|| (i == QuantumInstructionEnum.Create_CRX.ordinal())
-					|| (i == QuantumInstructionEnum.Create_CRY.ordinal())
-					|| (i == QuantumInstructionEnum.Create_CRZ.ordinal())
-					|| (i == QuantumInstructionEnum.Create_RX.ordinal())
-					|| (i == QuantumInstructionEnum.Create_RY.ordinal())
-					|| (i == QuantumInstructionEnum.Create_RZ.ordinal())) {
+			if (// (i == QuantumInstructionEnum.Create_Zero.ordinal())
+			// || (i == QuantumInstructionEnum.Create_CRX.ordinal())
+			// || (i == QuantumInstructionEnum.Create_CRY.ordinal())
+			// || (i == QuantumInstructionEnum.Create_CRZ.ordinal())
+			// || (i == QuantumInstructionEnum.Create_RX.ordinal())
+			// || (i == QuantumInstructionEnum.Create_RY.ordinal())
+			// || (i == QuantumInstructionEnum.Create_RZ.ordinal())
+			/* || */(i == QuantumInstructionEnum.Create_P.ordinal())) {
 				temp[i] = false;
-				temp[i] = true;
 			} else {
 				temp[i] = true;
 			}
@@ -59,22 +60,22 @@ public class qcevolutionbackend {
 	/**
 	 * @uml.property name="semanager"
 	 */
-	private searchenginemanager semanager;
+	private searchenginemanager		semanager;
 
 	/**
 	 * @uml.property name="currentse"
 	 */
-	private circuitsearchengine currentse;
+	private circuitsearchengine		currentse;
 
 	/**
 	 * @uml.property name="qproblem"
 	 */
-	private quantumproblem qproblem;
+	private quantumproblem			qproblem;
 
 	/**
 	 * @uml.property name="ffmanager"
 	 */
-	private fitnessfunctionmanager ffmanager;
+	private fitnessfunctionmanager	ffmanager;
 
 	/**
 	 * Getter of the property <tt>currentse</tt>

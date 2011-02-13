@@ -20,6 +20,7 @@ import Core.CircuitEvolution.GateImplementations.RZ_Gate;
 import Core.CircuitEvolution.GateImplementations.Swap_Gate;
 import Core.CircuitEvolution.GateImplementations.V_Gate;
 import Core.CircuitEvolution.GateImplementations.W_Gate;
+import Core.CircuitEvolution.GateImplementations.Zero_Gate;
 import Core.CircuitEvolution.QPace4.terminal.Variables.LoopVar;
 import Core.CircuitEvolution.QPace4.terminal.Variables.SystemSize;
 
@@ -112,47 +113,67 @@ public class basiccircuitbuilder implements circuitBuilder {
 					to_return.addGate(Builder_ID, new W_Gate(Int1));
 					break;
 				case Create_Zero:
-					// to_return.addGate(Builder_ID, new Zero_Gate(Int1));
+					to_return.addGate(Builder_ID, new Zero_Gate(Int1));
 					break;
 				case Create_CH:
-					to_return.addGate(Builder_ID, new ControlledU_Gate(
-							(new Hadamard_Gate(1)), Int1, Int2));
+					if (Int1 != Int2) {
+						to_return.addGate(Builder_ID, new ControlledU_Gate(
+								(new Hadamard_Gate(1)), Int1, Int2));
+					}
 					break;
 				case Create_CX:
-					to_return.addGate(Builder_ID, new ControlledU_Gate(
-							(new Pauli_X(1)), Int1, Int2));
+					if (Int1 != Int2) {
+						to_return.addGate(Builder_ID, new ControlledU_Gate(
+								(new Pauli_X(1)), Int1, Int2));
+					}
 					break;
 				case Create_CY:
-					to_return.addGate(Builder_ID, new ControlledU_Gate(
-							(new Pauli_Y(1)), Int1, Int2));
+					if (Int1 != Int2) {
+						to_return.addGate(Builder_ID, new ControlledU_Gate(
+								(new Pauli_Y(1)), Int1, Int2));
+					}
 					break;
 				case Create_CZ:
-					to_return.addGate(Builder_ID, new ControlledU_Gate(
-							(new Pauli_Z(1)), Int1, Int2));
+					if (Int1 != Int2) {
+						to_return.addGate(Builder_ID, new ControlledU_Gate(
+								(new Pauli_Z(1)), Int1, Int2));
+					}
 					break;
 				case Create_CP:
-					to_return.addGate(Builder_ID, new ControlledU_Gate(
-							(new Phase_Gate(1, Double1)), Int1, Int2));
+					if (Int1 != Int2) {
+						to_return.addGate(Builder_ID, new ControlledU_Gate(
+								(new Phase_Gate(1, Double1)), Int1, Int2));
+					}
 					break;
 				case Create_CRX:
-					to_return.addGate(Builder_ID, new ControlledU_Gate(
-							(new RX_Gate(1, Double1)), Int1, Int2));
+					if (Int1 != Int2) {
+						to_return.addGate(Builder_ID, new ControlledU_Gate(
+								(new RX_Gate(1, Double1)), Int1, Int2));
+					}
 					break;
 				case Create_CRY:
-					to_return.addGate(Builder_ID, new ControlledU_Gate(
-							(new RY_Gate(1, Double1)), Int1, Int2));
+					if (Int1 != Int2) {
+						to_return.addGate(Builder_ID, new ControlledU_Gate(
+								(new RY_Gate(1, Double1)), Int1, Int2));
+					}
 					break;
 				case Create_CRZ:
-					to_return.addGate(Builder_ID, new ControlledU_Gate(
-							(new RZ_Gate(1, Double1)), Int1, Int2));
+					if (Int1 != Int2) {
+						to_return.addGate(Builder_ID, new ControlledU_Gate(
+								(new RZ_Gate(1, Double1)), Int1, Int2));
+					}
 					break;
 				case Create_CV:
-					to_return.addGate(Builder_ID, new ControlledU_Gate(
-							(new V_Gate(1)), Int1, Int2));
+					if (Int1 != Int2) {
+						to_return.addGate(Builder_ID, new ControlledU_Gate(
+								(new V_Gate(1)), Int1, Int2));
+					}
 					break;
 				case Create_CW:
-					to_return.addGate(Builder_ID, new ControlledU_Gate(
-							(new W_Gate(1)), Int1, Int2));
+					if (Int1 != Int2) {
+						to_return.addGate(Builder_ID, new ControlledU_Gate(
+								(new W_Gate(1)), Int1, Int2));
+					}
 					break;
 				// case Root:
 				case Body:
