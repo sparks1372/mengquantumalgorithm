@@ -59,22 +59,22 @@ public class qcevolutionbackend {
 	/**
 	 * @uml.property name="semanager"
 	 */
-	private searchenginemanager		semanager;
+	private searchenginemanager semanager;
 
 	/**
 	 * @uml.property name="currentse"
 	 */
-	private circuitsearchengine		currentse;
+	private circuitsearchengine currentse;
 
 	/**
 	 * @uml.property name="qproblem"
 	 */
-	private quantumproblem			qproblem;
+	private quantumproblem qproblem;
 
 	/**
 	 * @uml.property name="ffmanager"
 	 */
-	private fitnessfunctionmanager	ffmanager;
+	private fitnessfunctionmanager ffmanager;
 
 	/**
 	 * Getter of the property <tt>currentse</tt>

@@ -3,14 +3,15 @@ Generation: 0
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_Y on gate 1 and gate 0 with phase 0.0
-Create_RZ on gate 1 and gate 0 with phase 0.7853981633974483
-Create_Y on gate 1 and gate 0 with phase 0.0
+Create_SWAP on gate -2 and gate 3 with phase 0.0
+Create_RY on gate -2 and gate 0 with phase 1.0
+Create_RZ on gate -2 and gate 0 with phase 1.5707963267948966
+Create_RY on gate -2 and gate 0 with phase 1.0
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{Y}&\gate{RZ(0.7853981633974483)}&\gate{Y}&\\%1
+\gate{RY(1.0)}&\gate{RZ(1.5707963267948966)}&\gate{RY(1.0)}&\\%1
 }
 \]
 \end{figure}
@@ -18,7 +19,378 @@ Create_Y on gate 1 and gate 0 with phase 0.0
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{Y}&\gate{RZ(0.7853981633974483)}&\gate{Y}&\\%1
+\qw&\qw&\qw&\\%1
+\gate{RY(1.0)}&\gate{RZ(1.5707963267948966)}&\gate{RY(1.0)}&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\qw&\qw&\qw&\\%1
+\qw&\qw&\qw&\\%2
+\gate{RY(1.0)}&\gate{RZ(1.5707963267948966)}&\gate{RY(1.0)}&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=581.9614 Adjusted=0.0017153794 Hits=0
+
+Generation: 1
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_SWAP on gate -2 and gate 3 with phase 0.0
+Create_RY on gate -2 and gate 0 with phase 1.0
+Create_RZ on gate -2 and gate 0 with phase 1.5707963267948966
+Create_RY on gate -2 and gate 0 with phase 1.0
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.0)}&\gate{RZ(1.5707963267948966)}&\gate{RY(1.0)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\qw&\qw&\qw&\\%1
+\gate{RY(1.0)}&\gate{RZ(1.5707963267948966)}&\gate{RY(1.0)}&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\qw&\qw&\qw&\\%1
+\qw&\qw&\qw&\\%2
+\gate{RY(1.0)}&\gate{RZ(1.5707963267948966)}&\gate{RY(1.0)}&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=581.9614 Adjusted=0.0017153794 Hits=0
+
+Generation: 2
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_CY on gate 1 and gate 4 with phase 0.0
+Create_RZ on gate 1 and gate 0 with phase 1.0
+Create_X on gate 1 and gate 0 with phase 0.0
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\qw&\gate{RZ(1.0)}&\gate{X}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\ctrl &\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\qw \qwx&\qw&\qw&\\%2
+\ctrl &\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=469.42856 Adjusted=0.0021257212 Hits=0
+
+Generation: 3
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_CY on gate 1 and gate 4 with phase 0.0
+Create_RZ on gate 1 and gate 0 with phase 1.0
+Create_X on gate 1 and gate 0 with phase 0.0
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\qw&\gate{RZ(1.0)}&\gate{X}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\ctrl &\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\qw \qwx&\qw&\qw&\\%2
+\ctrl &\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=469.42856 Adjusted=0.0021257212 Hits=0
+
+Generation: 4
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_CY on gate 1 and gate 4 with phase 0.0
+Create_RZ on gate 1 and gate 0 with phase 1.0
+Create_X on gate 1 and gate 0 with phase 0.0
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\qw&\gate{RZ(1.0)}&\gate{X}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\ctrl &\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\qw \qwx&\qw&\qw&\\%2
+\ctrl &\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=469.42856 Adjusted=0.0021257212 Hits=0
+
+Generation: 5
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_CY on gate 1 and gate 4 with phase 0.0
+Create_RZ on gate 1 and gate 0 with phase 1.0
+Create_X on gate 1 and gate 0 with phase 0.0
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\qw&\gate{RZ(1.0)}&\gate{X}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\ctrl &\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\qw \qwx&\qw&\qw&\\%2
+\ctrl &\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=469.42856 Adjusted=0.0021257212 Hits=0
+
+Generation: 6
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_CY on gate 1 and gate 4 with phase 0.0
+Create_RZ on gate 1 and gate 0 with phase 1.0
+Create_X on gate 1 and gate 0 with phase 0.0
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\qw&\gate{RZ(1.0)}&\gate{X}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\ctrl &\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\qw \qwx&\qw&\qw&\\%2
+\ctrl &\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=469.42856 Adjusted=0.0021257212 Hits=0
+
+Generation: 7
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_CY on gate 1 and gate 4 with phase 0.0
+Create_RZ on gate 1 and gate 0 with phase 1.0
+Create_X on gate 1 and gate 0 with phase 0.0
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\qw&\gate{RZ(1.0)}&\gate{X}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\ctrl &\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\qw \qwx&\qw&\qw&\\%2
+\ctrl &\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=469.42856 Adjusted=0.0021257212 Hits=0
+
+Generation: 8
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_CY on gate 1 and gate 4 with phase 0.0
+Create_RZ on gate 1 and gate 0 with phase 1.0
+Create_X on gate 1 and gate 0 with phase 0.0
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\qw&\gate{RZ(1.0)}&\gate{X}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\ctrl &\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\qw \qwx&\qw&\qw&\\%2
+\ctrl &\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=469.42856 Adjusted=0.0021257212 Hits=0
+
+Generation: 9
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_CY on gate 1 and gate 4 with phase 0.0
+Create_RZ on gate 1 and gate 0 with phase 1.0
+Create_X on gate 1 and gate 0 with phase 0.0
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\qw&\gate{RZ(1.0)}&\gate{X}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\ctrl &\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{Y}&\gate{RZ(1.0)}&\gate{X}&\\%1
+\qw \qwx&\qw&\qw&\\%2
+\ctrl &\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=469.42856 Adjusted=0.0021257212 Hits=0
+
+Generation: 10
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.0
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\gate{RY(1.0)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\gate{RY(1.0)}&\\%1
 \qw&\qw&\qw&\\%2
 }
 \]
@@ -27,375 +399,26 @@ Create_Y on gate 1 and gate 0 with phase 0.0
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{Y}&\gate{RZ(0.7853981633974483)}&\gate{Y}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\gate{RY(1.0)}&\\%1
 \qw&\qw&\qw&\\%2
 \qw&\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=82.0 Adjusted=0.012048192 Hits=21
-
-Generation: 1
-Best Individual:
-Subpopulation 0:
-Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 3.141592653589793
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(3.141592653589793)}&\\%1
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(3.141592653589793)}&\\%2
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(3.141592653589793)}&\\%3
-}
-\]
-\end{figure}
-
-Fitness: Standardized=37.5 Adjusted=0.025974026 Hits=0
-
-Generation: 2
-Best Individual:
-Subpopulation 0:
-Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 3.141592653589793
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(3.141592653589793)}&\\%1
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(3.141592653589793)}&\\%2
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(3.141592653589793)}&\\%3
-}
-\]
-\end{figure}
-
-Fitness: Standardized=37.5 Adjusted=0.025974026 Hits=0
-
-Generation: 3
-Best Individual:
-Subpopulation 0:
-Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
-}
-\]
-\end{figure}
-
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
-
-Generation: 4
-Best Individual:
-Subpopulation 0:
-Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
-}
-\]
-\end{figure}
-
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
-
-Generation: 5
-Best Individual:
-Subpopulation 0:
-Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
-}
-\]
-\end{figure}
-
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
-
-Generation: 6
-Best Individual:
-Subpopulation 0:
-Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
-}
-\]
-\end{figure}
-
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
-
-Generation: 7
-Best Individual:
-Subpopulation 0:
-Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
-}
-\]
-\end{figure}
-
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
-
-Generation: 8
-Best Individual:
-Subpopulation 0:
-Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
-}
-\]
-\end{figure}
-
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
-
-Generation: 9
-Best Individual:
-Subpopulation 0:
-Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
-}
-\]
-\end{figure}
-
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
-
-Generation: 10
-Best Individual:
-Subpopulation 0:
-Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
-}
-\]
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
-}
-\]
-\end{figure}
-
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=467.48578 Adjusted=0.0021345366 Hits=0
 
 Generation: 11
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -403,8 +426,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -412,25 +435,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 12
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -438,8 +462,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -447,25 +471,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 13
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -473,8 +498,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -482,25 +507,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 14
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -508,8 +534,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -517,25 +543,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 15
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -543,8 +570,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -552,25 +579,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 16
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -578,8 +606,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -587,25 +615,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 17
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -613,8 +642,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -622,25 +651,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 18
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -648,8 +678,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -657,25 +687,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 19
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -683,8 +714,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -692,25 +723,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 20
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -718,8 +750,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -727,25 +759,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 21
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -753,8 +786,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -762,25 +795,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 22
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -788,8 +822,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -797,25 +831,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 23
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -823,8 +858,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -832,25 +867,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 24
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -858,8 +894,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -867,25 +903,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 25
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -893,8 +930,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -902,25 +939,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 26
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -928,8 +966,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -937,25 +975,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 27
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -963,8 +1002,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -972,25 +1011,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 28
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -998,8 +1038,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -1007,25 +1047,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 29
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -1033,8 +1074,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -1042,25 +1083,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 30
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -1068,8 +1110,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -1077,25 +1119,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 31
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -1103,8 +1146,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -1112,25 +1155,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 32
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -1138,8 +1182,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -1147,25 +1191,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 33
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -1173,8 +1218,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -1182,25 +1227,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 34
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -1208,8 +1254,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -1217,25 +1263,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 35
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -1243,8 +1290,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -1252,25 +1299,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 36
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -1278,8 +1326,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -1287,25 +1335,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 37
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -1313,8 +1362,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -1322,25 +1371,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 38
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -1348,8 +1398,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -1357,25 +1407,26 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
 
 Generation: 39
 Best Individual:
 Subpopulation 0:
 Evaluated: T
-Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\gate{RZ(1.5707963267948966)}&\\%1
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
 }
 \]
 \end{figure}
@@ -1383,8 +1434,8 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\gate{RZ(1.5707963267948966)}&\\%2
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
 }
 \]
 \end{figure}
@@ -1392,11 +1443,3214 @@ Create_RZ on gate -1 and gate 0 with phase 1.5707963267948966
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-\qw&\\%1
-\qw&\\%2
-\gate{RZ(1.5707963267948966)}&\\%3
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
 }
 \]
 \end{figure}
 
-Fitness: Standardized=29.25 Adjusted=0.03305785 Hits=0
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 40
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 41
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 42
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 43
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 44
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 45
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 46
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 47
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 48
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 49
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 50
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 51
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 52
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 53
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 54
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 55
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 56
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 57
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 58
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 59
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 60
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 61
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 62
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 63
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 64
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 65
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 66
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 67
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 68
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 69
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 70
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 71
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 72
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 73
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 74
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 75
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 76
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 77
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 78
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 79
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 80
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 81
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 82
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 83
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 84
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 85
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 86
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 87
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 88
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 89
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 90
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 91
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 92
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 93
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 94
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 95
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 96
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 97
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 98
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 99
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 100
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 101
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 102
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 103
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 104
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 105
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 106
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 107
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 108
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 109
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 110
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 111
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 112
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 113
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 114
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 115
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 116
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 117
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 118
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 119
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 120
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 121
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 122
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 123
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 124
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 125
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 126
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Generation: 127
+Best Individual:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
+
+Best Individual of Run:
+Subpopulation 0:
+Evaluated: T
+Create_RY on gate 1 and gate 0 with phase 1.5707963267948966
+Create_RZ on gate 1 and gate 0 with phase 1.5707963267948966
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+}
+\]
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+\gate{RY(1.5707963267948966)}&\gate{RZ(1.5707963267948966)}&\\%1
+\qw&\qw&\\%2
+\qw&\qw&\\%3
+}
+\]
+\end{figure}
+
+Fitness: Standardized=323.2381 Adjusted=0.0030841534 Hits=0
