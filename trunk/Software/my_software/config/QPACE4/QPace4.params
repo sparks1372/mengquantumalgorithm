@@ -6,34 +6,46 @@ pop.subpop.0.species.ind = Core.CircuitEvolution.QPace4.Individual.QPace_Ind
 
 #pop.subpop.0.species.pipe.num-sources = 3
 
-#pop.subpop.0.species.pipe.source.0.prob = 0.8
-#pop.subpop.0.species.pipe.source.1.prob = 0.1
-#pop.subpop.0.species.pipe.source.2.prob = 0.1
+#pop.subpop.0.species.pipe.source.0.prob = 0.75
+#pop.subpop.0.species.pipe.source.1.prob = 0
+#pop.subpop.0.species.pipe.source.2.prob = 0.25
 
 pop.subpop.0.species.pipe.source.1 = ec.gp.breed.MutateOneNodePipeline
-#pop.subpop.0.species.pipe.source.2 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionReductionMutation
+#pop.subpop.0.species.pipe.source.2 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionMutation
 
 #gp.breed.instruction-reduction.source.0 = ec.select.FitProportionateSelection
 #gp.breed.instruction-reduction.ns.0 = ec.gp.koza.KozaNodeSelector
+
+gp.breed.instruction-mutation.source.0 = ec.select.FitProportionateSelection
+gp.breed.instruction-mutation.ns.0 = ec.gp.koza.KozaNodeSelector
+pop.subpop.0.species.pipe.generate-max = true
 
 generations =				128
 quit-on-run-complete =			true
 breed.elite.0 = 			2
 
-#gp.koza.mutate.tries = 100
-#gp.koza.xover.tries = 3
+gp.koza.mutate.tries = 100
+gp.koza.xover.tries = 100
 
-pop.subpop.0.size 		= 1024
+pop.subpop.0.size 		= 64
 breedthreads	= 8
-evalthreads	= 1
-seed.0		= 100
-seed.1		= 20
-seed.2		= 300
-seed.3		= 40
-seed.4		= 500
-seed.5		= 60
-seed.6		= 700
-seed.7		= 80
+evalthreads	= 8
+#seed.0		= 100
+#seed.1		= 20
+#seed.2		= 300
+#seed.3		= 40
+#seed.4		= 500
+#seed.5		= 60
+#seed.6		= 700
+#seed.7		= 80
+seed.0		= time
+seed.1		= time
+seed.2		= time
+seed.3		= time
+seed.4		= time
+seed.5		= time
+seed.6		= time
+seed.7		= time
 
 #Types
 #Atomic

@@ -17,9 +17,9 @@ import Core.CircuitEvaluator.circuitevaluator;
 import Jama.Matrix;
 
 public class basiccircuitevaluator implements circuitevaluator {
-	private quantumproblem			quantprob;
-	private FitnessFunction			ff;
-	private final circuitBuilder	cb;
+	private quantumproblem quantprob;
+	private FitnessFunction ff;
+	private final circuitBuilder cb;
 
 	public basiccircuitevaluator(circuitBuilder cirbui) {
 		cb = cirbui;
@@ -79,6 +79,7 @@ public class basiccircuitevaluator implements circuitevaluator {
 		if (fitness_to_return > Float.MAX_VALUE) {
 			return new Fitness(Float.MAX_VALUE, 0);
 		}
+
 		return new Fitness(fitness_to_return, count);
 	}
 
