@@ -10,7 +10,7 @@ import Utils.Complex;
 
 public class SimpleFitness implements FitnessFunction {
 	public static void main(String[] args) {
-		SimpleFitness test = new SimpleFitness();
+		SimpleFitness test = new SimpleFitness("Simple Fitness");
 
 		System.out.println("2 qubits state 00, Pauli X Qubit 1");
 		Matrix final_state = predefined_states.get_2q_0();
@@ -23,7 +23,14 @@ public class SimpleFitness implements FitnessFunction {
 
 	}
 
-	private final String	name	= "Simple Fitness";
+	private final String	name;
+
+	/**
+	 * 
+	 */
+	public SimpleFitness(String n) {
+		name = n;
+	}
 
 	@Override
 	public Fitness evaluate(Matrix start_state, Matrix final_state,

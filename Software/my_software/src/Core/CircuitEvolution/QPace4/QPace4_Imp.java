@@ -32,11 +32,11 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 			}
 		}
 
-		new QPace4_Imp(null, null, temp);
+		// new QPace4_Imp(null, null, temp);
 	}
 
-	private final circuitBuilder		cb;
-	private final circuitevaluator		ce;
+	private circuitBuilder				cb;
+	private circuitevaluator			ce;
 	private static final String			NAME		= "QPace 4 Implementation";
 	private static final EvolutionType	ET			= EvolutionType.Evolutionary;
 	private Circuit						bc;
@@ -45,22 +45,6 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 	private static final String			filename	= "config/ecparams.params";
 
 	private Params_Writer				pw			= null;
-
-	public QPace4_Imp(circuitBuilder cb, circuitevaluator ce, boolean[] ai) {
-		super();
-		this.cb = cb;
-		this.ce = ce;
-		for (int i = 0; i < this.ai.length; i++) {
-			this.ai[i] = ai[i];
-		}
-		try {
-			pw = new Params_Writer(filename);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		pw.updateParams(ai);
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -180,6 +164,22 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 	@Override
 	public String getName() {
 		return NAME;
+	}
+
+	@Override
+	public void init(circuitBuilder cb, circuitevaluator ce, boolean[] ai) {
+		this.cb = cb;
+		this.ce = ce;
+		for (int i = 0; i < this.ai.length; i++) {
+			this.ai[i] = ai[i];
+		}
+		try {
+			pw = new Params_Writer(filename);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pw.updateParams(ai);
 	}
 
 	/*

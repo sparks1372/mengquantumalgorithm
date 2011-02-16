@@ -6,14 +6,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
 
-import Core.testcase;
-import Core.testset;
-import Core.testsuite;
+import Core.Problem.testcase;
+import Core.Problem.testset;
+import Core.Problem.testsuite;
 import Jama.Matrix;
 
 public class TestSuiteToXML {
 
-	static String	zero_string	= "0";
+	private static String	zero_string	= "0";
 
 	public static void TestSuiteToXML(testsuite testsuite, File f) {
 		String filename = f.getAbsolutePath();

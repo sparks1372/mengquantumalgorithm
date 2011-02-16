@@ -1,6 +1,6 @@
 package Core.CircuitEvaluator;
 
-import Core.testsuite;
+import Core.Problem.testsuite;
 
 public interface testparser {
 

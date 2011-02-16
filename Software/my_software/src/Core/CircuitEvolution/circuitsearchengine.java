@@ -48,6 +48,8 @@ public interface circuitsearchengine {
 	 */
 	public String getName();
 
+	public void init(circuitBuilder cb, circuitevaluator ce, boolean[] ai);
+
 	/**
 	 * Setter of the property <tt>availableinstructions</tt>
 	 * 

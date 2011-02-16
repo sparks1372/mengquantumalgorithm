@@ -14,10 +14,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import Core.testcase;
-import Core.testset;
-import Core.testsuite;
 import Core.CircuitEvaluator.testparser;
+import Core.Problem.testcase;
+import Core.Problem.testset;
+import Core.Problem.testsuite;
 import Jama.Matrix;
 import Utils.Complex;
 

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import Core.CircuitEvolution.Util.SE_XML_Parser;
+import Core.CircuitEvolution.Util.SearchEngineTag;
 
 public class searchenginemanager {
 
@@ -12,7 +13,7 @@ public class searchenginemanager {
 	 * @uml.property name="availablesearchengines" readOnly="true"
 	 */
 	// Search Engine Name - Search Engine Class Name
-	private final HashMap<String, String>	availablesearchengines;
+	private final HashMap<String, SearchEngineTag>	availablesearchengines;
 
 	/**
 			 */
@@ -28,15 +29,23 @@ public class searchenginemanager {
 	public circuitsearchengine getSearchEngine(String key) {
 		Object retobj = null;
 		try {
-			Class<?> cls = Class.forName(availablesearchengines.get(key));
+			SearchEngineTag selected = availablesearchengines.get(key);
+			Class<?> cls = Class.forName(selected.Class);
 			Class<?> partypes[] = new Class[0];
 			Constructor<?> ct = cls.getConstructor(partypes);
 			Object arglist[] = new Object[0];
 			retobj = ct.newInstance(arglist);
 		} catch (Throwable e) {
 			System.err.println(e);
+			e.printStackTrace();
 		}
 		return (circuitsearchengine) retobj;
 	}
 
+	public String getSearchEngineDesc(String key) {
+
+		SearchEngineTag selected = availablesearchengines.get(key);
+
+		return selected.Desc;
+	}
 }

@@ -27,22 +27,22 @@ import org.xml.sax.SAXException;
 public class SE_XML_Parser {
 	public static void main(String[] args) {
 		SE_XML_Parser p = new SE_XML_Parser("config/SearchEngine.xml");
-		HashMap<String, String> fft = p.parseDocument();
+		HashMap<String, SearchEngineTag> fft = p.parseDocument();
 		Iterator<String> iter = fft.keySet().iterator();
 		while (iter.hasNext()) {
 			String Name = iter.next();
-			String Class = fft.get(Name);
+			String Class = fft.get(Name).Name;
 			System.out.println("Name : " + Name + " Class : " + Class);
 		}
 
 	}
 
-	HashMap<String, String>	ses;
+	HashMap<String, SearchEngineTag>	ses;
 
-	Document				dom;
+	Document							dom;
 
 	public SE_XML_Parser(String filename) {
-		ses = new HashMap<String, String>();
+		ses = new HashMap<String, SearchEngineTag>();
 		parseXmlFile(filename);
 	}
 
@@ -52,9 +52,10 @@ public class SE_XML_Parser {
 		// name ,id, age and name
 		String Name = getTextValue(empEl, "Name");
 		String Class = getTextValue(empEl, "Class");
+		String Desc = getTextValue(empEl, "Desc");
 
 		// Create a new Employee with the value read from the xml nodes
-		SearchEngineTag e = new SearchEngineTag(Name, Class);
+		SearchEngineTag e = new SearchEngineTag(Name, Class, Desc);
 
 		return e;
 	}
@@ -70,7 +71,7 @@ public class SE_XML_Parser {
 		return textVal;
 	}
 
-	public HashMap<String, String> parseDocument() {
+	public HashMap<String, SearchEngineTag> parseDocument() {
 		// get the root elememt
 		Element docEle = dom.getDocumentElement();
 
@@ -86,7 +87,7 @@ public class SE_XML_Parser {
 				SearchEngineTag e = getSearchEngine(el);
 
 				// add it to list
-				ses.put(e.Name, e.Class);
+				ses.put(e.Name, e);
 			}
 		}
 		return ses;
@@ -123,17 +124,5 @@ public class SE_XML_Parser {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-	}
-}
-
-class SearchEngineTag {
-	public String	Name;
-
-	public String	Class;
-
-	public SearchEngineTag(String name, String class1) {
-		super();
-		Name = name;
-		Class = class1;
 	}
 }

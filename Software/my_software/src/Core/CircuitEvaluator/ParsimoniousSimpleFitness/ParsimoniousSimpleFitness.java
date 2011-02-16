@@ -10,7 +10,8 @@ import Utils.Complex;
 
 public class ParsimoniousSimpleFitness implements FitnessFunction {
 	public static void main(String[] args) {
-		ParsimoniousSimpleFitness test = new ParsimoniousSimpleFitness();
+		ParsimoniousSimpleFitness test = new ParsimoniousSimpleFitness(
+				"Parsimonious Simple Fitness");
 
 		System.out.println("2 qubits state 00, Pauli X Qubit 1");
 		Matrix final_state = predefined_states.get_2q_0();
@@ -23,7 +24,14 @@ public class ParsimoniousSimpleFitness implements FitnessFunction {
 
 	}
 
-	private final String	name	= "Parsimonious Simple Fitness";
+	private final String	name;
+
+	/**
+	 * 
+	 */
+	public ParsimoniousSimpleFitness(String n) {
+		name = n;
+	}
 
 	@Override
 	public Fitness evaluate(Matrix start_state, Matrix final_state,
