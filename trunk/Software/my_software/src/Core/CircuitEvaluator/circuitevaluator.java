@@ -1,7 +1,7 @@
 package Core.CircuitEvaluator;
 
-import Core.quantumproblem;
 import Core.Algorithms.QuantumAlgorithm;
+import Core.Problem.quantumproblem;
 
 public interface circuitevaluator {
 

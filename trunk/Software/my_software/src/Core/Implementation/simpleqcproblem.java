@@ -1,7 +1,7 @@
 package Core.Implementation;
 
-import Core.quantumproblem;
-import Core.testsuite;
+import Core.Problem.quantumproblem;
+import Core.Problem.testsuite;
 
 public class simpleqcproblem implements quantumproblem {
 

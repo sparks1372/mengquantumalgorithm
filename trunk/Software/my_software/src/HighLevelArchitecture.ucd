@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="HighLevelArchitecture" size="2729,1811" id="Core.CircuitEvolution" metadata="uml2-1.0" initialized="true" zoom="0.5" scrolledY="186" tag="1000" key="32303037303533312D31303030204D456E6752657365617263682050726F6A6563742F73616D">
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.13/@sourceConnections.2" name="basicquantuminstruction" location="126,1031" size="229,315" id="Core.Algorithms.Implementation/basicquantuminstruction" runTimeClassModel="setInteger2(I),getInteger1(),setDouble1(D),getSubalg(),getDouble1(),setSubalg([LCore.Algorithms.QuantumAlgorithm;),subalg,setInstruction(LCore.Algorithms.QuantumInstructionEnum;),setInteger1(I),getInteger2(),getInstruction()">
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="HighLevelArchitecture" size="2729,1811" id="Core.CircuitEvolution" metadata="uml2-1.0" initialized="true" zoom="0.5" tag="1000" key="32303037303533312D31303030204D456E6752657365617263682050726F6A6563742F73616D">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.13/@sourceConnections.2" name="basicquantuminstruction" location="126,1031" size="229,315" id="Core.Algorithms.Implementation/basicquantuminstruction" runTimeClassModel="getInteger1(),setInteger2(I),setDouble1(D),getSubalg(),getDouble1(),setSubalg([LCore.Algorithms.QuantumAlgorithm;),subalg,setInstruction(LCore.Algorithms.QuantumInstructionEnum;),setInteger1(I),getInstruction(),getInteger2()">
     <children xsi:type="editmodel:CompartmentEditModel" size="202,72">
       <children xsi:type="editmodel:AttributeEditModel" name="gate1" id="Core.Algorithms.Implementation/basicquantuminstruction#gate1"/>
       <children xsi:type="editmodel:AttributeEditModel" name="gate2" id="Core.Algorithms.Implementation/basicquantuminstruction#gate2"/>
@@ -26,8 +26,8 @@
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Algorithms.Implementation/basicquantuminstruction-Soyatec::Import->Core.Algorithms/QuantumAlgorithm" source="//@children.0" target="//@children.14" targetEnd="//@children.0/@sourceConnections.1/@children.2" label="//@children.0/@sourceConnections.1/@children.0" sourceEnd="//@children.0/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="229,248" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,2"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="229,249" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,9"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Algorithms.Implementation/basicquantuminstruction-Soyatec::Implement->Core.Algorithms/QuantumInstruction" source="//@children.0" target="//@children.39" targetEnd="//@children.0/@sourceConnections.2/@children.2" label="//@children.0/@sourceConnections.2/@children.0" sourceEnd="//@children.0/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Implement»" size="72,13" anchorKind="MiddlePart"/>
@@ -41,41 +41,52 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.2/@sourceConnections.3" name="searchenginemanager" location="172,691" size="316,122" id="Core.CircuitEvolution/searchenginemanager" runTimeClassModel="getAvailableSearchEngines(),getSearchEngine(Ljava.lang.String;),searchenginemanager(Ljava.lang.String;)">
-    <children xsi:type="editmodel:CompartmentEditModel" size="293,18">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.2/@sourceConnections.3 //@children.4/@sourceConnections.4" name="searchenginemanager" location="172,691" size="379,140" id="Core.CircuitEvolution/searchenginemanager" runTimeClassModel="getAvailableSearchEngines(),getSearchEngine(Ljava.lang.String;),searchenginemanager(Ljava.lang.String;),getSearchEngineDesc(Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="356,18">
       <children xsi:type="editmodel:AttributeEditModel" name="availablesearchengines" id="Core.CircuitEvolution/searchenginemanager#availablesearchengines"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="179,54">
+    <children xsi:type="editmodel:CompartmentEditModel" size="179,72">
       <children xsi:type="editmodel:MethodEditModel" name="searchenginemanager" id="Core.CircuitEvolution/searchenginemanager#searchenginemanager(Ljava.lang.String;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="getSearchEngine" id="Core.CircuitEvolution/searchenginemanager#getSearchEngine(Ljava.lang.String;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="getAvailableSearchEngines" id="Core.CircuitEvolution/searchenginemanager#getAvailableSearchEngines()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSearchEngineDesc" id="Core.CircuitEvolution/searchenginemanager#getSearchEngineDesc(Ljava.lang.String;)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvolution/searchenginemanager-Soyatec::Import->Core.CircuitEvolution/circuitsearchengine" source="//@children.1" target="//@children.12" targetEnd="//@children.1/@sourceConnections.0/@children.2" label="//@children.1/@sourceConnections.0/@children.0" sourceEnd="//@children.1/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="316,34" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,154"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="379,43" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,163"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.4/@sourceConnections.2" name="qcevolutionbackend" location="345,69" size="236,153" id="Core/qcevolutionbackend" runTimeClassModel="main([Ljava.lang.String;),semanager,currentse,circuitBuilder,ffmanager,qproblem">
-    <children xsi:type="editmodel:CompartmentEditModel" size="213,72">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.4/@sourceConnections.2" name="qcevolutionbackend" location="345,69" size="236,297" id="Core/qcevolutionbackend" runTimeClassModel="main([Ljava.lang.String;),ffmanager,getCireval(),cireval,qproblem,setCireval(LCore.CircuitEvaluator.circuitevaluator;),semanager,currentse,cirbui,circuitBuilder,available_gates,currentff,getCirbui(),setCirbui(LCore.CircuitBuilder.circuitBuilder;),qcevolutionbackend()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="213,144">
       <children xsi:type="editmodel:AttributeEditModel" name="currentse" id="Core/qcevolutionbackend#currentse"/>
       <children xsi:type="editmodel:AttributeEditModel" name="qproblem" id="Core/qcevolutionbackend#qproblem"/>
       <children xsi:type="editmodel:AttributeEditModel" name="ffmanager" id="Core/qcevolutionbackend#ffmanager"/>
       <children xsi:type="editmodel:AttributeEditModel" name="semanager" id="Core/qcevolutionbackend#semanager"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="cirbui" id="Core/qcevolutionbackend#cirbui"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="available_gates" id="Core/qcevolutionbackend#available_gates"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="cireval" id="Core/qcevolutionbackend#cireval"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="currentff" id="Core/qcevolutionbackend#currentff"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="110,18"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="141,90">
+      <children xsi:type="editmodel:MethodEditModel" name="getCireval" id="Core/qcevolutionbackend#getCireval()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setCirbui" id="Core/qcevolutionbackend#setCirbui(LCore.CircuitBuilder.circuitBuilder;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getCirbui" id="Core/qcevolutionbackend#getCirbui()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="qcevolutionbackend" id="Core/qcevolutionbackend#qcevolutionbackend()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setCireval" id="Core/qcevolutionbackend#setCireval(LCore.CircuitEvaluator.circuitevaluator;)"/>
+    </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend-Soyatec::Import->Core.CircuitEvolution/circuitsearchengine*Core/qcevolutionbackend-Standard::Call->Core.CircuitEvolution/circuitsearchengine" source="//@children.2" target="//@children.12" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="75,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="191,153" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="33,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend->Soyatec::Import" source="//@children.2" target="//@children.12" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="75,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="236,258" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="11,0"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend-Soyatec::Import->Core/quantumproblem*Core/qcevolutionbackend-Standard::Call->Core/quantumproblem" source="//@children.2" target="//@children.3" targetEnd="//@children.2/@sourceConnections.1/@children.2" label="//@children.2/@sourceConnections.1/@children.0" sourceEnd="//@children.2/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="75,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="236,102" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,32"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend->Soyatec::Import" source="//@children.2" target="//@children.3" targetEnd="//@children.2/@sourceConnections.1/@children.2" label="//@children.2/@sourceConnections.1/@children.0" sourceEnd="//@children.2/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="75,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="236,286" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,10"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend-Soyatec::Import->Core.CircuitEvaluator/fitnessfunctionmanager" source="//@children.2" target="//@children.10" targetEnd="//@children.2/@sourceConnections.2/@children.2" label="//@children.2/@sourceConnections.2/@children.0" sourceEnd="//@children.2/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
@@ -84,12 +95,12 @@
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend-Soyatec::Import->Core.CircuitEvolution/searchenginemanager" source="//@children.2" target="//@children.1" targetEnd="//@children.2/@sourceConnections.3/@children.2" label="//@children.2/@sourceConnections.3/@children.0" sourceEnd="//@children.2/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="71,153" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="244,0"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="102,297" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="275,0"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="Core.CircuitBuilder/circuitBuilder@circuitBuilder+Core/qcevolutionbackend@qcevolutionbackend" source="//@children.2" target="//@children.15" targetEnd="//@children.2/@sourceConnections.4/@children.2" label="//@children.2/@sourceConnections.4/@children.0" sourceEnd="//@children.2/@sourceConnections.4/@children.1" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="qcevolutionbackend" location="226,153" id="Core.CircuitBuilder/circuitBuilder@circuitBuilder+Core/qcevolutionbackend@qcevolutionbackend|Core/qcevolutionbackend#qcevolutionbackend" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="qcevolutionbackend" location="226,297" id="Core.CircuitBuilder/circuitBuilder@circuitBuilder+Core/qcevolutionbackend@qcevolutionbackend|Core/qcevolutionbackend#qcevolutionbackend" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" name="circuitBuilder" location="0,10" id="Core.CircuitBuilder/circuitBuilder@circuitBuilder+Core/qcevolutionbackend@qcevolutionbackend|Core.CircuitBuilder/circuitBuilder#circuitBuilder" multiplicityLabel="//@children.2/@sourceConnections.4/@children.2/@children.2" roleLabel="//@children.2/@sourceConnections.4/@children.2/@children.0" orderingLabel="//@children.2/@sourceConnections.4/@children.2/@children.1" scopeKind="1" navigable="true" orderingKind="1">
         <children xsi:type="editmodel:LabelEditModel" name=" + circuitBuilder" location="735,1271" size="86,13" anchorKind="LastPart"/>
         <children xsi:type="editmodel:LabelEditModel" name="{order}" location="778,1244" size="43,13" anchorKind="LastPart"/>
@@ -98,70 +109,88 @@
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend-Standard::Instantiate->Core.CircuitBuilder.Implementation/basiccircuitbuilder" source="//@children.2" target="//@children.16" targetEnd="//@children.2/@sourceConnections.5/@children.2" label="//@children.2/@sourceConnections.5/@children.0" sourceEnd="//@children.2/@sourceConnections.5/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate»" size="73,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="144,153" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="86,0"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="171,297" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="84,0"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend-Standard::Call->Core.Algorithms/QuantumInstructionEnum*Core/qcevolutionbackend-Soyatec::Access->Core.Algorithms/QuantumInstructionEnum" source="//@children.2" target="//@children.40" targetEnd="//@children.2/@sourceConnections.6/@children.2" label="//@children.2/@sourceConnections.6/@children.0" sourceEnd="//@children.2/@sourceConnections.6/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Access»" size="78,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="58,153" attachSource="true"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend->Standard::Call" source="//@children.2" target="//@children.40" targetEnd="//@children.2/@sourceConnections.6/@children.2" label="//@children.2/@sourceConnections.6/@children.0" sourceEnd="//@children.2/@sourceConnections.6/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Access, Call»" size="78,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="58,295" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="171,0"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend-Standard::Instantiate->Core.Implementation/simpleqcproblem" source="//@children.2" target="//@children.35" targetEnd="//@children.2/@sourceConnections.7/@children.2" label="//@children.2/@sourceConnections.7/@children.0" sourceEnd="//@children.2/@sourceConnections.7/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate»" size="73,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="236,121" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,43"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="236,186" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,48"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend-Standard::Call->Core.CircuitEvaluator/circuitevaluator*Core/qcevolutionbackend-Soyatec::Import->Core.CircuitEvaluator/circuitevaluator" source="//@children.2" target="//@children.7" targetEnd="//@children.2/@sourceConnections.8/@children.2" label="//@children.2/@sourceConnections.8/@children.0" sourceEnd="//@children.2/@sourceConnections.8/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="0,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="236,137" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,8"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend->Standard::Call" source="//@children.2" target="//@children.7" targetEnd="//@children.2/@sourceConnections.8/@children.2" label="//@children.2/@sourceConnections.8/@children.0" sourceEnd="//@children.2/@sourceConnections.8/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="75,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="236,200" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,16"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend-Soyatec::Import->Core.CircuitBuilder/circuitBuilder" source="//@children.2" target="//@children.15" targetEnd="//@children.2/@sourceConnections.9/@children.2" label="//@children.2/@sourceConnections.9/@children.0" sourceEnd="//@children.2/@sourceConnections.9/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="236,148" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="236,292" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="145,5"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/qcevolutionbackend-Soyatec::Import->Core.CircuitEvaluator/FitnessFunction" source="//@children.2" target="//@children.5" targetEnd="//@children.2/@sourceConnections.10/@children.2" label="//@children.2/@sourceConnections.10/@children.0" sourceEnd="//@children.2/@sourceConnections.10/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="236,271" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,26"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.2/@sourceConnections.1 //@children.7/@sourceConnections.0 //@children.35/@sourceConnections.0 //@children.35/@sourceConnections.1 //@children.36/@sourceConnections.0" name="quantumproblem" location="1507,345" size="172,102" id="Core/quantumproblem" runTimeClassModel="name,testset">
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.2/@sourceConnections.1 //@children.7/@sourceConnections.0 //@children.35/@sourceConnections.0 //@children.35/@sourceConnections.1 //@children.36/@sourceConnections.0" name="quantumproblem" location="1507,345" size="172,102" id="Core.Problem/quantumproblem" runTimeClassModel="name,testset">
     <children xsi:type="editmodel:CompartmentEditModel" size="112,36">
-      <children xsi:type="editmodel:AttributeEditModel" name="name" location="-6,61" id="Core/quantumproblem#name"/>
-      <children xsi:type="editmodel:AttributeEditModel" name="testset" id="Core/quantumproblem#testset"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="name" location="-6,61" id="Core.Problem/quantumproblem#name"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="testset" id="Core.Problem/quantumproblem#testset"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/quantumproblem-Soyatec::Import->Core/testsuite" source="//@children.3" target="//@children.6" targetEnd="//@children.3/@sourceConnections.0/@children.2" label="//@children.3/@sourceConnections.0/@children.0" sourceEnd="//@children.3/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/quantumproblem-Soyatec::Import->Core.Problem/testsuite" source="//@children.3" target="//@children.6" targetEnd="//@children.3/@sourceConnections.0/@children.2" label="//@children.3/@sourceConnections.0/@children.0" sourceEnd="//@children.3/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="172,58" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,43"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" name="qcevolutionfrontend" location="514,781" size="195,89" id="GUI/qcevolutionfrontend" runTimeClassModel="backend,peditor,cvisualiser">
+  <children xsi:type="editmodel:ClassEditModel" name="qcevolutionfrontend" location="514,781" size="195,135" id="GUI/qcevolutionfrontend" runTimeClassModel="main([Ljava.lang.String;),backend,peditor,qcevolutionfrontend(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;),cvisualiser">
     <children xsi:type="editmodel:CompartmentEditModel" size="169,36">
       <children xsi:type="editmodel:AttributeEditModel" name="cvisualiser" id="GUI/qcevolutionfrontend#cvisualiser"/>
       <children xsi:type="editmodel:AttributeEditModel" name="peditor" id="GUI/qcevolutionfrontend#peditor"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="141,36">
+      <children xsi:type="editmodel:MethodEditModel" name="qcevolutionfrontend" id="GUI/qcevolutionfrontend#qcevolutionfrontend(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="main" id="GUI/qcevolutionfrontend#main([Ljava.lang.String;)"/>
+    </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/qcevolutionfrontend-Soyatec::Import->GUI.CircuitVisualiser/circuitvisualiser" source="//@children.4" target="//@children.8" targetEnd="//@children.4/@sourceConnections.0/@children.2" label="//@children.4/@sourceConnections.0/@children.0" sourceEnd="//@children.4/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="84,89" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="84,135" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="81,0"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/qcevolutionfrontend-Soyatec::Import->GUI.ProblemEditor/problemeditor" source="//@children.4" target="//@children.36" targetEnd="//@children.4/@sourceConnections.1/@children.2" label="//@children.4/@sourceConnections.1/@children.0" sourceEnd="//@children.4/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="75,0" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="76,112"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="76,130"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/qcevolutionfrontend-Standard::Instantiate->Core/qcevolutionbackend*GUI/qcevolutionfrontend-Soyatec::Import->Core/qcevolutionbackend" source="//@children.4" target="//@children.2" targetEnd="//@children.4/@sourceConnections.2/@children.2" label="//@children.4/@sourceConnections.2/@children.0" sourceEnd="//@children.4/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate, Import»" size="114,13" anchorKind="MiddlePart"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/qcevolutionfrontend->Standard::Instantiate" source="//@children.4" target="//@children.2" targetEnd="//@children.4/@sourceConnections.2/@children.2" label="//@children.4/@sourceConnections.2/@children.0" sourceEnd="//@children.4/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call, Instantiate»" size="0,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="33,0" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="202,153"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="202,297"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/qcevolutionfrontend-Standard::Instantiate->Core.CircuitEvaluator/fitnessfunctionmanager" source="//@children.4" target="//@children.10" targetEnd="//@children.4/@sourceConnections.3/@children.2" label="//@children.4/@sourceConnections.3/@children.0" sourceEnd="//@children.4/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate»" size="73,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="145,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="68,117"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/qcevolutionfrontend-Standard::Instantiate->Core.CircuitEvolution/searchenginemanager" source="//@children.4" target="//@children.1" targetEnd="//@children.4/@sourceConnections.4/@children.2" label="//@children.4/@sourceConnections.4/@children.0" sourceEnd="//@children.4/@sourceConnections.4/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate»" size="73,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,21" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.7/@sourceConnections.1 //@children.10/@sourceConnections.0" name="FitnessFunction" location="1069,314" size="159,112" id="Core.CircuitEvaluator/FitnessFunction" runTimeClassModel="Name,evaluate(LJama.Matrix;LJama.Matrix;LJama.Matrix;LCore.Circuit.Circuit;LCore.Algorithms.QuantumAlgorithm;)">
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.7/@sourceConnections.1 //@children.10/@sourceConnections.0 //@children.2/@sourceConnections.10" name="FitnessFunction" location="1069,314" size="159,112" id="Core.CircuitEvaluator/FitnessFunction" runTimeClassModel="Name,evaluate(LJama.Matrix;LJama.Matrix;LJama.Matrix;LCore.Circuit.Circuit;LCore.Algorithms.QuantumAlgorithm;)">
     <children xsi:type="editmodel:CompartmentEditModel" size="90,18">
       <children xsi:type="editmodel:AttributeEditModel" name="Name" location="-45,66" id="Core.CircuitEvaluator/FitnessFunction#Name"/>
     </children>
@@ -177,24 +206,29 @@
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvaluator/FitnessFunction-Soyatec::Import->Core.Algorithms/QuantumAlgorithm" source="//@children.5" target="//@children.14" targetEnd="//@children.5/@sourceConnections.1/@children.2" label="//@children.5/@sourceConnections.1/@children.0" sourceEnd="//@children.5/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="69,112" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="106,0"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="107,0"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvaluator/FitnessFunction-Soyatec::Import->Core.CircuitEvaluator/Fitness" source="//@children.5" target="//@children.41" targetEnd="//@children.5/@sourceConnections.2/@children.2" label="//@children.5/@sourceConnections.2/@children.0" sourceEnd="//@children.5/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="0,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="159,16" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,92"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.3/@sourceConnections.0 //@children.35/@sourceConnections.2 //@children.37/@sourceConnections.0" name="testsuite" location="1734,360" size="288,117" id="Core/testsuite" runTimeClassModel="testcases,getKeys(),testsuite()">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.3/@sourceConnections.0 //@children.35/@sourceConnections.2 //@children.37/@sourceConnections.0" name="testsuite" location="1734,360" size="288,117" id="Core.Problem/testsuite" runTimeClassModel="testcases,getKeys(),testsuite()">
     <children xsi:type="editmodel:CompartmentEditModel" size="265,18">
-      <children xsi:type="editmodel:AttributeEditModel" name="testcases" id="Core/testsuite#testcases"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="testcases" id="Core.Problem/testsuite#testcases"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="78,36">
-      <children xsi:type="editmodel:MethodEditModel" name="getKeys" id="Core/testsuite#getKeys()"/>
-      <children xsi:type="editmodel:MethodEditModel" name="testsuite" id="Core/testsuite#testsuite()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getKeys" id="Core.Problem/testsuite#getKeys()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="testsuite" id="Core.Problem/testsuite#testsuite()"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/testsuite->Standard::Call" source="//@children.6" target="//@children.34" targetEnd="//@children.6/@sourceConnections.0/@children.2" label="//@children.6/@sourceConnections.0/@children.0" sourceEnd="//@children.6/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="75,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="163,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
   <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.12/@sourceConnections.1 //@children.2/@sourceConnections.8" name="circuitevaluator" location="1295,568" size="222,130" id="Core.CircuitEvaluator/circuitevaluator" runTimeClassModel="qfitnessfunction,qproblem,Evaluate(LCore.Algorithms.QuantumAlgorithm;)">
@@ -206,7 +240,7 @@
       <children xsi:type="editmodel:MethodEditModel" name="Evaluate" id="Core.CircuitEvaluator/circuitevaluator#Evaluate(LCore.Algorithms.QuantumAlgorithm;)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvaluator/circuitevaluator-Soyatec::Import->Core/quantumproblem" source="//@children.7" target="//@children.3" targetEnd="//@children.7/@sourceConnections.0/@children.2" label="//@children.7/@sourceConnections.0/@children.0" sourceEnd="//@children.7/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvaluator/circuitevaluator-Soyatec::Import->Core.Problem/quantumproblem" source="//@children.7" target="//@children.3" targetEnd="//@children.7/@sourceConnections.0/@children.2" label="//@children.7/@sourceConnections.0/@children.0" sourceEnd="//@children.7/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="216,0" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="4,102"/>
@@ -219,7 +253,7 @@
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvaluator/circuitevaluator-Soyatec::Import->Core.Algorithms/QuantumAlgorithm" source="//@children.7" target="//@children.14" targetEnd="//@children.7/@sourceConnections.2/@children.2" label="//@children.7/@sourceConnections.2/@children.0" sourceEnd="//@children.7/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="81,130" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="127,0"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="131,0"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvaluator/circuitevaluator-Soyatec::Import->Core.CircuitEvaluator/Fitness" source="//@children.7" target="//@children.41" targetEnd="//@children.7/@sourceConnections.3/@children.2" label="//@children.7/@sourceConnections.3/@children.0" sourceEnd="//@children.7/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
@@ -249,31 +283,35 @@
     </children>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.2/@sourceConnections.2" name="fitnessfunctionmanager" location="1020,69" size="220,117" id="Core.CircuitEvaluator/fitnessfunctionmanager" runTimeClassModel="getAvailableSearchEngines(),getSearchEngine(Ljava.lang.String;),fitnessfunctionmanager(Ljava.lang.String;)">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.2/@sourceConnections.2 //@children.4/@sourceConnections.3" name="fitnessfunctionmanager" location="1020,69" size="220,117" id="Core.CircuitEvaluator/fitnessfunctionmanager" runTimeClassModel="fitnessfunctionmanager(Ljava.lang.String;),getFitnessFuntion(Ljava.lang.String;),getAvailableFitnessFunctions()">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="179,54">
-      <children xsi:type="editmodel:MethodEditModel" name="getSearchEngine" id="Core.CircuitEvaluator/fitnessfunctionmanager#getSearchEngine(Ljava.lang.String;)"/>
-      <children xsi:type="editmodel:MethodEditModel" name="getAvailableSearchEngines" id="Core.CircuitEvaluator/fitnessfunctionmanager#getAvailableSearchEngines()"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="187,54">
       <children xsi:type="editmodel:MethodEditModel" name="fitnessfunctionmanager" id="Core.CircuitEvaluator/fitnessfunctionmanager#fitnessfunctionmanager(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getFitnessFuntion" id="Core.CircuitEvaluator/fitnessfunctionmanager#getFitnessFuntion(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getAvailableFitnessFunctions" id="Core.CircuitEvaluator/fitnessfunctionmanager#getAvailableFitnessFunctions()"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvaluator/fitnessfunctionmanager-Soyatec::Import->Core.CircuitEvaluator/FitnessFunction" source="//@children.10" target="//@children.5" targetEnd="//@children.10/@sourceConnections.0/@children.2" label="//@children.10/@sourceConnections.0/@children.0" sourceEnd="//@children.10/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="0,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="128,117" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="79,0"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.34/@sourceConnections.0" name="testcase" location="2154,351" size="152,89" id="Core/testcase" runTimeClassModel="startingstate,finalstate">
-    <children xsi:type="editmodel:CompartmentEditModel" size="129,36">
-      <children xsi:type="editmodel:AttributeEditModel" name="startingstate" location="18,45" id="Core/testcase#startingstate"/>
-      <children xsi:type="editmodel:AttributeEditModel" name="finalstate" id="Core/testcase#finalstate"/>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.34/@sourceConnections.0" name="testcase" location="2154,351" size="152,153" id="Core.Problem/testcase" runTimeClassModel="id,startingstate,testcase(ILjava.lang.String;),finalstate,label">
+    <children xsi:type="editmodel:CompartmentEditModel" size="129,72">
+      <children xsi:type="editmodel:AttributeEditModel" name="startingstate" location="18,45" id="Core.Problem/testcase#startingstate"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="finalstate" id="Core.Problem/testcase#finalstate"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="id" id="Core.Problem/testcase#id"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="label" id="Core.Problem/testcase#label"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="77,18">
+      <children xsi:type="editmodel:MethodEditModel" name="testcase" id="Core.Problem/testcase#testcase(ILjava.lang.String;)"/>
+    </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.2/@sourceConnections.0 //@children.1/@sourceConnections.0" name="circuitsearchengine" location="832,571" size="245,189" id="Core.CircuitEvolution/circuitsearchengine" runTimeClassModel="Name,cbuilder,evotype,Evolve(),availableinstructions,cevaluator,BestCircuit">
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.2/@sourceConnections.0 //@children.1/@sourceConnections.0" name="circuitsearchengine" location="832,571" size="245,207" id="Core.CircuitEvolution/circuitsearchengine" runTimeClassModel="Name,init(LCore.CircuitBuilder.circuitBuilder;LCore.CircuitEvaluator.circuitevaluator;[Z),cbuilder,evotype,Evolve(),availableinstructions,cevaluator,BestCircuit">
     <children xsi:type="editmodel:CompartmentEditModel" size="222,108">
       <children xsi:type="editmodel:AttributeEditModel" name="cevaluator" id="Core.CircuitEvolution/circuitsearchengine#cevaluator"/>
       <children xsi:type="editmodel:AttributeEditModel" name="cbuilder" id="Core.CircuitEvolution/circuitsearchengine#cbuilder"/>
@@ -282,17 +320,18 @@
       <children xsi:type="editmodel:AttributeEditModel" name="BestCircuit" id="Core.CircuitEvolution/circuitsearchengine#BestCircuit"/>
       <children xsi:type="editmodel:AttributeEditModel" name="availableinstructions" id="Core.CircuitEvolution/circuitsearchengine#availableinstructions"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="66,18">
+    <children xsi:type="editmodel:CompartmentEditModel" size="66,36">
       <children xsi:type="editmodel:MethodEditModel" name="Evolve" id="Core.CircuitEvolution/circuitsearchengine#Evolve()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="init" id="Core.CircuitEvolution/circuitsearchengine#init(LCore.CircuitBuilder.circuitBuilder;LCore.CircuitEvaluator.circuitevaluator;[Z)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvolution/circuitsearchengine-Soyatec::Import->Core.CircuitBuilder/circuitBuilder" source="//@children.12" target="//@children.15" targetEnd="//@children.12/@sourceConnections.0/@children.2" label="//@children.12/@sourceConnections.0/@children.0" sourceEnd="//@children.12/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="70,189" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="70,207" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="73,0"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvolution/circuitsearchengine-Soyatec::Import->Core.CircuitEvaluator/circuitevaluator" source="//@children.12" target="//@children.7" targetEnd="//@children.12/@sourceConnections.1/@children.2" label="//@children.12/@sourceConnections.1/@children.0" sourceEnd="//@children.12/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="0,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="245,63" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,66"/>
     </sourceConnections>
@@ -303,47 +342,59 @@
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvolution/circuitsearchengine-Soyatec::Import->Core.Circuit/Circuit" source="//@children.12" target="//@children.18" targetEnd="//@children.12/@sourceConnections.3/@children.2" label="//@children.12/@sourceConnections.3/@children.0" sourceEnd="//@children.12/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="197,189" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="197,207" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="46,0"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" name="basicquantumalgorithm" location="439,1094" size="271,189" id="Core.Algorithms.Implementation/basicquantumalgorithm" runTimeClassModel="getInstructions(),basicquantumalgorithm(),getSize(),addInstruction(LCore.Algorithms.QuantumInstructionEnum;IID[LCore.Algorithms.QuantumAlgorithm;),print(),size">
+  <children xsi:type="editmodel:ClassEditModel" name="basicquantumalgorithm" location="439,1094" size="271,207" id="Core.Algorithms.Implementation/basicquantumalgorithm" runTimeClassModel="getInstructions(),basicquantumalgorithm(),getSize(),addInstruction(LCore.Algorithms.QuantumInstructionEnum;IID[LCore.Algorithms.QuantumAlgorithm;),print(),getValSum(),size">
     <children xsi:type="editmodel:CompartmentEditModel" size="248,36">
       <children xsi:type="editmodel:AttributeEditModel" name="inst_list" id="Core.Algorithms.Implementation/basicquantumalgorithm#inst_list"/>
       <children xsi:type="editmodel:AttributeEditModel" name="size" id="Core.Algorithms.Implementation/basicquantumalgorithm#size"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="160,90">
+    <children xsi:type="editmodel:CompartmentEditModel" size="160,108">
       <children xsi:type="editmodel:MethodEditModel" name="basicquantumalgorithm" id="Core.Algorithms.Implementation/basicquantumalgorithm#basicquantumalgorithm()"/>
       <children xsi:type="editmodel:MethodEditModel" name="getInstructions" id="Core.Algorithms.Implementation/basicquantumalgorithm#getInstructions()"/>
       <children xsi:type="editmodel:MethodEditModel" name="addInstruction" id="Core.Algorithms.Implementation/basicquantumalgorithm#addInstruction(LCore.Algorithms.QuantumInstructionEnum;IID[LCore.Algorithms.QuantumAlgorithm;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="print" id="Core.Algorithms.Implementation/basicquantumalgorithm#print()"/>
       <children xsi:type="editmodel:MethodEditModel" name="getSize" id="Core.Algorithms.Implementation/basicquantumalgorithm#getSize()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getValSum" id="Core.Algorithms.Implementation/basicquantumalgorithm#getValSum()"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="Core.Algorithms/QuantumAlgorithm&lt;-Core.Algorithms.Implementation/basicquantumalgorithm" source="//@children.13" target="//@children.14" targetEnd="//@children.13/@sourceConnections.0/@children.1" sourceEnd="//@children.13/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:AssociationEndEditModel" location="195,189" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="45,0"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="200,207" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="40,0"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Algorithms.Implementation/basicquantumalgorithm-Soyatec::Import->Core.Algorithms/QuantumInstructionEnum*Core.Algorithms.Implementation/basicquantumalgorithm-Standard::Call->Core.Algorithms/QuantumInstructionEnum*Core.Algorithms.Implementation/basicquantumalgorithm-Soyatec::Access->Core.Algorithms/QuantumInstructionEnum" source="//@children.13" target="//@children.40" targetEnd="//@children.13/@sourceConnections.1/@children.2" label="//@children.13/@sourceConnections.1/@children.0" sourceEnd="//@children.13/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Access»" size="119,13" anchorKind="MiddlePart"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Algorithms.Implementation/basicquantumalgorithm->Soyatec::Import" source="//@children.13" target="//@children.40" targetEnd="//@children.13/@sourceConnections.1/@children.2" label="//@children.13/@sourceConnections.1/@children.0" sourceEnd="//@children.13/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Access, Call»" size="119,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="46,0" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Algorithms.Implementation/basicquantumalgorithm-Standard::Instantiate->Core.Algorithms.Implementation/basicquantuminstruction" source="//@children.13" target="//@children.0" targetEnd="//@children.13/@sourceConnections.2/@children.2" label="//@children.13/@sourceConnections.2/@children.0" sourceEnd="//@children.13/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate»" size="73,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,94" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="229,157"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,103" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="229,166"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Algorithms.Implementation/basicquantumalgorithm->Standard::Call" source="//@children.13" target="//@children.39" targetEnd="//@children.13/@sourceConnections.3/@children.2" label="//@children.13/@sourceConnections.3/@children.0" sourceEnd="//@children.13/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="75,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="112,206" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Algorithms.Implementation/basicquantumalgorithm->Standard::Call" source="//@children.13" target="//@children.14" targetEnd="//@children.13/@sourceConnections.4/@children.2" label="//@children.13/@sourceConnections.4/@children.0" sourceEnd="//@children.13/@sourceConnections.4/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Implement, Call»" size="139,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="220,207" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="20,0"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.15/@sourceConnections.0 //@children.13/@sourceConnections.0 //@children.7/@sourceConnections.2 //@children.39/@sourceConnections.0 //@children.0/@sourceConnections.1 //@children.5/@sourceConnections.1 //@children.16/@sourceConnections.16" name="QuantumAlgorithm" location="810,1635" size="184,148" id="Core.Algorithms/QuantumAlgorithm" runTimeClassModel="getInstructions(),getSize(),addInstruction(LCore.Algorithms.QuantumInstructionEnum;IID[LCore.Algorithms.QuantumAlgorithm;),print()">
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.15/@sourceConnections.0 //@children.13/@sourceConnections.0 //@children.7/@sourceConnections.2 //@children.39/@sourceConnections.0 //@children.0/@sourceConnections.1 //@children.5/@sourceConnections.1 //@children.16/@sourceConnections.16 //@children.13/@sourceConnections.4" name="QuantumAlgorithm" location="810,1635" size="184,166" id="Core.Algorithms/QuantumAlgorithm" runTimeClassModel="getInstructions(),getSize(),addInstruction(LCore.Algorithms.QuantumInstructionEnum;IID[LCore.Algorithms.QuantumAlgorithm;),print(),getValSum()">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="112,72">
+    <children xsi:type="editmodel:CompartmentEditModel" size="112,90">
       <children xsi:type="editmodel:MethodEditModel" name="getInstructions" id="Core.Algorithms/QuantumAlgorithm#getInstructions()"/>
       <children xsi:type="editmodel:MethodEditModel" name="addInstruction" id="Core.Algorithms/QuantumAlgorithm#addInstruction(LCore.Algorithms.QuantumInstructionEnum;IID[LCore.Algorithms.QuantumAlgorithm;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="print" id="Core.Algorithms/QuantumAlgorithm#print()"/>
       <children xsi:type="editmodel:MethodEditModel" name="getSize" id="Core.Algorithms/QuantumAlgorithm#getSize()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getValSum" id="Core.Algorithms/QuantumAlgorithm#getValSum()"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Algorithms/QuantumAlgorithm-Soyatec::Import->Core.Algorithms/QuantumInstructionEnum" source="//@children.14" target="//@children.40" targetEnd="//@children.14/@sourceConnections.0/@children.2" label="//@children.14/@sourceConnections.0/@children.0" sourceEnd="//@children.14/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
@@ -422,7 +473,7 @@
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitBuilder.Implementation/basiccircuitbuilder-Standard::Instantiate->Core.CircuitEvolution.GateImplementations/RZ_Gate" source="//@children.16" target="//@children.27" targetEnd="//@children.16/@sourceConnections.8/@children.2" label="//@children.16/@sourceConnections.8/@children.0" sourceEnd="//@children.16/@sourceConnections.8/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate»" size="73,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="211,44" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,87"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,96"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitBuilder.Implementation/basiccircuitbuilder-Standard::Instantiate->Core.CircuitEvolution.GateImplementations/Pauli_Z" source="//@children.16" target="//@children.33" targetEnd="//@children.16/@sourceConnections.9/@children.2" label="//@children.16/@sourceConnections.9/@children.0" sourceEnd="//@children.16/@sourceConnections.9/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate»" size="73,13" anchorKind="MiddlePart"/>
@@ -446,8 +497,8 @@
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitBuilder.Implementation/basiccircuitbuilder-Standard::Instantiate->Core.CircuitEvolution.GateImplementations/W_Gate" source="//@children.16" target="//@children.24" targetEnd="//@children.16/@sourceConnections.13/@children.2" label="//@children.16/@sourceConnections.13/@children.0" sourceEnd="//@children.16/@sourceConnections.13/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate»" size="73,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="211,18" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,108"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="211,19" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,116"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitBuilder.Implementation/basiccircuitbuilder-Standard::Instantiate->Core.Circuit.Implementation/basiccircuit" source="//@children.16" target="//@children.17" targetEnd="//@children.16/@sourceConnections.14/@children.2" label="//@children.16/@sourceConnections.14/@children.0" sourceEnd="//@children.16/@sourceConnections.14/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate»" size="73,13" anchorKind="MiddlePart"/>
@@ -459,10 +510,25 @@
       <children xsi:type="editmodel:AssociationEndEditModel" location="205,0" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,125"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitBuilder.Implementation/basiccircuitbuilder-Standard::Call->Core.Algorithms/QuantumAlgorithm*Core.CircuitBuilder.Implementation/basiccircuitbuilder-Soyatec::Import->Core.Algorithms/QuantumAlgorithm" source="//@children.16" target="//@children.14" targetEnd="//@children.16/@sourceConnections.16/@children.2" label="//@children.16/@sourceConnections.16/@children.0" sourceEnd="//@children.16/@sourceConnections.16/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="75,13" anchorKind="MiddlePart"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitBuilder.Implementation/basiccircuitbuilder->Standard::Call" source="//@children.16" target="//@children.14" targetEnd="//@children.16/@sourceConnections.16/@children.2" label="//@children.16/@sourceConnections.16/@children.0" sourceEnd="//@children.16/@sourceConnections.16/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="75,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="105,117" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="91,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitBuilder.Implementation/basiccircuitbuilder->Standard::Call" source="//@children.16" target="//@children.39" targetEnd="//@children.16/@sourceConnections.17/@children.2" label="//@children.16/@sourceConnections.17/@children.0" sourceEnd="//@children.16/@sourceConnections.17/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="75,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="33,117" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="218,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitBuilder.Implementation/basiccircuitbuilder->Standard::Call" source="//@children.16" target="//@children.40" targetEnd="//@children.16/@sourceConnections.18/@children.2" label="//@children.16/@sourceConnections.18/@children.0" sourceEnd="//@children.16/@sourceConnections.18/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Access, Call»" size="78,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="35,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitBuilder.Implementation/basiccircuitbuilder->Standard::Call" source="//@children.16" target="//@children.18" targetEnd="//@children.16/@sourceConnections.19/@children.2" label="//@children.16/@sourceConnections.19/@children.0" sourceEnd="//@children.16/@sourceConnections.19/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="75,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="198,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="11,148"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
@@ -480,9 +546,29 @@
       <children xsi:type="editmodel:AssociationEndEditModel" location="87,0" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="124,148"/>
     </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Circuit.Implementation/basiccircuit->Standard::Call" source="//@children.17" target="//@children.18" targetEnd="//@children.17/@sourceConnections.1/@children.2" label="//@children.17/@sourceConnections.1/@children.0" sourceEnd="//@children.17/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Implement, Call»" size="139,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="53,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Circuit.Implementation/basiccircuit->Standard::Call" source="//@children.17" target="//@children.23" targetEnd="//@children.17/@sourceConnections.2/@children.2" label="//@children.17/@sourceConnections.2/@children.0" sourceEnd="//@children.17/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="75,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="174,136" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Circuit.Implementation/basiccircuit->Standard::Call" source="//@children.17" target="//@children.25" targetEnd="//@children.17/@sourceConnections.3/@children.2" label="//@children.17/@sourceConnections.3/@children.0" sourceEnd="//@children.17/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="75,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="164,153" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Circuit.Implementation/basiccircuit->Standard::Call" source="//@children.17" target="//@children.26" targetEnd="//@children.17/@sourceConnections.4/@children.2" label="//@children.17/@sourceConnections.4/@children.0" sourceEnd="//@children.17/@sourceConnections.4/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="75,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="174,54" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,92"/>
+    </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.8/@sourceConnections.0 //@children.12/@sourceConnections.3 //@children.15/@sourceConnections.1 //@children.5/@sourceConnections.0 //@children.17/@sourceConnections.0" name="Circuit" location="983,830" size="248,148" id="Core.Circuit/Circuit" runTimeClassModel="addCircuit(ILCore.Circuit.Circuit;),getSize(),circuitlayout,addGate(ILCore.Circuit.quantumgate;),toLatex(I)">
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.8/@sourceConnections.0 //@children.12/@sourceConnections.3 //@children.15/@sourceConnections.1 //@children.5/@sourceConnections.0 //@children.17/@sourceConnections.0 //@children.16/@sourceConnections.19 //@children.17/@sourceConnections.1" name="Circuit" location="983,830" size="248,148" id="Core.Circuit/Circuit" runTimeClassModel="addCircuit(ILCore.Circuit.Circuit;),getSize(),circuitlayout,addGate(ILCore.Circuit.quantumgate;),toLatex(I)">
     <children xsi:type="editmodel:CompartmentEditModel" size="225,18">
       <children xsi:type="editmodel:AttributeEditModel" name="circuitlayout" id="Core.Circuit/Circuit#circuitlayout"/>
     </children>
@@ -533,6 +619,11 @@
       <children xsi:type="editmodel:AssociationEndEditModel" location="84,0" anchorKind="FixedAtEdge" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="103,148"/>
     </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvolution.GateImplementations/RY_Gate->Standard::Call" source="//@children.20" target="//@children.28" targetEnd="//@children.20/@sourceConnections.2/@children.2" label="//@children.20/@sourceConnections.2/@children.0" sourceEnd="//@children.20/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Instantiate»" size="99,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,124" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
   <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.15" name="Zero_Gate" location="1919,740" size="168,153" id="Core.CircuitEvolution.GateImplementations/Zero_Gate" runTimeClassModel="toLatex(),Zero_Gate(I),apply(LJama.Matrix;),getTarget(),getUnitary_operation()">
@@ -556,7 +647,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.12" name="Pauli_X" location="2117,740" size="168,171" id="Core.CircuitEvolution.GateImplementations/Pauli_X" runTimeClassModel="main([Ljava.lang.String;),toLatex(),apply(LJama.Matrix;),getTarget(),getUnitary_operation(),Pauli_X(I)">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.12 //@children.31/@sourceConnections.2" name="Pauli_X" location="2117,740" size="168,171" id="Core.CircuitEvolution.GateImplementations/Pauli_X" runTimeClassModel="main([Ljava.lang.String;),toLatex(),apply(LJama.Matrix;),getTarget(),getUnitary_operation(),Pauli_X(I)">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="145,108">
       <children xsi:type="editmodel:MethodEditModel" name="getUnitary_operation" location="579,1135" id="Core.CircuitEvolution.GateImplementations/Pauli_X#getUnitary_operation()"/>
@@ -578,7 +669,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.4" name="Swap_Gate" location="1770,1561" size="168,189" id="Core.CircuitEvolution.GateImplementations/Swap_Gate" runTimeClassModel="toLatex(),getTarget2(),Swap_Gate(II),apply(LJama.Matrix;),getUnitary_operation(),getTarget(),toLatex(Z)">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.4 //@children.17/@sourceConnections.2" name="Swap_Gate" location="1770,1561" size="168,189" id="Core.CircuitEvolution.GateImplementations/Swap_Gate" runTimeClassModel="toLatex(),getTarget2(),Swap_Gate(II),apply(LJama.Matrix;),getTarget(),getUnitary_operation(),toLatex(Z)">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="145,126">
       <children xsi:type="editmodel:MethodEditModel" name="getTarget2" id="Core.CircuitEvolution.GateImplementations/Swap_Gate#getTarget2()"/>
@@ -601,19 +692,20 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.13" name="W_Gate" location="2513,740" size="168,153" id="Core.CircuitEvolution.GateImplementations/W_Gate" runTimeClassModel="toLatex(),apply(LJama.Matrix;),getTarget(),getUnitary_operation(),W_Gate(I)">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.13" name="W_Gate" location="2513,740" size="168,171" id="Core.CircuitEvolution.GateImplementations/W_Gate" runTimeClassModel="main([Ljava.lang.String;),toLatex(),apply(LJama.Matrix;),getUnitary_operation(),getTarget(),W_Gate(I)">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="145,90">
+    <children xsi:type="editmodel:CompartmentEditModel" size="145,108">
       <children xsi:type="editmodel:MethodEditModel" name="getUnitary_operation" id="Core.CircuitEvolution.GateImplementations/W_Gate#getUnitary_operation()"/>
       <children xsi:type="editmodel:MethodEditModel" name="getTarget" id="Core.CircuitEvolution.GateImplementations/W_Gate#getTarget()"/>
       <children xsi:type="editmodel:MethodEditModel" name="toLatex" id="Core.CircuitEvolution.GateImplementations/W_Gate#toLatex()"/>
       <children xsi:type="editmodel:MethodEditModel" name="W_Gate" id="Core.CircuitEvolution.GateImplementations/W_Gate#W_Gate(I)"/>
       <children xsi:type="editmodel:MethodEditModel" name="apply" id="Core.CircuitEvolution.GateImplementations/W_Gate#apply(LJama.Matrix;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="main" id="Core.CircuitEvolution.GateImplementations/W_Gate#main([Ljava.lang.String;)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvolution.GateImplementations/W_Gate-Soyatec::Implement->Core.Circuit/quantumgate" source="//@children.24" target="//@children.26" targetEnd="//@children.24/@sourceConnections.0/@children.2" label="//@children.24/@sourceConnections.0/@children.0" sourceEnd="//@children.24/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Implement»" size="72,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,98" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,106" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="178,51"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="Core.Circuit/quantumgate&lt;-Core.CircuitEvolution.GateImplementations/W_Gate" source="//@children.24" target="//@children.32/@sourceConnections.1" targetEnd="//@children.24/@sourceConnections.1/@children.1" sourceEnd="//@children.24/@sourceConnections.1/@children.0" connectionRouterKind="GeneralizationManhattan">
@@ -622,7 +714,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.6" name="ControlledU_Gate" location="1566,1561" size="174,207" id="Core.CircuitEvolution.GateImplementations/ControlledU_Gate" runTimeClassModel="toLatex(),ControlledU_Gate(LCore.Circuit.quantumgate;II),getControl(),apply(LJama.Matrix;),getTarget(),getUnitary_operation(),toLatex(Z)">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.6 //@children.17/@sourceConnections.3" name="ControlledU_Gate" location="1566,1561" size="174,207" id="Core.CircuitEvolution.GateImplementations/ControlledU_Gate" runTimeClassModel="toLatex(),ControlledU_Gate(LCore.Circuit.quantumgate;II),getControl(),apply(LJama.Matrix;),getTarget(),getUnitary_operation(),toLatex(Z)">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="145,144">
       <children xsi:type="editmodel:MethodEditModel" name="getControl" id="Core.CircuitEvolution.GateImplementations/ControlledU_Gate#getControl()"/>
@@ -643,9 +735,14 @@
       <children xsi:type="editmodel:AssociationEndEditModel" location="145,0" anchorKind="FixedAtEdge" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="85,43" anchorKind="FixedAtEdge"/>
     </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvolution.GateImplementations/ControlledU_Gate->Standard::Call" source="//@children.25" target="//@children.26" targetEnd="//@children.25/@sourceConnections.2/@children.2" label="//@children.25/@sourceConnections.2/@children.0" sourceEnd="//@children.25/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="75,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="87,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="89,148"/>
+    </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.18/@sourceConnections.0 //@children.32/@sourceConnections.0 //@children.22/@sourceConnections.0 //@children.28/@sourceConnections.0 //@children.33/@sourceConnections.0 //@children.29/@sourceConnections.0 //@children.31/@sourceConnections.0 //@children.20/@sourceConnections.0 //@children.27/@sourceConnections.0 //@children.30/@sourceConnections.0 //@children.24/@sourceConnections.0 //@children.21/@sourceConnections.0 //@children.19/@sourceConnections.0 //@children.32/@sourceConnections.1" name="quantumgate" location="1564,990" size="178,148" id="Core.Circuit/quantumgate" runTimeClassModel="unitary_operation,toLatex(),target,apply(LJama.Matrix;)">
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.18/@sourceConnections.0 //@children.32/@sourceConnections.0 //@children.22/@sourceConnections.0 //@children.28/@sourceConnections.0 //@children.33/@sourceConnections.0 //@children.29/@sourceConnections.0 //@children.31/@sourceConnections.0 //@children.20/@sourceConnections.0 //@children.27/@sourceConnections.0 //@children.30/@sourceConnections.0 //@children.24/@sourceConnections.0 //@children.21/@sourceConnections.0 //@children.19/@sourceConnections.0 //@children.32/@sourceConnections.1 //@children.17/@sourceConnections.4 //@children.25/@sourceConnections.2" name="quantumgate" location="1564,990" size="178,148" id="Core.Circuit/quantumgate" runTimeClassModel="unitary_operation,toLatex(),target,apply(LJama.Matrix;)">
     <children xsi:type="editmodel:CompartmentEditModel" size="155,36">
       <children xsi:type="editmodel:AttributeEditModel" name="target" id="Core.Circuit/quantumgate#target"/>
       <children xsi:type="editmodel:AttributeEditModel" name="unitary_operation" id="Core.Circuit/quantumgate#unitary_operation"/>
@@ -657,28 +754,34 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.8" name="RZ_Gate" location="2341,1172" size="168,153" id="Core.CircuitEvolution.GateImplementations/RZ_Gate" runTimeClassModel="toLatex(),RZ_Gate(ID),apply(LJama.Matrix;),getUnitary_operation(),getTarget()">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.8" name="RZ_Gate" location="2341,1172" size="168,171" id="Core.CircuitEvolution.GateImplementations/RZ_Gate" runTimeClassModel="main([Ljava.lang.String;),toLatex(),RZ_Gate(ID),apply(LJama.Matrix;),getUnitary_operation(),getTarget()">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="145,90">
+    <children xsi:type="editmodel:CompartmentEditModel" size="145,108">
       <children xsi:type="editmodel:MethodEditModel" name="getUnitary_operation" id="Core.CircuitEvolution.GateImplementations/RZ_Gate#getUnitary_operation()"/>
       <children xsi:type="editmodel:MethodEditModel" name="getTarget" id="Core.CircuitEvolution.GateImplementations/RZ_Gate#getTarget()"/>
       <children xsi:type="editmodel:MethodEditModel" name="toLatex" id="Core.CircuitEvolution.GateImplementations/RZ_Gate#toLatex()"/>
       <children xsi:type="editmodel:MethodEditModel" name="RZ_Gate" id="Core.CircuitEvolution.GateImplementations/RZ_Gate#RZ_Gate(ID)"/>
       <children xsi:type="editmodel:MethodEditModel" name="apply" id="Core.CircuitEvolution.GateImplementations/RZ_Gate#apply(LJama.Matrix;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="main" id="Core.CircuitEvolution.GateImplementations/RZ_Gate#main([Ljava.lang.String;)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvolution.GateImplementations/RZ_Gate-Soyatec::Implement->Core.Circuit/quantumgate" source="//@children.27" target="//@children.26" targetEnd="//@children.27/@sourceConnections.0/@children.2" label="//@children.27/@sourceConnections.0/@children.0" sourceEnd="//@children.27/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Implement»" size="72,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,56" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="178,95"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,64" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="178,96"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="Core.Circuit/quantumgate&lt;-Core.CircuitEvolution.GateImplementations/RZ_Gate" source="//@children.27" target="//@children.32/@sourceConnections.1" targetEnd="//@children.27/@sourceConnections.1/@children.1" sourceEnd="//@children.27/@sourceConnections.1/@children.0" connectionRouterKind="GeneralizationManhattan">
       <children xsi:type="editmodel:AssociationEndEditModel" location="84,0" anchorKind="FixedAtEdge" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="77,0"/>
     </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvolution.GateImplementations/RZ_Gate->Standard::Call" source="//@children.27" target="//@children.33" targetEnd="//@children.27/@sourceConnections.2/@children.2" label="//@children.27/@sourceConnections.2/@children.0" sourceEnd="//@children.27/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Instantiate»" size="99,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="63,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.10" name="Pauli_Y" location="1950,1184" size="168,171" id="Core.CircuitEvolution.GateImplementations/Pauli_Y" runTimeClassModel="main([Ljava.lang.String;),toLatex(),Pauli_Y(I),apply(LJama.Matrix;),getUnitary_operation(),getTarget()">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.10 //@children.20/@sourceConnections.2" name="Pauli_Y" location="1950,1184" size="168,171" id="Core.CircuitEvolution.GateImplementations/Pauli_Y" runTimeClassModel="main([Ljava.lang.String;),toLatex(),Pauli_Y(I),apply(LJama.Matrix;),getUnitary_operation(),getTarget()">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="145,108">
       <children xsi:type="editmodel:MethodEditModel" name="getUnitary_operation" id="Core.CircuitEvolution.GateImplementations/Pauli_Y#getUnitary_operation()"/>
@@ -722,7 +825,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.11" name="V_Gate" location="2315,740" size="168,153" id="Core.CircuitEvolution.GateImplementations/V_Gate" runTimeClassModel="toLatex(),apply(LJama.Matrix;),V_Gate(I),getTarget(),getUnitary_operation()">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.11" name="V_Gate" location="2315,740" size="168,153" id="Core.CircuitEvolution.GateImplementations/V_Gate" runTimeClassModel="toLatex(),apply(LJama.Matrix;),V_Gate(I),getUnitary_operation(),getTarget()">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="145,90">
       <children xsi:type="editmodel:MethodEditModel" name="getUnitary_operation" id="Core.CircuitEvolution.GateImplementations/V_Gate#getUnitary_operation()"/>
@@ -762,9 +865,14 @@
       <children xsi:type="editmodel:AssociationEndEditModel" location="84,0" anchorKind="FixedAtEdge" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,125"/>
     </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvolution.GateImplementations/RX_Gate->Standard::Call" source="//@children.31" target="//@children.22" targetEnd="//@children.31/@sourceConnections.2/@children.2" label="//@children.31/@sourceConnections.2/@children.0" sourceEnd="//@children.31/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Instantiate»" size="99,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="8,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.5" name="Hadamard_Gate" location="2143,1185" size="168,171" id="Core.CircuitEvolution.GateImplementations/Hadamard_Gate" runTimeClassModel="main([Ljava.lang.String;),toLatex(),apply(LJama.Matrix;),Hadamard_Gate(I),getUnitary_operation(),getTarget()">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.5" name="Hadamard_Gate" location="2143,1185" size="168,171" id="Core.CircuitEvolution.GateImplementations/Hadamard_Gate" runTimeClassModel="main([Ljava.lang.String;),toLatex(),apply(LJama.Matrix;),getTarget(),Hadamard_Gate(I),getUnitary_operation()">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="145,108">
       <children xsi:type="editmodel:MethodEditModel" name="getUnitary_operation" id="Core.CircuitEvolution.GateImplementations/Hadamard_Gate#getUnitary_operation()"/>
@@ -786,7 +894,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.9" name="Pauli_Z" location="2343,948" size="168,171" id="Core.CircuitEvolution.GateImplementations/Pauli_Z" runTimeClassModel="main([Ljava.lang.String;),toLatex(),Pauli_Z(I),apply(LJama.Matrix;),getUnitary_operation(),getTarget()">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.9 //@children.27/@sourceConnections.2" name="Pauli_Z" location="2343,948" size="168,171" id="Core.CircuitEvolution.GateImplementations/Pauli_Z" runTimeClassModel="main([Ljava.lang.String;),toLatex(),Pauli_Z(I),apply(LJama.Matrix;),getUnitary_operation(),getTarget()">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="145,108">
       <children xsi:type="editmodel:MethodEditModel" name="getTarget" id="Core.CircuitEvolution.GateImplementations/Pauli_Z#getTarget()"/>
@@ -808,16 +916,16 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" name="testset" location="1942,227" size="186,117" id="Core/testset" runTimeClassModel="num_of_qubits,testcases,testset(I)">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.6/@sourceConnections.0" name="testset" location="1942,227" size="186,117" id="Core.Problem/testset" runTimeClassModel="num_of_qubits,testcases,testset(I)">
     <children xsi:type="editmodel:CompartmentEditModel" size="163,36">
-      <children xsi:type="editmodel:AttributeEditModel" name="num_of_qubits" id="Core/testset#num_of_qubits"/>
-      <children xsi:type="editmodel:AttributeEditModel" name="testcases" id="Core/testset#testcases"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="num_of_qubits" id="Core.Problem/testset#num_of_qubits"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="testcases" id="Core.Problem/testset#testcases"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="68,18">
-      <children xsi:type="editmodel:MethodEditModel" name="testset" id="Core/testset#testset(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="testset" id="Core.Problem/testset#testset(I)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core/testset-Soyatec::Import->Core/testcase" source="//@children.34" target="//@children.11" targetEnd="//@children.34/@sourceConnections.0/@children.2" label="//@children.34/@sourceConnections.0/@children.0" sourceEnd="//@children.34/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/testset-Soyatec::Import->Core.Problem/testcase" source="//@children.34" target="//@children.11" targetEnd="//@children.34/@sourceConnections.0/@children.2" label="//@children.34/@sourceConnections.0/@children.0" sourceEnd="//@children.34/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="186,110" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,1"/>
@@ -832,36 +940,37 @@
       <children xsi:type="editmodel:MethodEditModel" name="getName" id="Core.Implementation/simpleqcproblem#getName()"/>
       <children xsi:type="editmodel:MethodEditModel" name="getTestSuite" id="Core.Implementation/simpleqcproblem#getTestSuite()"/>
       <children xsi:type="editmodel:MethodEditModel" name="simpleqcproblem" id="Core.Implementation/simpleqcproblem#simpleqcproblem(Ljava.lang.String;)"/>
-      <children xsi:type="editmodel:MethodEditModel" name="setTestSuite" id="Core.Implementation/simpleqcproblem#setTestSuite(LCore.testsuite;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setTestSuite" id="Core.Implementation/simpleqcproblem#setTestSuite(LCore.Problem.testsuite;)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="Core/quantumproblem&lt;-Core.Implementation/simpleqcproblem" source="//@children.35" target="//@children.3" targetEnd="//@children.35/@sourceConnections.0/@children.1" sourceEnd="//@children.35/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="Core.Problem/quantumproblem&lt;-Core.Implementation/simpleqcproblem" source="//@children.35" target="//@children.3" targetEnd="//@children.35/@sourceConnections.0/@children.1" sourceEnd="//@children.35/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
       <children xsi:type="editmodel:AssociationEndEditModel" location="34,0" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="137,102"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Implementation/simpleqcproblem-Soyatec::Implement->Core/quantumproblem" source="//@children.35" target="//@children.3" targetEnd="//@children.35/@sourceConnections.1/@children.2" label="//@children.35/@sourceConnections.1/@children.0" sourceEnd="//@children.35/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Implementation/simpleqcproblem-Soyatec::Implement->Core.Problem/quantumproblem" source="//@children.35" target="//@children.3" targetEnd="//@children.35/@sourceConnections.1/@children.2" label="//@children.35/@sourceConnections.1/@children.0" sourceEnd="//@children.35/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Implement»" size="72,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="14,0" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="157,102"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="117,102"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Implementation/simpleqcproblem-Standard::Instantiate->Core/testsuite*Core.Implementation/simpleqcproblem-Soyatec::Import->Core/testsuite" source="//@children.35" target="//@children.6" targetEnd="//@children.35/@sourceConnections.2/@children.2" label="//@children.35/@sourceConnections.2/@children.0" sourceEnd="//@children.35/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate, Import»" size="114,13" anchorKind="MiddlePart"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Implementation/simpleqcproblem->Standard::Instantiate" source="//@children.35" target="//@children.6" targetEnd="//@children.35/@sourceConnections.2/@children.2" label="//@children.35/@sourceConnections.2/@children.0" sourceEnd="//@children.35/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Instantiate»" size="114,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="149,0" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="25,117"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.4/@sourceConnections.1" name="problemeditor" location="513,555" size="152,112" id="GUI.ProblemEditor/problemeditor" runTimeClassModel="edit(LCore.quantumproblem;),loadFile(Ljava.io.File;)">
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.4/@sourceConnections.1" name="problemeditor" location="513,555" size="152,130" id="GUI.ProblemEditor/problemeditor" runTimeClassModel="edit(LCore.quantumproblem;),loadFile(Ljava.io.File;),saveFile(Ljava.io.File;)">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="72,36">
-      <children xsi:type="editmodel:MethodEditModel" name="edit" id="GUI.ProblemEditor/problemeditor#edit(LCore.quantumproblem;)"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="74,54">
+      <children xsi:type="editmodel:MethodEditModel" name="edit" id="GUI.ProblemEditor/problemeditor#edit(LCore.Problem.quantumproblem;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="loadFile" id="GUI.ProblemEditor/problemeditor#loadFile(Ljava.io.File;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="saveFile" id="GUI.ProblemEditor/problemeditor#saveFile(Ljava.io.File;)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI.ProblemEditor/problemeditor-Soyatec::Import->Core/quantumproblem" source="//@children.36" target="//@children.3" targetEnd="//@children.36/@sourceConnections.0/@children.2" label="//@children.36/@sourceConnections.0/@children.0" sourceEnd="//@children.36/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI.ProblemEditor/problemeditor-Soyatec::Import->Core.Problem/quantumproblem" source="//@children.36" target="//@children.3" targetEnd="//@children.36/@sourceConnections.0/@children.2" label="//@children.36/@sourceConnections.0/@children.0" sourceEnd="//@children.36/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="152,40" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,69"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="152,48" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,70"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
@@ -871,7 +980,7 @@
       <children xsi:type="editmodel:MethodEditModel" name="parse" id="Core.CircuitEvaluator/testparser#parse()"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvaluator/testparser-Soyatec::Import->Core/testsuite" source="//@children.37" target="//@children.6" targetEnd="//@children.37/@sourceConnections.0/@children.2" label="//@children.37/@sourceConnections.0/@children.0" sourceEnd="//@children.37/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.CircuitEvaluator/testparser-Soyatec::Import->Core.Problem/testsuite" source="//@children.37" target="//@children.6" targetEnd="//@children.37/@sourceConnections.0/@children.2" label="//@children.37/@sourceConnections.0/@children.0" sourceEnd="//@children.37/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,78" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="273,0"/>
@@ -879,7 +988,7 @@
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
   <children xsi:type="editmodel:NotepadEditModel" location="2226,134" size="191,23" fontInfo="Sans-8-0" note="Parses a standardised XML file"/>
-  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.0/@sourceConnections.0 //@children.0/@sourceConnections.2" name="QuantumInstruction" location="466,1635" size="246,156" id="Core.Algorithms/QuantumInstruction" runTimeClassModel="integer1,subalg,integer2,instruction,double1">
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.0/@sourceConnections.0 //@children.0/@sourceConnections.2 //@children.13/@sourceConnections.3 //@children.16/@sourceConnections.17" name="QuantumInstruction" location="466,1635" size="246,156" id="Core.Algorithms/QuantumInstruction" runTimeClassModel="integer1,subalg,integer2,instruction,double1">
     <children xsi:type="editmodel:CompartmentEditModel" size="223,90">
       <children xsi:type="editmodel:AttributeEditModel" name="instruction" id="Core.Algorithms/QuantumInstruction#instruction"/>
       <children xsi:type="editmodel:AttributeEditModel" name="subalg" id="Core.Algorithms/QuantumInstruction#subalg"/>
@@ -892,7 +1001,7 @@
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Algorithms/QuantumInstruction-Soyatec::Import->Core.Algorithms/QuantumAlgorithm" source="//@children.39" target="//@children.14" targetEnd="//@children.39/@sourceConnections.0/@children.2" label="//@children.39/@sourceConnections.0/@children.0" sourceEnd="//@children.39/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="246,73" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,73"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,81"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Algorithms/QuantumInstruction-Soyatec::Import->Core.Algorithms/QuantumInstructionEnum" source="//@children.39" target="//@children.40" targetEnd="//@children.39/@sourceConnections.1/@children.2" label="//@children.39/@sourceConnections.1/@children.0" sourceEnd="//@children.39/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="49,13" anchorKind="MiddlePart"/>
@@ -901,7 +1010,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:EnumerationEditModel" targetConnections="//@children.0/@sourceConnections.3 //@children.13/@sourceConnections.1 //@children.14/@sourceConnections.0 //@children.39/@sourceConnections.1 //@children.2/@sourceConnections.6" name="QuantumInstructionEnum" location="232,903" size="231,516" id="Core.Algorithms/QuantumInstructionEnum" runTimeClassModel="Create_CRY%,Create_W%,Create_CV%,Create_CX%,Create_CZ%,Create_RY%,Create_P%,Create_Zero%,Root%,Create_Y%,Create_CRZ%,Create_V%,Create_Z%,Create_X%,Create_CRX%,Create_CW%,Create_RZ%,Create_CP%,Create_CY%,Body%,Create_RX%,Iterate%,Create_SWAP%,Create_CH%,Create_H%">
+  <children xsi:type="editmodel:EnumerationEditModel" targetConnections="//@children.0/@sourceConnections.3 //@children.13/@sourceConnections.1 //@children.14/@sourceConnections.0 //@children.39/@sourceConnections.1 //@children.2/@sourceConnections.6 //@children.16/@sourceConnections.18" name="QuantumInstructionEnum" location="232,903" size="231,516" id="Core.Algorithms/QuantumInstructionEnum" runTimeClassModel="Create_CRY%,Create_W%,Create_CV%,Create_CX%,Create_RY%,Create_CZ%,Create_P%,Create_Zero%,Root%,Create_Y%,Create_CRZ%,Create_V%,Create_Z%,Create_X%,Create_CRX%,Create_CW%,Create_RZ%,Create_CP%,Create_CY%,Body%,Create_RX%,Iterate%,Create_SWAP%,Create_CH%,Create_H%">
     <children xsi:type="editmodel:CompartmentEditModel" size="90,450">
       <children xsi:type="editmodel:EnumerationLiteralEditModel" name="Create_CV" id="Core.Algorithms/QuantumInstructionEnum#Create_CV%"/>
       <children xsi:type="editmodel:EnumerationLiteralEditModel" name="Create_CRX" id="Core.Algorithms/QuantumInstructionEnum#Create_CRX%"/>
@@ -923,7 +1032,7 @@
       <children xsi:type="editmodel:EnumerationLiteralEditModel" name="Create_H" id="Core.Algorithms/QuantumInstructionEnum#Create_H%"/>
       <children xsi:type="editmodel:EnumerationLiteralEditModel" name="Create_RY" id="Core.Algorithms/QuantumInstructionEnum#Create_RY%"/>
       <children xsi:type="editmodel:EnumerationLiteralEditModel" name="Body" id="Core.Algorithms/QuantumInstructionEnum#Body%"/>
-      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="Root" id="Core.Algorithms/QuantumInstructionEnum#Root%"/>
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="Root"/>
       <children xsi:type="editmodel:EnumerationLiteralEditModel" name="Create_CRZ" id="Core.Algorithms/QuantumInstructionEnum#Create_CRZ%"/>
       <children xsi:type="editmodel:EnumerationLiteralEditModel" name="Create_Y" id="Core.Algorithms/QuantumInstructionEnum#Create_Y%"/>
       <children xsi:type="editmodel:EnumerationLiteralEditModel" name="Create_CRY" id="Core.Algorithms/QuantumInstructionEnum#Create_CRY%"/>

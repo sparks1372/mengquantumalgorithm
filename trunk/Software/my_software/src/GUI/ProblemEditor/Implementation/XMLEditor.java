@@ -7,18 +7,18 @@ import java.util.Set;
 
 import javax.swing.JTabbedPane;
 
-import Core.testcase;
-import Core.testset;
-import Core.testsuite;
 import Core.CircuitEvaluator.Implementation.test_UML_parser;
+import Core.Problem.testcase;
+import Core.Problem.testset;
+import Core.Problem.testsuite;
 import Jama.Matrix;
 import Utils.Complex;
 
 public class XMLEditor extends JTabbedPane {
 
-	static String		zero_string		= "0";
-	static String		qubits_string	= " Qubit(s)";
-	private testsuite	tsuite;
+	private static String	zero_string		= "0";
+	private static String	qubits_string	= " Qubit(s)";
+	private testsuite		tsuite;
 
 	public XMLEditor() {
 		super();
@@ -32,7 +32,12 @@ public class XMLEditor extends JTabbedPane {
 		update_tabs();
 	}
 
-	public void add_testset(int num_of_qubits) {
+	public XMLEditor(testsuite ts) {
+		tsuite = ts;
+		update_tabs();
+	}
+
+	public void addTestSet(int num_of_qubits) {
 		int num_of_testcases;
 		switch (num_of_qubits) {
 			case 1:
@@ -109,6 +114,14 @@ public class XMLEditor extends JTabbedPane {
 		test_UML_parser ts_parser = new test_UML_parser(f.getAbsolutePath());
 		tsuite = ts_parser.parse();
 		update_tabs();
+	}
+
+	public void removeCurrentTestSet() {
+		InnerEditorPanel currentTab = (InnerEditorPanel) this
+				.getSelectedComponent();
+		tsuite.removeTestSet(currentTab.getTestSet());
+		update_tabs();
+
 	}
 
 	protected void setTestSuite(testsuite ts) {

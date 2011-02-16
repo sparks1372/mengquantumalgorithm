@@ -3,10 +3,6 @@ package Core.CircuitEvaluator.Implementation;
 import java.util.Iterator;
 import java.util.Set;
 
-import Core.quantumproblem;
-import Core.testcase;
-import Core.testset;
-import Core.testsuite;
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Circuit.Circuit;
 import Core.Circuit.quantumgate;
@@ -14,6 +10,10 @@ import Core.CircuitBuilder.circuitBuilder;
 import Core.CircuitEvaluator.Fitness;
 import Core.CircuitEvaluator.FitnessFunction;
 import Core.CircuitEvaluator.circuitevaluator;
+import Core.Problem.quantumproblem;
+import Core.Problem.testcase;
+import Core.Problem.testset;
+import Core.Problem.testsuite;
 import Jama.Matrix;
 
 public class basiccircuitevaluator implements circuitevaluator {
@@ -93,6 +93,9 @@ public class basiccircuitevaluator implements circuitevaluator {
 		}
 		fitness_to_return = count != 0 ? fitness_to_return
 				/ ((double) count / possiblecount) : Float.MAX_VALUE;
+
+		fitness_to_return = count == possiblecount ? 0 : fitness_to_return;
+
 		// if (fitness_to_return < 15.701) {
 		// keys = ts.getKeys();
 		//

@@ -1,6 +1,7 @@
 package GUI.ProblemEditor;
 
-import Core.quantumproblem;
+import Core.Problem.quantumproblem;
+
 import java.io.File;
 
 public interface problemeditor {

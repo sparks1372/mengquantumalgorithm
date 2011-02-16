@@ -3,6 +3,7 @@ package Core;
 import Core.Algorithms.QuantumInstructionEnum;
 import Core.CircuitBuilder.circuitBuilder;
 import Core.CircuitBuilder.Implementation.basiccircuitbuilder;
+import Core.CircuitEvaluator.FitnessFunction;
 import Core.CircuitEvaluator.circuitevaluator;
 import Core.CircuitEvaluator.fitnessfunctionmanager;
 import Core.CircuitEvaluator.Implementation.basiccircuitevaluator;
@@ -12,6 +13,8 @@ import Core.CircuitEvolution.circuitsearchengine;
 import Core.CircuitEvolution.searchenginemanager;
 import Core.CircuitEvolution.QPace4.QPace4_Imp;
 import Core.Implementation.simpleqcproblem;
+import Core.Problem.Problem_Manager;
+import Core.Problem.quantumproblem;
 
 /**
  * @uml.dependency supplier="Core.CircuitBuilder.circuitBuilder"
@@ -28,16 +31,13 @@ public class qcevolutionbackend {
 	public static void main(String[] args) {
 
 		qcevolutionbackend be = new qcevolutionbackend();
-		be.setQproblem(new simpleqcproblem("Hadamard"));
-		test_UML_parser tup = new test_UML_parser(args[0]);
-		be.getQproblem().setTestSuite(tup.parse());
 
 		circuitBuilder cirbui = new basiccircuitbuilder();
 		circuitevaluator cireval = new basiccircuitevaluator(cirbui);
-		cireval.setQfitnessfunction(new PhaseSensitiveParsimoniousSimpleFitness());
+		FitnessFunction ff = (new PhaseSensitiveParsimoniousSimpleFitness());
 		// cireval.setQfitnessfunction(new ParsimoniousSimpleFitness());
 		// cireval.setQfitnessfunction(new SimpleFitness());
-		cireval.setQproblem(be.getQproblem());
+		// cireval.setQproblem(be.getQproblem());
 		boolean[] temp = new boolean[QuantumInstructionEnum.values().length];
 		for (int i = 0; i < temp.length; i++) {
 			if (// (i == QuantumInstructionEnum.Create_Zero.ordinal())
@@ -53,9 +53,26 @@ public class qcevolutionbackend {
 				temp[i] = true;
 			}
 		}
-		be.setCurrentse(new QPace4_Imp(cirbui, cireval, temp));
+		be.setCurrentse(new QPace4_Imp());
+		be.setCirbui(cirbui);
+		be.setCireval(cireval);
+		be.setCurrentff(ff);
+		be.setQproblem(new simpleqcproblem("Hadamard"));
+		test_UML_parser tup = new test_UML_parser(args[0]);
+		be.getQproblem().setTestSuite(tup.parse());
+
 		be.getCurrentse().Evolve();
 	}
+
+	private circuitBuilder			cirbui;
+	private circuitevaluator		cireval;
+	boolean[]						available_gates	= new boolean[QuantumInstructionEnum
+															.values().length];
+
+	/**
+	 * @uml.property name="probmanager"
+	 */
+	private Problem_Manager			probmanager;
 
 	/**
 	 * @uml.property name="semanager"
@@ -68,14 +85,50 @@ public class qcevolutionbackend {
 	private circuitsearchengine		currentse;
 
 	/**
-	 * @uml.property name="qproblem"
-	 */
-	private quantumproblem			qproblem;
-
-	/**
 	 * @uml.property name="ffmanager"
 	 */
 	private fitnessfunctionmanager	ffmanager;
+
+	/**
+	 * 
+	 */
+	public qcevolutionbackend() {
+		cirbui = new basiccircuitbuilder();
+		cireval = new basiccircuitevaluator(cirbui);
+
+		for (int i = 0; i < available_gates.length; i++) {
+			if (// (i == QuantumInstructionEnum.Create_Zero.ordinal())
+			// || (i == QuantumInstructionEnum.Create_CRX.ordinal())
+			// || (i == QuantumInstructionEnum.Create_CRY.ordinal())
+			// || (i == QuantumInstructionEnum.Create_CRZ.ordinal())
+			// || (i == QuantumInstructionEnum.Create_RX.ordinal())
+			// || (i == QuantumInstructionEnum.Create_RY.ordinal())
+			// || (i == QuantumInstructionEnum.Create_RZ.ordinal())
+			/* || */(i == QuantumInstructionEnum.Create_P.ordinal())) {
+				available_gates[i] = false;
+			} else {
+				available_gates[i] = true;
+			}
+		}
+	}
+
+	/**
+	 * @return the cirbui
+	 */
+	public circuitBuilder getCirbui() {
+		return cirbui;
+	}
+
+	/**
+	 * @return the cireval
+	 */
+	public circuitevaluator getCireval() {
+		return cireval;
+	}
+
+	public FitnessFunction getCurrentff() {
+		return cireval.getQfitnessfunction();
+	}
 
 	/**
 	 * Getter of the property <tt>currentse</tt>
@@ -98,13 +151,23 @@ public class qcevolutionbackend {
 	}
 
 	/**
+	 * Getter of the property <tt>probmanager</tt>
+	 * 
+	 * @return Returns the probmanager.
+	 * @uml.property name="probmanager"
+	 */
+	public Problem_Manager getProbmanager() {
+		return probmanager;
+	}
+
+	/**
 	 * Getter of the property <tt>qproblem</tt>
 	 * 
 	 * @return Returns the qproblem.
 	 * @uml.property name="qproblem"
 	 */
 	public quantumproblem getQproblem() {
-		return qproblem;
+		return cireval.getQproblem();
 	}
 
 	/**
@@ -117,6 +180,35 @@ public class qcevolutionbackend {
 		return semanager;
 	}
 
+	private void seinit() {
+		if (currentse != null) {
+			currentse.init(getCirbui(), getCireval(), available_gates);
+		}
+	}
+
+	/**
+	 * @param cirbui
+	 *            the cirbui to set
+	 */
+	public void setCirbui(circuitBuilder cirbui) {
+		this.cirbui = cirbui;
+		seinit();
+	}
+
+	/**
+	 * @param cireval
+	 *            the cireval to set
+	 */
+	public void setCireval(circuitevaluator cireval) {
+		this.cireval = cireval;
+		seinit();
+	}
+
+	public void setCurrentff(FitnessFunction currentff) {
+		cireval.setQfitnessfunction(currentff);
+		seinit();
+	}
+
 	/**
 	 * Setter of the property <tt>currentse</tt>
 	 * 
@@ -126,6 +218,7 @@ public class qcevolutionbackend {
 	 */
 	public void setCurrentse(circuitsearchengine currentse) {
 		this.currentse = currentse;
+		seinit();
 	}
 
 	/**
@@ -140,14 +233,18 @@ public class qcevolutionbackend {
 	}
 
 	/**
-	 * Setter of the property <tt>qproblem</tt>
+	 * Setter of the property <tt>probmanager</tt>
 	 * 
-	 * @param qproblem
-	 *            The qproblem to set.
-	 * @uml.property name="qproblem"
+	 * @param probmanager
+	 *            The probmanager to set.
+	 * @uml.property name="probmanager"
 	 */
+	public void setProbmanager(Problem_Manager probmanager) {
+		this.probmanager = probmanager;
+	}
+
 	public void setQproblem(quantumproblem qproblem) {
-		this.qproblem = qproblem;
+		cireval.setQproblem(qproblem);
 	}
 
 	/**

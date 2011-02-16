@@ -16,8 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import Core.quantumproblem;
-import Core.testsuite;
+import Core.Problem.quantumproblem;
+import Core.Problem.testsuite;
 import GUI.ProblemEditor.problemeditor;
 
 public class VisualProblemEditor extends JPanel implements problemeditor,
@@ -156,7 +156,7 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 								"Message", JOptionPane.INFORMATION_MESSAGE);
 				s = 10;
 			}
-			xmled.add_testset(s);
+			xmled.addTestSet(s);
 		}
 	}
 

@@ -14,21 +14,22 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import Core.testcase;
-import Core.testset;
+import Core.Problem.testcase;
+import Core.Problem.testset;
 
 public class InnerEditorPanel extends JPanel implements ListSelectionListener {
 
-	JList test_case_list;
-	testset tset;
-	JPanel test_case_editor;
-	DefaultListModel model;
-	JLabel tc_label = new JLabel("Starting State");
-	TestCaseEditor tce;
+	private final JList				test_case_list;
+	private final testset			tset;
+	private JPanel					test_case_editor;
+	private final DefaultListModel	model;
+	private final JLabel			tc_label	= new JLabel("Starting State");
+	private final TestCaseEditor	tce;
 
 	public InnerEditorPanel(testset tset) {
 		super();
 		this.tset = tset;
+		this.tce = new TestCaseEditor();
 		this.setLayout(new BorderLayout());
 
 		model = new DefaultListModel();
@@ -41,9 +42,11 @@ public class InnerEditorPanel extends JPanel implements ListSelectionListener {
 		}
 		test_case_list = new JList(model);
 
-		test_case_list.addListSelectionListener(this);
 		test_case_list.setVisibleRowCount(-1);
 		test_case_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		test_case_list.setSelectedIndex(0);
+		valueChanged(null);
+		test_case_list.addListSelectionListener(this);
 
 		JScrollPane listScroller = new JScrollPane(test_case_list);
 		listScroller.setPreferredSize(new Dimension(250, 80));
@@ -55,10 +58,16 @@ public class InnerEditorPanel extends JPanel implements ListSelectionListener {
 
 		this.add(left_panel, BorderLayout.LINE_START);
 
-		tce = new TestCaseEditor();
-
 		this.add(tce, BorderLayout.CENTER);
 
+	}
+
+	public int getQubit() {
+		return tset.getNum_of_qubits();
+	}
+
+	protected testset getTestSet() {
+		return tset;
 	}
 
 	@Override
@@ -67,7 +76,7 @@ public class InnerEditorPanel extends JPanel implements ListSelectionListener {
 		index = test_case_list.getSelectedIndex();
 		Iterator<testcase> iter = tset.getTestcases();
 		testcase tc = null;
-		while (tc == null && iter.hasNext()) {
+		while ((tc == null) && iter.hasNext()) {
 			testcase temp = iter.next();
 			if (temp.getId() == index) {
 				tc = temp;
