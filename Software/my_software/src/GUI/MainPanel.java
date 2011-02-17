@@ -6,9 +6,11 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import Core.qcevolutionbackend;
+import GUI.SubPanels.CPanel;
 import GUI.SubPanels.LPanel;
 import GUI.SubPanels.RPanel;
 
@@ -21,10 +23,11 @@ public class MainPanel extends JPanel {
 	private final JPanel				centre_panel;
 	private final JPanel				right_panel;
 	private final Dimension				screen_size;
-	private static final double			left_perc	= 0.2;
-	private static final double			centre_perc	= 0.6;
-	private static final double			right_perc	= 0.2;
-	private static final double			height_perc	= 0.8;
+	public static final double			left_perc		= 0.2;
+	public static final double			centre_perc		= 0.6;
+	public static final double			right_perc		= 0.2;
+	public static final double			height_perc		= 0.8;
+	public static final int				titleFontSize	= 28;
 	private final qcevolutionbackend	backend;
 
 	/**
@@ -34,8 +37,12 @@ public class MainPanel extends JPanel {
 		backend = be;
 		screen_size = dim;
 		left_panel = new LPanel(backend);
-		centre_panel = new JPanel();
+		centre_panel = new CPanel(backend);
 		right_panel = new RPanel(backend);
+
+		left_panel.setBorder(BorderFactory.createEtchedBorder());
+		centre_panel.setBorder(BorderFactory.createEtchedBorder());
+		right_panel.setBorder(BorderFactory.createEtchedBorder());
 
 		left_panel.setSize((int) (screen_size.width * left_perc),
 				(int) (screen_size.height * height_perc));
@@ -48,4 +55,5 @@ public class MainPanel extends JPanel {
 		this.add(centre_panel, BorderLayout.CENTER);
 		this.add(right_panel, BorderLayout.LINE_END);
 	}
+
 }

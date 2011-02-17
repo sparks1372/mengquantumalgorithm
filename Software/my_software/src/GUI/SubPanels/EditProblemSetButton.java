@@ -5,6 +5,8 @@ package GUI.SubPanels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 
@@ -14,7 +16,7 @@ import Core.qcevolutionbackend;
  * @author Sam Ratcliff
  * 
  */
-public class EditProblemSetButton extends JButton implements ActionListener {
+public class EditProblemSetButton extends JButton implements Observer {
 	private final qcevolutionbackend	backend;
 	private static final String			text	= "Edit Selected Problem";
 
@@ -32,6 +34,7 @@ public class EditProblemSetButton extends JButton implements ActionListener {
 						.setVisible(true);
 			}
 		});
+		backend.addObserver(this);
 		if ((backend.getQproblem() == null)
 				|| (backend.getQproblem().getTestSuite() == null)) {
 			this.setEnabled(false);
@@ -47,8 +50,13 @@ public class EditProblemSetButton extends JButton implements ActionListener {
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		this.setEnabled(true);
+	public void update(Observable arg0, Object arg1) {
+		if ((backend.getQproblem() == null)
+				|| (backend.getQproblem().getTestSuite() == null)) {
+			this.setEnabled(false);
+		} else {
+			this.setEnabled(true);
+		}
 	}
 
 }

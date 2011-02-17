@@ -49,6 +49,7 @@ public class Problem_Manager extends Observable {
 			ProblemTag pt = new ProblemTag(Name, FileName, Description);
 			availableproblems.put(Name, pt);
 			saved = false;
+			setChanged();
 			notifyObservers(this);
 		}
 		return to_return;
@@ -101,7 +102,7 @@ public class Problem_Manager extends Observable {
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(prob_file));
 			out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-			out.write("<Problems  xmlns=\"http://www.w3schools.com\"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"xsi:schemaLocation=\"http://www.w3schools.com problem_spec.xsd\">\n");
+			out.write("<Problems xmlns=\"http://www.w3schools.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3schools.com problem_spec.xsd\">\n");
 			Iterator<String> problem_iterator = availableproblems.keySet()
 					.iterator();
 			ProblemTag pr;
@@ -120,5 +121,19 @@ public class Problem_Manager extends Observable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public boolean updateProblem(String Name, String FileName, testsuite ts,
+			String Description) {
+		boolean to_return = true;
+		if (!availableproblems.containsKey(Name)) {
+			to_return = false;
+		} else {
+			quantumproblem qp = getProblem(Name);
+			qp.setTestSuite(ts);
+			setChanged();
+		}
+		notifyObservers(this);
+		return to_return;
 	}
 }

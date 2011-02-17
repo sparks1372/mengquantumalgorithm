@@ -5,8 +5,12 @@ import Jama.Matrix;
 public interface quantumgate {
 
 	/**
-			 */
-	public abstract String toLatex();
+	 */
+	public abstract Matrix apply(Matrix start_state);
+
+	/**
+	 */
+	public abstract String getlabel();
 
 	/**
 	 * @return Returns the target.
@@ -21,10 +25,8 @@ public interface quantumgate {
 	 */
 	public Matrix getUnitary_operation();
 
-		
-		/**
-		 */
-		public abstract Matrix apply(Matrix start_state);
-		
+	/**
+				 */
+	public abstract String toLatex();
 
 }

@@ -6,6 +6,8 @@ import Testing.predefined_states;
 import Utils.Complex;
 
 public class Pauli_Z implements quantumgate {
+	private static final String	labelStr	= "Z";
+
 	public static void main(String[] args) {
 
 		Pauli_Z test = new Pauli_Z(1);
@@ -131,6 +133,16 @@ public class Pauli_Z implements quantumgate {
 		}
 		return start_state;
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.Circuit.quantumgate#getlabel()
+	 */
+	@Override
+	public String getlabel() {
+		return labelStr;
 	}
 
 	@Override

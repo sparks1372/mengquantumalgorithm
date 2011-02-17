@@ -3,80 +3,74 @@ package Core.CircuitEvolution.GateImplementations;
 import Core.Circuit.quantumgate;
 import Core.CircuitEvolution.multiqubitquantumgate;
 import Jama.Matrix;
+import Testing.predefined_states;
 import Utils.Complex;
 import Utils.Tensor_Matrix;
 
 public class ControlledU_Gate implements multiqubitquantumgate {
-	private int			targ;
-	private int			ctrl;
-	private String		latex;
-	private quantumgate	innergate	= null;
+	public static void main(String[] args) {
+		ControlledU_Gate cu = new ControlledU_Gate(new Pauli_X(1), 2, 1);
+		cu.apply(predefined_states.get_2q_3());
+	}
+
+	private final String	labelStr;
+
+	private int				ctrl;
+	private int				targ;
+	private String			latex;
+	private quantumgate		innergate		= null;
 	/**
 	 * @uml.property name="u_node"
 	 * @uml.associationEnd
 	 */
-	private Matrix		unitary;
+	private Matrix			unitary;
 	/**
-	 * @uml.property name="a"
+	 * @uml.property name="controlMat"
 	 * @uml.associationEnd
 	 */
-	private Matrix		A			= Matrix.identity(2, 2);
+	private final Matrix	controlMat		= Matrix.identity(2, 2);
 	/**
-	 * @uml.property name="b"
+	 * @uml.property name="nonControlMat"
 	 * @uml.associationEnd
 	 */
-	private Matrix		B			= Matrix.identity(2, 2);
-	/**
-	 * @uml.property name="c"
-	 * @uml.associationEnd
-	 */
-	private Matrix		C			= Matrix.identity(2, 2);
-	/**
-	 * @uml.property name="d"
-	 * @uml.associationEnd
-	 */
-	private Matrix		D			= Matrix.identity(2, 2);
-
-	/**
-		 */
+	private final Matrix	nonControlMat	= Matrix.identity(2, 2);
 
 	/**
 		 */
 	public ControlledU_Gate(quantumgate gate, int t, int c) {
-		// System.out.println(this.getClass().getName());
+		labelStr = gate.getlabel();
 		if (t != c) {
 			targ = t;
 			ctrl = c;
 			latex = gate.toLatex();
-			B.set(0, 0, new Complex(0, 0));
-			B.set(0, 1, new Complex(0, 0));
-			B.set(1, 0, new Complex(0, 0));
-			B.set(1, 1, new Complex(0, 0));
-			C.set(0, 0, new Complex(0, 0));
-			C.set(0, 1, new Complex(0, 0));
-			C.set(1, 0, new Complex(0, 0));
-			C.set(1, 1, new Complex(0, 0));
-			D = gate.getUnitary_operation();
+			controlMat.set(0, 0, new Complex(0, 0));
+			nonControlMat.set(1, 1, new Complex(0, 0));
+			Matrix gateU = gate.getUnitary_operation();
 
-			Matrix temp = Matrix.identity(1, 1);
+			Matrix spacing = Matrix.identity(1, 1);
 			for (int i = 1; i < Math.abs(targ - ctrl); i++) {
-				temp = Tensor_Matrix.tensor_prod(temp, Matrix.identity(2, 2));
+				spacing = Tensor_Matrix.tensor_prod(spacing,
+						Matrix.identity(2, 2));
 			}
 
-			A = Tensor_Matrix.tensor_prod(temp, A);
-			B = Tensor_Matrix.tensor_prod(temp, B);
-			C = Tensor_Matrix.tensor_prod(temp, C);
-			D = Tensor_Matrix.tensor_prod(temp, D);
-			int dim = A.getColumnDimension() * 2;
-			unitary = new Matrix(dim, dim);
-			unitary.setMatrix(0, A.getColumnDimension() - 1, 0,
-					A.getColumnDimension() - 1, A);
-			unitary.setMatrix(0, A.getColumnDimension() - 1,
-					A.getColumnDimension(), dim - 1, B);
-			unitary.setMatrix(A.getColumnDimension(), dim - 1, 0,
-					A.getColumnDimension() - 1, C);
-			unitary.setMatrix(A.getColumnDimension(), dim - 1,
-					A.getColumnDimension(), dim - 1, D);
+			Matrix nonControlUnitary;
+			Matrix controlUnitary;
+			if (ctrl > targ) {
+				nonControlUnitary = Tensor_Matrix.tensor_prod(
+						nonControlMat,
+						Tensor_Matrix.tensor_prod(spacing,
+								Matrix.identity(2, 2)));
+				controlUnitary = Tensor_Matrix.tensor_prod(controlMat,
+						Tensor_Matrix.tensor_prod(spacing, gateU));
+			} else {
+				nonControlUnitary = Tensor_Matrix.tensor_prod(
+						Matrix.identity(2, 2),
+						Tensor_Matrix.tensor_prod(spacing, nonControlMat));
+				controlUnitary = Tensor_Matrix.tensor_prod(gateU,
+						Tensor_Matrix.tensor_prod(spacing, controlMat));
+			}
+
+			unitary = nonControlUnitary.plus(controlUnitary);
 
 			if (Math.min(targ, ctrl) != 1) {
 				unitary = Tensor_Matrix.tensor_prod(Matrix.identity(
@@ -88,6 +82,9 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 			innergate = gate;
 		}
 	}
+
+	/**
+		 */
 
 	@Override
 	public Matrix apply(Matrix start_state) {
@@ -105,13 +102,32 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 										: Math.pow(2, qubits - targ))));
 			}
 
+			// System.out.println("ContolledU " + getlabel() + " ctrlet "
+			// + getTarget() + "r control " + getSecondQubit() + "Unitary");
+			// operation.print(0, 0);
 			return operation.times(start_state);
 		} else {
 			return innergate.apply(start_state);
 		}
 	}
 
-	public int getControl() {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.Circuit.quantumgate#getlabel()
+	 */
+	@Override
+	public String getlabel() {
+		return labelStr;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.CircuitEvolution.multiqubitquantumgate#getSecondQubit()
+	 */
+	@Override
+	public int getSecondQubit() {
 		return ctrl;
 	}
 
@@ -143,5 +159,4 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 		}
 
 	}
-
 }

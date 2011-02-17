@@ -1,5 +1,7 @@
 package Core;
 
+import java.util.Observable;
+
 import Core.Algorithms.QuantumInstructionEnum;
 import Core.CircuitBuilder.circuitBuilder;
 import Core.CircuitBuilder.Implementation.basiccircuitbuilder;
@@ -19,7 +21,7 @@ import Core.Problem.quantumproblem;
 /**
  * @uml.dependency supplier="Core.CircuitBuilder.circuitBuilder"
  */
-public class qcevolutionbackend {
+public class qcevolutionbackend extends Observable {
 
 	/**
 	 * @uml.property name="circuitBuilder"
@@ -61,7 +63,7 @@ public class qcevolutionbackend {
 		test_UML_parser tup = new test_UML_parser(args[0]);
 		be.getQproblem().setTestSuite(tup.parse());
 
-		be.getCurrentse().Evolve();
+		be.getCurrentse().getEvolveDialog().setVisible(true);
 	}
 
 	private circuitBuilder			cirbui;
@@ -182,7 +184,10 @@ public class qcevolutionbackend {
 
 	private void seinit() {
 		if (currentse != null) {
+			currentse.removeAllObservers();
 			currentse.init(getCirbui(), getCireval(), available_gates);
+			setChanged();
+			super.notifyObservers(this);
 		}
 	}
 
@@ -245,6 +250,8 @@ public class qcevolutionbackend {
 
 	public void setQproblem(quantumproblem qproblem) {
 		cireval.setQproblem(qproblem);
+		setChanged();
+		notifyObservers(this);
 	}
 
 	/**
@@ -257,4 +264,5 @@ public class qcevolutionbackend {
 	public void setSemanager(searchenginemanager semanager) {
 		this.semanager = semanager;
 	}
+
 }

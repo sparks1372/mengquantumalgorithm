@@ -5,8 +5,9 @@ import Jama.Matrix;
 import Utils.Complex;
 
 public class Zero_Gate implements quantumgate {
-	private final int		targ;
-	private final Matrix	unitary;
+	private static final String	labelStr	= "Zero";
+	private final int			targ;
+	private final Matrix		unitary;
 
 	/**
 		 */
@@ -27,6 +28,16 @@ public class Zero_Gate implements quantumgate {
 		start_state = start_state.times(new Complex(0, 0));
 		start_state.set(0, 0, new Complex(1, 0));
 		return start_state;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.Circuit.quantumgate#getlabel()
+	 */
+	@Override
+	public String getlabel() {
+		return labelStr;
 	}
 
 	@Override

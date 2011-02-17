@@ -95,20 +95,20 @@ public class basiccircuit implements Circuit {
 								.concat(((ControlledU_Gate) next_gate)
 										.toLatex());
 					} else if ((i == (((ControlledU_Gate) next_gate)
-							.getControl() - 1))
+							.getSecondQubit() - 1))
 							&& (((ControlledU_Gate) next_gate).getTarget() > ((ControlledU_Gate) next_gate)
-									.getControl())) {
+									.getSecondQubit())) {
 						cir_diag[i] = cir_diag[i].concat("\\ctrl \\qwx&");
 					} else if (i == (((ControlledU_Gate) next_gate)
-							.getControl() - 1)) {
+							.getSecondQubit() - 1)) {
 						cir_diag[i] = cir_diag[i].concat("\\ctrl &");
 					} else if ((i > (((ControlledU_Gate) next_gate).getTarget() - 1))
 							&& (i < (((ControlledU_Gate) next_gate)
-									.getControl() - 1))) {
+									.getSecondQubit() - 1))) {
 						cir_diag[i] = cir_diag[i].concat("\\qw \\qwx&");
 					} else if ((i < (((ControlledU_Gate) next_gate).getTarget() - 1))
 							&& (i > (((ControlledU_Gate) next_gate)
-									.getControl() - 1))) {
+									.getSecondQubit() - 1))) {
 						cir_diag[i] = cir_diag[i].concat("\\qw \\qwx&");
 					} else {
 						cir_diag[i] = cir_diag[i].concat("\\qw&");
@@ -126,14 +126,14 @@ public class basiccircuit implements Circuit {
 		}
 
 		String to_return = new String();
-		int qubit = 1;
+		int qubit = cir_diag.length;
 		String new_line = "\\\\%" + qubit + "\n";
 		to_return = to_return
 				.concat("\\begin{figure}\n\\[\n\\Qcircuit @C=1.0em @R=.7em {\n");
-		for (String element : cir_diag) {
-			to_return = to_return.concat(element);
+		for (int index = cir_diag.length; index > 0;) {
+			to_return = to_return.concat(cir_diag[--index]);
 			to_return = to_return.concat(new_line);
-			new_line = "\\\\%" + ++qubit + "\n";
+			new_line = "\\\\%" + --qubit + "\n";
 		}
 
 		to_return = to_return.concat("}\n\\]\n\\end{figure}\n");

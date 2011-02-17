@@ -6,9 +6,10 @@ import Utils.Complex;
 import Utils.Tensor_Matrix;
 
 public class RX_Gate implements quantumgate {
-	private final int		targ;
-	private final double	theta;
-	private final Matrix	unitary;
+	private static final String	labelStr	= "RX";
+	private final int			targ;
+	private final double		theta;
+	private final Matrix		unitary;
 
 	/**
 		 */
@@ -59,6 +60,16 @@ public class RX_Gate implements quantumgate {
 			}
 		}
 		return operation.times(start_state);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.Circuit.quantumgate#getlabel()
+	 */
+	@Override
+	public String getlabel() {
+		return labelStr;
 	}
 
 	@Override

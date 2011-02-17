@@ -90,7 +90,6 @@ public class qcevolutionfrontend extends JFrame {
 		setUndecorated(true);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(0, 0, screenSize.width, screenSize.height);
-		getContentPane().add(new JLabel(title), BorderLayout.NORTH);
 		JButton closeButton = new JButton("Close");
 		closeButton.addActionListener(new ActionListener() {
 			@Override

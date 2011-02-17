@@ -1,6 +1,11 @@
 package Core.CircuitEvolution;
 
-import Core.Circuit.Circuit;
+import java.util.Observer;
+
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+
+import Core.Algorithms.QuantumAlgorithm;
 import Core.CircuitBuilder.circuitBuilder;
 import Core.CircuitEvaluator.circuitevaluator;
 
@@ -9,7 +14,9 @@ import Core.CircuitEvaluator.circuitevaluator;
  */
 public interface circuitsearchengine {
 
-	public abstract float Evolve();
+	public void addObserver(Observer ob);
+
+	public void Evolve();
 
 	/**
 	 * @return Returns the availableinstructions.
@@ -19,10 +26,10 @@ public interface circuitsearchengine {
 	public boolean[] getAvailableinstructions();
 
 	/**
-	 * @return Returns the bestCircuit.
-	 * @uml.property name="BestCircuit" readOnly="true"
+	 * @return Returns the best Algorithm.
+	 * @uml.property name="BestAlgorithm" readOnly="true"
 	 */
-	public Circuit getBestCircuit();
+	public QuantumAlgorithm getBestAlgorithm();
 
 	/**
 	 * @return Returns the cbuilder.
@@ -36,6 +43,8 @@ public interface circuitsearchengine {
 	 */
 	public circuitevaluator getCevaluator();
 
+	public JDialog getEvolveDialog();
+
 	/**
 	 * @return Returns the evotype.
 	 * @uml.property name="evotype" readOnly="true"
@@ -48,7 +57,20 @@ public interface circuitsearchengine {
 	 */
 	public String getName();
 
+	public JPanel getProgressBar();
+
+	public JPanel getSearchStatisticsPanel();
+
+	public SearchEngineState getState();
+
 	public void init(circuitBuilder cb, circuitevaluator ce, boolean[] ai);
+
+	/**
+	 * 
+	 */
+	public void removeAllObservers();
+
+	public void removeObserver(Observer ob);
 
 	/**
 	 * Setter of the property <tt>availableinstructions</tt>

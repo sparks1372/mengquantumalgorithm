@@ -7,6 +7,8 @@ import Utils.Complex;
 import Utils.Tensor_Matrix;
 
 public class RZ_Gate implements quantumgate {
+	private static final String	labelStr	= "RZ";
+
 	public static void main(String[] args) {
 
 		RZ_Gate test = new RZ_Gate(1, Math.PI / 2);
@@ -31,6 +33,7 @@ public class RZ_Gate implements quantumgate {
 	}
 
 	private final int		targ;
+
 	private final double	theta;
 	private final Matrix	unitary;
 
@@ -78,6 +81,16 @@ public class RZ_Gate implements quantumgate {
 			}
 		}
 		return operation.times(start_state);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.Circuit.quantumgate#getlabel()
+	 */
+	@Override
+	public String getlabel() {
+		return labelStr;
 	}
 
 	@Override

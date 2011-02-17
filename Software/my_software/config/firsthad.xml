@@ -47,7 +47,7 @@
 </testcase>
 </testset>
 <testset NumQubits="2">
-<testcase><!--0-->
+<testcase><!--00-->
 <starting_state>
 <matrix_element><!-- 00-->
 <Real>1.0</Real>
@@ -85,7 +85,7 @@
 </matrix_element>
 </final_state>
 </testcase>
-<testcase><!--1-->
+<testcase><!--01-->
 <starting_state>
 <matrix_element><!-- 00-->
 <Real>0.0</Real>
@@ -312,7 +312,7 @@
 <Imag>0.0</Imag>
 </matrix_element>
 <matrix_element><!-- 001-->
-<Real>1.0</Real>
+<Real>-0.707106781</Real>
 <Imag>0.0</Imag>
 </matrix_element>
 <matrix_element><!-- 010-->

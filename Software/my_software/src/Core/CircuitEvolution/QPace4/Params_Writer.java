@@ -20,15 +20,18 @@ public class Params_Writer {
 	private static final String	fixed_line_1			= "gp.fs.size = 1";
 	private static final String	fixed_line_2			= "gp.fs.0.size = ";
 	private static final String	fixed_line_3			= "gp.fs.0.func.";
+	private static final String	fixed_line_4			= "generations = ";
+	private static final String	fixed_line_5			= "pop.subpop.0.size = ";
+	private static final String	fixed_line_6			= "breedthreads = ";
+	private static final String	fixed_line_7			= "evalthreads = ";
+
 	private static final String	fixed_eqal				= " = ";
 	private static final String	fixed_instr				= Instruction.class
 																.getName();
 	private static final String	fixed_node_constraint	= ".nc";
 	private static final String	fixed_dot				= ".";
 	private static final String	fixed_nc_instr			= "terminalinst";
-	private static final int	base_node_count			= Integer
-																.parseInt(System
-																		.getenv("BASICNODECOUNT"));
+	private static final int	base_node_count			= 6;
 
 	/**
 	 * @param filename
@@ -38,7 +41,8 @@ public class Params_Writer {
 		out = new FileWriter(filename);
 	}
 
-	public void updateParams(boolean[] avail_gates) {
+	public void updateParams(boolean[] avail_gates, int gen, int pop, int bth,
+			int eth) {
 		int true_count = 0;
 		for (boolean avail_gate : avail_gates) {
 			if (avail_gate) {
@@ -54,6 +58,18 @@ public class Params_Writer {
 			osw.write(parent_line);
 			osw.newLine();
 			osw.write(fixed_line_1);
+			osw.newLine();
+			osw.write(fixed_line_4);
+			osw.write(Integer.toString(gen));
+			osw.newLine();
+			osw.write(fixed_line_5);
+			osw.write(Integer.toString(pop));
+			osw.newLine();
+			osw.write(fixed_line_6);
+			osw.write(Integer.toString(bth));
+			osw.newLine();
+			osw.write(fixed_line_7);
+			osw.write(Integer.toString(eth));
 			osw.newLine();
 			osw.write(fixed_line_2);
 			osw.write(Integer.toString(node_count));

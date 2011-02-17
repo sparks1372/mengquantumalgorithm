@@ -3,6 +3,7 @@
  */
 package Core.CircuitEvolution.QPace4.Stats;
 
+import Core.CircuitEvolution.QPace4.State.QPaceEvoState;
 import ec.EvolutionState;
 import ec.Individual;
 import ec.gp.koza.KozaFitness;
@@ -24,6 +25,8 @@ public class QPACE_stats extends SimpleStatistics {
 	public void postEvaluationStatistics(EvolutionState state) {
 		// super.postEvaluationStatistics(state);
 
+		((QPaceEvoState) state).setGens(state.generation);
+		((QPaceEvoState) state).getProgressBar().setValue(state.generation);
 		Float avfit[] = new Float[state.population.subpops.length];
 		int count;
 		// for now we just print the best fitness per subpopulation.
