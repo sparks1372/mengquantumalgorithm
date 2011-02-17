@@ -135,6 +135,54 @@ public class basiccircuitevaluator implements circuitevaluator {
 		return quantprob;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.CircuitEvaluator.circuitevaluator#getResults(Core.Algorithms.
+	 * QuantumAlgorithm)
+	 */
+	@Override
+	public testsuite getResults(QuantumAlgorithm alg) {
+		System.out.println(alg.print());
+		Circuit cir;
+		Iterator<quantumgate> qgate_iter;
+		testsuite ts = quantprob.getTestSuite();
+		testsuite to_return = new testsuite();
+		testcase tc;
+		testcase tc_toadd;
+		testset ts_toadd;
+		Set<Integer> keys = ts.getKeys();
+
+		Iterator<Integer> kiter = keys.iterator();
+
+		while (kiter.hasNext()) {
+			int numofqubits = kiter.next();
+			testset tempts = ts.getTestcases(numofqubits);
+			ts_toadd = new testset(tempts.getNum_of_qubits());
+			cir = cb.Build(alg, numofqubits);
+			Iterator<testcase> tciter = tempts.getTestcases();
+			quantumgate qg;
+			while (tciter.hasNext()) {
+				tc = tciter.next();
+				tc_toadd = new testcase(tc.getId(), tc.getLabel());
+				qgate_iter = cir.getCircuitlayout();
+				cir.getSize();
+				Matrix state = tc.getStartingstate().copy();
+				while (qgate_iter.hasNext()) {
+					qg = qgate_iter.next();
+					state = qg.apply(state);
+				}
+
+				tc_toadd.setStartingstate(tc.getStartingstate().copy());
+				tc_toadd.setFinalstate(state);
+				ts_toadd.addTestcases(tc_toadd);
+
+			}
+			to_return.addTestcases(ts_toadd);
+		}
+		return to_return;
+	}
+
 	@Override
 	public void setQfitnessfunction(FitnessFunction qfitnessfunction) {
 		ff = qfitnessfunction;

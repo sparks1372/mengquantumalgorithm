@@ -6,8 +6,9 @@ import Utils.Complex;
 import Utils.Tensor_Matrix;
 
 public class V_Gate implements quantumgate {
-	private final int		targ;
-	private final Matrix	unitary;
+	private static final String	labelStr	= "V";
+	private final int			targ;
+	private final Matrix		unitary;
 
 	/**
 		 */
@@ -52,6 +53,16 @@ public class V_Gate implements quantumgate {
 			}
 		}
 		return operation.times(start_state);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.Circuit.quantumgate#getlabel()
+	 */
+	@Override
+	public String getlabel() {
+		return labelStr;
 	}
 
 	@Override

@@ -4,18 +4,23 @@
 package GUI.SubPanels;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 import Core.qcevolutionbackend;
+import GUI.MainPanel;
 
 /**
  * @author Sam Ratcliff
@@ -28,6 +33,9 @@ public class SearchEngineSelectionPanel extends JPanel implements
 	private final JTextPane				description;
 	private final JScrollPane			description_scroller;
 	private final qcevolutionbackend	backend;
+	private static String				psLabelStr	= "Search Engine Selection";
+	private JLabel						psLabel;
+	private JPanel						labelPanel;
 
 	/**
 	 * 
@@ -35,8 +43,17 @@ public class SearchEngineSelectionPanel extends JPanel implements
 	public SearchEngineSelectionPanel(qcevolutionbackend be) {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		backend = be;
-		selection_model = new DefaultComboBoxModel(backend.getSemanager()
-				.getAvailableSearchEngines().toArray());
+
+		Set<String> probs = backend.getSemanager().getAvailableSearchEngines();
+		String[] options = new String[probs.size() + 1];
+		options[0] = "Please Select Search Engine";
+		int index = 1;
+		Iterator<String> iter = probs.iterator();
+		while (iter.hasNext()) {
+			options[index++] = iter.next();
+		}
+		selection_model = new DefaultComboBoxModel(options);
+
 		selection = new JComboBox(selection_model);
 		selection.addActionListener(this);
 
@@ -55,6 +72,9 @@ public class SearchEngineSelectionPanel extends JPanel implements
 					.setText(backend.getSemanager().getSearchEngineDesc(key));
 		}
 
+		setupLabels();
+
+		this.add(labelPanel);
 		this.add(selection);
 		this.add(description_scroller);
 
@@ -69,9 +89,24 @@ public class SearchEngineSelectionPanel extends JPanel implements
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JComboBox cb = (JComboBox) e.getSource();
-		String se_key = (String) cb.getSelectedItem();
-		description.setText(backend.getSemanager().getSearchEngineDesc(se_key));
-		backend.setCurrentse(backend.getSemanager().getSearchEngine(se_key));
+		if (cb.getSelectedIndex() != 0) {
+			String se_key = (String) cb.getSelectedItem();
+			description.setText(backend.getSemanager().getSearchEngineDesc(
+					se_key));
+			backend.setCurrentse(backend.getSemanager().getSearchEngine(se_key));
+		}
+
+	}
+
+	private void setupLabels() {
+
+		psLabel = new JLabel(psLabelStr);
+		Font fancyFont = new Font(psLabel.getFont().getFontName(), psLabel
+				.getFont().getStyle(), MainPanel.titleFontSize);
+		psLabel.setFont(fancyFont);
+
+		labelPanel = new JPanel();
+		labelPanel.add(psLabel);
 
 	}
 }

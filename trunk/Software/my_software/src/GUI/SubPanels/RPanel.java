@@ -5,6 +5,8 @@ package GUI.SubPanels;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,12 +14,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Core.qcevolutionbackend;
+import GUI.MainPanel;
 
 /**
  * @author Sam Ratcliff
  * 
  */
-public class RPanel extends JPanel {
+public class RPanel extends JPanel implements Observer {
 	private static String				psLabelStr	= "Problem Selection";
 	private final qcevolutionbackend	backend;
 	private JLabel						psLabel;
@@ -25,10 +28,12 @@ public class RPanel extends JPanel {
 	private JButton						cpbutton;
 	private JButton						spbutton;
 	private JButton						ldbutton;
-	private EditProblemSetButton		edbutton;
+	private JButton						edbutton;
 	private JButton						evbutton;
 	private JPanel						labelPanel;
 	private JPanel						buttonPanel;
+	private JPanel						progressPanel;
+	private JPanel						statsPanel;
 
 	/**
 	 * 
@@ -37,10 +42,16 @@ public class RPanel extends JPanel {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		backend = be;
 
+		backend.addObserver(this);
+
+		if (null != backend.getCurrentse()) {
+			backend.getCurrentse().addObserver(this);
+		}
+
 		setupLabels();
 		setupButtons();
 
-		prob_select_panel = new ProblemSelectionPanel(backend, edbutton);
+		prob_select_panel = new ProblemSelectionPanel(backend);
 
 		this.add(labelPanel);
 		this.add(prob_select_panel);
@@ -65,7 +76,7 @@ public class RPanel extends JPanel {
 		edbutton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		edbutton.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-		evbutton = new JButton("Evolve");
+		evbutton = new EvolveButton(backend);
 		evbutton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		evbutton.setAlignmentY(Component.CENTER_ALIGNMENT);
 
@@ -83,11 +94,35 @@ public class RPanel extends JPanel {
 
 		psLabel = new JLabel(psLabelStr);
 		Font fancyFont = new Font(psLabel.getFont().getFontName(), psLabel
-				.getFont().getStyle(), 32);
+				.getFont().getStyle(), MainPanel.titleFontSize);
 		psLabel.setFont(fancyFont);
 
 		labelPanel = new JPanel();
 		labelPanel.add(psLabel);
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+
+		if (o instanceof qcevolutionbackend) {
+			if (null != backend.getCurrentse()) {
+				if (progressPanel != null) {
+					this.remove(progressPanel);
+				}
+				progressPanel = backend.getCurrentse().getProgressBar();
+				this.add(progressPanel);
+				if (statsPanel != null) {
+					this.remove(statsPanel);
+				}
+				statsPanel = backend.getCurrentse().getSearchStatisticsPanel();
+				this.add(statsPanel);
+			}
+		}
 	}
 }

@@ -6,6 +6,8 @@ import Testing.predefined_states;
 import Utils.Complex;
 
 public class Hadamard_Gate implements quantumgate {
+	private static final String	labelStr	= "H";
+
 	public static void main(String[] args) {
 
 		Hadamard_Gate test = new Hadamard_Gate(1);
@@ -149,6 +151,16 @@ public class Hadamard_Gate implements quantumgate {
 		}
 		return start_state;
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.Circuit.quantumgate#getlabel()
+	 */
+	@Override
+	public String getlabel() {
+		return labelStr;
 	}
 
 	@Override

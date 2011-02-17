@@ -7,6 +7,8 @@ import Utils.Complex;
 import Utils.Tensor_Matrix;
 
 public class Phase_Gate implements quantumgate {
+	private static final String	labelStr	= "P";
+
 	public static void main(String[] args) {
 
 		Phase_Gate test = new Phase_Gate(1, Math.PI / 4);
@@ -99,8 +101,8 @@ public class Phase_Gate implements quantumgate {
 	}
 
 	private final int		targ;
-	private final Matrix	unitary;
 
+	private final Matrix	unitary;
 	private final double	theta;
 
 	/**
@@ -142,6 +144,16 @@ public class Phase_Gate implements quantumgate {
 		}
 		// operation.print(0, 0);
 		return operation.times(start_state);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.Circuit.quantumgate#getlabel()
+	 */
+	@Override
+	public String getlabel() {
+		return labelStr;
 	}
 
 	@Override

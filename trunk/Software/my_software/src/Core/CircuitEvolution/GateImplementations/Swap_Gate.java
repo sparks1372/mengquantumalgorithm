@@ -6,29 +6,30 @@ import Utils.Complex;
 import Utils.Tensor_Matrix;
 
 public class Swap_Gate implements multiqubitquantumgate {
-	private final int	targ1;
-	private final int	targ2;
-	private Matrix		unitary;
+	private static final String	labelStr	= "Swap";
+	private final int			targ1;
+	private final int			targ2;
+	private Matrix				unitary;
 	/**
 	 * @uml.property name="a"
 	 * @uml.associationEnd
 	 */
-	Matrix				A	= Matrix.identity(2, 2);
+	Matrix						A			= Matrix.identity(2, 2);
 	/**
 	 * @uml.property name="b"
 	 * @uml.associationEnd
 	 */
-	Matrix				B	= Matrix.identity(2, 2);
+	Matrix						B			= Matrix.identity(2, 2);
 	/**
 	 * @uml.property name="c"
 	 * @uml.associationEnd
 	 */
-	Matrix				C	= Matrix.identity(2, 2);
+	Matrix						C			= Matrix.identity(2, 2);
 	/**
 	 * @uml.property name="d"
 	 * @uml.associationEnd
 	 */
-	Matrix				D	= Matrix.identity(2, 2);
+	Matrix						D			= Matrix.identity(2, 2);
 
 	public Swap_Gate(int target, int target2) {
 		// System.out.println(this.getClass().getName());
@@ -86,6 +87,26 @@ public class Swap_Gate implements multiqubitquantumgate {
 		}
 
 		return operation.times(start_state);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.Circuit.quantumgate#getlabel()
+	 */
+	@Override
+	public String getlabel() {
+		return labelStr;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.CircuitEvolution.multiqubitquantumgate#getSecondQubit()
+	 */
+	@Override
+	public int getSecondQubit() {
+		return targ2;
 	}
 
 	@Override

@@ -27,6 +27,7 @@ import Core.qcevolutionbackend;
 import Core.Problem.quantumproblem;
 import Core.Problem.testsuite;
 import GUI.ProblemEditor.Implementation.InnerEditorPanel;
+import GUI.ProblemEditor.Implementation.TestSuiteToXML;
 import GUI.ProblemEditor.Implementation.XMLEditor;
 import GUI.ProblemEditor.Implementation.XMLFilter;
 
@@ -44,6 +45,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 	private JButton						openButton;
 	private JButton						okayButton;
 	private JButton						cancelButton;
+	private JButton						saveButton;
 	private JButton						addTestSetButton;
 	private JButton						deleteTestSetButton;
 	private JLabel						nameLabel, descLabel, title;
@@ -111,6 +113,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		buttonPanel.setLayout(new FlowLayout());
 		buttonPanel.add(okayButton);
 		buttonPanel.add(cancelButton);
+		buttonPanel.add(saveButton);
 
 		this.getContentPane().add(titlePanel);
 		this.getContentPane().add(namePanel);
@@ -121,6 +124,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 
 		this.pack();
 		centre();
+
 	}
 
 	@Override
@@ -133,6 +137,21 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 				filename.setText(selected_file.getAbsolutePath());
 			}
 
+		} else if (e.getSource() == saveButton) {
+			int result = JOptionPane
+					.showConfirmDialog(
+							this,
+							"This will save the changes made to "
+									+ selected_file.getAbsolutePath()
+									+ " all the current contents will be overwritten. Continue?");
+			if (result == JOptionPane.YES_OPTION) {
+				backend.getProbmanager().updateProblem(name.getText(),
+						selected_file.getAbsolutePath(),
+						tsXmlEditor.getTsuite(), desc.getText());
+				TestSuiteToXML.TestSuiteToXML(tsXmlEditor.getTsuite(),
+						selected_file);
+				this.setVisible(false);
+			}
 		} else if (e.getSource() == okayButton) {
 			if (selected_file == null) {
 				JOptionPane
@@ -153,9 +172,17 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 								"No Problem description specified. Please enter a Problem description and retry",
 								"Message", JOptionPane.ERROR_MESSAGE);
 			} else {
-				backend.getProbmanager().addProblem(name.getText(),
-						selected_file.getAbsolutePath(), desc.getText());
-				this.setVisible(false);
+
+				int result = JOptionPane
+						.showConfirmDialog(
+								this,
+								"This does not save changes to file, you must use the save button to ensure changes are saved to file. Continue?");
+				if (result == JOptionPane.YES_OPTION) {
+					backend.getProbmanager().updateProblem(name.getText(),
+							selected_file.getAbsolutePath(),
+							tsXmlEditor.getTsuite(), desc.getText());
+					this.setVisible(false);
+				}
 			}
 		} else if (e.getSource() == cancelButton) {
 			this.setVisible(false);
@@ -216,6 +243,11 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		cancelButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		cancelButton.setAlignmentY(Component.CENTER_ALIGNMENT);
 
+		saveButton = new JButton("Save to File and Close");
+		saveButton.addActionListener(this);
+		saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		saveButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+
 		addTestSetButton = new JButton("Add TestSet");
 		addTestSetButton.addActionListener(this);
 		addTestSetButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -262,6 +294,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		name.setSize(new Dimension(this.getWidth() - 50, 20));
 		name.setPreferredSize(new Dimension(this.getWidth() - 50, 20));
 		name.setBorder(BorderFactory.createRaisedBevelBorder());
+		name.setEditable(false);
 
 		if (qp != null) {
 			desc = new JTextArea(backend.getProbmanager().getProblemTag(
@@ -272,6 +305,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		desc.setSize(new Dimension(this.getWidth() - 50, 100));
 		desc.setPreferredSize(new Dimension(this.getWidth() - 50, 100));
 		desc.setBorder(BorderFactory.createRaisedBevelBorder());
+		desc.setEditable(false);
 	}
 
 	/**

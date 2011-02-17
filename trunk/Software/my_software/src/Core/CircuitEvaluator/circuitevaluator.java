@@ -2,6 +2,7 @@ package Core.CircuitEvaluator;
 
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Problem.quantumproblem;
+import Core.Problem.testsuite;
 
 public interface circuitevaluator {
 
@@ -20,6 +21,10 @@ public interface circuitevaluator {
 	 * @uml.property name="qproblem"
 	 */
 	public quantumproblem getQproblem();
+
+	/**
+		 */
+	public abstract testsuite getResults(QuantumAlgorithm alg);
 
 	/**
 	 * Setter of the property <tt>qfitnessfunction</tt>

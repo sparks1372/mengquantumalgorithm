@@ -6,8 +6,10 @@ package GUI.SubPanels;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
@@ -34,11 +36,18 @@ public class ProblemSelectionPanel extends JPanel implements ActionListener,
 	/**
 	 * 
 	 */
-	public ProblemSelectionPanel(qcevolutionbackend be, ActionListener ac) {
+	public ProblemSelectionPanel(qcevolutionbackend be) {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		backend = be;
-		selection_model = new DefaultComboBoxModel(backend.getProbmanager()
-				.getAvailableProblems().toArray());
+		Set<String> probs = backend.getProbmanager().getAvailableProblems();
+		String[] options = new String[probs.size() + 1];
+		options[0] = "Please Select Problem";
+		int index = 1;
+		Iterator<String> iter = probs.iterator();
+		while (iter.hasNext()) {
+			options[index++] = iter.next();
+		}
+		selection_model = new DefaultComboBoxModel(options);
 
 		description = new JTextPane();
 		description.setEditable(false);
@@ -56,7 +65,6 @@ public class ProblemSelectionPanel extends JPanel implements ActionListener,
 		}
 		selection = new JComboBox(selection_model);
 		selection.addActionListener(this);
-		selection.addActionListener(ac);
 
 		be.getProbmanager().addObserver(this);
 
@@ -73,10 +81,12 @@ public class ProblemSelectionPanel extends JPanel implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JComboBox cb = (JComboBox) e.getSource();
-		String prob_key = (String) cb.getSelectedItem();
-		description.setText(backend.getProbmanager().getSearchEngineDesc(
-				prob_key));
-		backend.setQproblem(backend.getProbmanager().getProblem(prob_key));
+		if (cb.getSelectedIndex() != 0) {
+			String prob_key = (String) cb.getSelectedItem();
+			description.setText(backend.getProbmanager().getSearchEngineDesc(
+					prob_key));
+			backend.setQproblem(backend.getProbmanager().getProblem(prob_key));
+		}
 
 	}
 
