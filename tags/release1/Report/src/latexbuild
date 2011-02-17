@@ -1,0 +1,5 @@
+pdflatex mengreport
+bibtex mengreport
+pdflatex mengreport
+pdflatex mengreport
+evince mengreport.pdf

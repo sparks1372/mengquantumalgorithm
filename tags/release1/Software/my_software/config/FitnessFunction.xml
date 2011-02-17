@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FitnessFunc  xmlns="http://www.w3schools.com"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.w3schools.com fitnessfunction_spec.xsd">
+	<FitnessFunctionTag>
+	  <Name>Simple Fitness</Name>
+	  <Class>Core.CircuitEvaluator.SimpleFitness.SimpleFitness</Class>
+	  <Desc>A simple and naive fitness function</Desc>
+	</FitnessFunctionTag>
+	<FitnessFunctionTag>
+	  <Name>Parsimonious Fitness</Name>
+	  <Class>Core.CircuitEvaluator.ParsimoniousSimpleFitness.ParsimoniousSimpleFitness</Class>
+	  <Desc>A simple and naive fitness function that includes pressure to reduce the size of algorithms and circuits produced</Desc>
+	</FitnessFunctionTag>
+</FitnessFunc>
+
