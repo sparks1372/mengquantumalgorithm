@@ -1169,22 +1169,206 @@ This would however require several fitness functions which give comparable value
 The representation of this also leads to numerous choices, using just a MAX function or an average function or to represent the fitness as an n-dimensional point to optimise for n fitness functions.
 
 \section{The Focus of this Project}
-In the first stage of this project I aim to produce a graphical toolkit which will allow users to search for quantum algorithms.
-The toolkit will allow for various different search methods and be fully extendable so additional search techniques can be added.
-These techniques will include, but not be limited to, evolutionary algorithms.
-The first evolutionary algorithm that will be included in the toolkit will be a reimplementation of the Q-Pace IV suite presented by Massey\cite{masseythesis}.
+When looking at all the papers that include the use an evolutionary approach there is one thing tahat they all have in common.
+Each time research is carried out in this area nearly everything is bespoke.
+Some research use a library to perform the evolutionary search but that seems the extent of reuse.
+QPace I - IV share properties and each iteration is developed with respect to the strengths and weaknesses of the previous version and indeed the strengths and weaknesses of the Spector research.
 
-The toolkit will allow the user to provide a fitness measure and to alter the parameters used for the search algorithm.
-A graphical display of the search progress will be available.
-The solution produced by the search will produce a Q-Circuit representation of the circuit found.
-This output will be able to be copied straight into a latex document for the circuit to be seen.
-Internally a simulation will be produced for fitness evalution.
+The other common feature is the lack of source code available.
+None of the QPace suites are easily available and neither is the Spector code.
+This is not to say that there are not tools available to help with Quantum Algorithm design.
+There are many available in many different languages, Java, C++, Matlab etc, but these are purely simulators.
+A user creates a circuit, provides an input state and the tool will provide a final state.
+What seems to be the largest gap in the tools available for such research is a tool or even a framework that allows researchers to concentrate on the research of quantum algorithms rather than all the peripheral, but necessary, tasks.
 
-The toolkit will provide and API so that the core search engine can be accessed by other programs.
-If accessed through this API the internal representation used for the simulation will be provided alongside the Q-Circuit circuit specifications.
+In this project I aim to produce a framework that will enable researchers to be abstracted away from the problem of simulation and representation and concentrate on searching for the desired Quantum Algorithm.
+The framework shall allow a researcher to come up with their own search mechanism, QPAce V for example, without having to reimplement the circuit simulation or representation.
+The framework shall not only allow researcher to provide new search techniques but also to research the most effective cost functions.
+As was seen in the work presented by Massey\cite{masseythesis} the representation of complex numbers that is used within the cost funtion had a significant impact on the solutions found by the search.
 
-As a second stage I intend to produce a new Genetic Programming suite to construct quantum algorithms.
-$\dots$
+The use of the framework shall also allow for the work of different researchers to easily be compared, contrasted and combined within the same framework.
+
+Secondly in this project I will produce a fully working system using this framework.
+The search engine and cost functions will be based on those presented as QPace IV\cite{masseythesis}.
+This fully working example will be an indication as to how the framework could be used by researchers.
+
+Thirdly, in this project I will produce effectively a 3rd Party application that will use the fully implemented system to perform all Quantum Algorithm searching and evaluation.
+This 3rd Party application will simply be a client GUI.
+This could be seen not as a 3rd party application but as part of the fully working system.
+This observation I accept.
+The use of 3rd Party in this instance is simply an indication of the separation of knowledge.
+The client GUI produced will use only the API available to the ``traditional'' 3rd party applications rather than any internal knowledge or interfaces not available through the API.
+
+The creation of such a toolkit is, to the best of my knowledge, something that has not previously been produced.
+All previous work in the area has focussed purely on the discovery of Quantum Algorithms with each researcher working in isolation.
+Without there being a known ``right way'' to search for Quantum Algorithms it is essential for the framework produced not to limit or encourage any particular search method.
+Although in the literature review the focus has been on evolutionary approaches, the framework must not appear to push any potential researcher into using evolutionary approaches.
+This I feel is essential for the framework, and even the fully implemented system and client GUI, to be adopted by researchers in this area.
+
+As a final stage of the project I will be using the fully implemented system to carry out a number of experiments searching for Quantum Algorithm.
+This will use the QPace IV based search engine implemented in stage two listed above.
+
+% In the first stage of this project I aim to produce a graphical toolkit which will allow users to search for quantum algorithms.
+% The toolkit will allow for various different search methods and be fully extendable so additional search techniques can be added.
+% These techniques will include, but not be limited to, evolutionary algorithms.
+% The first evolutionary algorithm that will be included in the toolkit will be a reimplementation of the Q-Pace IV suite presented by Massey\cite{masseythesis}.
+
+% The toolkit will allow the user to provide a fitness measure and to alter the parameters used for the search algorithm.
+% A graphical display of the search progress will be available.
+% The solution produced by the search will produce a Q-Circuit representation of the circuit found.
+% This output will be able to be copied straight into a latex document for the circuit to be seen.
+% Internally a simulation will be produced for fitness evalution.
+
+% The toolkit will provide and API so that the core search engine can be accessed by other programs.
+% If accessed through this API the internal representation used for the simulation will be provided alongside the Q-Circuit circuit specifications.
+
+% As a second stage I intend to produce a new Genetic Programming suite to construct quantum algorithms.
+% $\dots$
+
+\chapter{Requirements}
+The requirements listed in this section are for the framework, fully implemented system and the client GUI.
+The requirements were maintained using an online tool called ReqMan\cite{reqman} by RequirementOne.
+This section and the requirements have been formed using the guidelines provided in the IEEE standard 830\cite{ieee830}.
+
+\section{Purpose}
+\subsection{Framework}
+The framework is aimed to allow research into Quantum Algorithms to concentrate on producing Quantum Algorithms.
+The framework is aimed to make it much simpler for research by different researchers to be combined and contrasted.
+
+\subsection{Fully Functional Tool}
+The full implementation of a Quantum Algorithm search tool using the framework is to provide a working toolkit for researchers interested in finding Quantum Algorithms rather than the search techniques to find Quantum Algorithms.
+As the toolkit will use the framework it will also provide a potential foundation for future research into the search techniques.
+
+\subsection{Client and GUI}
+The client and GUI will provide an interface that should make the toolkit more accessible for researchers.
+Without the GUI provided, researchers would have to either embed the toolkit in their own application or within their own specific GUI.
+This is likely to reduce the potential use of the toolkit in the academic community.
+One of the main focusses of the toolkit is to try and provide a standardised framework for research of Quantum Algorithms.
+Not providing a GUI, resulting in many bespoke GUIs, goes against this focus.
+This is not to say that inclusion of the framework in 3rd party systems or improvement to the GUI is not encouraged.
+
+\section{Scope}
+The requirements listed in the following section cover the framework and the client GUI.
+The full implementation, based on the QPace IV suite, is not covered by these requirements.
+This is to improve the clarity between the framework and the implementation.
+
+The requirements of the full implementation are listed in a separate section following the framework and client GUI requirements.
+
+\section{Definition, Acronyms, and Abbreviations}
+
+
+
+\chapter{Design Decisions}
+
+\section{Manager Classes}
+Allowing post complilation specification of various elements of the system.
+The system can then be used as an extendable foundation application.
+
+\begin{itemize}
+ \item Fitness Function Manager
+ \item Search Engine Manager
+\end{itemize}
+
+
+\section{Multiple Search Engines}
+Example of extendable functionality.
+Allows different Evolutionary and Standard algorithms to be used
+
+\section{Multiple Problems}
+Separation of the Problem and Search technique.
+The Problem does not have to be explicitly stated at start up.
+Available problems specifed by XML, available problems provided by backend for selection
+Problems defined as a starting and desired final state vectors.
+
+\section{State}
+Quantum states are represented by state vectors.
+Vectors of Complex numbers.
+Vectors are represented as special cases of Matricies using the same class as all other matrices.
+
+\section{Matricies}
+The Matrix representation is based on the Matrix class provided by the Jama library.
+Jama Matrix is modified to provide Matricies of Complex numbers.
+The extra funcitonality provided by Jama, such as eigendecomposition, has been disabled currently.
+Other option was to use explicit array of arrays.
+Use of Jama Matrix abstracts this representation.
+Operations such as matric multiplication and subtraction is encapsulated, reducing probability of errors.
+
+\section{Complex Numbers}
+Complex number representation is provided by class from http://www.math.ksu.edu/~bennett/jomacg/c.html.
+The Complex number class provides ``smart'' printing.
+The use of a Complex number class is used to encapsulate all operations on complex numbers.
+Saves the operations being replicated throughout the code.
+Reduces opportunity for errors to be introduced
+
+\section{Quantum Algorithms}
+The search engines produce second order or second degree representations.
+The quantum algorithms produced need to be parameterized by the number of qubits to produce the respective circuit.
+The form of the algorithm is standardised and specified by the tool.
+The creation of the algorithms are through predefined methods.
+Search engines can provide any internal representation but must produce this stardardised algorithm form as a result.
+The algorithm representation provides a human readable form that can be reported to the user.
+
+\section{Quantum Circuits}
+Circuits are produced by a circuit builder.
+Both the circuits and the circuit builder is hidden behind an interface.
+Allows different representations to be used of circuits and the way they are built.
+The different circuit representations allow for optimisation for different scenarios if required.
+The circuit interface includes a method to produce a Latex representation of the produced circuit.
+The latex library used to render the quantum circuits is QCircuit.
+The interface also defines that the circuit will be returned as an iterator of quantum gates, ensuring the internal circuit representation is not restricted by the returning of an ordered iterator.
+
+\section{Quantum Gates}
+Gates are hidden behind an interface.
+The application of a gate is not fixed as matrix manipulation.
+Each gate must provide an application of the specific gate on a provided state returning the resulting state.
+This abstraction of how a gate is applied allows for application to be optimised using simple state vector manipulation rather than matrix multiplication.
+Dispite the ability for these optimisations, the unitary must also be provided so that controlled instances can be produced.
+Controlled gates are also hidden behind an interface for the same reasons.
+
+\subsection{Custom Gates}
+To allow users to introduce their own gates a limited number of custom gates can be included.
+Is limited due to the use of enumeration types in the specification of algorithms.
+Custom gates are like any other gate, a class implementing the correct interface, are specifed through xml specification.
+
+\section{Test Suite Structures}
+Each problem is represented by a test suite.
+The test suite contains a collection of test sets, one for each system size.
+The test suite does not contain test sets for all possible system sizes, only those for use in the fitness function.
+Each test set contains a number of test cases represented by two state vectors, the starting and respective final state.
+The specification of the test suites are provided in XML files.
+The use of XML files allows for easy 3rd party generation and use.
+
+\section{Separation of GUI from Core Functionality}
+The main functionality is functionally separated from the graphical interface, server-client type architecture.
+Backend is able to be invoked through a well defined interface.
+Backend can be used with other front ends and therefore integrated into 3rd party applications.
+
+\section{GUI Design}
+
+\subsection{Search and Problem Selection}
+
+\subsection{Quantum Circuit Viewer}
+
+\subsection{Interactive Circuit Evaluator}
+
+\chapter{Implementation Decisions}
+
+\section{Quantum Gate Implemenation}
+
+\section{Test Suite Editor}
+
+
+\section{Fitness Functions}
+
+\subsection{Simple}
+
+\subsection{Simple and Parsimony}
+
+\subsection{Phase Aware}
+
+\begin{itemize}
+ \item Extendible Library
+\end{itemize}
 
 
 \bibliography{mengreport}
