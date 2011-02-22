@@ -4,6 +4,8 @@
 \usepackage[matrix,frame,arrow]{xypic}
 \usepackage{graphicx,array}
 \usepackage{qtree}
+\usepackage{listings}
+\usepackage{appendix}
 \input{Qcircuit}
 
 \vfuzz2pt % Don't report over-full v-boxes if over-edge is small
@@ -23,14 +25,16 @@
 }
 
 \begin{document}
+\pagenumbering{Roman}
 \maketitle
 %PUT THESE BACK IN
 \listoffigures
 \listoftables
 % \renewcommand*{\lstlistlistingname}{List of Listings}
 % \lstlistoflistings
-
 \chapter{Introduction}
+ \setcounter{page}{0} 
+\pagenumbering{arabic}
 \chapter{Literature Review}
 \section{Introduction to Quantum Computation}
 %Historic Introduction
@@ -190,6 +194,7 @@ Substituting in the vector values we have
 \end{pmatrix}
 \)
 \end{tabular}
+\label{eq:notexplanded}
 \end{equation}
 
 This matrix can be seen as a transformation matrix for the NOT operation.
@@ -1256,51 +1261,197 @@ The requirements of the full implementation are listed in a separate section fol
 
 \section{Definition, Acronyms, and Abbreviations}
 
+\section{Requirements}
+FROM REQMAN
+
+\chapter{Design }
+
+\section{Framework}
+In this section I will outline the design decisions that directly effect only the framework produced.
+
+\subsection{Complex Numbers}
+Complex numbers are central to Quantum Computing.
+As such, any attempt to simulate the behaviour of a Quantum Ciruit must handle complex numbers.
+
+There are really only two ways to handle the existance of complex numbers.
+One can represent a complex number explicitly as a pair of floating point numbers, or to encapsulate the representation inside a ``complex number'' data structure.
+
+The framework uses the second of these options and provides the ``Complex'' class.
+This was chosen for several reasons.
+The primary reason was to reduce the risk of programming errors effecting the simulation.
+If complex multiplication, addition and other operations had to be replicated throughout the frameworks codebase, and the codebase of any research work, the likelihood of implementation error is much higher, and the tests required to find the error become more specific.
+It is much better software engineering practice to encapsulate the properties, real and imaginary values, and the operations on those properties, arithmetic etc.
+
+A season reason is that after breif research online, there are complex number libraries already available.
+This reuse of previously written software can also reduce the likelihood of errors in the code.
+This is not necessarily due to the software being written by people that are more intelligent or that are better programmers, or even that the software has been explicitly tested more thoroughly than if I were to write a complex number class.
+It is due to the size of the deployment footprint.
+The number of times the software has previously been deployed, and therefore the number of times it has been implicitly tested by users.
+
+The third reason is that one of the principles behind producing the framework is the attempt to try standardise the research from different researchers.
+Without the provision of this ``Complex'' class one researcher could use Cartesian representation, two floating point values, while a second researcher could use the Polar representation, also two floating point values.
+If the documentation of the software produced by the two researchers did not mention the representation used, a third researcher could try combine, or compare, the two pieces of software using the framework.
+The third researcher is likely to receive very confusing and highly misleading results.
+The provision of a Complex class that is used throughout the framework where complex numbers need to be used will reduce the risk of such an event.
+
+\subsection{Matricies}
+As seen in Equation \ref{eq:notexplanded} the application of a quantum gate is simply the application of a unitary operation, represented as a matrix, to a quantum state.
+This adds the requirement on the framework to provide a manner in which matricies will be represented.
+
+In a similar way to the complex numbers discussed above, there are two distinct ways the framework could have been designed.
+The framework could either use an explicit representation, two-dimensional arrays, or could provide a Matrix data structure.
+
+The framework has been designed to use the data structure encapsulation as the matrix represenation.
+The justification is identical to that discussed above.
+Matrix operations are easy to get wrong in implementation and there are matrix libraries for many languages.
+The incomplete documentation argument also holds with matricies.
+If the framework were to just simply represent matricies as two dimensional arrays, two researchers could order the dimensions differently leading to similar problems to that of conflicting complex represenations for the third researcher.
+
+\subsection{State}
+With a representation of matricies defined, the definition of a quantum state naturally followed.
+Using the matrix representation, quantum states are defined simply as $2^n\times1$ matricies, vectors.
+This represenation makes unitary application much simpler as it automatically supported as matrix multiplication.
+
+\subsection{Test Suite Structures}
+Each problem is represented by a test suite.
+The test suite contains a collection of test sets, one for each system size.
+The test suite does not contain test sets for all possible system sizes, only those for use in the fitness function.
+Each test set contains a number of test cases represented by two state vectors, the starting and respective final state.
+The specification of the test suites are provided in XML files.
+The use of XML files allows for easy 3rd party generation and use.
 
 
-\chapter{Design Decisions}
 
-\section{Manager Classes}
-Allowing post complilation specification of various elements of the system.
-The system can then be used as an extendable foundation application.
+The test case definition has been represented using a starting and final state vector.
+The application of a quantum gate is a simple mapping from a starting state to a resulting state.
+When a circuit can be defined as a single unitary operation, a custom quantum gate, this representation seems a natural choice.
 
+
+\subsection{Problem Specification}
+As has been mentioned on several occasions, one of the foundation principles of the framework is the ability to ``Plug and Play'' the work of other researchers without the proplem of integration.
+With Search Engines and Fitness Functions developed to adhere to the respective interfaces, a user should be able to work with the toolkit and treat it as a ``Black Box''.
+
+Along with the standardisation of Fitness Functions and Search Engines, the way in which the ``thing'' being searched for also needed to be standardised.
+This ``thing'' has been referred to as the Problem.
+The way in which the Problem is specifed also has to be standardised to enable the different Fitness Functions to evaluate potential solutions in respect to the Problem.
+Without this, the Problem would have to be redefined for each Fitness Function.
+This would severely undermine the simple ``Plug and Play'' use of the framework.
+
+The specification of a problem uses an XML file.
+The XML in Figure \ref{code:paulixtestset} is a sample of such a file.
+The file structure reflects the internal structure of the test suites.
+
+\lstset{language = XML}
+\begin{figure}
+ \begin{lstlisting}
+ <testsuite>
+    <testset NumQubits="1">
+      <testcase><!--0-->
+	<starting_state>
+	  <matrix_element><!-- 0-->
+	    <Real>1.0</Real>
+	    <Imag>0.0</Imag>
+	  </matrix_element>
+	  <matrix_element><!-- 1-->
+	    <Real>0.0</Real>
+	    <Imag>0.0</Imag>
+	  </matrix_element>
+	</starting_state>
+	<final_state>
+	  <matrix_element><!-- 0-->
+	    <Real>0.0</Real>
+	    <Imag>0.0</Imag>
+	  </matrix_element>
+	  <matrix_element><!-- 1-->
+	    <Real>1.0</Real>
+	    <Imag>0.0</Imag>
+	  </matrix_element>
+	</final_state>
+      </testcase>
+    </testset>
+</testsuite>
+ \end{lstlisting}
+\label{code:paulixtestset}
+\caption{Partial Test Set for Pauli X Gate}
+\end{figure}
+
+\subsection{Manager Classes}
+As can be seen in the architecture diagram of the framework, Appendix REF???, that there are several classes with names suffixed with ``Manager''.
+These classes provide access to the extendible areas of the framework.
+There is a Manager class for the Fitness Functions, the Search Engines and the Problems.
+Each of these are a specific site of expansion.
+
+Each Manager is configured using an XML file specfying all options for the specific Manager.
+The Fitness Function Manager will be configured for all the available Fitness Functions, the Search Engine Manager for all the available Search Engines, and the Problem manager for all the available Problems.
+
+This configuration is performed at runtime rather than at compile time.
+it was designed as such so as to provide the ability to add, for example, extra Fitness Functions without altering the code of the framework.
+This independence of the framework implementation and the results of research, specific Fitness Funcitons etc, has been identified as one of the key foundations of the framework concept.
+The inclusion of this knowledge separation encourages the use of the standardised interfaces specified for each expansion site.
+
+\lstset{language=XML}
+\begin{figure}
+\begin{lstlisting}
+ <FitnessFunc>
+	<FitnessFunctionTag>
+	  <Name>FITNESS FUNCTION NAME</Name>
+	  <Class>IMPLEMENTING FULLY QUALIFIED CLASS NAME</Class>
+	  <Desc>FITNESS FUNCTION DESCRIPTION</Desc>
+	</FitnessFunctionTag>
+</FitnessFunc>
+\end{lstlisting}
+\caption{XML for Fitness Function Manager Configuration}
+\label{code:fitfuntmanconfig}
+\end{figure}
+
+The XML outline shown in Figure \ref{code:fitfuntmanconfig} is an outline of the XML file used to specify the available Fitness Functions.
+The XML files specifying the available Search Engines and the available Problems can be found in Appendix \ref{sec:semanspecxml} and \ref{sec:probmanspecxml}.
+
+These XML files are used to regiser the available implementations with the respective Managers.
+The Manager classes use these registrations to provide the choice of available instantiations of Search Engines, Fitness Functions and Problems.
+
+\subsection{Multiple Search Engines}
+The framework is aimed to be used universally by Quantum Algorithm researchers.
+The search techniques used by these researchers are also a matter of research effort.
+If the tool were to provide a search engine, with no option for change, the use of the tool is likely to be significantly impacted.
+
+Providing a simple interface that allows each researcher to potentially use a different search technique is likely to increase the tools applicability.
+The simple interface allows a user to:
 \begin{itemize}
- \item Fitness Function Manager
- \item Search Engine Manager
+ \item retreive the names, used as the search engine identifier, of all registered Search Engines
+ \item retreive the instantiation of the specified Search Engine instantiation
+ \item retreive the description of the specified Search Engine
 \end{itemize}
 
+All registered Search Engines must implement the supplied interface.
+The Search Engines are not restricted to evolutionary approaches.
+The internal workings of the different search engines are unrestricted.
 
-\section{Multiple Search Engines}
-Example of extendable functionality.
-Allows different Evolutionary and Standard algorithms to be used
+The alternative approach would have been to implement a series of search engines based on several different techniques and provide researchers this choice.
+This was not accepted as it moved the tool away from the framework intended.
+The provision of search engines without a simple manner to add additional engines would restrict research and not allow researchers to easily use techniques developed in the research community within the system.
 
-\section{Multiple Problems}
+\subsection{Multiple Fitness Functions}
+As was noted by Massey\cite{masseythesis}, different Fitness Functions can have a dramatic impact on the success of a Quantum Algorithm search.
+The inclusion of a choice of Fitness Functions is to account for this.
+As with Search Engines, the choice of Fitness Functions is provided by the Manager class through a simple interface with methods synonomous to those provided for the Search Engine selection.
+A Fitness Function interface is provided to ensure that all Fitness Functions are able to be used universally within the tool and are not specific to any particular Search Engine for example.
+
+Similarly to the Search Engine, a series of Fitness Functions could have been implemented and provided without provision for extension.
+The justification for the approach taken is the same as listed for the multiple Search Engines.
+It was deemed detrimental and in contradiction of the frameworks purpose to limit the Fitness Functions to those provided by the tool.
+
+
+\subsection{Multiple Problems}
+
+
+
 Separation of the Problem and Search technique.
 The Problem does not have to be explicitly stated at start up.
 Available problems specifed by XML, available problems provided by backend for selection
 Problems defined as a starting and desired final state vectors.
 
-\section{State}
-Quantum states are represented by state vectors.
-Vectors of Complex numbers.
-Vectors are represented as special cases of Matricies using the same class as all other matrices.
-
-\section{Matricies}
-The Matrix representation is based on the Matrix class provided by the Jama library.
-Jama Matrix is modified to provide Matricies of Complex numbers.
-The extra funcitonality provided by Jama, such as eigendecomposition, has been disabled currently.
-Other option was to use explicit array of arrays.
-Use of Jama Matrix abstracts this representation.
-Operations such as matric multiplication and subtraction is encapsulated, reducing probability of errors.
-
-\section{Complex Numbers}
-Complex number representation is provided by class from http://www.math.ksu.edu/~bennett/jomacg/c.html.
-The Complex number class provides ``smart'' printing.
-The use of a Complex number class is used to encapsulate all operations on complex numbers.
-Saves the operations being replicated throughout the code.
-Reduces opportunity for errors to be introduced
-
-\section{Quantum Algorithms}
+\subsection{Quantum Algorithms}
 The search engines produce second order or second degree representations.
 The quantum algorithms produced need to be parameterized by the number of qubits to produce the respective circuit.
 The form of the algorithm is standardised and specified by the tool.
@@ -1308,7 +1459,7 @@ The creation of the algorithms are through predefined methods.
 Search engines can provide any internal representation but must produce this stardardised algorithm form as a result.
 The algorithm representation provides a human readable form that can be reported to the user.
 
-\section{Quantum Circuits}
+\subsection{Quantum Circuits}
 Circuits are produced by a circuit builder.
 Both the circuits and the circuit builder is hidden behind an interface.
 Allows different representations to be used of circuits and the way they are built.
@@ -1317,7 +1468,7 @@ The circuit interface includes a method to produce a Latex representation of the
 The latex library used to render the quantum circuits is QCircuit.
 The interface also defines that the circuit will be returned as an iterator of quantum gates, ensuring the internal circuit representation is not restricted by the returning of an ordered iterator.
 
-\section{Quantum Gates}
+\subsection{Quantum Gates}
 Gates are hidden behind an interface.
 The application of a gate is not fixed as matrix manipulation.
 Each gate must provide an application of the specific gate on a provided state returning the resulting state.
@@ -1330,20 +1481,26 @@ To allow users to introduce their own gates a limited number of custom gates can
 Is limited due to the use of enumeration types in the specification of algorithms.
 Custom gates are like any other gate, a class implementing the correct interface, are specifed through xml specification.
 
-\section{Test Suite Structures}
-Each problem is represented by a test suite.
-The test suite contains a collection of test sets, one for each system size.
-The test suite does not contain test sets for all possible system sizes, only those for use in the fitness function.
-Each test set contains a number of test cases represented by two state vectors, the starting and respective final state.
-The specification of the test suites are provided in XML files.
-The use of XML files allows for easy 3rd party generation and use.
-
-\section{Separation of GUI from Core Functionality}
+\subsection{Separation of GUI from Core Functionality}
 The main functionality is functionally separated from the graphical interface, server-client type architecture.
 Backend is able to be invoked through a well defined interface.
 Backend can be used with other front ends and therefore integrated into 3rd party applications.
 
-\section{GUI Design}
+\section{Fully Implemented System}
+\subsection{Quantum Gate Implemenation}
+
+
+\subsection{Fitness Functions}
+
+\subsubsection{Simple}
+
+\subsubsection{Simple and Parsimony}
+
+\subsubsection{Phase Aware}
+
+\section{Client and GUI}
+
+\subsection{GUI Design}
 
 \subsection{Search and Problem Selection}
 
@@ -1351,25 +1508,50 @@ Backend can be used with other front ends and therefore integrated into 3rd part
 
 \subsection{Interactive Circuit Evaluator}
 
-\chapter{Implementation Decisions}
-
-\section{Quantum Gate Implemenation}
-
-\section{Test Suite Editor}
+\subsection{Test Suite Editor}
 
 
-\section{Fitness Functions}
-
-\subsection{Simple}
-
-\subsection{Simple and Parsimony}
-
-\subsection{Phase Aware}
 
 \begin{itemize}
  \item Extendible Library
 \end{itemize}
 
+\chapter{Implemenation}
 
+Complex number representation is provided by class from http://www.math.ksu.edu/~bennett/jomacg/c.html.
+
+The Matrix representation is based on the Matrix class provided by the Jama library.
+Jama Matrix is modified to provide Matricies of Complex numbers.
+The extra funcitonality provided by Jama, such as eigendecomposition, has been disabled currently.
 \bibliography{mengreport}
+
+\appendix
+
+\chapter{XML Outlines}
+\section{Search Engine XML Outline}
+\label{sec:semanspecxml}
+\lstset{language = XML}
+\begin{lstlisting}
+ <searchengine>
+	<se>
+	  <Name>SEARCH ENGINE NAMES</Name>
+	  <Class>IMPLEMENTING FULLY QUALIFIED CLASS NAME</Class>
+	  <Desc>SEARCH ENGINE DESCRIPTION</Desc>
+	</se>
+</searchengine>
+\end{lstlisting}
+
+\section{Search Engine XML Outline}
+\label{sec:probmanspecxml}
+\lstset{language = XML}
+\begin{lstlisting}
+<Problems>
+	<prob>
+	  <Name>PROBLEM NAME</Name>
+	  <DefFile>PROBLEM DEFINITION FILE</DefFile>
+	  <Desc>PROBLEM DESCRIPTION</Desc>
+	</prob>
+</Problems>
+\end{lstlisting}
+
 \end{document}
