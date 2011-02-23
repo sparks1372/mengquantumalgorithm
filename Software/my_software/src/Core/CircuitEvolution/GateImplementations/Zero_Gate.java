@@ -3,6 +3,7 @@ package Core.CircuitEvolution.GateImplementations;
 import Core.Circuit.quantumgate;
 import Jama.Matrix;
 import Utils.Complex;
+import Utils.Tensor_Matrix;
 
 public class Zero_Gate implements quantumgate {
 	private static final String	labelStr	= "Zero";
@@ -25,9 +26,24 @@ public class Zero_Gate implements quantumgate {
 
 	@Override
 	public Matrix apply(Matrix start_state) {
-		start_state = start_state.times(new Complex(0, 0));
-		start_state.set(0, 0, new Complex(1, 0));
-		return start_state;
+		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
+		Complex[][] init = new Complex[1][1];
+		init[0][0] = new Complex(1, 0);
+		Matrix operation = new Matrix(init);
+		Complex[][] I = new Complex[2][2];
+		I[0][0] = new Complex(1, 0);
+		I[1][1] = new Complex(1, 0);
+		I[0][1] = new Complex(0, 0);
+		I[1][0] = new Complex(0, 0);
+		Matrix iden = new Matrix(I);
+		for (int index = 1; index <= qubits; index++) {
+			if (index == targ) {
+				operation = Tensor_Matrix.tensor_prod(unitary, operation);
+			} else {
+				operation = Tensor_Matrix.tensor_prod(iden, operation);
+			}
+		}
+		return operation.times(start_state);
 	}
 
 	/*

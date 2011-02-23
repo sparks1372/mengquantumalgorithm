@@ -18,6 +18,26 @@ public class QPACE_stats extends SimpleStatistics {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see ec.simple.SimpleStatistics#finalStatistics(ec.EvolutionState, int)
+	 */
+	@Override
+	public void finalStatistics(EvolutionState state, int result) {
+		// super.finalStatistics(state, result);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ec.Statistics#postBreedingStatistics(ec.EvolutionState)
+	 */
+	@Override
+	public void postBreedingStatistics(EvolutionState state) {
+		// super.postBreedingStatistics(state);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * ec.simple.SimpleStatistics#postEvaluationStatistics(ec.EvolutionState)
 	 */
@@ -59,12 +79,12 @@ public class QPACE_stats extends SimpleStatistics {
 			}
 		}
 		// print the best-of-generation individual
-		state.output
-				.println("\nGeneration: " + state.generation, statisticslog);
-		state.output.println("Best Individual:", statisticslog);
+		// state.output
+		// .println("\nGeneration: " + state.generation, statisticslog);
+		// state.output.println("Best Individual:", statisticslog);
 		for (int x = 0; x < state.population.subpops.length; x++) {
 
-			state.output.println("Subpopulation " + x + ":", statisticslog);
+			// state.output.println("Subpopulation " + x + ":", statisticslog);
 
 			state.output.message("Subpop " + x
 					+ " best fitness of generation: "
@@ -74,5 +94,16 @@ public class QPACE_stats extends SimpleStatistics {
 			state.output.message("Subpop " + x
 					+ " mean fitness of generation: " + avfit[x]);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ec.Statistics#preBreedingStatistics(ec.EvolutionState)
+	 */
+	@Override
+	public void preBreedingStatistics(EvolutionState state) {
+		// TODO Auto-generated method stub
+		// super.preBreedingStatistics(state);
 	}
 }

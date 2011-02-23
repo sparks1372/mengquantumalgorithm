@@ -6,6 +6,9 @@
 
 package Core.CircuitEvolution.QPace4.nonterminal.arithmetic_integer;
 
+import Core.Algorithms.exp_node;
+import Core.Algorithms.Implementation.ExpArith.div;
+import Core.Algorithms.ImplementationExpTerm.val;
 import Core.CircuitEvolution.QPace4.Data.QPaceData;
 import ec.EvolutionState;
 import ec.Problem;
@@ -34,17 +37,29 @@ public class Div extends GPNode {
 	public void eval(final EvolutionState state, final int thread,
 			final GPData input, final ADFStack stack,
 			final GPIndividual individual, final Problem problem) {
-		int result;
+		exp_node c1;
+		exp_node c2;
+		boolean c1Const;
+		boolean c2Const;
 		QPaceData rd = ((QPaceData) (input));
 
+		rd.exConst = true;
 		children[0].eval(state, thread, input, stack, individual, problem);
-		result = rd.i;
+		c1 = rd.ex;
+		c1Const = rd.exConst;
 
+		rd.exConst = true;
 		children[1].eval(state, thread, input, stack, individual, problem);
-		if (rd.i != 0) {
-			rd.i = result / rd.i;
-		}
+		c2 = rd.ex;
+		c2Const = rd.exConst;
 
+		if (c1Const && c2Const) {
+			int t2 = (int) c2.evaluate(0, new int[0]);
+			int val = (int) (t2 != 0 ? c1.evaluate(0, new int[0]) / t2 : t2);
+			rd.ex = new val(val);
+		} else {
+			rd.ex = new div(c1, c2);
+		}
 	}
 
 	@Override

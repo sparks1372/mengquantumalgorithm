@@ -3,6 +3,7 @@
  */
 package Core.CircuitEvolution.QPace4.terminal;
 
+import Core.Algorithms.ImplementationExpTerm.val;
 import Core.CircuitEvolution.QPace4.Data.QPaceData;
 import ec.EvolutionState;
 import ec.Problem;
@@ -31,7 +32,7 @@ public class Qubit extends GPNode {
 	@Override
 	public void eval(EvolutionState state, int thread, GPData input,
 			ADFStack stack, GPIndividual individual, Problem problem) {
-		((QPaceData) input).i = value;
+		((QPaceData) input).ex = new val(value);
 	}
 
 	@Override

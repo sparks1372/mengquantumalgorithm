@@ -25,6 +25,7 @@ import javax.swing.JTextArea;
 
 import Core.qcevolutionbackend;
 import GUI.ProblemEditor.Implementation.InnerEditorPanel;
+import GUI.ProblemEditor.Implementation.TestSuiteToXML;
 import GUI.ProblemEditor.Implementation.XMLEditor;
 import GUI.ProblemEditor.Implementation.XMLFilter;
 
@@ -127,7 +128,12 @@ public class CreateProblemPanel extends JDialog implements ActionListener {
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				selected_file = fc.getSelectedFile();
-				filename.setText(selected_file.getAbsolutePath());
+				String fn = selected_file.getAbsolutePath();
+				if (!fn.endsWith(".xml")) {
+					fn = fn.concat(".xml");
+					selected_file = new File(fn);
+				}
+				filename.setText(fn);
 			}
 
 		} else if (e.getSource() == okayButton) {
@@ -150,6 +156,8 @@ public class CreateProblemPanel extends JDialog implements ActionListener {
 								"No Problem description specified. Please enter a Problem description and retry",
 								"Message", JOptionPane.ERROR_MESSAGE);
 			} else {
+				TestSuiteToXML.TestSuiteToXML(tsXmlEditor.getTsuite(),
+						selected_file);
 				backend.getProbmanager().addProblem(name.getText(),
 						selected_file.getAbsolutePath(), desc.getText());
 				this.setVisible(false);

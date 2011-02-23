@@ -4,8 +4,9 @@ import java.util.ListIterator;
 
 public interface QuantumAlgorithm {
 
-	public abstract void addInstruction(QuantumInstructionEnum inst, int gate1,
-			int gate2, double phase, QuantumAlgorithm[] subalg);
+	public abstract void addInstruction(QuantumInstructionEnum inst,
+			exp_node gate1, exp_node gate2, exp_node phase,
+			QuantumAlgorithm[] subalg);
 
 	/**
 		 */

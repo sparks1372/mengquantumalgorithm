@@ -123,25 +123,25 @@ public class Hadamard_Gate implements quantumgate {
 
 	@Override
 	public Matrix apply(Matrix start_state) {
+		Matrix to_return = start_state.copy();
 		Complex temp0;
 		Complex temp1;
 
-		for (int k = 0; k < start_state.getRowDimension(); k += Math.pow(2,
-				targ)) {
+		for (int k = 0; k < to_return.getRowDimension(); k += Math.pow(2, targ)) {
 			for (int l = 0; l < Math.pow(2, targ - 1); l++) {
 				int i0 = k + l;
 				int i1 = (int) (k + l + Math.pow(2, targ - 1));
 
-				temp0 = start_state.get(i0, 0);
-				temp1 = start_state.get(i1, 0);
+				temp0 = to_return.get(i0, 0);
+				temp1 = to_return.get(i1, 0);
 
-				start_state.set(
+				to_return.set(
 						i0,
 						0,
 						new Complex((temp0.real() + temp1.real())
 								/ Math.sqrt(2), (temp0.imag() + temp1.imag())
 								/ Math.sqrt(2)));
-				start_state.set(
+				to_return.set(
 						i1,
 						0,
 						new Complex((temp0.real() - temp1.real())
@@ -149,7 +149,7 @@ public class Hadamard_Gate implements quantumgate {
 								/ Math.sqrt(2)));
 			}
 		}
-		return start_state;
+		return to_return;
 
 	}
 

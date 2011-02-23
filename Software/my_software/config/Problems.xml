@@ -1,8 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Problems xmlns="http://www.w3schools.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com problem_spec.xsd">
-<prob><Name>Final Pauli X</Name><DefFile>config/finalpaulix.xml</DefFile><Desc>A Pauli X gate on the final Qubit</Desc></prob>
-<prob><Name>First Hadamard</Name><DefFile>config/firsthad.xml</DefFile><Desc>A Hadamard gate on the first Qubit</Desc></prob>
-<prob><Name>First Pauli Z</Name><DefFile>config/firstpauliz.xml</DefFile><Desc>A Pauli Z gate on the first Qubit</Desc></prob>
-<prob><Name>First Pauli X</Name><DefFile>config/firstpaulix.xml</DefFile><Desc>A Pauli X gate on the first Qubit</Desc></prob>
-<prob><Name>hadcnot</Name><DefFile>/home/sam/University/Project/trunk/Software/my_software/config/hadcnot.xml</DefFile><Desc>Hadamard followed by controlled not - Entanglement</Desc></prob>
-</Problems>
+<prob><Name>jac</Name><DefFile>/home/sam/University/Project/trunk/Software/my_software/config/jac.xml</DefFile><Desc>sfa</Desc></prob><prob><Name>Final Pauli X</Name><DefFile>config/finalpaulix.xml</DefFile><Desc>A Pauli X gate on the final Qubit</Desc></prob><prob><Name>First Hadamard</Name><DefFile>config/firsthad.xml</DefFile><Desc>A Hadamard gate on the first Qubit</Desc></prob><prob><Name>Quantum Fourier Transform</Name><DefFile>/home/sam/University/Project/trunk/Software/my_software/config/qft.xml</DefFile><Desc>Search for the Quantum Fourier Transform</Desc></prob><prob><Name>First Pauli Z</Name><DefFile>config/firstpauliz.xml</DefFile><Desc>A Pauli Z gate on the first Qubit</Desc></prob><prob><Name>First Pauli X</Name><DefFile>config/firstpaulix.xml</DefFile><Desc>A Pauli X gate on the first Qubit</Desc></prob><prob><Name>hadcnot</Name><DefFile>/home/sam/University/Project/trunk/Software/my_software/config/hadcnot.xml</DefFile><Desc>Hadamard followed by controlled not - Entanglement</Desc></prob></Problems>

@@ -7,6 +7,7 @@ import java.util.ListIterator;
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Algorithms.QuantumInstruction;
 import Core.Algorithms.QuantumInstructionEnum;
+import Core.Algorithms.exp_node;
 
 public class basicquantumalgorithm implements QuantumAlgorithm {
 	private final LinkedList<QuantumInstruction>	inst_list;
@@ -18,22 +19,26 @@ public class basicquantumalgorithm implements QuantumAlgorithm {
 	}
 
 	@Override
-	public void addInstruction(QuantumInstructionEnum inst, int gate1,
-			int gate2, double phase, QuantumAlgorithm[] subalg) {
+	public void addInstruction(QuantumInstructionEnum inst, exp_node gate1,
+			exp_node gate2, exp_node phase, QuantumAlgorithm[] subalg) {
 
 		QuantumInstruction to_add = new basicquantuminstruction();
 		switch (inst) {
 			case Body:
 			case Iterate:
 				// case Root:
-				size = size + 5;
+				size = size + 1;
 				break;
 			default:
 				size = size + 1;
+				if (gate1 != null) {
+					val_sum += gate1.val_sum();
+				}
+				if (gate2 != null) {
+					val_sum += gate2.val_sum();
+				}
 				break;
 		}
-		val_sum += Math.abs(gate1);
-		val_sum += Math.abs(gate2);
 		to_add.setInstruction(inst);
 		to_add.setInteger1(gate1);
 		to_add.setInteger2(gate2);
@@ -91,26 +96,54 @@ public class basicquantumalgorithm implements QuantumAlgorithm {
 		Iterator<QuantumInstruction> iter = getInstructions();
 		while (iter.hasNext()) {
 			qi = iter.next();
-			if (qi.getSubalg().length == 0) {
-				ins = qi.getInstruction().name() + " on gate "
-						+ qi.getInteger1() + " and gate " + qi.getInteger2()
-						+ " with phase " + qi.getDouble1() + "\n";
-			} else if ((qi.getInstruction() == QuantumInstructionEnum.Iterate)
-					&& (qi.getSubalg().length != 0)) {
-				ins = qi.getInstruction().name() + " for " + qi.getInteger1()
-						+ " iterations {\n";
-				for (int i = 0; i < qi.getSubalg().length; i++) {
-					ins = ins.concat(qi.getSubalg()[i].print());
-				}
-				ins = ins.concat("}\n");
-			} else if (qi.getSubalg().length != 0) {
-				ins = "{\n";
-				for (int i = 0; i < qi.getSubalg().length; i++) {
-					ins = ins.concat(qi.getSubalg()[i].print());
-				}
-				ins = ins.concat("}\n");
-			} else {
-				ins = new String();
+			ins = "";
+			switch (qi.getInstruction()) {
+				case Body:
+					ins = "{\n";
+					for (int i = 0; i < qi.getSubalg().length; i++) {
+						ins = ins.concat(qi.getSubalg()[i].print());
+					}
+					ins = ins.concat("}\n");
+					break;
+				case Iterate:
+					if ((qi.getSubalg().length != 0)) {
+						ins = qi.getInstruction().name() + " for "
+								+ qi.getInteger1().toPrint()
+								+ " iterations {\n";
+						for (int i = 0; i < qi.getSubalg().length; i++) {
+							ins = ins.concat(qi.getSubalg()[i].print());
+						}
+						ins = ins.concat("}\n");
+					}
+					break;
+				default:
+					if (QuantumInstructionEnum.hasSecondQubit(qi
+							.getInstruction())) {
+						if (QuantumInstructionEnum
+								.hasPhase(qi.getInstruction())) {
+							ins = qi.getInstruction().name() + " on gate "
+									+ qi.getInteger1().toPrint() + " and gate "
+									+ qi.getInteger2().toPrint()
+									+ " with phase "
+									+ qi.getDouble1().toPrint() + "\n";
+						} else {
+							ins = qi.getInstruction().name() + " on gate "
+									+ qi.getInteger1().toPrint() + " and gate "
+									+ qi.getInteger2().toPrint() + "\n";
+						}
+					} else {
+						if (QuantumInstructionEnum
+								.hasPhase(qi.getInstruction())) {
+							ins = qi.getInstruction().name() + " on gate "
+									+ qi.getInteger1().toPrint()
+									+ " with phase "
+									+ qi.getDouble1().toPrint() + "\n";
+						} else {
+							ins = qi.getInstruction().name() + " on gate "
+									+ qi.getInteger1().toPrint() + "\n";
+						}
+					}
+
 			}
 
 			to_return = to_return.concat(ins);

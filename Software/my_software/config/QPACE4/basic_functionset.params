@@ -1,72 +1,91 @@
 parent.0 = QPace4.params
 
-gp.fs.0.size = 6
+gp.fs.0.size = 24
 
-# Arithmetic
-#gp.fs.0.func.0 = Core.CircuitEvolution.QPace4.nonterminal.arithmetic_integer.Add
-#gp.fs.0.func.0.nc = nonterminalarithmetic
-#gp.fs.0.func.1 = Core.CircuitEvolution.QPace4.nonterminal.arithmetic_integer.Mul
-#gp.fs.0.func.1.nc = nonterminalarithmetic
-#gp.fs.0.func.2 = Core.CircuitEvolution.QPace4.nonterminal.arithmetic_integer.Pow
-#gp.fs.0.func.2.nc = nonterminalarithmetic
-#gp.fs.0.func.3 = Core.CircuitEvolution.QPace4.nonterminal.arithmetic_integer.Sub
-#gp.fs.0.func.3.nc = nonterminalarithmetic
-#gp.fs.0.func.4 = Core.CircuitEvolution.QPace4.nonterminal.arithmetic_integer.Div
-#gp.fs.0.func.4.nc = nonterminalarithmetic
+# Arithmetic Integer
+gp.fs.0.func.0 = Core.CircuitEvolution.QPace4.nonterminal.arithmetic_integer.Add
+gp.fs.0.func.0.nc = nonterminalarithmetici
+gp.fs.0.func.1 = Core.CircuitEvolution.QPace4.nonterminal.arithmetic_integer.Mul
+gp.fs.0.func.1.nc = nonterminalarithmetici
+gp.fs.0.func.2 = Core.CircuitEvolution.QPace4.nonterminal.arithmetic_integer.Pow
+gp.fs.0.func.2.nc = nonterminalarithmetici
+gp.fs.0.func.3 = Core.CircuitEvolution.QPace4.nonterminal.arithmetic_integer.Sub
+gp.fs.0.func.3.nc = nonterminalarithmetici
+gp.fs.0.func.4 = Core.CircuitEvolution.QPace4.nonterminal.arithmetic_integer.Div
+gp.fs.0.func.4.nc = nonterminalarithmetici
+
+
+# Arithmetic Double
+gp.fs.0.func.5 = Core.CircuitEvolution.QPace4.terminal.Variables.SystemSize
+gp.fs.0.func.5.nc = terminaldouble
+gp.fs.0.func.6 = Core.CircuitEvolution.QPace4.nonterminal.LoopVar
+gp.fs.0.func.6.nc = nonterminalloopd
+gp.fs.0.func.7 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.7.nc = terminaldouble
+gp.fs.0.func.7.Qubit = 0
+gp.fs.0.func.8 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.8.nc = terminaldouble
+gp.fs.0.func.8.Qubit = 1
+gp.fs.0.func.21= Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.21.nc = terminaldouble
+gp.fs.0.func.21.Qubit = 2
+gp.fs.0.func.22 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.22.nc = terminaldouble
+gp.fs.0.func.22.Qubit = 3
 
 #Phase
-gp.fs.0.func.0 = Core.CircuitEvolution.QPace4.terminal.Phase
-gp.fs.0.func.0.nc = terminaldouble
-gp.fs.0.func.0.Phase = 0
-gp.fs.0.func.1 = Core.CircuitEvolution.QPace4.terminal.Phase
-gp.fs.0.func.1.nc = terminaldouble
-gp.fs.0.func.1.Phase = 1
-gp.fs.0.func.2 = Core.CircuitEvolution.QPace4.terminal.Phase
-gp.fs.0.func.2.nc = terminaldouble
-gp.fs.0.func.2.Phase = 2
-gp.fs.0.func.3 = Core.CircuitEvolution.QPace4.terminal.Phase
-gp.fs.0.func.3.nc = terminaldouble
-gp.fs.0.func.3.Phase = 3
+#gp.fs.0.func.5 = Core.CircuitEvolution.QPace4.terminal.Phase
+#gp.fs.0.func.5.nc = terminaldouble
+#gp.fs.0.func.5.Phase = 0
+#gp.fs.0.func.6 = Core.CircuitEvolution.QPace4.terminal.Phase
+#gp.fs.0.func.6.nc = terminaldouble
+#gp.fs.0.func.6.Phase = 1
+#gp.fs.0.func.7 = Core.CircuitEvolution.QPace4.terminal.Phase
+#gp.fs.0.func.7.nc = terminaldouble
+#gp.fs.0.func.7.Phase = 2
+#gp.fs.0.func.8 = Core.CircuitEvolution.QPace4.terminal.Phase
+#gp.fs.0.func.8.nc = terminaldouble
+#gp.fs.0.func.8.Phase = 3
 
 #Variables
-gp.fs.0.func.4 = Core.CircuitEvolution.QPace4.terminal.QubitERC
-gp.fs.0.func.4.nc = terminalint
-#gp.fs.0.func.3 = Core.CircuitEvolution.QPace4.terminal.Variables.SystemSize
-#gp.fs.0.func.3.nc = terminalint
+gp.fs.0.func.9 = Core.CircuitEvolution.QPace4.terminal.Variables.SystemSize
+gp.fs.0.func.9.nc = terminalint
+gp.fs.0.func.23 = Core.CircuitEvolution.QPace4.nonterminal.LoopVar
+gp.fs.0.func.23.nc = nonterminalloopi
 
 #Qubits available (1-10)
-#gp.fs.0.func.0 = Core.CircuitEvolution.QPace4.terminal.Qubit
-#gp.fs.0.func.0.nc = terminalint
-#gp.fs.0.func.0.Qubit = 1
-#gp.fs.0.func.1 = Core.CircuitEvolution.QPace4.terminal.Qubit
-#gp.fs.0.func.1.nc = terminalint
-#gp.fs.0.func.1.Qubit = 2
-#gp.fs.0.func.2 = Core.CircuitEvolution.QPace4.terminal.Qubit
-#gp.fs.0.func.2.nc = terminalint
-#gp.fs.0.func.2.Qubit = 3
-#gp.fs.0.func.14 = Core.CircuitEvolution.QPace4.terminal.Qubit
-#gp.fs.0.func.14.nc = terminalint
-#gp.fs.0.func.14.Qubit = 4
-#gp.fs.0.func.15 = Core.CircuitEvolution.QPace4.terminal.Qubit
-#gp.fs.0.func.15.nc = terminalint
-#gp.fs.0.func.15.Qubit = 5
-#gp.fs.0.func.16 = Core.CircuitEvolution.QPace4.terminal.Qubit
-#gp.fs.0.func.16.nc = terminalint
-#gp.fs.0.func.16.Qubit = 6
-#gp.fs.0.func.0 = Core.CircuitEvolution.QPace4.terminal.Qubit
-#gp.fs.0.func.0.nc = terminalint
-#gp.fs.0.func.0.Qubit = 7
-#gp.fs.0.func.1 = Core.CircuitEvolution.QPace4.terminal.Qubit
-#gp.fs.0.func.1.nc = terminalint
-#gp.fs.0.func.1.Qubit = 8
-#gp.fs.0.func.2 = Core.CircuitEvolution.QPace4.terminal.Qubit
-#gp.fs.0.func.2.nc = terminalint
-#gp.fs.0.func.2.Qubit = 9
-#gp.fs.0.func.3 = Core.CircuitEvolution.QPace4.terminal.Qubit
-#gp.fs.0.func.3.nc = terminalint
-#gp.fs.0.func.3.Qubit = 10
+gp.fs.0.func.10 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.10.nc = terminalint
+gp.fs.0.func.10.Qubit = 1
+gp.fs.0.func.11 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.11.nc = terminalint
+gp.fs.0.func.11.Qubit = 2
+gp.fs.0.func.12 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.12.nc = terminalint
+gp.fs.0.func.12.Qubit = 3
+gp.fs.0.func.13 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.13.nc = terminalint
+gp.fs.0.func.13.Qubit = 4
+gp.fs.0.func.14 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.14.nc = terminalint
+gp.fs.0.func.14.Qubit = 5
+gp.fs.0.func.15 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.15.nc = terminalint
+gp.fs.0.func.15.Qubit = 6
+gp.fs.0.func.16 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.16.nc = terminalint
+gp.fs.0.func.16.Qubit = 7
+gp.fs.0.func.17 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.17.nc = terminalint
+gp.fs.0.func.17.Qubit = 8
+gp.fs.0.func.18 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.18.nc = terminalint
+gp.fs.0.func.18.Qubit = 9
+gp.fs.0.func.19 = Core.CircuitEvolution.QPace4.terminal.Qubit
+gp.fs.0.func.19.nc = terminalint
+gp.fs.0.func.19.Qubit = 10
 
 #gate non-teminal
-gp.fs.0.func.5 = Core.CircuitEvolution.QPace4.nonterminal.Gate
-gp.fs.0.func.5.nc = nonterminalgateanditeration
+gp.fs.0.func.20 = Core.CircuitEvolution.QPace4.nonterminal.Gate
+gp.fs.0.func.20.nc = nonterminalgateanditeration
 

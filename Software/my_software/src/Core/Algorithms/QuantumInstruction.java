@@ -3,10 +3,43 @@ package Core.Algorithms;
 public interface QuantumInstruction {
 
 	/**
+	 * @return Returns the phase.
+	 * @uml.property name="double1"
+	 */
+	public exp_node getDouble1();
+
+	/**
 	 * @return Returns the instruction.
 	 * @uml.property name="instruction"
 	 */
 	public QuantumInstructionEnum getInstruction();
+
+	/**
+	 * @return Returns the controls.
+	 * @uml.property name="integer1"
+	 */
+	public exp_node getInteger1();
+
+	/**
+	 * @return Returns the gate2.
+	 * @uml.property name="integer2"
+	 */
+	public exp_node getInteger2();
+
+	/**
+	 * @return Returns the subalgs.
+	 * @uml.property name="subalg" multiplicity="(0 -1)" dimension="1"
+	 */
+	public QuantumAlgorithm[] getSubalg();
+
+	/**
+	 * Setter of the property <tt>phase</tt>
+	 * 
+	 * @param phase
+	 *            The phase to set.
+	 * @uml.property name="double1"
+	 */
+	public void setDouble1(exp_node double1);
 
 	/**
 	 * Setter of the property <tt>instruction</tt>
@@ -18,10 +51,22 @@ public interface QuantumInstruction {
 	public void setInstruction(QuantumInstructionEnum instruction);
 
 	/**
-	 * @return Returns the subalgs.
-	 * @uml.property name="subalg" multiplicity="(0 -1)" dimension="1"
+	 * Setter of the property <tt>Control</tt>
+	 * 
+	 * @param Control
+	 *            The controls to set.
+	 * @uml.property name="integer1"
 	 */
-	public QuantumAlgorithm[] getSubalg();
+	public void setInteger1(exp_node integer1);
+
+	/**
+	 * Setter of the property <tt>gate2</tt>
+	 * 
+	 * @param gate2
+	 *            The gate2 to set.
+	 * @uml.property name="integer2"
+	 */
+	public void setInteger2(exp_node integer2);
 
 	/**
 	 * Setter of the property <tt>subalg</tt>
@@ -31,44 +76,5 @@ public interface QuantumInstruction {
 	 * @uml.property name="subalg"
 	 */
 	public void setSubalg(QuantumAlgorithm[] subalg);
-
-	/** 
-	 * @return Returns the controls.
-	 * @uml.property  name="integer1"
-	 */
-	public int getInteger1();
-
-	/** 
-	 * Setter of the property <tt>Control</tt>
-	 * @param Control The controls to set.
-	 * @uml.property  name="integer1"
-	 */
-	public void setInteger1(int integer1);
-
-	/** 
-	 * @return Returns the gate2.
-	 * @uml.property  name="integer2"
-	 */
-	public int getInteger2();
-
-	/** 
-	 * Setter of the property <tt>gate2</tt>
-	 * @param gate2 The gate2 to set.
-	 * @uml.property  name="integer2"
-	 */
-	public void setInteger2(int integer2);
-
-	/** 
-	 * @return  Returns the phase.
-	 * @uml.property  name="double1"
-	 */
-	public double getDouble1();
-
-	/** 
-	 * Setter of the property <tt>phase</tt>
-	 * @param phase  The phase to set.
-	 * @uml.property  name="double1"
-	 */
-	public void setDouble1(double double1);
 
 }

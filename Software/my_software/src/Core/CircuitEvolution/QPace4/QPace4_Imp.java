@@ -70,7 +70,6 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 		 */
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			System.out.println("sfao");
 			if (e.getStateChange() == ItemEvent.DESELECTED) {
 				enabledGate[index] = false;
 			} else {
@@ -207,6 +206,8 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 			// now we let it go
 			long startT = System.currentTimeMillis();
 			evoState.run(EvolutionState.C_STARTED_FRESH);
+			((QPaceEvoState) evoState).getProgressBar().setValue(
+					((QPaceEvoState) evoState).numGenerations);
 			long finishT = System.currentTimeMillis();
 			long dif = finishT - startT;
 			int days = (int) Math.floor(dif / (24 * 60 * 60 * 100.0));
@@ -298,6 +299,8 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 					int pop = Integer.parseInt(popTA.getText());
 					int bth = Integer.parseInt(bthTA.getText());
 					int eth = Integer.parseInt(ethTA.getText());
+					System.out.println("gen " + gen + " pop " + pop + " bth "
+							+ bth + " eth " + eth);
 
 					pw.updateParams(enabledGate, gen, pop, bth, eth);
 					ev.execute();

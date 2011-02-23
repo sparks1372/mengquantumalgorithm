@@ -6,43 +6,39 @@ pop.subpop.0.species.ind = Core.CircuitEvolution.QPace4.Individual.QPace_Ind
 
 pop.subpop.0.species.pipe.num-sources = 3
 
-pop.subpop.0.species.pipe.source.0.prob = 0.25
-pop.subpop.0.species.pipe.source.1.prob = 0.5
-pop.subpop.0.species.pipe.source.2.prob = 0.5
+pop.subpop.0.species.pipe.source.0.prob = 0.9
+pop.subpop.0.species.pipe.source.1.prob = 0.1
+pop.subpop.0.species.pipe.source.2.prob = 0.1
+pop.subpop.0.species.pipe.source.3.prob = 0.1
+pop.subpop.0.species.pipe.source.4.prob = 0.1
 
-#pop.subpop.0.species.pipe.source.0.prob = 0.125
-#pop.subpop.0.species.pipe.source.1.prob = 0.25
-#pop.subpop.0.species.pipe.source.2.prob = 0.125
-#pop.subpop.0.species.pipe.source.3.prob = 1
+pop.subpop.0.species.pipe.source.1 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionMutation
+pop.subpop.0.species.pipe.source.2= Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.ReplacementPipeline
+pop.subpop.0.species.pipe.source.3= ec.gp.breed.InternalCrossoverPipeline
+pop.subpop.0.species.pipe.source.4= ec.gp.breed.MutateOneNodePipeline
 
-pop.subpop.0.species.pipe.source.1 = ec.gp.breed.MutateOneNodePipeline
-pop.subpop.0.species.pipe.source.2 = ec.gp.breed.MutateERCPipeline
-#pop.subpop.0.species.pipe.source.2 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionMutation
-##pop.subpop.0.species.pipe.source.3 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionReductionMutation
-#pop.subpop.0.species.pipe.source.3 = ec.gp.breed.MutateERCPipeline
+gp.breed.internal-xover.source.0 = ec.select.TournamentSelection
+gp.breed.internal-xover.ns.0 = ec.gp.koza.KozaNodeSelector
+gp.breed.internal-xover.ns.1= ec.gp.koza.KozaNodeSelector
+gp.breed.internal-xover.tries = 2
+gp.breed.internal-xover.maxdepth = 200
 
-#gp.breed.instruction-reduction.source.0 = ec.select.TournamentSelection
-#gp.breed.instruction-reduction.ns.0 = ec.gp.koza.KozaNodeSelector
+#pop.subpop.0.species.pipe.source.2.source.0.pick-worst=true
 
-#gp.breed.instruction-mutation.source.0 = ec.select.TournamentSelection
-#gp.breed.instruction-mutation.ns.0 = ec.gp.koza.KozaNodeSelector
+gp.breed.instruction-mutation.source.0 = ec.select.TournamentSelection
+gp.breed.instruction-mutation.ns.0 = ec.gp.koza.KozaNodeSelector
 
-gp.breed.mutate-erc.source.0 = ec.select.TournamentSelection
-gp.breed.mutate-erc.ns.0 = ec.gp.koza.KozaNodeSelector
+gp.breed.mutate-one-node.source.0 = ec.select.TournamentSelection
+gp.breed.mutate-one-node.ns.0 = ec.gp.koza.KozaNodeSelector
 
-#gp.breed.mutate-swap.tries = 10
-#gp.breed.mutate-swap.source.0 = ec.select.TournamentSelection
-
-#breed.reproduce.source.0 = ec.select.TournamentSelection
-#pop.subpop.0.duplicate-retries = 10000
 #pop.subpop.0.species.pipe.generate-max = true
 
-generations =				512
+#generations =				512
 quit-on-run-complete =			true
-breed.elite.0 = 			2
+#breed.elite.0 = 			1
 
-#select.tournament.size = 2
-go.tc.0.init.max-depth = 20
+#select.tournament.size = 7
+#go.tc.0.init.max-depth = 20
 
 #pop.subpop.0.species.pipe.source.1.ns.terminals = 0.25
 #pop.subpop.0.species.pipe.source.1.ns.nonterminals = 0.5
@@ -56,32 +52,31 @@ gp.koza.ns.terminals = 0.1
 gp.koza.ns.nonterminals = 0.75
 gp.koza.ns.root = 0.15
 
-gp.koza.grow.min-depth = 2
-gp.koza.grow.max-depth = 20
+#gp.koza.grow.min-depth = 2
+#gp.koza.grow.max-depth = 20
 
-
-#gp.koza.mutate.tries = 100000
-#gp.koza.xover.tries = 100000
+gp.koza.mutate.tries = 2
+gp.koza.xover.tries = 2
 
 pop.subpop.0.size 		= 2048
 breedthreads	= 6
 evalthreads	= 6
-#seed.0		= 100
-#seed.1		= 20
-#seed.2		= 300
-#seed.3		= 40
-#seed.4		= 500
-#seed.5		= 60
-#seed.6		= 700
-#seed.7		= 80
-seed.0		= time
-seed.1		= time
-seed.2		= time
-seed.3		= time
-seed.4		= time
-seed.5		= time
-seed.6		= time
-seed.7		= time
+seed.0		= 100
+seed.1		= 20
+seed.2		= 300
+seed.3		= 40
+seed.4		= 500
+seed.5		= 60
+seed.6		= 700
+seed.7		= 80
+#seed.0		= time
+#seed.1		= time
+#seed.2		= time
+#seed.3		= time
+#seed.4		= time
+#seed.5		= time
+#seed.6		= time
+#seed.7		= time
 
 #Types
 #Atomic
@@ -95,7 +90,7 @@ gp.type.a.5.name = root
 #tree must return boolean
 gp.tc.0.returns = int
 
-gp.nc.size = 14
+gp.nc.size = 17
 
 #Terminal Node Constraints
 gp.nc.7 = ec.gp.GPNodeConstraints
@@ -149,11 +144,30 @@ gp.nc.12.child.2 = int
 gp.nc.12.child.3 = double
 
 gp.nc.13 = ec.gp.GPNodeConstraints
-gp.nc.13.name = nonterminalarithmetic
+gp.nc.13.name = nonterminalarithmetici
 gp.nc.13.returns = int
 gp.nc.13.size = 2
 gp.nc.13.child.0 = int
 gp.nc.13.child.1 = int
+
+gp.nc.14 = ec.gp.GPNodeConstraints
+gp.nc.14.name = nonterminalarithmeticd
+gp.nc.14.returns = double
+gp.nc.14.size = 2
+gp.nc.14.child.0 = double
+gp.nc.14.child.1 = double
+
+gp.nc.15 = ec.gp.GPNodeConstraints
+gp.nc.15.name = nonterminalloopi
+gp.nc.15.returns = int
+gp.nc.15.size = 1
+gp.nc.15.child.0 = int
+
+gp.nc.16 = ec.gp.GPNodeConstraints
+gp.nc.16.name = nonterminalloopd
+gp.nc.16.returns = double
+gp.nc.16.size = 1
+gp.nc.16.child.0 = double
 
 eval.problem = Core.CircuitEvolution.QPace4.Problem.QPace_Problem
 eval.problem.data = Core.CircuitEvolution.QPace4.Data.QPaceData

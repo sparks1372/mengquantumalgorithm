@@ -12,5 +12,10 @@ xsi:schemaLocation="http://www.w3schools.com fitnessfunction_spec.xsd">
 	  <Class>Core.CircuitEvaluator.ParsimoniousSimpleFitness.ParsimoniousSimpleFitness</Class>
 	  <Desc>A simple and naive fitness function that includes pressure to reduce the size of algorithms and circuits produced</Desc>
 	</FitnessFunctionTag>
+	<FitnessFunctionTag>
+	  <Name>Phase and Parsimonious Fitness</Name>
+	  <Class>Core.CircuitEvaluator.PhaseSensitiveParsimoniousSimpleFitness.PhaseSensitiveParsimoniousSimpleFitness</Class>
+	  <Desc>A simple and naive fitness function that includes pressure to reduce the size of algorithms and circuits produced that is sensitive to incorrect phases</Desc>
+	</FitnessFunctionTag>
 </FitnessFunc>
 

@@ -116,7 +116,7 @@ public class Phase_Gate implements quantumgate {
 		zero[0][0] = new Complex(1, 0);
 		zero[0][1] = new Complex(0, 0);
 		zero[1][0] = new Complex(0, 0);
-		zero[1][1] = new Complex(0, Math.exp(2 * theta));
+		zero[1][1] = new Complex(Math.cos(2 * theta), Math.sin(2 * theta));
 
 		unitary = new Matrix(zero);
 		// unitary.print(0, 0);
@@ -135,14 +135,12 @@ public class Phase_Gate implements quantumgate {
 		I[1][0] = new Complex(0, 0);
 		Matrix iden = new Matrix(I);
 		for (int index = 1; index <= qubits; index++) {
-
 			if (index == targ) {
-				operation = Tensor_Matrix.tensor_prod(operation, unitary);
+				operation = Tensor_Matrix.tensor_prod(unitary, operation);
 			} else {
-				operation = Tensor_Matrix.tensor_prod(operation, iden);
+				operation = Tensor_Matrix.tensor_prod(iden, operation);
 			}
 		}
-		// operation.print(0, 0);
 		return operation.times(start_state);
 	}
 

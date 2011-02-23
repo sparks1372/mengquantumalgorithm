@@ -15,7 +15,8 @@ import Core.CircuitEvolution.QPace4.terminal.Instruction;
  */
 public class Params_Writer {
 
-	private final FileWriter	out;
+	private FileWriter			out;
+	private final String		fname;
 	private static final String	parent_line				= "parent.0 = QPACE4/basic_functionset.params";
 	private static final String	fixed_line_1			= "gp.fs.size = 1";
 	private static final String	fixed_line_2			= "gp.fs.0.size = ";
@@ -31,14 +32,14 @@ public class Params_Writer {
 	private static final String	fixed_node_constraint	= ".nc";
 	private static final String	fixed_dot				= ".";
 	private static final String	fixed_nc_instr			= "terminalinst";
-	private static final int	base_node_count			= 6;
+	private static final int	base_node_count			= 24;
 
 	/**
 	 * @param filename
 	 * @throws IOException
 	 */
 	public Params_Writer(String filename) throws IOException {
-		out = new FileWriter(filename);
+		fname = filename;
 	}
 
 	public void updateParams(boolean[] avail_gates, int gen, int pop, int bth,
@@ -54,6 +55,7 @@ public class Params_Writer {
 		int current_node = base_node_count;
 
 		try {
+			out = new FileWriter(fname);
 			BufferedWriter osw = new BufferedWriter(out);
 			osw.write(parent_line);
 			osw.newLine();
@@ -73,6 +75,14 @@ public class Params_Writer {
 			osw.newLine();
 			osw.write(fixed_line_2);
 			osw.write(Integer.toString(node_count));
+			osw.newLine();
+			osw.write("select.tournament.size = ");
+			int t = (int) Math.ceil(0.01 * pop);
+			t = t < 5 ? 5 : t;
+			osw.write(Integer.toString(t));
+			osw.newLine();
+			osw.write("breed.elite.0 =  ");
+			osw.write(Integer.toString((int) Math.ceil(0.001 * pop)));
 			osw.newLine();
 
 			for (int index = 0; index < avail_gates.length; index++) {

@@ -73,10 +73,9 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 			unitary = nonControlUnitary.plus(controlUnitary);
 
 			if (Math.min(targ, ctrl) != 1) {
-				unitary = Tensor_Matrix.tensor_prod(Matrix.identity(
+				unitary = Tensor_Matrix.tensor_prod(unitary, Matrix.identity(
 						(int) Math.pow(2, ctrl < targ ? ctrl - 1 : targ - 1),
-						(int) Math.pow(2, ctrl < targ ? ctrl - 1 : targ - 1)),
-						unitary);
+						(int) Math.pow(2, ctrl < targ ? ctrl - 1 : targ - 1)));
 			}
 		} else {
 			innergate = gate;
@@ -94,12 +93,11 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 
 			Matrix operation = unitary;
 			if (Math.max(targ, ctrl) != qubits) {
-				operation = Tensor_Matrix.tensor_prod(operation, Matrix
-						.identity(
-								(int) (ctrl > targ ? Math.pow(2, qubits - ctrl)
-										: Math.pow(2, qubits - targ)),
-								(int) (ctrl > targ ? Math.pow(2, qubits - ctrl)
-										: Math.pow(2, qubits - targ))));
+				operation = Tensor_Matrix.tensor_prod(Matrix.identity(
+						(int) (ctrl > targ ? Math.pow(2, qubits - ctrl) : Math
+								.pow(2, qubits - targ)),
+						(int) (ctrl > targ ? Math.pow(2, qubits - ctrl) : Math
+								.pow(2, qubits - targ))), operation);
 			}
 
 			// System.out.println("ContolledU " + getlabel() + " ctrlet "
@@ -152,8 +150,7 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 
 	public String toLatex(boolean upward) {
 		if (upward) {
-			return latex.substring(0, latex.indexOf('&') - 1)
-					.concat(" \\qwx &");
+			return latex.substring(0, latex.indexOf('&')).concat(" \\qwx &");
 		} else {
 			return latex;
 		}
