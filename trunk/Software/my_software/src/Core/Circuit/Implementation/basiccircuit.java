@@ -74,43 +74,71 @@ public class basiccircuit implements Circuit {
 			next_gate = cir_iter.next();
 
 			if (next_gate instanceof Swap_Gate) {
+
 				for (int i = 0; i < qubits; i++) {
+
 					if (i == (((Swap_Gate) next_gate).getTarget() - 1)) {
-						cir_diag[i] = cir_diag[i]
-								.concat(((Swap_Gate) next_gate).toLatex(false));
-					} else if (i == (((Swap_Gate) next_gate).getTarget2() - 1)) {
+
 						cir_diag[i] = cir_diag[i]
 								.concat(((Swap_Gate) next_gate).toLatex(true));
-					} else if ((i > (((Swap_Gate) next_gate).getTarget() - 1))
-							&& (i < (((Swap_Gate) next_gate).getTarget2() - 1))) {
+
+					} else if (i == (((Swap_Gate) next_gate).getTarget2() - 1)) {
+
+						cir_diag[i] = cir_diag[i]
+								.concat(((Swap_Gate) next_gate).toLatex(false));
+
+					} else if ((i >= ((Swap_Gate) next_gate).getTarget())
+							&& (i <= ((Swap_Gate) next_gate).getTarget2())) {
+
 						cir_diag[i] = cir_diag[i].concat("\\qw \\qwx&");
+
 					} else {
 						cir_diag[i] = cir_diag[i].concat("\\qw&");
 					}
+
 				}
 			} else if (next_gate instanceof ControlledU_Gate) {
+
 				for (int i = 0; i < qubits; i++) {
+
 					if (i == (((ControlledU_Gate) next_gate).getTarget() - 1)) {
-						cir_diag[i] = cir_diag[i]
-								.concat(((ControlledU_Gate) next_gate)
-										.toLatex());
+						if ((((ControlledU_Gate) next_gate).getTarget() > ((ControlledU_Gate) next_gate)
+								.getSecondQubit())) {
+							cir_diag[i] = cir_diag[i]
+									.concat(((ControlledU_Gate) next_gate)
+											.toLatex(false));
+						} else {
+							cir_diag[i] = cir_diag[i]
+									.concat(((ControlledU_Gate) next_gate)
+											.toLatex(true));
+						}
+
 					} else if ((i == (((ControlledU_Gate) next_gate)
 							.getSecondQubit() - 1))
 							&& (((ControlledU_Gate) next_gate).getTarget() > ((ControlledU_Gate) next_gate)
 									.getSecondQubit())) {
+
 						cir_diag[i] = cir_diag[i].concat("\\ctrl \\qwx&");
+
 					} else if (i == (((ControlledU_Gate) next_gate)
 							.getSecondQubit() - 1)) {
+
 						cir_diag[i] = cir_diag[i].concat("\\ctrl &");
+
 					} else if ((i > (((ControlledU_Gate) next_gate).getTarget() - 1))
 							&& (i < (((ControlledU_Gate) next_gate)
 									.getSecondQubit() - 1))) {
+
 						cir_diag[i] = cir_diag[i].concat("\\qw \\qwx&");
+
 					} else if ((i < (((ControlledU_Gate) next_gate).getTarget() - 1))
 							&& (i > (((ControlledU_Gate) next_gate)
 									.getSecondQubit() - 1))) {
+
 						cir_diag[i] = cir_diag[i].concat("\\qw \\qwx&");
+
 					} else {
+
 						cir_diag[i] = cir_diag[i].concat("\\qw&");
 					}
 				}

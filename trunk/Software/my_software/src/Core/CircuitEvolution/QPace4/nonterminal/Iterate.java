@@ -5,6 +5,7 @@ package Core.CircuitEvolution.QPace4.nonterminal;
 
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Algorithms.QuantumInstructionEnum;
+import Core.Algorithms.exp_node;
 import Core.Algorithms.Implementation.basicquantumalgorithm;
 import Core.CircuitEvolution.QPace4.Data.QPaceData;
 import ec.EvolutionState;
@@ -33,8 +34,8 @@ public class Iterate extends GPNode {
 	public void eval(EvolutionState state, int thread, GPData input,
 			ADFStack stack, GPIndividual individual, Problem problem) {
 		QuantumInstructionEnum qins;
-		int int1;
-		int int2;
+		exp_node int1;
+		exp_node int2;
 		QPaceData rd = ((QPaceData) (input));
 
 		// Produce the Quantum Instruction
@@ -42,7 +43,7 @@ public class Iterate extends GPNode {
 		QPaceData secinput;
 		// Produce the Number of Iteration
 		children[1].eval(state, thread, input, stack, individual, problem);
-		int1 = rd.i;
+		int1 = rd.ex;
 
 		subalg = new basicquantumalgorithm[1];
 		secinput = new QPaceData();
@@ -52,7 +53,8 @@ public class Iterate extends GPNode {
 		subalg[0] = secinput.qa != null ? secinput.qa
 				: new basicquantumalgorithm();
 
-		rd.qa.addInstruction(QuantumInstructionEnum.Iterate, int1, 0, 0, subalg);
+		rd.qa.addInstruction(QuantumInstructionEnum.Iterate, int1, null, null,
+				subalg);
 
 	}
 

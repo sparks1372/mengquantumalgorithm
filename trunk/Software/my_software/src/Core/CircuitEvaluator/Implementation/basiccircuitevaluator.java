@@ -94,33 +94,7 @@ public class basiccircuitevaluator implements circuitevaluator {
 		fitness_to_return = count != 0 ? fitness_to_return
 				/ ((double) count / possiblecount) : Float.MAX_VALUE;
 
-		fitness_to_return = count == possiblecount ? 0 : fitness_to_return;
-
-		// if (fitness_to_return < 15.701) {
-		// keys = ts.getKeys();
-		//
-		// kiter = keys.iterator();
-		//
-		// while (kiter.hasNext()) {
-		// int numofqubits = kiter.next();
-		// testset tempts = ts.getTestcases(numofqubits);
-		// cir = cb.Build(alg, numofqubits);
-		// Iterator<testcase> tciter = tempts.getTestcases();
-		// quantumgate qg;
-		// while (tciter.hasNext()) {
-		// tc = tciter.next();
-		// qgate_iter = cir.getCircuitlayout();
-		// Matrix state = tc.getStartingstate();
-		// while (qgate_iter.hasNext()) {
-		// qg = qgate_iter.next();
-		// state = qg.apply(state);
-		// }
-		// }
-		//
-		// }
-		// }
-		// System.out.println("Percentage correct = "
-		// + ((double) count / possiblecount) * 100);
+		// fitness_to_return = count == possiblecount ? 0 : fitness_to_return;
 
 		return new Fitness(fitness_to_return, count);
 	}

@@ -4,6 +4,7 @@
 package Core.CircuitEvolution.QPace4.Data;
 
 import Core.Algorithms.QuantumAlgorithm;
+import Core.Algorithms.exp_node;
 import Core.Algorithms.Implementation.basicquantumalgorithm;
 import ec.gp.GPData;
 
@@ -13,9 +14,11 @@ import ec.gp.GPData;
  */
 public class QPaceData extends GPData {
 
-	public QuantumAlgorithm	qa	= new basicquantumalgorithm();
+	public QuantumAlgorithm	qa		= new basicquantumalgorithm();
 	public int				i;
 	public double			d;
+	public exp_node			ex		= null;
+	public boolean			exConst	= true;
 
 	/*
 	 * (non-Javadoc)
@@ -27,6 +30,8 @@ public class QPaceData extends GPData {
 		((QPaceData) gpd).qa = qa;
 		((QPaceData) gpd).i = i;
 		((QPaceData) gpd).d = d;
+		((QPaceData) gpd).ex = ex;
+		((QPaceData) gpd).exConst = exConst;
 	}
 
 }

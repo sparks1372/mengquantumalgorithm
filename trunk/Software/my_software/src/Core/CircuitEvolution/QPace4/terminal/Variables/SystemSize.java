@@ -3,6 +3,7 @@
  */
 package Core.CircuitEvolution.QPace4.terminal.Variables;
 
+import Core.Algorithms.ImplementationExpTerm.syssize;
 import Core.CircuitEvolution.QPace4.Data.QPaceData;
 import ec.EvolutionState;
 import ec.Problem;
@@ -16,7 +17,7 @@ import ec.gp.GPNode;
  * 
  */
 public class SystemSize extends GPNode {
-	public static final int	SYSTEM_SIZE_FLAG	= -1;
+	public static final int	SYSTEM_SIZE_FLAG	= 0;
 
 	/*
 	 * (non-Javadoc)
@@ -27,7 +28,8 @@ public class SystemSize extends GPNode {
 	@Override
 	public void eval(EvolutionState state, int thread, GPData input,
 			ADFStack stack, GPIndividual individual, Problem problem) {
-		((QPaceData) input).i = SYSTEM_SIZE_FLAG;
+		((QPaceData) input).ex = new syssize();
+		((QPaceData) input).exConst = false;
 	}
 
 	/*

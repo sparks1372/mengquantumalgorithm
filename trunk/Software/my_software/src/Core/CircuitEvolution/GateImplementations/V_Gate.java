@@ -37,19 +37,10 @@ public class V_Gate implements quantumgate {
 		I[1][0] = new Complex(0, 0);
 		Matrix iden = new Matrix(I);
 		for (int index = 1; index <= qubits; index++) {
-
-			if (index == (qubits)) {
-				try {
-					operation = Tensor_Matrix.tensor_prod(operation, unitary);
-				} catch (NullPointerException e) {
-					e.printStackTrace();
-				}
+			if (index == targ) {
+				operation = Tensor_Matrix.tensor_prod(unitary, operation);
 			} else {
-				try {
-					operation = Tensor_Matrix.tensor_prod(operation, iden);
-				} catch (NullPointerException e) {
-					e.printStackTrace();
-				}
+				operation = Tensor_Matrix.tensor_prod(iden, operation);
 			}
 		}
 		return operation.times(start_state);

@@ -100,6 +100,23 @@ public class Matrix implements Cloneable, java.io.Serializable {
 		return X;
 	}
 
+	public static boolean equal(Matrix A, Matrix B) {
+		try {
+			A.checkMatrixDimensions(B);
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
+		for (int i = 0; i < A.getRowDimension(); i++) {
+			for (int j = 0; j < A.getColumnDimension(); j++) {
+				if (!A.get(i, j).equal(B.get(i, j))) {
+					return false;
+				}
+			}
+		}
+		return true;
+
+	}
+
 	public static Fitness euclid(Matrix A, Matrix B) {
 		if (A.n != 1) {
 			throw new IllegalArgumentException("Matrix dimensions must agree.");

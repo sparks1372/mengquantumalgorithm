@@ -10,6 +10,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
+import Core.Algorithms.ImplementationExpTerm.val;
 import Core.CircuitEvolution.QPace4.Data.QPaceData;
 import ec.EvolutionState;
 import ec.Problem;
@@ -72,7 +73,7 @@ public class QubitERC extends ERC {
 			final GPData input, final ADFStack stack,
 			final GPIndividual individual, final Problem problem) {
 		QPaceData rd = ((QPaceData) (input));
-		rd.i = q < 3 ? q - 3 : q - 2;
+		rd.ex = new val(q < 3 ? q - 3 : q - 2);
 	}
 
 	@Override

@@ -13,6 +13,6 @@ public interface circuitBuilder {
 	/**
 	 */
 	public abstract Circuit Build(QuantumAlgorithm quantumAlgorithm,
-			int num_qubits, int loopvar);
+			int num_qubits, int[] loopvars);
 
 }

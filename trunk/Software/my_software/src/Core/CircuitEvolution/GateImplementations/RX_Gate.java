@@ -52,11 +52,10 @@ public class RX_Gate implements quantumgate {
 		I[1][0] = new Complex(0, 0);
 		Matrix iden = new Matrix(I);
 		for (int index = 1; index <= qubits; index++) {
-
-			if (index == (qubits)) {
-				operation = Tensor_Matrix.tensor_prod(operation, unitary);
+			if (index == targ) {
+				operation = Tensor_Matrix.tensor_prod(unitary, operation);
 			} else {
-				operation = Tensor_Matrix.tensor_prod(operation, iden);
+				operation = Tensor_Matrix.tensor_prod(iden, operation);
 			}
 		}
 		return operation.times(start_state);

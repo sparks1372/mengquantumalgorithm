@@ -36,7 +36,8 @@ public class qcevolutionbackend extends Observable {
 
 		circuitBuilder cirbui = new basiccircuitbuilder();
 		circuitevaluator cireval = new basiccircuitevaluator(cirbui);
-		FitnessFunction ff = (new PhaseSensitiveParsimoniousSimpleFitness());
+		FitnessFunction ff = (new PhaseSensitiveParsimoniousSimpleFitness(
+				"PPSF"));
 		// cireval.setQfitnessfunction(new ParsimoniousSimpleFitness());
 		// cireval.setQfitnessfunction(new SimpleFitness());
 		// cireval.setQproblem(be.getQproblem());

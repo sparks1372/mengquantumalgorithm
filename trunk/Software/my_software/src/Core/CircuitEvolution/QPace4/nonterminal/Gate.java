@@ -3,12 +3,12 @@
  */
 package Core.CircuitEvolution.QPace4.nonterminal;
 
-import Core.Algorithms.PhaseEnum;
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Algorithms.QuantumInstructionEnum;
+import Core.Algorithms.exp_node;
 import Core.Algorithms.Implementation.basicquantumalgorithm;
+import Core.Algorithms.Implementation.ExpArith.pidiv;
 import Core.CircuitEvolution.QPace4.Data.QPaceData;
-import Core.CircuitEvolution.QPace4.terminal.Variables.SystemSize;
 import ec.EvolutionState;
 import ec.Problem;
 import ec.gp.ADFStack;
@@ -39,9 +39,9 @@ public class Gate extends GPNode {
 	public void eval(EvolutionState state, int thread, GPData input,
 			ADFStack stack, GPIndividual individual, Problem problem) {
 		QuantumInstructionEnum qins;
-		int int1;
-		int int2;
-		double double1;
+		exp_node int1;
+		exp_node int2;
+		exp_node double1;
 		QPaceData rd = ((QPaceData) (input));
 
 		QPaceData secinput;
@@ -61,55 +61,38 @@ public class Gate extends GPNode {
 		if (QuantumInstructionEnum.hasSecondQubit(qins)) {
 			// Produce the "Control" Qubit ID
 			children[2].eval(state, thread, input, stack, individual, problem);
-			int2 = rd.i;
-			if (int2 > 100) {
-				int2 = SystemSize.SYSTEM_SIZE_FLAG;
-			}
+			int2 = rd.ex;
 		} else if (qins == QuantumInstructionEnum.Iterate) {
 
-			int2 = 0;
+			int2 = null;
 			// Produce the subalgorithm
 			children[2].eval(state, thread, secinput, stack, individual,
 					problem);
 			subalg = new basicquantumalgorithm[1];
 			subalg[0] = secinput.qa;
 		} else {
-			int2 = 0;
+			int2 = null;
 		}
 		if (qins == QuantumInstructionEnum.Iterate) {
 			secinput = new QPaceData();
 			// Produce the "Target Qubit ID
 			children[1].eval(state, thread, secinput, stack, individual,
 					problem);
-			rd.i = secinput.i;
-			int1 = rd.i;
-			if (int1 > 100) {
-				int1 = SystemSize.SYSTEM_SIZE_FLAG;
-			}
+			rd.ex = secinput.ex;
+			int1 = rd.ex;
 		} else {
 			// Produce the "Target Qubit ID
 			children[1].eval(state, thread, input, stack, individual, problem);
-			int1 = rd.i;
-			if (int1 > 100) {
-				int1 = SystemSize.SYSTEM_SIZE_FLAG;
-			}
+			int1 = rd.ex;
 		}
 
 		if (QuantumInstructionEnum.hasPhase(qins)) {
 			// Produce the "Phase" value
 			children[3].eval(state, thread, input, stack, individual, problem);
-			double1 = PhaseEnum.getPhase(PhaseEnum.values()[rd.i]);
+			double1 = new pidiv(rd.ex);
 		} else {
-			double1 = 0;
+			double1 = null;
 		}
-		if (int1 == 0) {
-			int1 = int1;
-			secinput = new QPaceData();
-			// Produce the "Target Qubit ID
-			children[1].eval(state, thread, secinput, stack, individual,
-					problem);
-		}
-		rd.i = int1;
 
 		rd.qa.addInstruction(qins, int1, int2, double1, subalg);
 

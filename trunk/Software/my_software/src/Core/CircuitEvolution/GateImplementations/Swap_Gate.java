@@ -33,8 +33,8 @@ public class Swap_Gate implements multiqubitquantumgate {
 
 	public Swap_Gate(int target, int target2) {
 		// System.out.println(this.getClass().getName());
-		this.targ1 = Math.abs(target);
-		this.targ2 = Math.abs(target2);
+		this.targ1 = target < target2 ? target : target2;
+		this.targ2 = target < target2 ? target2 : target;
 		A.set(1, 1, new Complex(0, 0));
 		B.set(0, 0, new Complex(0, 0));
 		B.set(0, 1, new Complex(0, 0));

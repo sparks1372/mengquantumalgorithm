@@ -98,8 +98,15 @@ public class ProblemSelectionPanel extends JPanel implements ActionListener,
 	@Override
 	public void update(Observable o, Object arg) {
 
-		selection_model = new DefaultComboBoxModel(backend.getProbmanager()
-				.getAvailableProblems().toArray());
+		Set<String> probs = backend.getProbmanager().getAvailableProblems();
+		String[] options = new String[probs.size() + 1];
+		options[0] = "Please Select Problem";
+		int index = 1;
+		Iterator<String> iter = probs.iterator();
+		while (iter.hasNext()) {
+			options[index++] = iter.next();
+		}
+		selection_model = new DefaultComboBoxModel(options);
 		if (backend.getQproblem() != null) {
 			String key = backend.getQproblem().getName();
 			selection_model.setSelectedItem(key);

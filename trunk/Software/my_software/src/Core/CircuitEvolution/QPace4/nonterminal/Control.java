@@ -51,10 +51,11 @@ public class Control extends GPNode {
 			subalg[index] = secinput.qa != null ? secinput.qa
 					: new basicquantumalgorithm();
 			if (index == 0) {
-				rd.i = secinput.i;
+				rd.ex = secinput.ex;
 			}
 		}
-		rd.qa.addInstruction(QuantumInstructionEnum.Body, 0, 0, 0, subalg);
+		rd.qa.addInstruction(QuantumInstructionEnum.Body, null, null, null,
+				subalg);
 
 	}
 

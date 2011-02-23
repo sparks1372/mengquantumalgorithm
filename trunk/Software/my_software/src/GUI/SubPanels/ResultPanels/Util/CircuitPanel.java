@@ -29,6 +29,7 @@ import Core.Circuit.Circuit;
 import Core.Circuit.quantumgate;
 import Core.CircuitEvolution.multiqubitquantumgate;
 import Core.CircuitEvolution.GateImplementations.ControlledU_Gate;
+import Core.CircuitEvolution.GateImplementations.Swap_Gate;
 
 /**
  * This class serves to show the panel on which the quantum circuits are
@@ -79,9 +80,13 @@ public class CircuitPanel extends javax.swing.JPanel {
 	}
 
 	private void drawGate(Graphics g, quantumgate gate, int i) {
-		int gateHeight = 12;
 		x = (i + 1) * xDelta;
 		y0 = (2 * (numOfQubits - gate.getTarget()) + 1) * yDelta / 2 + adjust;
+		drawGate(g, gate, i, x, y0);
+	}
+
+	private void drawGate(Graphics g, quantumgate gate, int i, int x, int y) {
+		int gateHeight = 12;
 		g.setColor(Color.white);
 		g.fillRect(x, y0 - gateHeight / 2, xDelta / 2, gateHeight);
 		g.setColor(Color.black);
@@ -195,6 +200,22 @@ public class CircuitPanel extends javax.swing.JPanel {
 					}
 
 					drawGate(g, gate, i);
+
+				} else if (gate instanceof Swap_Gate) {
+					radius = numOfQubits <= 5 ? 3 : 2;
+					x = (4 * i + 5) * xDelta / 4;
+					y0 = (2 * (xRegisterSize - gate.getTarget()) + 1) * yDelta
+							/ 2 + adjust;
+					y1 = (2 * (xRegisterSize - ((multiqubitquantumgate) gate)
+							.getSecondQubit()) + 1) * yDelta / 2 + adjust;
+
+					g.drawLine(x - radius, y0 - radius, x + radius, y0 + radius);
+					g.drawLine(x - radius, y0 + radius, x + radius, y0 - radius);
+
+					g.drawLine(x, y0, x, y1);
+
+					g.drawLine(x - radius, y1 - radius, x + radius, y1 + radius);
+					g.drawLine(x - radius, y1 + radius, x + radius, y1 - radius);
 
 				} else {
 					drawGate(g, gate, i);
