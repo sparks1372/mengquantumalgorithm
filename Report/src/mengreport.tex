@@ -6,6 +6,8 @@
 \usepackage{qtree}
 \usepackage{listings}
 \usepackage{appendix}
+\usepackage{color}
+\usepackage{longtable} 
 \input{Qcircuit}
 
 \vfuzz2pt % Don't report over-full v-boxes if over-edge is small
@@ -23,7 +25,7 @@
 
 \abstract{ TO BE DONE
 }
-
+\setcounter{tocdepth}{2}
 \begin{document}
 \pagenumbering{Roman}
 \maketitle
@@ -1240,40 +1242,355 @@ This section and the requirements have been formed using the guidelines provided
 The framework is aimed to allow research into Quantum Algorithms to concentrate on producing Quantum Algorithms.
 The framework is aimed to make it much simpler for research by different researchers to be combined and contrasted.
 
-\subsection{Fully Functional Tool}
+\subsection{Fully Implemented Tool}
 The full implementation of a Quantum Algorithm search tool using the framework is to provide a working toolkit for researchers interested in finding Quantum Algorithms rather than the search techniques to find Quantum Algorithms.
 As the toolkit will use the framework it will also provide a potential foundation for future research into the search techniques.
 
-\subsection{Client and GUI}
-The client and GUI will provide an interface that should make the toolkit more accessible for researchers.
+\subsection{Client GUI}
+The client GUI will provide an interface that should make the toolkit more accessible for researchers.
 Without the GUI provided, researchers would have to either embed the toolkit in their own application or within their own specific GUI.
 This is likely to reduce the potential use of the toolkit in the academic community.
 One of the main focusses of the toolkit is to try and provide a standardised framework for research of Quantum Algorithms.
 Not providing a GUI, resulting in many bespoke GUIs, goes against this focus.
 This is not to say that inclusion of the framework in 3rd party systems or improvement to the GUI is not encouraged.
 
-\section{Scope}
-The requirements listed in the following section cover the framework and the client GUI.
-The full implementation, based on the QPace IV suite, is not covered by these requirements.
-This is to improve the clarity between the framework and the implementation.
-
-The requirements of the full implementation are listed in a separate section following the framework and client GUI requirements.
+% \section{Scope}
+% The requirements listed in the following section cover the framework and the client GUI.
+% The full implementation, based on the QPace IV suite, is not covered by these requirements.
+% This is to improve the clarity between the framework and the implementation.
+% 
+% The requirements of the full implementation are listed in a separate section following the framework and client GUI requirements.
 
 \section{Definition, Acronyms, and Abbreviations}
+The definitions given here are consistent with those used in the rest of the document but are included as a matter of clarity.
 
-\section{Requirements}
-FROM REQMAN
+\textbf{System Size} - The number of qubits in the system. For example the quantum teleportation protocol has a fixed system size of 3 whereas the Quantum Fourier Transform can scale to any system size.
 
-\chapter{Design }
+\textbf{Quantum State} - A column vector of $2^n$ complex numbers representing the probability amplitudes and phase of the $2^n$ states $\ket{0}\rightarrow\ket{2^n-1}$ for a system size $n$.
+
+\textbf{Quantum Gate} - A complex unitary operation on a quantum state.
+
+\textbf{Quantum Circuit} - An ordered list of quantum gates to be applied to the quantum state.
+
+\textbf{Quantum Algorithm} - An ordered list of instructions used to construct a quantum circuit.
+
+\textbf{Suitability Measure} - A function to provide a performance of a solution with $0$ as the ``Best'' performance and performance decreasing as the function result increases.
+
+
+\section{Requirements Summaries}
+This section contains a summary of the requirements of each of the separate phases of the project.
+A full listing of specific requirements can be found in Appendix \ref{sec:reqs}.
+
+\subsection{Framework}
+\subsubsection{Additional Search Engines}
+\textbf{The framework shall allow researchers to provide search engines for the system to use.}
+This is important as one of the intended uses of the framework is for research into the techniques used for searching for quantum algorithms.
+The way in which the framework provides this shall not imply the use of any search technique in favour to any other.
+It is important that the framework shall effectively be research direction independent.
+
+\subsubsection{Additional Suitability Measures}
+\textbf{The framework shall allow researchers to provide suitability measures for the system to use.}
+A suitability measure is effectively a fitness function.
+However, the term fitness function is associated with the use of evolutionary techniques.
+With the tool intended to be technique independent the term suitability measure shall be used.
+
+It is well known that the suitability measure, performance metric, has a significant impact on the success of a search.
+However, it was also shown by Massey\cite{masseythesis} that in the search for quantum algorithms the search can be sensitive even to the level of complex number representation.
+The ability for researchers to provide suitability measures is therefore paramount for the framework to be useful and improve research progress rather than hinder it.
+
+Not only is this ability required by the researchers searching for quantum algorithms but also for those researchers concerned with finding successful suitability measures for use by the first group of researchers.
+
+\subsubsection{Quantum Algorithm Output}
+\textbf{The solution of a search, a quantum algorithm, shall be presented to the user as a list of instructions.}
+An algorithm is a list of instruction to follow in order to produce a circuit.
+The solution of a search using the framework is an algorithm.
+This solution shall be provided to the user as a list of instructions in a consistent format.
+
+\subsubsection{Visualising a Circuit}
+\textbf{The system shall provide visualisation of the circuit produced by the solution of the search for a system of a user specified number of qubits.}
+To ensure that the output of the search is helpful the framework shall provide a representation of the resulting circuit that can be rendered into a circuit diagram.
+
+The circuit visualisations produced shall follow the widely recognised conventions of each gates appearance.
+
+\subsubsection{Third Party Software}
+\textbf{The framework shall be able to be embedded in third party software.}
+The framework is intended for use by the research community and it is not intended to limit the ways that it can be used.
+As a result it is not only important that the framework be able to use third party software, search engines and suitability measures, but is also important for the framework to be available for inclusion in third party software.
+To achieve this knowledge of the internal implementation detail shall not be required.
+
+\subsubsection{Definition of Search Target}
+\textbf{The framework shall provide a standardised definition format for users to specify the target of the search.}
+All searches have a target, the shortest path or the minimum value for example.
+The searches that the framework are intended for are those to find a quantum algorithm to produce a circuit to solve a specific problem, to produce an equal superposition or the Quantum Fourier Transform circuit.
+The framework needs to provide a standard way of defining what the search target is.
+The standard shall be formalised so it is able to be used and produced by third party software.
+
+\subsubsection{Use of Configuration Files}
+\textbf{The customisation of the framework shall be provided through a series of configuration files.}
+All third party additions to the framework, search engines and suitability measures, shall be specified using a series of configuration file.
+These configuration files shall be well defined and able to be used and produced by third party software.
+
+\subsubsection{Provided Gates and Algorithm instructions}
+\textbf{The framework shall provide implementations of all gates specified in Figure \ref{fig:providedgates}.
+The framework shall provide algorithm instructions for each of these gates and for the instantiation of the Controlled-U gate with all single qubit gates.}
+Figure \ref{fig:providedgates} defines all the most well known quantum gates and indicates the visual representation convention used in the project.
+
+\begin{figure}
+ \begin{longtable}{|c c|c c|c c|}
+\hline & & & & & \\
+$
+\Qcircuit @C=1.0em @R=.7em {
+&\gate{X}&\qw
+}
+$
+& 
+$
+\begin{pmatrix}0&&1\\1&&0\end{pmatrix}
+$ 
+& 
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{Y}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}0&&-i\\i&&0\end{pmatrix}
+$
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+&\gate{Z}&\qw
+}
+$
+& 
+$
+\begin{pmatrix}1&&0\\0&&-1\end{pmatrix}
+$  \\ & & & & & \\
+\hline & & & & & \\
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{H}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}\frac{1}{\sqrt{2}}&&\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}&&-\frac{1}{\sqrt{2}}\end{pmatrix}
+$ 
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{RX}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}\cos{\frac{\theta}{2}}&&-i\sin{\frac{\theta}{2}}\\-i\sin{\frac{\theta}{2}}&&\cos{\frac{\theta}{2}}\end{pmatrix}
+$
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{RY}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}\cos{\frac{\theta}{2}}&&-\sin{\frac{\theta}{2}}\\\sin{\frac{\theta}{2}}&&\cos{\frac{\theta}{2}}\end{pmatrix}
+$  \\ & & & & & \\
+\hline & & & & & \\
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{RZ}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}e^{-i\frac{\theta}{2}}&&0\\0&&e^{i\frac{\theta}{2}}\end{pmatrix}
+$ 
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{V}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}1&&0\\0&&i\end{pmatrix}
+$
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{W}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}1&&0\\0&&-i\end{pmatrix}
+$  \\ & & & & & \\
+\hline & & & & & \\
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{Zero}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}1&&1\\0&&0\end{pmatrix}
+$ 
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \qswap &\qw \\
+& \qswap \qwx &\qw
+}
+$ 
+&
+$
+\begin{pmatrix}a\\b\\c\\d\end{pmatrix} \rightarrow \begin{pmatrix}a\\c\\b\\d\end{pmatrix}
+$
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \ctrl{1} & \qw \\
+& \gate{U} \qwx & \qw
+}
+$ 
+&
+$
+\begin{pmatrix}I&&0\\0&&U\end{pmatrix}
+$  \\ & & & & & \\
+\hline
+  
+ \end{longtable}
+\caption{Supported Gates and Definitions}
+\label{fig:providedgates}
+\end{figure}
+
+\subsubsection{Algorithm Control Structures}
+\textbf{The system shall provide the iterate control structure and support nested iterate instructions.}
+
+\subsubsection{Producing Circuits from Algorithms}
+\textbf{The framework shall be able to produce a circuit, for any given number of qubits, from a quantum algorithm.}
+
+\subsubsection{Circuit Simulation}
+\textbf{The framework shall provide the simulation of a circuit given an initial state.}
+Using the gate definitions given in Figure \ref{fig:providedgates}, a circuit constructed of the supported gates shall be able to be accurately simulated.
+Given an initial state the framework shall be able to give the final state up to the accuracy of floating point arithmetic.
+
+\subsubsection{Step-by-Step State Evolution}
+\textbf{The framework shall provide a way to perform step-by-step evaluation of a circuit given an initial state}
+To aid researchers in understanding the algorithms and circuits produced as the result of a search a step-by-step evaluation shall be provided.
+Given an initial state and a circuit, the state after the application of each unitary operation, gate, shall be reported so the state evolution can be traced.
+
+This shall also provide a debugging mechanism to ensure that all unitary operations are performing the expected opertation on state.
+
+\subsection{Fully Implemented Tool}
+\subsubsection{Sample Search Engine}
+\textbf{The tool shall provide at least one implemented search engine.}
+The tool shall provide a basic search engine that will allow researchers interested in the quantum algorithms, rather than the search techniques, to use the tool ``out of the box''.
+The specific search engine is not specified.
+
+\subsubsection{Sample Suitability Measure}
+\textbf{The tool shall provide at least one implemented suitability measure.}
+The tool shall provide a basic suitability measure that will allow researchers interested in the quantum algorithms, rather than the suitability measure, to use the tool ``out of the box''.
+The specific suitability is not specified but shall be proven to allow basic circuit to the produced by search.
+
+\subsubsection{Sample Search Targets}
+\textbf{The tool shall provide a number of search targets with known outputs.}
+To allow search engine and suitability measure researchers to perform simple tests the tool shall provide a selection of basic search targets.
+The search targets included are not specified.
+
+\subsection{Client GUI}
+\subsubsection{Search Engine Selection}
+\textbf{The GUI shall provide a user with a selection of search engines to use in a search.}
+The GUI shall provide a selection between all search engines registered in the framework.
+The most recently selected search engine shall be used by subsequent search.
+
+\subsubsection{Suitability Measure Selection}
+\textbf{The GUI shall provide a user with a selection of suitability measures to use in a search.}
+The GUI shall provide a selection between all suitability measures registered in the framework.
+The most recently selected suitability measure shall be used by subsequent search.
+
+\subsubsection{Search Target Selection}
+\textbf{The GUI shall provide a user with a selection of search targets to be used as the search goal.}
+The GUI shall provide a seleciton between all search targets registered in the framework.
+The most recently selected search target shall be set for subsequent searches.
+
+\subsubsection{Search Target Creation}
+\textbf{The GUI shall provide a way for users to create a new search target without needing to explicitly write a configuration file.}
+Writing configuration files is quite monotonous and highly error prone.
+The GUI shall provide a way to create these configuration files that reduces the error rate.
+The way in which the GUI provides this is not expected to dramatically decrease the monotony due to the nature of the amount of information that need be specified for problems when high number of Qubits are involved.
+The inclusion of such a feature is very important to improve the usability of the system and improve the potential level of use in the research community.
+
+\subsubsection{Search Target Editing}
+\textbf{The GUI shall provide a way for users to edit the contents of a previously created search target without manual editing of the configuration file.}
+The size of the configuration file required to specify a search target will increase linearly with respect to the amount of test data.
+The size of the data is likely to follow the same rate of expansion as the quantum search space as the number of qubits, $n$, increases, $2^n$.
+With the size of configuration file increasing in such a dramatic way the risk of error when directly and manually editing the values in such files increases in a similar fashion.
+To improve the risk of errors the GUI shall provide a way to graphically edit the test data in a way that abstracts away from the configuration file structure.
+
+\subsubsection{Loading a Search Target From a Previously Defined Configuration File}
+\textbf{The GUI shall provide a way to import a predefined search target from a configuration file.}
+One of the intended uses of the GUI is for research into producing quantum algorithms.
+As part of this research it is likely that researchers will want to distribute the search target definitions they create.
+This distribution may be to collegues or simply to other computers for them to continue work.
+Either way once a search target is defined and distributed, the use of received search target configuration files should be supported by the GUI.
+The GUI shall provide a way for users to import search targets using the respective search target configuration file as long as the configuration file is of the correct format.
+
+\subsubsection{State Visualisation}
+\textbf{The GUI shall provide a way to visualise any quantum state.}
+A quantum state is defined as a vector of complex numbers.
+Depending on size, comparing two or more state can become monotonous.
+If the comparision of the two states does not need to be exact, a visual representation of the two states can provide a simpler, and quicker, method for comparision.
+To provide such comparison the GUI shall provide a way to visualise a quantum state.
+
+\subsubsection{Reporting the Search Result}
+\textbf{The GUI shall provide a way to report the search result, a quantum algorithm, to the user.}
+The GUI would be of no use to any quantum algorithm researcher if it did not provide the results of any searches.
+The GUI shall provide the quantum algorithm in the same way the framework reports the quantum algorithm result.
+This is to ensure that the format of the quantum algorithm reported does not change depending on whether the GUI is used or not.
+
+\subsubsection{Circuit Visualisation}
+\textbf{Given a quantum algorithm and a system size, the GUI shall produce a visualisation of the resulting circuit.}
+Some quantum algorithms produced using the search are likely to be hard to understand in pure algorithm form.
+Understanding a circuit is likely to be easier.
+To save researcher time in drawing the circuits by hand, the GUI shall provide a visualisation of the circuit for a specified system size.
+
+\subsubsection{Step-by-Step State Evolution}
+\textbf{The GUI shall provide a way to perform, control and visualise the step-by-step state evolution for an intial state and circuit.}
+The framework provides the ability to analyse the evolution of a satet with respect to an initial state and a circuit.
+The GUI shall provide a way of controlling and reporting this step by step evaluation to the user.
+
+\subsubsection{Tooltips}
+\textbf{The GUI shall provide user help through the use of tooltips.}
+All elements of the GUI shall be explained through the use of tooltips.
+
+\subsection{General Requirements}
+\subsubsection{Portability}
+\textbf{The framework, fully implemented tool and the GUI shall be able to be used on a range of Operating Systems.}
+The produced software shall be able to be run on:
+\begin{itemize}
+ \item Windows 7 32-Bit
+ \item Windows 7 64-Bit
+ \item Linux 32-Bit
+ \item Linux 64-Bit
+\end{itemize}
+
+\subsubsection{Usability}
+\textbf{Using either the fully implemented tool or the GUI a user shall be able to start a search within 30 seconds.}
+Using a predefined search target a user shall be able to initiate a search with a chosen search engine and suitability measure within 30 seconds of starting the software.
+
+\chapter{Design}
 
 \section{Framework}
 In this section I will outline the design decisions that directly effect only the framework produced.
 
 \subsection{Complex Numbers}
 Complex numbers are central to Quantum Computing.
-As such, any attempt to simulate the behaviour of a Quantum Ciruit must handle complex numbers.
+As such, any attempt to simulate the behaviour of a Quantum Circuit must handle complex numbers.
 
-There are really only two ways to handle the existance of complex numbers.
+There are really only two ways to handle the existence of complex numbers.
 One can represent a complex number explicitly as a pair of floating point numbers, or to encapsulate the representation inside a ``complex number'' data structure.
 
 The framework uses the second of these options and provides the ``Complex'' class.
@@ -1282,7 +1599,7 @@ The primary reason was to reduce the risk of programming errors effecting the si
 If complex multiplication, addition and other operations had to be replicated throughout the frameworks codebase, and the codebase of any research work, the likelihood of implementation error is much higher, and the tests required to find the error become more specific.
 It is much better software engineering practice to encapsulate the properties, real and imaginary values, and the operations on those properties, arithmetic etc.
 
-A season reason is that after breif research online, there are complex number libraries already available.
+A season reason is that after brief research online, there are complex number libraries already available.
 This reuse of previously written software can also reduce the likelihood of errors in the code.
 This is not necessarily due to the software being written by people that are more intelligent or that are better programmers, or even that the software has been explicitly tested more thoroughly than if I were to write a complex number class.
 It is due to the size of the deployment footprint.
@@ -1294,52 +1611,46 @@ If the documentation of the software produced by the two researchers did not men
 The third researcher is likely to receive very confusing and highly misleading results.
 The provision of a Complex class that is used throughout the framework where complex numbers need to be used will reduce the risk of such an event.
 
-\subsection{Matricies}
+\subsection{Matrices}
 As seen in Equation \ref{eq:notexplanded} the application of a quantum gate is simply the application of a unitary operation, represented as a matrix, to a quantum state.
-This adds the requirement on the framework to provide a manner in which matricies will be represented.
+This adds the requirement on the framework to provide a manner in which matrices will be represented.
 
 In a similar way to the complex numbers discussed above, there are two distinct ways the framework could have been designed.
 The framework could either use an explicit representation, two-dimensional arrays, or could provide a Matrix data structure.
 
-The framework has been designed to use the data structure encapsulation as the matrix represenation.
+The framework has been designed to use the data structure encapsulation as the matrix representation.
 The justification is identical to that discussed above.
 Matrix operations are easy to get wrong in implementation and there are matrix libraries for many languages.
-The incomplete documentation argument also holds with matricies.
-If the framework were to just simply represent matricies as two dimensional arrays, two researchers could order the dimensions differently leading to similar problems to that of conflicting complex represenations for the third researcher.
+The incomplete documentation argument also holds with matrices.
+If the framework were to just simply represent matrices as two dimensional arrays, two researchers could order the dimensions differently leading to similar problems to that of conflicting complex representations for the third researcher.
 
 \subsection{State}
-With a representation of matricies defined, the definition of a quantum state naturally followed.
-Using the matrix representation, quantum states are defined simply as $2^n\times1$ matricies, vectors.
-This represenation makes unitary application much simpler as it automatically supported as matrix multiplication.
+With a representation of matrices defined, the definition of a quantum state naturally followed.
+Using the matrix representation, quantum states are defined simply as $2^n\times1$ matrices, vectors.
+This representation makes unitary application much simpler as it automatically supported as matrix multiplication.
 
 \subsection{Test Suite Structures}
-Each problem is represented by a test suite.
-The test suite contains a collection of test sets, one for each system size.
-The test suite does not contain test sets for all possible system sizes, only those for use in the fitness function.
-Each test set contains a number of test cases represented by two state vectors, the starting and respective final state.
-The specification of the test suites are provided in XML files.
-The use of XML files allows for easy 3rd party generation and use.
+\label{sec:testsuitestruc}
+With most problems there are a series of expected results that are used to measure the suitability of any suggested solution.
+The expected results are also usually coupled with the respective inputs.
 
-
-
-The test case definition has been represented using a starting and final state vector.
+For Quantum Algorithms the expected results are the state vectors produced by circuits constructed by the algorithm.
+As such it was chosen that a test case would be represented as a pair of state vectors, the stating state and the expected state.
 The application of a quantum gate is a simple mapping from a starting state to a resulting state.
 When a circuit can be defined as a single unitary operation, a custom quantum gate, this representation seems a natural choice.
 
+Each circuit produced by the Quantum Algorithms has $n$ qubits.
+This means that it can only be evaluated using test cases for $n$ qubits.
+Test cases for any other number of qubits would not produce useful results.
+The notion of a test set was introduced to hold all test cases for a specific $n$.
+All test cases are held within a test set.
 
-\subsection{Problem Specification}
-As has been mentioned on several occasions, one of the foundation principles of the framework is the ability to ``Plug and Play'' the work of other researchers without the proplem of integration.
-With Search Engines and Fitness Functions developed to adhere to the respective interfaces, a user should be able to work with the toolkit and treat it as a ``Black Box''.
+A test suite is used to hold all the test sets produced for the same problem.
+There is only one test set for each distinct value of $n$.
 
-Along with the standardisation of Fitness Functions and Search Engines, the way in which the ``thing'' being searched for also needed to be standardised.
-This ``thing'' has been referred to as the Problem.
-The way in which the Problem is specifed also has to be standardised to enable the different Fitness Functions to evaluate potential solutions in respect to the Problem.
-Without this, the Problem would have to be redefined for each Fitness Function.
-This would severely undermine the simple ``Plug and Play'' use of the framework.
-
-The specification of a problem uses an XML file.
+The test suite is fully defined in a single XML file.
 The XML in Figure \ref{code:paulixtestset} is a sample of such a file.
-The file structure reflects the internal structure of the test suites.
+It is easy to see file structure reflects the internal structure of test suites just described.
 
 \lstset{language = XML}
 \begin{figure}
@@ -1442,41 +1753,154 @@ The justification for the approach taken is the same as listed for the multiple 
 It was deemed detrimental and in contradiction of the frameworks purpose to limit the Fitness Functions to those provided by the tool.
 
 
-\subsection{Multiple Problems}
+\subsection{Multiple Problems and Problem Specification}
+As has been mentioned on several occasions, one of the foundation principles of the framework is the ability to ``Plug and Play'' the work of other researchers without the proplem of integration.
+With Search Engines and Fitness Functions developed to adhere to the respective interfaces, a user should be able to work with the toolkit and treat it as a ``Black Box''.
 
+In Section \ref{sec:testsuitestruc} how test suites and all their contained test cases are specified in XML was described.
+The use of XML files does however increase the effort required from the user.
+The user needs to specify, each time they use the framework, the location of the XML file containing the correct test suite.
+To reduce this effort the problem container is introduced alongside its manager.
 
+The problem manager allows multiple problems to be defined within a single XML file so the user need not provide the test suite XML each time the framework is used.
+This single XML file contains the definition of mutiple problems.
+An example of these XML files can be seen in Figure \ref{code:probmanconfig}.
+A problem has a name, description and file name for the respective test suite XML file.
+The name and description are used to provide a human readible explanation of the problem represented by the test suite XML file.
+The use of a separate XML file to collate all defined problems makes maintenance much simpler.
 
-Separation of the Problem and Search technique.
-The Problem does not have to be explicitly stated at start up.
-Available problems specifed by XML, available problems provided by backend for selection
-Problems defined as a starting and desired final state vectors.
+Providing a problem manager allows the framework to be used for different problems without having to restart the system and without any external software needing to provide different problems explicitly.
+
+\lstset{language=XML}
+\begin{figure}
+\begin{lstlisting}
+<Problems>
+  <prob>
+    <Name>Final Pauli X</Name>
+    <DefFile>config/finalpaulix.xml</DefFile>
+    <Desc>A Pauli X gate on the final Qubit</Desc>
+  </prob>
+</Problems>
+\end{lstlisting}
+\caption{XML for Problem Manager Configuration}
+\label{code:probmanconfig}
+\end{figure}
 
 \subsection{Quantum Algorithms}
-The search engines produce second order or second degree representations.
-The quantum algorithms produced need to be parameterized by the number of qubits to produce the respective circuit.
-The form of the algorithm is standardised and specified by the tool.
-The creation of the algorithms are through predefined methods.
-Search engines can provide any internal representation but must produce this stardardised algorithm form as a result.
-The algorithm representation provides a human readable form that can be reported to the user.
+The result of the search engines are quantum algorithms.
+To maintain the ``Plug and Play'' nature of the framework, the representation of these algorithms needed to be specifed and standardised.
+However, the representation also had to ensure that it was not limiting the search engines.
+
+To provide a standardised and non-limiting represenation the framework provides an internal quantum algorithm structure that can be simply built by any search engine.
+This allows the search engines to have a different internal representation that is then used to build the standardised algorithm.
+Using this there are no limitations on the structures used internal to the search engines.
+
+The use of the standardised quantum algorithm also ensures that the reporting of an algorithm to the user is consistent.
+
+\subsection{Qubit Numbering}
+One of the major decisions made relating to the way in which the produced quantum algorithms are produced was that of which way the qubits should be numbered.
+The two options were obviously in accending or decending order.
+
+The chosen approach was the decending order.
+This meant that for state $\ket{ab{\dots}st}$ the qubit represented by $a$ would always be given the identifier equal to the number of qubits in the system.
+For example, if there were three qubits in the system the identifier of the qubit represented by $a$ would be $3$.
+This was chosen to ensure that an identifier always represented the same qubit, irrespective of the number of qubits in the system.
+
+The justification for this is to make the algorithm much more understandable.
+If the identifers were dependant on the number of qubits it would make the results of the system much less comprehensible.
+
+The use of this numbering is also much more natural as the identifer, $x$, of a qubit, $a$, is related to the value of the qubit when read in binary.
+The value of the qubit $a$ is $2^{x-1}$.
+This makes the optimisation of gate application, see Section \ref{sec:quantumgates}, much simpler.
 
 \subsection{Quantum Circuits}
-Circuits are produced by a circuit builder.
-Both the circuits and the circuit builder is hidden behind an interface.
-Allows different representations to be used of circuits and the way they are built.
-The different circuit representations allow for optimisation for different scenarios if required.
-The circuit interface includes a method to produce a Latex representation of the produced circuit.
-The latex library used to render the quantum circuits is QCircuit.
-The interface also defines that the circuit will be returned as an iterator of quantum gates, ensuring the internal circuit representation is not restricted by the returning of an ordered iterator.
+To perform the evaluation of an algorithm the circuits for the test sets need to be produced.
+Both the representation of the circuit and the mechanism to construct the circuit from the algorithm needed to be standardised to ensure the ``Plug and Play'' nature of the framework.
+
+The framework provides a default circuit builder.
+The framework does allow a separate circuit builder to be provided as long as it conforms to the interface and the circuits it produces also adheres to the respective interface.
+There is no manager class provided for circuit builders.
+This was due to an assessment of the intended uses of the framework.
+It is intended that the framework would be used primarily to perform the following:
+\begin{itemize}
+  \item Perform research into the effect of different fitness functions on the search for quantum algorithms
+  \item Perform research into different search techniques that could be used to produce quantum algorithms
+  \item Perform research to produce new quantum algorithms for a specific problem
+\end{itemize}
+
+It is not seen as a priority of the system to provide the same level of flexibility to the circuit building as the search engines and fitness functions.
+
+The circuits that are produced by a circuit builder are hidden behind an interface.
+This is to allow third party circuit builders to use their own internal representation and also to allow any future optimisations made in future work on this framework to be made without impacting the work of researchers.
+
+The circuits produced provide the represented quantum circuit as an ordered iterator of quantum gates.
+The use of an ordered iterator rather than a specific data structure is to ensure that any future optimisation or third party circuit representation is not limited.
+It also reduced the potential errors involving the interpretation of a more complex data structure.
+
+The circuits also provide a Latex representation to allow the circuit to be visualised.
+The Latex representation uses the QCircuit package that can be freely obtained at \cite{QCsite}.
 
 \subsection{Quantum Gates}
-Gates are hidden behind an interface.
-The application of a gate is not fixed as matrix manipulation.
-Each gate must provide an application of the specific gate on a provided state returning the resulting state.
-This abstraction of how a gate is applied allows for application to be optimised using simple state vector manipulation rather than matrix multiplication.
-Dispite the ability for these optimisations, the unitary must also be provided so that controlled instances can be produced.
-Controlled gates are also hidden behind an interface for the same reasons.
+\label{sec:quantumgates}
+Any quantum circuit will be a series of quantum gates on specified qubits.
+The quantum gates provided by the system are hidden behind an interface.
+This is to ensure that any future optimisation of any gate's implementation cannot interfere with the implementation of any other component of the system.
+
+Each quantum gate is required to provide a unitary matrix but it is not required that the matrix must be used in the application of the gate.
+For quantum circuits with a high number of qubits, the cost of simulation increases rapidly.
+This is mainly due to the increase in state vector and unitary matrix sizes.
+Matrix multiplication is used to apply a unitary operation to a state vector, yet it is a very expensive operation.
+
+To improve the performance optimisations can be applied for several gate types.
+This is most obvious when analysing the operation of the Pauli X gate.
+Figure \ref{eq:paulixcheaptrickvisual} shows, with the help of colour, that the application of a Pauli X gate on Qubit 1 is essentially a flip of neighbouring values.
+This is also true for a Pauli X gate on any other qubit, just the definition of a state's ``neighbour'' is modifed with respect to the identifier of the qubit on which the gate is applied.
+
+\begin{figure}
+\[
+\begin{tabular}{ r c l }
+  \(\begin {pmatrix}
+    \textcolor{blue}{a}\\
+    \textcolor{red}{b}
+  \end{pmatrix}\) 
+& 
+  \(\rightarrow\) 
+& 
+  \(\begin {pmatrix}
+    \textcolor{red}{b}\\
+    \textcolor{blue}{a}
+  \end{pmatrix}\) \\
+
+\\
+
+  \(\begin {pmatrix}
+    \textcolor{blue}{a}\\
+    \textcolor{red}{b}\\
+    \textcolor{green}{c}\\
+    \textcolor{cyan}{d}
+  \end{pmatrix}\)
+  & \(\rightarrow\)
+  & \(\begin {pmatrix}
+    \textcolor{red}{b}\\
+    \textcolor{blue}{a}\\
+    \textcolor{cyan}{d}\\
+    \textcolor{green}{c}
+  \end{pmatrix}\) \\
+\end{tabular}
+\]
+\label{eq:paulixcheaptrickvisual}
+\caption{Visual Representation of Bit Manipulation Equivelent of Pauli X Operation on Qubit 1}
+\end{figure}
+
+The use of these tricks is not specified but the interface has been designed to ensure that the gate implementations can use such tricks or matrix multiplication interchangeably.
+
+Each gate must also provide a QCircuit represenation for use by the circuit to produce the QCircuit representation of the complete circuit.
+
+The implementation of gates effecting two qubits are hidden by an extended interface to provide access to the identifier of the second qubit but ensures that all standard gate operations are also available.
 
 \subsection{Custom Gates}
+
+
 To allow users to introduce their own gates a limited number of custom gates can be included.
 Is limited due to the use of enumeration types in the specification of algorithms.
 Custom gates are like any other gate, a class implementing the correct interface, are specifed through xml specification.
@@ -1523,9 +1947,20 @@ Complex number representation is provided by class from http://www.math.ksu.edu/
 The Matrix representation is based on the Matrix class provided by the Jama library.
 Jama Matrix is modified to provide Matricies of Complex numbers.
 The extra funcitonality provided by Jama, such as eigendecomposition, has been disabled currently.
+
+\chapter{Testing}
+\section{Unit Tests}
+\section{Integration Tests}
+\section{User Acceptance Tests}
+
 \bibliography{mengreport}
 
 \appendix
+\chapter{Full Requirements}
+\label{sec:reqs}
+\section{Framework}
+\section{Fully Functional Tool}
+\section{Client and GUI}
 
 \chapter{XML Outlines}
 \section{Search Engine XML Outline}
@@ -1541,7 +1976,7 @@ The extra funcitonality provided by Jama, such as eigendecomposition, has been d
 </searchengine>
 \end{lstlisting}
 
-\section{Search Engine XML Outline}
+\section{Problem Definition XML Outline}
 \label{sec:probmanspecxml}
 \lstset{language = XML}
 \begin{lstlisting}

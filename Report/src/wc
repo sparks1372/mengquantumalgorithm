@@ -1,0 +1,922 @@
+ [authoryearcitations] UoYCSproject 
+
+ [margin=2cm] geometry 
+ [matrix,frame,arrow] xypic 
+  graphicx 
+  qtree 
+  Qcircuit 
+
+  
+  Sam Ratcliff 
+  Quantum Algorithm Synthesis Workbench 
+    
+  John A Clark 
+
+
+  8832 
+  tocdepth  3 
+   
+
+   
+
+   TO BE DONE
+ 
+
+document  
+
+
+
+
+
+
+
+  Introduction 
+  Literature Review 
+  Introduction to Quantum Computation 
+In 1980, Richard Feynman noted `it is impossible to represent the results of quantum mechanics with a classical universal device`  Feynman82simulatingphysics .
+This statement was a seed for interest in the field of Quantum Computation.
+The true power of quantum computation was not initially realised.
+The discovery of a quantum algorithm by David Deutsch  Deutsch1985  in 1985 that performed better than a classical computer was the first glimpse of the potential power provided by harnessing quantum mechanics.
+However, with slow progress of research into both their implementation and algorithms, the energy behind the research started to decrease.
+It would take a discovery by Peter Shor  Shor:1994jg  to reignite the excitement surrounding the subject.  
+
+In classical computers the computation is performed using the discrete values of 0 and 1.
+These values are indicated by +5V and 0V signals propagating round circuits.
+A signal can only be 0 or 1, there is no in between value.
+Each signal can indicate the value of a single 'bit' of data.
+A combination of n bits can be used to represent a number from 0 to 2^n-1, an n-bit number.
+Classical computation works through the manipulation of these n-bit numbers.
+
+
+Quantum Computation uses the properties of quantum mechanics to perform computation.
+The power of quantum computers come from the use of particles in superpositions.
+Qubits are the quantum equivalent of the classical bit.
+It is these qubits which can be placed into superpositions.
+Just as classical computers manipulate bits to perform computation, quantum computers manipulate qubits and their superpositions to perform computation.
+The power of these superpositions is not obviously apparent.
+
+It is not possible to observe the superposition of a particle.
+When observed the superposition 'collapses' to either logical 0 or 1, the basis states.
+The probability the the superposition collapses to 0 is determined by the superposition's properties.
+
+To write the state of a superposition it is usual to use the 'Bra-Ket' notation, introduced by Dirac  dirac2004principles .
+A 'Ket' is mathematical notation,  a , which represents a basis function of the respective Hilbert space,   H , as a column vector.
+equation  
+
+
+a
+  = 
+pmatrix  
+a 1
+
+a 2
+
+a 3
+
+
+
+pmatrix  
+equation  
+Hilbert spaces extend the simple Euclidean vector space into a potential infinite dimension function space.
+figure  
+
+
+ [scale=0.5] Bloch.png 
+  The 1-Qubit Bloch Sphere   QuantikiBlochSphereImage  
+  BlochSphere 
+figure  
+A quantum state space can also been visualised in terms of the Bloch sphere, shown in Figure   BlochSphere .
+The shown Bloch sphere is for a single qubit system, it can be extended to an n-qubit system however the visualisation breaks down.
+All 'pure' quantum states can be described using the Bloch sphere and all exist on the surface produced by the unit sphere.
+In this report only pure quantum states will be used and all explanation of quantum states are more precisely explanations of 'pure' quantum states.
+This means that all superpositions of states can be expressed in terms of |   =        2    |0   +  e^ i            2    |1    with 0        ,    0       2  , ignoring global phase factors  BlochSphereTalk .
+
+In quantum mechanics, Kets are used to indicate a state, for example  0  is the state of a logical 0 whereas  1  is the state of logical 1.
+Using this notation and the inclusion of probabilities, the state of the superposition can be expressed.
+
+A dual to the Ket notation is the 'Bra' notation,  a .
+This notation is used to denote the 'dual vector' of the corresponding Ket.
+For a state vector represented by
+equation    ket explanation example 
+
+
+a
+  = 
+pmatrix  
+a 1
+
+a 2
+
+a 3
+
+
+
+pmatrix  
+equation  
+there is a dual vector representing its Hermitian conjugate
+equation    bra explanation example 
+
+
+a
+  = 
+pmatrix  
+a 1^*
+a 2^*
+a 3^*
+
+
+pmatrix  
+equation  
+
+Combining the two vectors  a  and  b , written  a  b , represents the inner product of the two vectors.
+If a and b are unit vectors and a == b,  a  b  == 1.
+If a and b are orthogonal,  a  b  == 0.
+
+The outer product of two vectors, a and b, can be represented by  a  b .
+This represents the transformation from a to b.
+It can also be represented in matrix form.
+
+With
+
+
+0
+
+
+== 
+   pmatrix 
+1
+
+0
+
+pmatrix  
+
+and
+
+
+1
+
+
+==  
+   pmatrix 
+0
+
+1
+
+pmatrix  
+
+it is possible to represent 1-qubit operations in the bra-ket notation.
+For example, the NOT gate performs a simple negation of a qubit's value.
+This can be written as      +     .
+Substituting in the vector values we have
+equation  
+tabular    r c l  
+(   pmatrix 
+1
+
+0
+pmatrix  
+   pmatrix 
+0  
+1
+pmatrix  
+ + 
+   pmatrix 
+0
+
+1
+pmatrix  
+   pmatrix 
+1  
+0
+pmatrix   )
+  (= )
+  ( 
+pmatrix  
+0    1 
+
+0    0
+pmatrix  
+ + 
+pmatrix  
+0    0
+
+1    0
+pmatrix  
+ ) 
+
+  (= )
+  ( 
+pmatrix  
+0    1 
+
+1    0
+pmatrix  
+ )
+tabular  
+equation  
+
+This matrix can be seen as a transformation matrix for the NOT operation.
+In quantum computation, the NOT gate is one of the 4 gates known as the Pauli gates, more specifically the Pauli-X gate.
+It is called the Pauli-X gate as it can be seen as a rotation of   radians about the X axis of the Bloch sphere, Figure   BlochSphere .
+
+The matrices representing the Pauli-X gate and all other quantum logic gates are unitary.
+A unitary matrix, U, is one which adheres to
+equation  
+U*   
+U == UU*    = I N
+equation  
+where I N is the identity matrix in N dimensions and U*    is the complex conjugate of U.
+The implication of all quantum logic operations being unitary is that they are reversible, this is a difference to classical computation.
+With many classical logic gates irreversible, there is not a set of quantum logic gates which is as computationally powerful as the set of classical logic gates.
+This seems like a major issue, quite the contrary.
+The set of classical logic gates can be replaced by reversible equivalents and therefore it is possible to produce a set of quantum logic gates with the equivalent computational power as the classical logic gates.
+
+As with all probabilities, the overall probability of a superposition collapsing to any of the states it contains must equal 1.
+equation  
+  superposition explanaiton 
+   +  
+
+equation  
+equation  
+  superposition explanaiton sum 
+  1  2^   1  n       i=0 ^N   x i 
+equation  
+Equation   superposition explanaiton  is how the combination of the logical 0 and 1 states in a superposition can be represented for a single particle.
+It can also be represented in the for of Equation   superposition explanaiton .
+This is equivalent to the representation provided by the Bloch sphere, Figure   BlochSphere .
+The probability of this state collapsing to the basis state 0 can be calculated by    ^2 where   is a complex number.
+  is known as the probability amplitude of   .
+Similarly, the probability of this state collapsing to the basis state 1 can be calculated by    ^2,   being the probability amplitude of   .
+It follows that   1    2    +  1    2     is an equal superposition where the collapse to 0 is just as likely as collapsing to 1.
+This provides the first glimpse of where a single qubit has the ability to perform a function not currently possible on a classical computer.
+With n-qubits in the equal superposition, we have n binary values which have an equal probability of taking the value 0 as the value 1.
+With an ordering decided of these qubits, collapsing the superposition of each qubit will result in a binary value of length n.
+With all probabilities being   1  2  this binary value takes a truly random value between 0 and 2^n-1.
+It is not possible to produce a truly random number using a classical computer.
+
+A second indication of the power held within the idea of superposition becomes clear if we look at the n-qubits in their equal superposition.
+In 1935, Erwin Schr  o ginger  SchroedingersCat  proposed a thought experiment to explain the idea of superposition.
+Imagine a cat in a fully opaque box with a vile of poison.
+The vile may break at any time, a truly random variable.
+After sealing the box the state of the cat is not known.
+The cat could be alive if the vile has not broken but could just as likely be dead.
+Only by looking inside the box will the state of the cat be known.
+Until this time the cat could be thought of as both alive and dead at the same time.
+If we assign 'dead' to the state    and 'alive' to the state    the situation looks very similar to the state we have previously seen.
+Therefore, just as the cat can be thought of as both dead and alive at the same time, a qubit in the superposition   1    2    +  1    2     can be thought of as both 0 and 1 at the same time.
+This leads to a very powerful property of quantum computers.
+With n classical bits, a single number in the range 0 to 2^n-1 can be expressed at any one time.
+With n quantum qubits, every number in the range 0 to 2^n-1 can be expressed at any one time.
+This effectively allows computation over the whole range of 2^n inputs to be carried out in parallel.
+
+This parallelism is very powerful and has been shown to enable the computation of problems classified as NP to be performed in polynomial time.
+This does however have a caveat.
+As mentioned previously the superposition cannot itself be observed or measured.
+When observed the superposition collapses to a basis state with respect to the superposition probability amplitudes.
+This means that even though 2^n calculations can be performed in parallel, only a single answer can be observed.
+
+Along with the Pauli-X gate, there are an additional 3 Pauli gates.
+The Pauli-I gate is the simplest of all quantum gates.
+It is the identity gate, the output is identical to the input.
+In Dirac notation this is      +     , and in matrix form below
+equation  
+tabular    r c l  
+(   pmatrix 
+1
+
+0
+pmatrix  
+   pmatrix 
+1  
+0
+pmatrix  
+ + 
+   pmatrix 
+0
+
+1
+pmatrix  
+   pmatrix 
+0  
+1
+pmatrix   )
+  (= )
+  ( 
+pmatrix  
+1    0 
+
+0    0
+pmatrix  
+ + 
+pmatrix  
+0    0
+
+0    1
+pmatrix  
+ ) 
+
+  (= )
+  ( 
+pmatrix  
+1    0 
+
+0    1
+pmatrix  
+ )
+tabular  
+equation  
+
+The Pauli-Z gate is similar to the Pauli-X gate, but differs in the axis about which it performs the rotation.
+The Pauli-Z gate rotates the quantum state by   radians about the Z axis.
+This represents a phase flip of the quantum state.
+The phase of a state is important when interference is used in computation.
+In Dirac notation this is  
+
+   +   (-  ), and in matrix form below
+equation  
+tabular    r c l  
+(   pmatrix 
+1
+
+0
+pmatrix  
+   pmatrix 
+1  
+0
+pmatrix  
+ + 
+   pmatrix 
+0
+
+1
+pmatrix  
+   pmatrix 
+0  
+-1
+pmatrix   )
+  (= )
+  ( 
+pmatrix  
+1    0 
+
+0    0
+pmatrix  
+ + 
+pmatrix  
+0    0
+
+0    -1
+pmatrix  
+ ) 
+
+  (= )
+  ( 
+pmatrix  
+1    0 
+
+0    -1
+pmatrix  
+ )
+tabular  
+equation  
+
+The Pauli-Y gate is similar to both the Pauli-X and Pauli-Z gates, but differs in the axis about which it performs the rotation.
+The Pauli-Y gate rotates the quantum state by   radians about the Y axis.
+This represents a phase flip followed by a bit flip.
+In Dirac notation this is  
+
+(i  ) +   (-i  ), and in matrix form below
+equation  
+tabular    r c l  
+(   pmatrix 
+1 
+
+0
+pmatrix  
+   pmatrix 
+0   
+-i
+pmatrix  
+ + 
+   pmatrix 
+0 
+
+1
+pmatrix  
+   pmatrix 
+i   
+0
+pmatrix   )
+  (= )
+  ( 
+pmatrix  
+0    -i 
+
+0    0
+pmatrix  
+ + 
+pmatrix  
+0    0
+
+i    0
+pmatrix  
+ ) 
+
+  (= )
+  ( 
+pmatrix  
+0    -i 
+
+i    0
+pmatrix  
+ )
+tabular  
+equation  
+
+Along with the single qubit operations, like those above, there are operations which can act over n-qubits.
+A simple example of a 2 qubit operation is the controlled-NOT, CNOT, operator.
+This is a simple extension of the Pauli-X gate.
+table  
+
+
+tabular    l | c || r |  
+0   0   0 
+
+0   1   1 
+
+1   0   1 
+
+1   1   0 
+ tabular  
+  Classical CNOT Truth Table 
+  CNOTTruthTable 
+table  
+The CNOT gate has a control input which it requires to be in the logical 1 state for the NOT operation on the second input to be carried out.
+In classical logic this would extend the truth table to be as shown in Table   CNOTTruthTable .
+The truth table of the CNOT gate is the same as that of the XOR gate.
+The Dirac notation of the CNOT gate is      +      +      +     .
+
+  An Introduction to Quantum Algorithms 
+
+Just as with classical computers, the computation to produce the required output given inputs is given in the form of an algorithm.
+Quantum algorithms can be constructed in several ways. These definitions are based on those provided by Massey  masseythesis .
+
+itemize  
+  A quantum circuit can be used to represent an algorithm at the level of quantum logic gates.
+This is similar to a specific purpose circuit diagram for classical systems.
+  A quantum program is a representation of the algorithm in some higher level quantum 'programming' language which would generate the required circuit.
+The circuit generated is not defined in this method, just it's behaviour.
+This could be seen as slightly more flexible that the quantum circuit model as the 'compiler' can be updated to reflect the findings of future research.
+  A parameterisable quantum algorithm is a representation in pure Pseudo-code.
+It proves the flexibility of changing some value n, which is used to indicate the number of input qubits, to produce quantum circuits or programs with the desired behaviour on n qubits.
+This is the most flexible construction of quantum algorithms.
+It can cope with the changing in input size and can use findings of research just like in the 'compilation' of a quantum program.
+itemize  
+
+Currently there are very few quantum algorithms known.
+Peter Shor has carried out, and published, a discussion on the progress made `in discovering algorithms for computation on a quantum computer`  Shor:2004:PQA:1032132.1032149 .
+Shor suggests two possible reasons for the lack of quantum algorithms.
+The first is `that there might really be only a few problems for which quantum computers can offer a substantial speed-up over classical computers`  Shor:2004:PQA:1032132.1032149 .
+This would indeed make the discovery of useful quantum algorithms difficult.
+However, I feel this is somewhat pessimistic.
+The main focus of the paper published by Feynman  Feynman82simulatingphysics  was the problem of simulating the physics of quantum mechanics on a classical computer.
+This to suggests there would be the potential of many applications of quantum computers, even if they aren't analogous to the classical computational applications.
+
+The second is `that quantum computers operate in a manner so non-intuitive, and so different from classical computers`  Shor:2004:PQA:1032132.1032149  that our current algorithm knowledge is close to useless.
+This, in my opinion, is a much more believable obstacle.
+Quantum mechanics is seen by many as a confusing and mystical subject.
+Even prize winning mathematician and physicist Roger Penrose is attributed to the remark `Quantum mechanics makes absolutely no sense`.
+Statements like this and the atmosphere surrounding quantum mechanics makes the potential of its study more than some what daunting.
+As computer scientists, the exposure to and therefore our understanding of quantum mechanics is limited, in general.
+With this in mind it is, currently, unreasonable to expect the discovery of algorithms that exploit the finer details of this complex and subtle theory to become an everyday occurrence.
+
+The following few sections outline a selection of the currently known quantum algorithms.
+
+  Deutsch-Jozsa Algorithm 
+The Deutsch-Jozsa algorithm  1992-deutsch  is a generalisation and improvement over an earlier algorithm proposed by David Deutsch  Deutsch1985 .
+The algorithm described here will be the algorithm including the improvements published in   Macchiavello97quantumalgorithms , the resulting algorithm is still refereed to as the Deutsch-Jozsa algorithm.
+
+The original Deutsch algorithm  Deutsch1985  was proposed to solve the following problem:
+quote  
+Given a function f: 0,1   0,1 , decide whether it is either a balanced, or constant function.
+The function f is guaranteed to be either constant or balanced.
+quote  
+The algorithm proposed was not deterministic, but provided the correct answer with probability   1  2 .
+The algorithm's major breakthrough was that it only required a single invocation of the function f to decide on which category it belonged.
+This is compared to the best classical approach requiring two invocations to the function.
+This was the first algorithm that it was possible to compute the solution to a problem more efficiently than a classical computer by exploiting quantum mechanics.
+The uncertainty of the result was obviously a problem but the principle was a large break through.
+
+In 1992, David Deutsch and Richard Jozsa  1992-deutsch  presented an improvement and extension which allowed for functions f: 0,1 ^ 2n   0,1  to be categorised as constant of balanced.
+The algorithm was again probabilistic but also required 2 invocations to the function f.
+This means that in the worst case, with f 1: 0,1   0,1 , the algorithm will perform worst than both the original Deutsch algorithm  Deutsch1985  and the classical algorithm due to the probabilistic nature of its result.
+This is a very limited case and does improve as the value of n increases.
+As with the original algorithm, the number of invocations of f is constant, truly independent of both n and f.
+This again is an improvement over the classical algorithm which requires in the worst case 2^n+1 to be certain of the function's category.
+figure  
+[
+  @C=1.0em @R=.7em  
+&     0   &   H  &   3    F   &   H  &   
+
+&     0   &   H  &     F   &   H  &   
+
+&     0   &   H  &     F   &   H  &   
+
+&     0   &   H  &     F    &   H  &   
+
+&     1   &   H  &    &   &      0 -  1    
+ 
+ ]
+  Deutsch-Jozsa Circuit 
+   Deutsch-Jozsa-Cir 
+figure  
+
+The algorithm requires n input qubits and a single control qubit.
+The n input qubits are initialised to   0 .
+The control qubit is initialised to   1 .
+The n-fold Hadamard gates are then used to produce the superposition of all 2^n-1 possible inputs, x = (  0 +  1 )^n).
+The Hadamard gate on the control qubit is used to produce the superposition   0 -  1 .
+The difference in superpositions between the input and control qubits is important to the way in which the algorithm classifies a function.
+This produces a state  (  0 +  1 )^n(  0 -  1 ).
+
+The n input qubits are then passed to the function we was to classify, f.
+The result of f for the x input is used as the control for a CNOT gate acting on the control qubit.
+Remember at this point that the input x is in effect all possible inputs to f, and as such the output is all the respective outputs.
+This means that each of the factors of the input are transformed, based on the action of f.
+This can be formalised as U f(  x ,  y )=(  x ,  f(x)  y  ).
+Using the final Hadamard gates we can use the transformation to categorise f.
+
+If we assume n to be equal to 4, then after the initial Hadamard gates we have the superposition:
+equation  
+  1  2      init    1    2  (  0 -  1 )=  1  2 (  00 +  01 +  10 +  11 )  1    2  (  0 -  1 )
+equation  
+At this point it is worth mentioning an identity which will be used in this explanations.
+equation  
+(  b -  a ) -1(  a -  b )
+equation  
+and by linearity
+equation  
+  a (  c -  b )   a (-1(  b -  c )) -1  a (  b -  c )
+  target qubit identity 
+equation  
+The CNOT on the target qubit is only activated if f(x)=1 which, using the equivalent above, produces the superposition -1(  0 -  1 ).
+This can also be generalised as (-1)^ f(x) (  0 -  1 ) where -1^1=-1 and -1^0=1 by definition.
+By linearity the superposition after the CNOT controlled by f(x) on the target qubit becomes
+equation  
+  1  2 ((-1)^ f(00)   00 +(-1)^ f(01)   01 +(-1)^ f(10)   10 +(-1)^ f(11)   11 )  1    2  (  0 -  1 )
+equation  
+
+After the application of f, the target bit has served it purpose and is neither measured nor entangled with any of the qubits from the n qubit input.
+To simplify the equations I will now ignore the (  1    2    0 -  1 ) contributed by the target qubit, the remaining state will be refereed to as  .
+If the function f is constant:
+equation  
+     const  =   1  2 (  00 +  01 +  10 +  11 )  1    2  (  0 -  1 )
+equation  
+Whereas if f is balanced then:
+equation  
+     bal  =(-1)^ f(00)   00 +(-1)^ f(01)   01 +(-1)^ f(10)   10 +(-1)^ f(11)   11 
+equation  
+However,as      const   and      bal   are orthogonal we can use this to detect if the function is balanced or constant.
+equation  
+     bal        const   = 0
+equation  
+
+Applying the n Hadamard gates to the state    const  produces the state    0 ^n.
+When measured this will return the result 0 as the global phase factor  ' cannot be observed.
+As we have noted,    const  is orthogonal to    bal  so when the n Hadamard gates are applied the measured result will be anything orthogonal to 0.
+This gives us a clear way of distinguishing between whether f is constant of balanced with certainty and only a single invocation of f.
+If the measurement returns 0 then f is constant, if the measurement returns anything else f is balanced  
+
+
+
+
+
+  Grover's Search Algorithm 	
+The Grover Search algorithm  Grover:1996rk  is an unstructured search problem.
+The algorithm assumes no underlying structure in the search space.
+By this I mean the algorithm does not exploit, and therefore assume, any structure, such as sorting, in the data set being searched.
+
+It has previously been proven  Bennett:1996iu  that the lower complexity limit for any algorithm identifying an element without knowledge of underlying structure in the data is  (  N ).
+For simplicities sake we assume N=2^n.
+The complexity is measured by the number of elements which need to be queried in order to find the desired element.
+The Grover Search algorithm has the complexity O(  N ) and so `is within a constant factor of the fastest possible quantum mechanical algorithm`  Grover:1996rk .
+
+figure  
+[
+  @C=1.0em @R=.7em  
+&   &   &   3  f  &  &    H  &  &   3  f 0  &  &    H   &  & 
+
+&   & &    f  &   &   & &   f 0  &  &    & & 
+
+&   & &   f  &   &   & &   f 0  &  &    & & 
+
+&   &  &    f  &   &   H  &  &   f 0  &  &    H  &  & 
+
+&   &  &      &  &    &  &     &  &    X  &  &  
+ 
+ ]
+  Grover's Search Circuit 
+   Grovers-Search-Cir 
+figure  
+
+
+The mechanisms used within the algorithm to produce a solution to the problem is more subtle than those used but the Deutsch-Jozsa algorithm.
+The algorithm does not perform the computation in a single step.
+The algorithm requires O(  N ) steps.
+The section of circuit which is repeated is that shown in Figure   Grovers-Search-Cir .
+
+The algorithm is to initialise the state,  , using n Hadamard gates.
+equation  
+  1=  1  2^   1  n       i=0 ^N   x i (  0 -  1 )
+equation  
+The application of f is used in an analogous way to in the Deutsch-Jozsa algorithm.
+It can again be written as U f(  x ,  y )=(  x ,  f(x)  y  ) and remember
+equation  
+x i {x 0,x 1, ,x  n-1 }
+equation  
+equation  
+f(x i)=1
+equation  
+equation  
+  x j  : i  j  : f(x j)=0
+equation  
+Just as in the Deutsch-Jozsa algorithm, the result of a 1 produces a bit flip on the target qubit.
+Using the identity in Equation   target qubit identity  this flips the sign on the amplitude associated with x i, a simple phase flip in the computational basis.
+The state   1 is transformed by U f to   2.
+equation  
+  2=  1  2^   1  n       j=0  j   i  ^N   x j (  0 -  1 ) -   1  2^   1  n      x i (  0 -  1 )
+equation  
+The second function, f 0, in the circuit is a fixed function.
+It is not dependant on f but is a function which evaluates to 1 only when the input is   0 .
+This means that given a simple state (   0 +   1 + ) the result is the state (-   0 +   1 + ).
+The action of both these function can be written in the shorter and much simpler Dirac notation.
+equation  
+U f=I-2  x i   x i 
+equation  
+equation  
+U 0=I-2  0   0 
+  Grover:U 0 dirac 
+equation  
+
+Functions f and f 0 seem relatively unimpressive and don't appear to solve the problem.
+The importance of the two sets of n Hadamard gates, one each side of f 0, is paramount.
+The effect they have on the action of f 0 is shown below, the action of f 0 and the Hadamard gates will be represented as V.
+equation  
+V=H^   n  U 0 H ^   n  
+equation  
+equation  
+V=H^   n  (I n-2  0   0 ) H ^   n  
+equation  
+equation  
+V=H^   n  I n H ^   n  -H^   n  (2  0   0 ) H ^   n  
+equation  
+equation  
+V=I n-2(H^   n    0 )(  0  H ^   n  )
+equation  
+equation  
+V=I n-2(H^   n    0 )( H ^   n    0 )^
+
+equation  
+The application of Hadamard gates to the   0  state is the method of creating the superposition of all 2^n-1 possible states.
+equation  
+V=I n-2(  1  2^   1  n       i=0 ^N   x i )(  1  2^   1  n       i=0 ^N   x i )^
+
+equation  
+equation  
+V=I n-2(  1  2^   1  n       i=0 ^N   x i )(  1  2^   1  n       i=0 ^N   x i )
+equation  
+equation  
+V=I n-2        
+equation  
+Just as with U f, V can be seen as a simple phase flip.
+However, the subtlety of this operator is that the flip is not in the computational basis, but in the basis described by     .
+
+The last gate in Figure   Grovers-Search-Cir  is the Pauli-X operator.
+This is not functional but for convenience of mathematics as produces a global phase flip of      which makes the mathematics simpler.
+
+That is Grovers algorithm.
+Looking at the circuit and the mathematics of the operators it represents doesn't provide an obvious answer as to how it solves the search problem.
+This is partly due to the fact the circuit in Figure   Grovers-Search-Cir  has to be repeated   N  times and partly due to the effect of the circuit being hidden in implementation.
+The circuit is actually little more than a complex rotation gate.
+It is however more sophisticated than a standard rotation gate as it computes the direction to rotate the state so as to solve the problem.
+The power of this does not initially appear as immense as it possibly should.
+The Hilbert space in which this circuit is operating is of the order N, we as humans can only accurately imagine a maximum of a 3 dimensional space as it the most dimensions we can observe directly.
+Taking into account the vast Hilbert space when assessing the power of this circuit produces a much better appreciation.
+
+However, even though the power can now be appreciated, the way in which it solves the problem is still not clear. 
+
+
+  The Use of Evolutionary Computation in the Synthesis of Quantum Algorithms 
+Nature inspired computation is a highly active research area.
+Taking inspiration from nature and biological theories, search techniques such as Genetic Algorithms and Genetic Programming are being employed to a wide rage of industrial problems.
+What makes these approaches different is that they are based on a population, or 'generation', of individuals.
+The basic principle is to take an 'individual' of a defined representation, evaluate it's 'fitness' to perform the task required and to 'mutate' it randomly and add it to the next 'generation' of individuals.
+Along with mutation, a computational analogy to biology's reproduction, called crossover, can be used.
+Crossover takes two, or potentially more, individuals and combines them to produce other individuals which are then added to the next 'generation'.
+The each cycle of evaluate, selection and mutation and/or crossover produces a 'generation' of individuals.
+The process repeats until a required 'fitness' is found or a resource limit is reached, time or number of generations produced for example.
+As the process progresses, with the a reasonable representation and fitness function, the average 'fitness' of each generation should improve.
+
+The use of evolutionary techniques to try synthesize quantum algorithms is not new.
+There are many examples of successes in producing solutions to problems already solved by a manual approach and some producing novel solutions to previously quantumly unsolved problems.
+The techniques used vary from Genetic Algorithms to Genetic Programming with varying success.
+
+Not only is the technique varied, the desired solution is also varied.
+Some research focuses on the evolution of quantum circuits or programs, whereas some focus on more general quantum algorithms which take a parameter representing the number of input qubits.
+Due to the exponential increase in resources required for simulation with an increase in qubits the generality of the quantum algorithms is not usually tested on large systems.
+
+Massey  masseythesis,masseymeng  explores both Genetic Algorithms and Genetic Programming as search techniques.
+The software suites presented, Q-PACE I - IV, have varying success and increase in search power.
+Q-PACE I  masseymeng  is described as solving `a number of basic proof of concept problems`  masseythesis  and `proves the concept that evolutionary search techniques can be used to evolve quantum software`  masseythesis .
+Q-PACE I uses a fixed length array of quantum gates and is based on a simple Genetic Algorithm found in   1989goldberg .
+
+Q-PACE II  masseythesis  is a suite based on Q-PACE I but uses Genetic Programming instead.
+In contrast to Q-PACE I, Q-PACE II is able to handle variable length solutions as individuals are represented as a list of quantum gates parameterized with the label, target and control bits and phase factor.
+It also includes the inclusion of vector manipulation rather than matrix manipulation to improve efficiency.
+Matrix manipulation is a simple concept, however it is very computationally expensive.
+Operators are just one to one functions acting on state vectors.
+equation  
+ pmatrix  
+  0
+
+  1
+
+  2
+
+  3
+pmatrix  
+
+
+ pmatrix  
+  2
+
+  3
+
+  0
+
+  1
+pmatrix  
+  vectormanipulation 
+equation  
+
+The operation of the Pauli-X gate on the first qubit in a two qubit system can be represented as Equation   vectormanipulation .
+For more complex gates, such as the Hadamard gate, the matrix manipulation is much more expensive than the equivalent vector manipulation.
+
+The representation used in Q-PACE II is not able to express a Toffoli, Controlled-Controlled-Not, gate as a single gate.
+This makes evolving a half-adder circuit more than a trivial test.
+When Q-PACE II is tested against producing a circuit with the specification   x, y, z    x,x   y, x   y  it is able to produce several exact solutions.
+One of which was claimed, at the time, to be the `best known solution to the problem`  masseythesis  with the restricted gate set.
+Q-PACE II was also challenged to produce a circuit to implement   c, a, b, z    c, a, (a+b) 0, (a+b) 1  and again produced `the most efficient solution to this particular problem`  masseythesis .
+
+equation  
+pmatrix  
+a
+
+b
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+pmatrix  
+  masseyprobref 
+equation  
+
+Both tests of Q-PACE outlined were carried out to produce a deterministic solution, would always present the correct answer after measurement.
+Further tests were performed on more complicated problems, however deterministic solutions were not found.
+Following on from the work carried out by Spector et al  LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112 , Massey changed to a probabilistic approach.
+The definition, referring to   masseyprobref , of a probabilistic solution used by Massey is:
+
+quote  
+The probability of measuring   000  is at least 0.5   a  a , and the probability of measuring   001  is at least 0.5   b  b .  masseythesis 
+quote  
+
+With this new, relaxed, requirement of probabilistic correctness, the Q-PACE II software was used to `evolve a quantum circuit to implement the specification 
+equation*  
+   a 1, a 0, b 1, b 0, z 1, z 0      a 1, a 0, (a+b) 2, (a+b) 1, (a+b) 0, z 0 '
+equation*  
+The result was, despite the requirement of only probabilistic correctness, a deterministic solution to the problem  masseythesis .
+The evolved circuit was not as efficient by that presented in   Vedral:1995ga  but was still deterministic.
+
+figure  
+  [.Create_CN [.Create_N 1 ] [.Create_H 2 ]]
+  Q-PACE III Example Solution Tree 
+  QPACEIIIEXTREE 
+figure  
+
+figure  
+[
+  @C=1.0em @R=.7em  
+&   &   N  &   &    1  &   
+
+&   &   &   H  &   & 
+
+ 
+ ]
+  Q-PACE III Example Program Output 
+  QPACEIIIEX 
+figure  
+
+Both Q-PACE and Q-PACE II evolved quantum circuits.
+The next generation, Q-PACE III, evolved quantum programs, inspired by the work of Spector et al  LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112 .
+Just as with Q-PACE II, Q-PACE III was a Genetic Programming suite.
+The solutions evolved by Q-PACE III were executable programs, 'second order' solutions, which produce as an output a quantum circuit.
+An additional difference between the two suites is the representation.
+Q-PACE III represents programs as trees, rather than lists.
+The execution of the solutions is performed by a pre-order traversal of the solutions tree representation.
+The tree in   QPACEIIIEXTREE  produces the circuit in   QPACEIIIEX .
+
+Due to the change in representation, the evolutionary operations, mutation and crossover, occur at the second order level.
+As shown in   QPACEIIIEXTREE , the different non-terminal nodes were of different arrity, allowing for more expressive trees.
+Whereas in Q-PACE I and II the fitness of an individual could be calculated directly from the individual, in Q-PACE III the individuals have to be `executed` to produce the quantum circuit before the fitness can be evaluated.
+With this additional step, the fitness evaluation requires more computational resources.
+
+Massey defines the PF Max problem as
+quote  
+ You are given a permutation function f(x) which operates over the integer range [0..3].
+Using a suitable encoding, evolve a quantum program U which returns the value of x that gives the maximum value of f(x).  masseythesis 
+quote  
+Q-PACE III was used to try find a probabilistic solution to the PF Max problem.
+The experiment was successful.
+When tested against the 8 permutations used as fitness cases, the correct result was the probabilistic result in each case.
+When tested against the 24 possible permutations, the correct result was the probabilistic result in 20 of the 24 cases.
+
+It was found that if the acceptance requirement was reduced to 0.4, from 0.5, a quantum program was evolved which returns the correct value for all 24 possible permutation exactly 50% of the time.
+This result was quite remarkable, this probability is twice that of the best classical approach, guessing.
+
+equation  
+ y k =   1    N      j=0 ^ N-1  x j e^   2  ijk   N  
+  QFTeqn 
+equation  
+
+Q-PACE III was also used to evolve an solution which, when run, produced the circuit for the Quantum Fourier Transform on 3 qubits.
+The Quantum Fourier Transform is an operation defined by equation   QFTeqn  where x, (x 0, x 1,  , x  N-1 ) where N = 2^n, is the input state and y, (y 0, y 1,  , y  N-1 ), is the resulting state.
+It is fundamental for Shor's factorisation algorithm.
+The problem was approached both deterministically and probabilistically, both were successful.
+The results of the probabilistic experiments were unexpected.
+The definition of the acceptance requirement had to be generalised.
+Whereas for the PF Max problem the correct answer was a single value, the correct answer for the Quantum Fourier Transform is a state vector.
+An acceptance level of x% was redefined as the requirement that for all fitness cases, each state has a probability of being measured of at least x% of the probability for the respective state after running a `perfect` Quantum Fourier Transform.
+It was found that for acceptance levels of 75%, 50% and even 25%, the evolved circuits often had an acceptance value in excess of 99%.
+
+With Q-PACE IV, Massey once again raised the level at which the solutions were represented.
+Q-PACE IV was a Genetic Programming suite to evole quantum algorithms, parameterisable with the system size.
+To reduce the complexity of the representation, all non-terminals were made to be the same arrity, 3.
+This was to remove the restrictions on the mutation operators while ensuring only syntactically correct algorithms were developed.
+As not all gates require 3 parameters, the excess parameters were ignored during evaluation.
+
+The desire to produce quantum algorithms required the inclusion of an iteration construct, numerical arithmetic and a store of variables so loop variables can be used.
+Several issues were encountered.
+An issue with the numerical arithmetic inclusion was with the posibility to specify a qubit which does not exist.
+In a system of 3 qubits, there is no sixth qubit so the syntactically correct `  Create_H(MULTIPLY(3, 2, X), X, X) `  masseythesis , where X is a don't care symbol, is syntactically correct depending on the system size.
+It was decided that any number above the system size would be interpreted as the system size.
+This is a solution but as is stated in   Stepney07searchingfor , this means that the system size is over represented in the search space.
+Also due to the limitations of quantum simulation, a number larger than the upper limit on system size efficiently able to be simulated may need to be the system size.
+However, it may need to be that specific value but until simulation or production of adequately large quantum computers is possible the algorithm cannot be finalise.
+Due to this, if the value is assumed to be the system size it may make analysis of the algorithm, and therefore the resulting understanding, much harder and possibly misleading.
+The comment made in   Stepney07searchingfor  was in reference to representing gates as the numbers between 0 and 7, but only needing to represent 5 gates.
+Using modulo 5 represents two gates with a single value but three with two values, potentially leading to favouring the over represented gates.
+Therefore the two potential solutions to the indexing of a non-existant qubit both have their potentially undesireable behaviours but the approach taken by Massey does appear to be the option which is unlikely to interfere with the evolution of solutions, only potentially with analysis.
+
+It would seem that there is the posibility of using individuals containing such nodes to spawn two separate individuals, one with the numerical value and one with the variable holding the system size.
+Protection would have to be added into the operator carrying out this operation to ensure the individual with the numerical value is not duplicated each generation. 
+If the evaluation of numerical nodes was altered to use the modulo of the system size the combination of the two individuals would cover both of the proposed solutions while compensating for the failings of both.
+
+The first test for Q-PACE IV was to try and evolve an algorithm to produce an n-qubit Quantum Fourier Transform with 100% fidelity.
+There is a known algorithm to produce these circuits, provided as Figure 32 in   masseythesis , so the test was quantifiable.
+It was also shown that the gate set available to Q-PACE IV was indeed able to express the algorithm.
+Q-PACE IV was unsuccessful using the same fitness function as used by Q-PACE III in its evolution of the 3-qubit Quantum Fourier Transform.
+The fitness function was subsequently changed so that it used the polar representation of the complex numbers indicating the probability amplitude of each state rather than their Cartesian form.
+This was more successful and managed to produce an algorithm capable of producing a circuit with 100% fidelity for 1, 2 and 3 qubits.
+
+However, this algorithm was not entirely system-size independent.
+The problem was due to the requirement of Quantum Fourier Transform to reverse the order of the qubits.
+This required the use of swap gates but the inclusion of these gates have a large effect on the fitness of individuals which include the phase rotation gates, another critical gate for the Quantum Fourier Transform.
+The fitness was once again altered, however this alteration guided the search in the direction of using swap gates.
+A solution was found that was system size independent and produced 100% fidelity.
+
+Both of these Quantum Fourier Transform examples show the importance of the fitness function.
+Even though the Cartesian and polar form of complex numbers are mathematically equivalent, they produced drastically different results.
+The Cartesian form restricted the search and no solution was found whereas the equivalent polar form had no such restriction.
+It appears to me that the reverse will be true in the search for other problems where the relative phases are not as fundamental as they are in the Quantum Fourier Transform.
+This gives an indication that the search for currently unknown quantum algorithms may require a series of parallel evolution streams using different representation within the fitness function.
+It may also prove helpful to use a series of fitness functions in a colaborative approach.
+
+Evolutionary approaches are commonly used for multi-objective optimisation problems where the multiple objectives are in conflict.
+The use of different representations in fitness funcitons could be seen in a similar way to these approaches.
+However, different representations of the fitness function would not be a set of conflicting objectives but colaborating objectives.
+This would allow the search to be free from selecting the correct representation of the complex probability amplitudes.
+This would however require several fitness functions which give comparable values as well as a mechanism to chose the `best` fitness value for the individual being evaluated.
+The representation of this also leads to numerous choices, using just a MAX function or an average function or to represent the fitness as an n-dimensional point to optimise for n fitness functions.
+
+  The Focus of this Project 
+
+  mengreport 
+document  

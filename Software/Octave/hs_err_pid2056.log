@@ -1,0 +1,23 @@
+
+An unexpected exception has been detected in native code outside the VM.
+Unexpected Signal : EXCEPTION_ACCESS_VIOLATION occurred at PC=0x77fcbd36
+Function name=(N/A)
+Library=(N/A)
+
+NOTE: We are unable to locate the function name symbol for the error
+      just occurred. Please refer to release documentation for possible
+      reason and solutions.
+
+
+
+Current Java thread:
+
+Dynamic libraries:
+
+Local Time = Wed Oct 29 21:18:19 2003
+Elapsed Time = 1706
+#
+# The exception above was detected in native code outside the VM
+#
+# Java VM: Java HotSpot(TM) Client VM (1.3.1_01 mixed mode)
+#
