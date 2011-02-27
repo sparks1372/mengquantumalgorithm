@@ -1175,6 +1175,15 @@ This would allow the search to be free from selecting the correct representation
 This would however require several fitness functions which give comparable values as well as a mechanism to chose the `best` fitness value for the individual being evaluated.
 The representation of this also leads to numerous choices, using just a MAX function or an average function or to represent the fitness as an n-dimensional point to optimise for n fitness functions.
 
+\subsection{Williams and Gray}
+None of the approaches presented so far have been used to produce the circuit for the quantum teleportation protocol.
+There is essentially no difference between the circuits required for the quantum teleportation protocol than to produce the quantum fourier transform.
+The main difference is the restriction on communication.
+
+With the quantum teleportation protocol only classical communication can be used when acting on the qubit held by Bob.
+In terms of automatically producing the circuits the restriction can be characterised as \emph{only single qubit gates, controlled or not, can be applied to the qubit held by Bob}.
+The use of controlled gates can allow the search to loosely represent measurement and communication of the measured value.
+
 \section{The Focus of this Project}
 When looking at all the papers that include the use an evolutionary approach there is one thing tahat they all have in common.
 Each time research is carried out in this area nearly everything is bespoke.
