@@ -33,6 +33,8 @@ public class Params_Writer {
 	private static final String	fixed_dot				= ".";
 	private static final String	fixed_nc_instr			= "terminalinst";
 	private static final int	base_node_count			= 24;
+	private static final String	min_tree_size_str		= "gp.tc.0.init.min-size = ";
+	private static final String	max_tree_size_str		= "gp.tc.0.init.max-size =";
 
 	/**
 	 * @param filename
@@ -43,7 +45,7 @@ public class Params_Writer {
 	}
 
 	public void updateParams(boolean[] avail_gates, int gen, int pop, int bth,
-			int eth) {
+			int eth, int treedepth) {
 		int true_count = 0;
 		for (boolean avail_gate : avail_gates) {
 			if (avail_gate) {
@@ -75,6 +77,12 @@ public class Params_Writer {
 			osw.newLine();
 			osw.write(fixed_line_2);
 			osw.write(Integer.toString(node_count));
+			osw.newLine();
+			osw.write(min_tree_size_str);
+			osw.write(Integer.toString(treedepth));
+			osw.newLine();
+			osw.write(max_tree_size_str);
+			osw.write(Integer.toString(treedepth * 2));
 			osw.newLine();
 			osw.write("select.tournament.size = ");
 			int t = (int) Math.ceil(0.01 * pop);

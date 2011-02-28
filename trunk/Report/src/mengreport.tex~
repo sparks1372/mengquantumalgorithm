@@ -45,9 +45,12 @@
 
 \input{Design}
 
-\input{Implementation}
+\imput{Implementation}
 
-\input{Testing}
+\chapter{Testing}
+\section{Unit Tests}
+\section{Integration Tests}
+\section{User Acceptance Tests}
 
 \bibliography{mengreport}
 

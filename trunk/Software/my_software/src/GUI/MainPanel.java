@@ -24,7 +24,7 @@ public class MainPanel extends JPanel {
 	private final JPanel				right_panel;
 	private final Dimension				screen_size;
 	public static final double			left_perc		= 0.2;
-	public static final double			centre_perc		= 0.6;
+	public static final double			centre_perc		= 0.55;
 	public static final double			right_perc		= 0.2;
 	public static final double			height_perc		= 0.8;
 	public static final int				titleFontSize	= 28;

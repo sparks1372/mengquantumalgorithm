@@ -57,7 +57,7 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 		/**
 		 * 
 		 */
-		public tickBoxListener(int i, boolean[] ar) {
+		public tickBoxListener(int i) {
 			index = i;
 		}
 
@@ -93,45 +93,49 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 
 	private circuitBuilder				cb;
 	private circuitevaluator			ce;
-	private static final String			NAME		= "QPace 4 Implementation";
+	private static final String			NAME			= "QPace 4 Implementation";
 
-	private static final EvolutionType	ET			= EvolutionType.Evolutionary;
+	private static final EvolutionType	ET				= EvolutionType.Evolutionary;
 	private QuantumAlgorithm			al;
-	private static final String			filename	= "config/ecparams.params";
-	private Params_Writer				pw			= null;
-	private SearchEngineState			state		= SearchEngineState.Start;
-	private final Vector<Observer>		observers	= new Vector<Observer>();
+	private static final String			filename		= "config/ecparams.params";
+	private Params_Writer				pw				= null;
+	private SearchEngineState			state			= SearchEngineState.Start;
+	private final Vector<Observer>		observers		= new Vector<Observer>();
 
 	private EvolutionState				evoState;
 	private final JPanel				progressPanel;
 	private JDialog						evolveDialog;
 	private JTextArea					genTA;
 	private JLabel						genL;
-	private final static String			genStr		= "Generations";
-	private final static int			genDef		= 128;
+	private final static String			genStr			= "Generations";
+	private final static int			genDef			= 128;
 	private JTextArea					popTA;
 	private JLabel						popL;
-	private final static String			popStr		= "Population Size";
-	private final static int			popDef		= 128;
+	private final static String			popStr			= "Population Size";
+	private final static int			popDef			= 128;
 	private JTextArea					bthTA;
 	private JLabel						bthL;
-	private final static String			bthStr		= "# of Breeder Threads";
-	private final static int			bthDef		= 8;
+	private final static String			bthStr			= "# of Breeder Threads";
+	private final static int			bthDef			= 8;
 	private JTextArea					ethTA;
 	private JLabel						ethL;
-	private final static String			ethStr		= "# of Evaluation Threads";
-	private final static int			ethDef		= 8;
+	private final static String			ethStr			= "# of Evaluation Threads";
+	private final static int			ethDef			= 8;
+	private JTextArea					treedepthTA;
+	private JLabel						treedepthL;
+	private final static String			treedepthStr	= "Minimum Initial Tree Depth";
+	private final static int			treedepthDef	= 20;
 	private boolean[]					enabledGate;
 
 	private JPanel						statsPanel;
 	private JLabel						timeL;
 	private JLabel						timeTA;
-	private static String				timeStr		= "Time Taken";
+	private static String				timeStr			= "Time Taken";
 	private JLabel						numGenL;
 	private JLabel						numGenTA;
 	private JLabel						fitL;
 	private JLabel						fitTA;
-	private static String				fitStr		= "Best Fitness";
+	private static String				fitStr			= "Best Fitness";
 
 	/**
 	 * 
@@ -299,10 +303,11 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 					int pop = Integer.parseInt(popTA.getText());
 					int bth = Integer.parseInt(bthTA.getText());
 					int eth = Integer.parseInt(ethTA.getText());
+					int treedepth = Integer.parseInt(treedepthTA.getText());
 					System.out.println("gen " + gen + " pop " + pop + " bth "
-							+ bth + " eth " + eth);
+							+ bth + " eth " + eth + " tree depth " + treedepth);
 
-					pw.updateParams(enabledGate, gen, pop, bth, eth);
+					pw.updateParams(enabledGate, gen, pop, bth, eth, treedepth);
 					ev.execute();
 					evolveDialog.setVisible(false);
 				} catch (NumberFormatException ex) {
@@ -384,7 +389,7 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 		for (int i = 0; i < gates.length; i++) {
 			l = new JLabel(gates[i].name());
 			cb = new JCheckBox("", enabledGate[i]);
-			cb.addItemListener(new tickBoxListener(i, enabledGate));
+			cb.addItemListener(new tickBoxListener(i));
 			p = new JPanel();
 			p.setLayout(new FlowLayout());
 			p.add(l);
@@ -408,7 +413,7 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 	private JPanel getParamsPanel() {
 
 		JPanel paramsPanel = new JPanel();
-		paramsPanel.setLayout(new FlowLayout());
+		paramsPanel.setLayout(new WrapLayout());
 		paramsPanel.setBorder(BorderFactory.createEtchedBorder());
 
 		genTA = new JTextArea(Integer.toString(genDef));
@@ -447,10 +452,20 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 		ethPanel.add(ethL);
 		ethPanel.add(ethTA);
 
+		treedepthTA = new JTextArea(Integer.toString(treedepthDef));
+		treedepthL = new JLabel(treedepthStr);
+
+		JPanel treedepthPanel = new JPanel();
+		treedepthPanel.setLayout(new FlowLayout());
+
+		treedepthPanel.add(treedepthL);
+		treedepthPanel.add(treedepthTA);
+
 		paramsPanel.add(popPanel);
 		paramsPanel.add(genPanel);
 		paramsPanel.add(bthPanel);
 		paramsPanel.add(ethPanel);
+		paramsPanel.add(treedepthPanel);
 
 		return paramsPanel;
 	}
@@ -540,8 +555,9 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 			int pop = Integer.parseInt(popTA.getText());
 			int bth = Integer.parseInt(bthTA.getText());
 			int eth = Integer.parseInt(ethTA.getText());
+			int treedepthth = Integer.parseInt(treedepthTA.getText());
 
-			pw.updateParams(enabledGate, gen, pop, bth, eth);
+			pw.updateParams(enabledGate, gen, pop, bth, eth, treedepthth);
 		} catch (NumberFormatException ex) {
 			JOptionPane
 					.showMessageDialog(
