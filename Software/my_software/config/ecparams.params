@@ -1,10 +1,12 @@
 parent.0 = QPACE4/basic_functionset.params
 gp.fs.size = 1
-generations = 128
+generations = 1024
 pop.subpop.0.size = 1024
 breedthreads = 8
 evalthreads = 8
 gp.fs.0.size = 48
+gp.tc.0.init.min-size = 5
+gp.tc.0.init.max-size =10
 select.tournament.size = 11
 breed.elite.0 =  2
 gp.fs.0.func.24 = Core.CircuitEvolution.QPace4.terminal.Instruction
