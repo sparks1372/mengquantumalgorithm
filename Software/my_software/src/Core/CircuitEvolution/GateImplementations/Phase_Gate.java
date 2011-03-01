@@ -1,5 +1,7 @@
 package Core.CircuitEvolution.GateImplementations;
 
+import java.text.DecimalFormat;
+
 import Core.Circuit.quantumgate;
 import Jama.Matrix;
 import Testing.predefined_states;
@@ -166,6 +168,7 @@ public class Phase_Gate implements quantumgate {
 
 	@Override
 	public String toLatex() {
-		return "\\gate{P(" + theta + ")}&";
+		DecimalFormat twoPlaces = new DecimalFormat("0.0000");
+		return "\\gate{P(" + twoPlaces.format(theta) + ")}&";
 	}
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="Jama/examples/|Jama/test/|Jama/CholeskyDecomposition.java|Jama/EigenvalueDecomposition.java|Jama/LUDecomposition.java|Jama/QRDecomposition.java|Jama/SingularValueDecomposition.java|QPACEIV/" kind="src" path="src"/>
-	<classpathentry kind="src" path="ecj"/>
 	<classpathentry kind="src" path="test_src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="ecj/libraries/itext-1.2.jar"/>
@@ -18,5 +17,6 @@
 	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="lib/seaglasslookandfeel-0.1.7.2.jar"/>
 	<classpathentry kind="con" path="com.soyatec.uml.CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ecj"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
