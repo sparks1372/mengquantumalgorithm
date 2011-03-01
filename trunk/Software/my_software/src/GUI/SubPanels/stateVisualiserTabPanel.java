@@ -44,7 +44,7 @@ public class stateVisualiserTabPanel extends JPanel implements Observer {
 		tabPane = new JTabbedPane();
 		setupLabels();
 
-		this.add(labelPanel);
+//		this.add(labelPanel);
 		this.add(tabPane);
 	}
 
@@ -79,7 +79,7 @@ public class stateVisualiserTabPanel extends JPanel implements Observer {
 			while (iter.hasNext()) {
 				int numofqubits = iter.next();
 				tab = new stateVisualiserTab(qp.getTestSuite().getTestcases(
-						numofqubits));
+						numofqubits), "Expected final state");
 				tabPane.add(
 						Integer.toString(numofqubits).concat(qubits_string),
 						tab);

@@ -166,6 +166,6 @@ public class Phase_Gate implements quantumgate {
 
 	@Override
 	public String toLatex() {
-		return "\\gate{P(" + Math.PI / theta + ")}&";
+		return "\\gate{P(" + theta + ")}&";
 	}
 }

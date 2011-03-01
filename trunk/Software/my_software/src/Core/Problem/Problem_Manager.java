@@ -113,11 +113,14 @@ public class Problem_Manager extends Observable {
 				out.write("<DefFile>" + pr.Def_File + "</DefFile>");
 				out.write("<Desc>" + pr.Desc + "</Desc>");
 				out.write("</prob>");
+				out.newLine();
 			}
 			out.write("</Problems>");
 			out.close();
 			saved = true;
-		} catch (IOException e) {
+			setChanged();
+			notifyObservers();
+			} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -15,26 +15,29 @@ import Core.CircuitEvolution.QPace4.terminal.Instruction;
  */
 public class Params_Writer {
 
-	private FileWriter			out;
-	private final String		fname;
-	private static final String	parent_line				= "parent.0 = QPACE4/basic_functionset.params";
-	private static final String	fixed_line_1			= "gp.fs.size = 1";
-	private static final String	fixed_line_2			= "gp.fs.0.size = ";
-	private static final String	fixed_line_3			= "gp.fs.0.func.";
-	private static final String	fixed_line_4			= "generations = ";
-	private static final String	fixed_line_5			= "pop.subpop.0.size = ";
-	private static final String	fixed_line_6			= "breedthreads = ";
-	private static final String	fixed_line_7			= "evalthreads = ";
+	private FileWriter out;
+	private final String fname;
+	private static final String parent_line = "parent.0 = QPACE4/basic_functionset.params";
+	private static final String fixed_line_1 = "gp.fs.size = 1";
+	private static final String fixed_line_2 = "gp.fs.0.size = ";
+	private static final String fixed_line_3 = "gp.fs.0.func.";
+	private static final String fixed_line_4 = "generations = ";
+	private static final String fixed_line_5 = "pop.subpop.0.size = ";
+	private static final String fixed_line_6 = "breedthreads = ";
+	private static final String fixed_line_7 = "evalthreads = ";
 
-	private static final String	fixed_eqal				= " = ";
-	private static final String	fixed_instr				= Instruction.class
-																.getName();
-	private static final String	fixed_node_constraint	= ".nc";
-	private static final String	fixed_dot				= ".";
-	private static final String	fixed_nc_instr			= "terminalinst";
-	private static final int	base_node_count			= 24;
-	private static final String	min_tree_size_str		= "gp.tc.0.init.min-size = ";
-	private static final String	max_tree_size_str		= "gp.tc.0.init.max-size =";
+	private static final String fixed_eqal = " = ";
+	private static final String fixed_instr = Instruction.class.getName();
+	private static final String fixed_node_constraint = ".nc";
+	private static final String fixed_dot = ".";
+	private static final String fixed_nc_instr = "terminalinst";
+	private static final int base_node_count = 24;
+	private static final String min_tree_size_str = "gp.tc.0.init.min-size = ";
+	private static final String max_tree_size_str = "gp.tc.0.init.max-size =";
+	private static final String xoverStr = "pop.subpop.0.species.pipe.source.0.prob = ";
+	private static final String mut1Str = "pop.subpop.0.species.pipe.source.1.prob = ";
+	private static final String mut2Str = "pop.subpop.0.species.pipe.source.2.prob = ";
+	private static final String mut3Str = "pop.subpop.0.species.pipe.source.3.prob = ";
 
 	/**
 	 * @param filename
@@ -45,7 +48,8 @@ public class Params_Writer {
 	}
 
 	public void updateParams(boolean[] avail_gates, int gen, int pop, int bth,
-			int eth, int treedepth) {
+			int eth, int mintreedepth, int maxtreedepth, int el, double xover,
+			double mut) {
 		int true_count = 0;
 		for (boolean avail_gate : avail_gates) {
 			if (avail_gate) {
@@ -79,10 +83,10 @@ public class Params_Writer {
 			osw.write(Integer.toString(node_count));
 			osw.newLine();
 			osw.write(min_tree_size_str);
-			osw.write(Integer.toString(treedepth));
+			osw.write(Integer.toString(mintreedepth));
 			osw.newLine();
 			osw.write(max_tree_size_str);
-			osw.write(Integer.toString(treedepth * 2));
+			osw.write(Integer.toString(maxtreedepth));
 			osw.newLine();
 			osw.write("select.tournament.size = ");
 			int t = (int) Math.ceil(0.01 * pop);
@@ -90,7 +94,19 @@ public class Params_Writer {
 			osw.write(Integer.toString(t));
 			osw.newLine();
 			osw.write("breed.elite.0 =  ");
-			osw.write(Integer.toString((int) Math.ceil(0.001 * pop)));
+			osw.write(Integer.toString(el));
+			osw.newLine();
+			osw.write(xoverStr);
+			osw.write(Double.toString(xover));
+			osw.newLine();
+			osw.write(mut1Str);
+			osw.write(Double.toString(mut));
+			osw.newLine();
+			osw.write(mut2Str);
+			osw.write(Double.toString(mut));
+			osw.newLine();
+			osw.write(mut3Str);
+			osw.write(Double.toString(mut));
 			osw.newLine();
 
 			for (int index = 0; index < avail_gates.length; index++) {

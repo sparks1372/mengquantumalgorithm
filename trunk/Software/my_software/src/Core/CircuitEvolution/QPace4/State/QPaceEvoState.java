@@ -3,10 +3,12 @@
  */
 package Core.CircuitEvolution.QPace4.State;
 
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import Core.CircuitBuilder.circuitBuilder;
 import Core.CircuitEvaluator.circuitevaluator;
+import Core.CircuitEvolution.QPace4.StatsPanel;
 import ec.simple.SimpleEvolutionState;
 
 /**
@@ -18,6 +20,12 @@ public class QPaceEvoState extends SimpleEvolutionState {
 	public circuitevaluator		cir_evaluator;
 	private final JProgressBar	progressBar	= new JProgressBar();
 	private int					gens;
+	private StatsPanel						statsPanel;
+
+	
+	public StatsPanel getStatsPanel() {
+		return statsPanel;
+	}
 
 	/**
 	 * @return the gens
@@ -69,6 +77,12 @@ public class QPaceEvoState extends SimpleEvolutionState {
 		// an attempt is made to connect to island models etc.
 		exchanger.initializeContacts(this);
 		evaluator.initializeContacts(this);
+	}
+
+
+
+	public void setStatsPanel(StatsPanel statsPanel2) {
+		statsPanel = statsPanel2;
 	}
 
 }

@@ -4,6 +4,7 @@
 package GUI.SubPanels;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
@@ -20,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 import Core.qcevolutionbackend;
+import GUI.MainPanel;
 
 /**
  * @author Sam Ratcliff
@@ -63,8 +65,14 @@ public class ProblemSelectionPanel extends JPanel implements ActionListener,
 			description.setText(backend.getProbmanager().getSearchEngineDesc(
 					key));
 		}
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		selection = new JComboBox(selection_model);
 		selection.addActionListener(this);
+		selection.setPreferredSize(new Dimension((int) (screenSize.width * MainPanel.right_perc),
+				30));
+		selection.setMaximumSize(new Dimension((int) (screenSize.width * MainPanel.right_perc),
+				30));
 
 		be.getProbmanager().addObserver(this);
 

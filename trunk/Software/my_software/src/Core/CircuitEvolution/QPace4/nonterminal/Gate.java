@@ -51,12 +51,13 @@ public class Gate extends GPNode {
 		qins = QuantumInstructionEnum.values()[Math.abs(secinput.i
 				% QuantumInstructionEnum.values().length)];
 
+			children[1].eval(state, thread, input, stack, individual, problem);
+			int1 = rd.ex;
 		/*
 		 * Order of child 1 and 2 are reversed to that the returned value in
 		 * rd.i is the Qubit ID of the "Target" Qubit
 		 */
 
-		secinput = new QPaceData();
 		QuantumAlgorithm[] subalg = null;
 		if (QuantumInstructionEnum.hasSecondQubit(qins)) {
 			// Produce the "Control" Qubit ID
@@ -64,6 +65,7 @@ public class Gate extends GPNode {
 			int2 = rd.ex;
 		} else if (qins == QuantumInstructionEnum.Iterate) {
 
+			secinput = new QPaceData();
 			int2 = null;
 			// Produce the subalgorithm
 			children[2].eval(state, thread, secinput, stack, individual,
@@ -73,18 +75,6 @@ public class Gate extends GPNode {
 		} else {
 			int2 = null;
 		}
-		if (qins == QuantumInstructionEnum.Iterate) {
-			secinput = new QPaceData();
-			// Produce the "Target Qubit ID
-			children[1].eval(state, thread, secinput, stack, individual,
-					problem);
-			rd.ex = secinput.ex;
-			int1 = rd.ex;
-		} else {
-			// Produce the "Target Qubit ID
-			children[1].eval(state, thread, input, stack, individual, problem);
-			int1 = rd.ex;
-		}
 
 		if (QuantumInstructionEnum.hasPhase(qins)) {
 			// Produce the "Phase" value
@@ -93,7 +83,7 @@ public class Gate extends GPNode {
 		} else {
 			double1 = null;
 		}
-
+		rd.ex= int1;
 		rd.qa.addInstruction(qins, int1, int2, double1, subalg);
 
 	}

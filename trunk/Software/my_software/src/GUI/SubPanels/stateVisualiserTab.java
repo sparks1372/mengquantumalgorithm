@@ -37,9 +37,8 @@ public class stateVisualiserTab extends JPanel implements ListSelectionListener 
 	/**
 	 * @param ts
 	 */
-	public stateVisualiserTab(testset ts) {
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		selectorWidth = (int) (screenSize.width * 0.1);
+	public stateVisualiserTab(testset ts, String title) {
+		selectorWidth = (int) (50);
 
 		model = new DefaultListModel();
 		tset = ts;
@@ -60,7 +59,7 @@ public class stateVisualiserTab extends JPanel implements ListSelectionListener 
 		if (iter.hasNext()) {
 			tc = iter.next();
 			stateVisualiser = new columnchartvisualiser(tc.getFinalstate(), tc
-					.getLabel().length());
+					.getLabel().length(), title);
 			valueChanged(null);
 			startStateSelector.addListSelectionListener(this);
 		} else {
