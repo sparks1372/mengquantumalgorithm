@@ -64,7 +64,7 @@ public class basiccircuit implements Circuit {
 		String[] cir_diag = new String[qubits];
 
 		for (int i = 0; i < cir_diag.length; i++) {
-			cir_diag[i] = new String();
+			cir_diag[i] = new String("&");
 		}
 
 		Iterator<quantumgate> cir_iter = getCircuitlayout();
@@ -117,13 +117,21 @@ public class basiccircuit implements Circuit {
 							.getSecondQubit() - 1))
 							&& (((ControlledU_Gate) next_gate).getTarget() > ((ControlledU_Gate) next_gate)
 									.getSecondQubit())) {
+						int dif = ((ControlledU_Gate) next_gate).getTarget()
+								- ((ControlledU_Gate) next_gate)
+										.getSecondQubit();
 
-						cir_diag[i] = cir_diag[i].concat("\\ctrl \\qwx&");
+						cir_diag[i] = cir_diag[i].concat("\\ctrl{-" + dif
+								+ "} \\qwx&");
 
 					} else if (i == (((ControlledU_Gate) next_gate)
 							.getSecondQubit() - 1)) {
+						int dif = ((ControlledU_Gate) next_gate)
+								.getSecondQubit()
+								- ((ControlledU_Gate) next_gate).getTarget();
 
-						cir_diag[i] = cir_diag[i].concat("\\ctrl &");
+						cir_diag[i] = cir_diag[i].concat("\\ctrl{" + dif
+								+ "} &");
 
 					} else if ((i > (((ControlledU_Gate) next_gate).getTarget() - 1))
 							&& (i < (((ControlledU_Gate) next_gate)
