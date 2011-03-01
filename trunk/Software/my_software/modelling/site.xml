@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://www.soyatec.com/euml2">
+      eUML2 Official Site
+   </description>
+   <feature url="features/com.soyatec.euml2.free_3.6.0.20110120.jar" id="com.soyatec.euml2.free" version="3.6.0.20110120">
+      <category name="eUML2 Free Edition"/>
+   </feature>
+   <feature url="features/com.soyatec.euml2.doc_3.6.0.20110120.jar" id="com.soyatec.euml2.doc" version="3.6.0.20110120">
+      <category name="eUML2 Free Edition"/>
+   </feature>
+   <category-def name="eUML2 Free Edition" label="eUML2 Free Edition"/>
+</site>
