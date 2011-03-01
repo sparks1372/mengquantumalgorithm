@@ -1,0 +1,348 @@
+\chapter{Requirements}
+The requirements listed in this section are for the framework, fully implemented system and the client GUI.
+The requirements were maintained using an online tool called ReqMan\cite{reqman} by RequirementOne.
+This section and the requirements have been formed using the guidelines provided in the IEEE standard 830\cite{ieee830}.
+
+\section{Purpose}
+\subsection{Framework}
+The framework is aimed to allow research into Quantum Algorithms to concentrate on producing Quantum Algorithms.
+The framework is aimed to make it much simpler for research by different researchers to be combined and contrasted.
+
+\subsection{Fully Implemented Tool}
+The full implementation of a Quantum Algorithm search tool using the framework is to provide a working toolkit for researchers interested in finding Quantum Algorithms rather than the search techniques to find Quantum Algorithms.
+As the toolkit will use the framework it will also provide a potential foundation for future research into the search techniques.
+
+\subsection{Client GUI}
+The client GUI will provide an interface that should make the toolkit more accessible for researchers.
+Without the GUI provided, researchers would have to either embed the toolkit in their own application or within their own specific GUI.
+This is likely to reduce the potential use of the toolkit in the academic community.
+One of the main focusses of the toolkit is to try and provide a standardised framework for research of Quantum Algorithms.
+Not providing a GUI, resulting in many bespoke GUIs, goes against this focus.
+This is not to say that inclusion of the framework in 3rd party systems or improvement to the GUI is not encouraged.
+
+% \section{Scope}
+% The requirements listed in the following section cover the framework and the client GUI.
+% The full implementation, based on the QPace IV suite, is not covered by these requirements.
+% This is to improve the clarity between the framework and the implementation.
+% 
+% The requirements of the full implementation are listed in a separate section following the framework and client GUI requirements.
+
+\section{Definition, Acronyms, and Abbreviations}
+The definitions given here are consistent with those used in the rest of the document but are included as a matter of clarity.
+
+\textbf{System Size} - The number of qubits in the system. For example the quantum teleportation protocol has a fixed system size of 3 whereas the Quantum Fourier Transform can scale to any system size.
+
+\textbf{Quantum State} - A column vector of $2^n$ complex numbers representing the probability amplitudes and phase of the $2^n$ states $\ket{0}\rightarrow\ket{2^n-1}$ for a system size $n$.
+
+\textbf{Quantum Gate} - A complex unitary operation on a quantum state.
+
+\textbf{Quantum Circuit} - An ordered list of quantum gates to be applied to the quantum state.
+
+\textbf{Quantum Algorithm} - An ordered list of instructions used to construct a quantum circuit.
+
+\textbf{Suitability Measure} - A function to provide a performance of a solution with $0$ as the ``Best'' performance and performance decreasing as the function result increases.
+
+
+\section{Requirements Summaries}
+This section contains a summary of the requirements of each of the separate phases of the project.
+A full listing of specific requirements can be found in Appendix \ref{sec:reqs}.
+
+\subsection{Framework}
+\subsubsection{Additional Search Engines}
+\textbf{The framework shall allow researchers to provide search engines for the system to use.}
+This is important as one of the intended uses of the framework is for research into the techniques used for searching for quantum algorithms.
+The way in which the framework provides this shall not imply the use of any search technique in favour to any other.
+It is important that the framework shall effectively be research direction independent.
+
+\subsubsection{Additional Suitability Measures}
+\textbf{The framework shall allow researchers to provide suitability measures for the system to use.}
+A suitability measure is effectively a fitness function.
+However, the term fitness function is associated with the use of evolutionary techniques.
+With the tool intended to be technique independent the term suitability measure shall be used.
+
+It is well known that the suitability measure, performance metric, has a significant impact on the success of a search.
+However, it was also shown by Massey\cite{masseythesis} that in the search for quantum algorithms the search can be sensitive even to the level of complex number representation.
+The ability for researchers to provide suitability measures is therefore paramount for the framework to be useful and improve research progress rather than hinder it.
+
+Not only is this ability required by the researchers searching for quantum algorithms but also for those researchers concerned with finding successful suitability measures for use by the first group of researchers.
+
+\subsubsection{Quantum Algorithm Output}
+\textbf{The solution of a search, a quantum algorithm, shall be presented to the user as a list of instructions.}
+An algorithm is a list of instruction to follow in order to produce a circuit.
+The solution of a search using the framework is an algorithm.
+This solution shall be provided to the user as a list of instructions in a consistent format.
+
+\subsubsection{Visualising a Circuit}
+\textbf{The system shall provide visualisation of the circuit produced by the solution of the search for a system of a user specified number of qubits.}
+To ensure that the output of the search is helpful the framework shall provide a representation of the resulting circuit that can be rendered into a circuit diagram.
+
+The circuit visualisations produced shall follow the widely recognised conventions of each gates appearance.
+
+\subsubsection{Third Party Software}
+\textbf{The framework shall be able to be embedded in third party software.}
+The framework is intended for use by the research community and it is not intended to limit the ways that it can be used.
+As a result it is not only important that the framework be able to use third party software, search engines and suitability measures, but is also important for the framework to be available for inclusion in third party software.
+To achieve this knowledge of the internal implementation detail shall not be required.
+
+\subsubsection{Definition of Search Target}
+\textbf{The framework shall provide a standardised definition format for users to specify the target of the search.}
+All searches have a target, the shortest path or the minimum value for example.
+The searches that the framework are intended for are those to find a quantum algorithm to produce a circuit to solve a specific problem, to produce an equal superposition or the Quantum Fourier Transform circuit.
+The framework needs to provide a standard way of defining what the search target is.
+The standard shall be formalised so it is able to be used and produced by third party software.
+
+\subsubsection{Use of Configuration Files}
+\textbf{The customisation of the framework shall be provided through a series of configuration files.}
+All third party additions to the framework, search engines and suitability measures, shall be specified using a series of configuration file.
+These configuration files shall be well defined and able to be used and produced by third party software.
+
+\subsubsection{Provided Gates and Algorithm instructions}
+\textbf{The framework shall provide implementations of all gates specified in Figure \ref{fig:providedgates}.
+The framework shall provide algorithm instructions for each of these gates and for the instantiation of the Controlled-U gate with all single qubit gates.}
+Figure \ref{fig:providedgates} defines all the most well known quantum gates and indicates the visual representation convention used in the project.
+
+\begin{figure}
+ \begin{longtable}{|c c|c c|c c|}
+\hline & & & & & \\
+$
+\Qcircuit @C=1.0em @R=.7em {
+&\gate{X}&\qw
+}
+$
+& 
+$
+\begin{pmatrix}0&&1\\1&&0\end{pmatrix}
+$ 
+& 
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{Y}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}0&&-i\\i&&0\end{pmatrix}
+$
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+&\gate{Z}&\qw
+}
+$
+& 
+$
+\begin{pmatrix}1&&0\\0&&-1\end{pmatrix}
+$  \\ & & & & & \\
+\hline & & & & & \\
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{H}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}\frac{1}{\sqrt{2}}&&\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}&&-\frac{1}{\sqrt{2}}\end{pmatrix}
+$ 
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{RX}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}\cos{\frac{\theta}{2}}&&-i\sin{\frac{\theta}{2}}\\-i\sin{\frac{\theta}{2}}&&\cos{\frac{\theta}{2}}\end{pmatrix}
+$
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{RY}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}\cos{\frac{\theta}{2}}&&-\sin{\frac{\theta}{2}}\\\sin{\frac{\theta}{2}}&&\cos{\frac{\theta}{2}}\end{pmatrix}
+$  \\ & & & & & \\
+\hline & & & & & \\
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{RZ}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}e^{-i\frac{\theta}{2}}&&0\\0&&e^{i\frac{\theta}{2}}\end{pmatrix}
+$ 
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{V}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}1&&0\\0&&i\end{pmatrix}
+$
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{W}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}1&&0\\0&&-i\end{pmatrix}
+$  \\ & & & & & \\
+\hline & & & & & \\
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \gate{Zero}&\qw
+}
+$ 
+&
+$
+\begin{pmatrix}1&&1\\0&&0\end{pmatrix}
+$ 
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \qswap &\qw \\
+& \qswap \qwx &\qw
+}
+$ 
+&
+$
+\begin{pmatrix}a\\b\\c\\d\end{pmatrix} \rightarrow \begin{pmatrix}a\\c\\b\\d\end{pmatrix}
+$
+&
+$
+\Qcircuit @C=1.0em @R=.7em {
+& \ctrl{1} & \qw \\
+& \gate{U} \qwx & \qw
+}
+$ 
+&
+$
+\begin{pmatrix}I&&0\\0&&U\end{pmatrix}
+$  \\ & & & & & \\
+\hline
+  
+ \end{longtable}
+\caption{Supported Gates and Definitions}
+\label{fig:providedgates}
+\end{figure}
+
+\subsubsection{Algorithm Control Structures}
+\textbf{The system shall provide the iterate control structure and support nested iterate instructions.}
+
+\subsubsection{Producing Circuits from Algorithms}
+\textbf{The framework shall be able to produce a circuit, for any given number of qubits, from a quantum algorithm.}
+
+\subsubsection{Circuit Simulation}
+\textbf{The framework shall provide the simulation of a circuit given an initial state.}
+Using the gate definitions given in Figure \ref{fig:providedgates}, a circuit constructed of the supported gates shall be able to be accurately simulated.
+Given an initial state the framework shall be able to give the final state up to the accuracy of floating point arithmetic.
+
+\subsubsection{Step-by-Step State Evolution}
+\textbf{The framework shall provide a way to perform step-by-step evaluation of a circuit given an initial state}
+To aid researchers in understanding the algorithms and circuits produced as the result of a search a step-by-step evaluation shall be provided.
+Given an initial state and a circuit, the state after the application of each unitary operation, gate, shall be reported so the state evolution can be traced.
+
+This shall also provide a debugging mechanism to ensure that all unitary operations are performing the expected opertation on state.
+
+\subsection{Fully Implemented Tool}
+\subsubsection{Sample Search Engine}
+\textbf{The tool shall provide at least one implemented search engine.}
+The tool shall provide a basic search engine that will allow researchers interested in the quantum algorithms, rather than the search techniques, to use the tool ``out of the box''.
+The specific search engine is not specified.
+
+\subsubsection{Sample Suitability Measure}
+\textbf{The tool shall provide at least one implemented suitability measure.}
+The tool shall provide a basic suitability measure that will allow researchers interested in the quantum algorithms, rather than the suitability measure, to use the tool ``out of the box''.
+The specific suitability is not specified but shall be proven to allow basic circuit to the produced by search.
+
+\subsubsection{Sample Search Targets}
+\textbf{The tool shall provide a number of search targets with known outputs.}
+To allow search engine and suitability measure researchers to perform simple tests the tool shall provide a selection of basic search targets.
+The search targets included are not specified.
+
+\subsection{Client GUI}
+\subsubsection{Search Engine Selection}
+\textbf{The GUI shall provide a user with a selection of search engines to use in a search.}
+The GUI shall provide a selection between all search engines registered in the framework.
+The most recently selected search engine shall be used by subsequent search.
+
+\subsubsection{Suitability Measure Selection}
+\textbf{The GUI shall provide a user with a selection of suitability measures to use in a search.}
+The GUI shall provide a selection between all suitability measures registered in the framework.
+The most recently selected suitability measure shall be used by subsequent search.
+
+\subsubsection{Search Target Selection}
+\textbf{The GUI shall provide a user with a selection of search targets to be used as the search goal.}
+The GUI shall provide a seleciton between all search targets registered in the framework.
+The most recently selected search target shall be set for subsequent searches.
+
+\subsubsection{Search Target Creation}
+\textbf{The GUI shall provide a way for users to create a new search target without needing to explicitly write a configuration file.}
+Writing configuration files is quite monotonous and highly error prone.
+The GUI shall provide a way to create these configuration files that reduces the error rate.
+The way in which the GUI provides this is not expected to dramatically decrease the monotony due to the nature of the amount of information that need be specified for problems when high number of Qubits are involved.
+The inclusion of such a feature is very important to improve the usability of the system and improve the potential level of use in the research community.
+
+\subsubsection{Search Target Editing}
+\textbf{The GUI shall provide a way for users to edit the contents of a previously created search target without manual editing of the configuration file.}
+The size of the configuration file required to specify a search target will increase linearly with respect to the amount of test data.
+The size of the data is likely to follow the same rate of expansion as the quantum search space as the number of qubits, $n$, increases, $2^n$.
+With the size of configuration file increasing in such a dramatic way the risk of error when directly and manually editing the values in such files increases in a similar fashion.
+To improve the risk of errors the GUI shall provide a way to graphically edit the test data in a way that abstracts away from the configuration file structure.
+
+\subsubsection{Loading a Search Target From a Previously Defined Configuration File}
+\textbf{The GUI shall provide a way to import a predefined search target from a configuration file.}
+One of the intended uses of the GUI is for research into producing quantum algorithms.
+As part of this research it is likely that researchers will want to distribute the search target definitions they create.
+This distribution may be to collegues or simply to other computers for them to continue work.
+Either way once a search target is defined and distributed, the use of received search target configuration files should be supported by the GUI.
+The GUI shall provide a way for users to import search targets using the respective search target configuration file as long as the configuration file is of the correct format.
+
+\subsubsection{State Visualisation}
+\textbf{The GUI shall provide a way to visualise any quantum state.}
+A quantum state is defined as a vector of complex numbers.
+Depending on size, comparing two or more state can become monotonous.
+If the comparision of the two states does not need to be exact, a visual representation of the two states can provide a simpler, and quicker, method for comparision.
+To provide such comparison the GUI shall provide a way to visualise a quantum state.
+
+\subsubsection{Reporting the Search Result}
+\textbf{The GUI shall provide a way to report the search result, a quantum algorithm, to the user.}
+The GUI would be of no use to any quantum algorithm researcher if it did not provide the results of any searches.
+The GUI shall provide the quantum algorithm in the same way the framework reports the quantum algorithm result.
+This is to ensure that the format of the quantum algorithm reported does not change depending on whether the GUI is used or not.
+
+\subsubsection{Circuit Visualisation}
+\textbf{Given a quantum algorithm and a system size, the GUI shall produce a visualisation of the resulting circuit.}
+Some quantum algorithms produced using the search are likely to be hard to understand in pure algorithm form.
+Understanding a circuit is likely to be easier.
+To save researcher time in drawing the circuits by hand, the GUI shall provide a visualisation of the circuit for a specified system size.
+
+\subsubsection{Step-by-Step State Evolution}
+\textbf{The GUI shall provide a way to perform, control and visualise the step-by-step state evolution for an intial state and circuit.}
+The framework provides the ability to analyse the evolution of a satet with respect to an initial state and a circuit.
+The GUI shall provide a way of controlling and reporting this step by step evaluation to the user.
+
+\subsubsection{Tooltips}
+\textbf{The GUI shall provide user help through the use of tooltips.}
+All elements of the GUI shall be explained through the use of tooltips.
+
+\subsection{General Requirements}
+\subsubsection{Portability}
+\textbf{The framework, fully implemented tool and the GUI shall be able to be used on a range of Operating Systems.}
+The produced software shall be able to be run on:
+\begin{itemize}
+ \item Windows 7 32-Bit
+ \item Windows 7 64-Bit
+ \item Linux 32-Bit
+ \item Linux 64-Bit
+\end{itemize}
+
+\subsubsection{Usability}
+\textbf{Using either the fully implemented tool or the GUI a user shall be able to start a search within 30 seconds.}
+Using a predefined search target a user shall be able to initiate a search with a chosen search engine and suitability measure within 30 seconds of starting the software.
