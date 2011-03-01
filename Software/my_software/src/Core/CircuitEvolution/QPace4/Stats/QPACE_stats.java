@@ -44,9 +44,6 @@ public class QPACE_stats extends SimpleStatistics {
 	@Override
 	public void postEvaluationStatistics(EvolutionState state) {
 		// super.postEvaluationStatistics(state);
-
-		((QPaceEvoState) state).setGens(state.generation);
-		((QPaceEvoState) state).getProgressBar().setValue(state.generation);
 		Float avfit[] = new Float[state.population.subpops.length];
 		int count;
 		// for now we just print the best fitness per subpopulation.
@@ -93,7 +90,13 @@ public class QPACE_stats extends SimpleStatistics {
 
 			state.output.message("Subpop " + x
 					+ " mean fitness of generation: " + avfit[x]);
+			((QPaceEvoState) state).getStatsPanel().setFitness(((KozaFitness) best_of_run[x].fitness).standardizedFitness());
 		}
+
+		((QPaceEvoState) state).setGens(state.generation);
+		((QPaceEvoState) state).getProgressBar().setValue(state.generation);
+		((QPaceEvoState) state).getStatsPanel().setGens(state.generation);
+
 	}
 
 	/*

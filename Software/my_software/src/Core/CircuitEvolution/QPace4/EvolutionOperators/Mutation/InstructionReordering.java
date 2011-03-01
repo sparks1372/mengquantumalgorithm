@@ -22,9 +22,9 @@ import ec.util.Parameter;
  * @author Sam Ratcliff
  * 
  */
-public class InstructionMutation extends GPBreedingPipeline {
+public class InstructionReordering extends GPBreedingPipeline {
 
-	public static final String	P_MUTATEONENODE	= "instruction-mutation";
+	public static final String	P_MUTATEONENODE	= "instruction-reorder";
 	public static final int		NUM_SOURCES		= 1;
 
 	/** How the pipeline chooses a subtree to mutate */
@@ -35,7 +35,7 @@ public class InstructionMutation extends GPBreedingPipeline {
 
 	@Override
 	public Object clone() {
-		InstructionMutation c = (InstructionMutation) (super.clone());
+		InstructionReordering c = (InstructionReordering) (super.clone());
 
 		// deep-cloned stuff
 		c.nodeselect = (GPNodeSelector) (nodeselect.clone());
@@ -162,7 +162,7 @@ public class InstructionMutation extends GPBreedingPipeline {
 		int n = sources[0].produce(min, max, start, subpopulation, inds, state,
 				thread);
 
-//		// should we bother?
+		// should we bother?
 		if (!state.random[thread].nextBoolean(likelihood)) {
 			return reproduce(n, start, subpopulation, inds, state, thread,
 					false); // DON'T produce children from source -- we already
@@ -174,6 +174,7 @@ public class InstructionMutation extends GPBreedingPipeline {
 		// now let's mutate 'em
 		for (int q = start; q < n + start; q++) {
 			GPIndividual i = (GPIndividual) inds[q];
+
 			if ((tree != TREE_UNFIXED)
 					&& ((tree < 0) || (tree >= i.trees.length))) {
 				// uh oh
@@ -205,64 +206,10 @@ public class InstructionMutation extends GPBreedingPipeline {
 			p1 = nodeselect.pickNode(state, subpopulation, thread, i,
 					i.trees[t]);
 
-			if (p1 instanceof Gate) {
-				p1 = p1.children[0];
-				// generate a tree with a new root but the same children,
-				// which we will replace p1 with
-
-				GPType type;
-				type = p1.parentType(initializer);
-
-				p2 = (pickCompatibleNode(p1,
-						i.trees[t].constraints(initializer).functionset, state,
-						type, thread)).lightClone();
-
-				// if it's an ERC, let it set itself up
-				p2.resetNode(state, thread);
-
-				// p2's parent and argposition will be set automatically below
-
-				GPIndividual j;
-
-				if (sources[0] instanceof BreedingPipeline)
-				// it's already a copy, so just smash the tree in
-				{
-					j = i;
-					p1.replaceWith(p2);
-					j.evaluated = false;
-				} else {
-					j = (i.lightClone());
-
-					// Fill in various tree information that didn't get filled
-					// in
-					// there
-					j.trees = new GPTree[i.trees.length];
-
-					for (int x = 0; x < j.trees.length; x++) {
-						if (x == t) // we've got a tree with a kicking cross
-									// position!
-						{
-							j.trees[x] = (i.trees[x].lightClone());
-							j.trees[x].owner = j;
-							j.trees[x].child = i.trees[x].child
-									.cloneReplacingAtomic(p2, p1);
-							j.trees[x].child.parent = j.trees[x];
-							j.trees[x].child.argposition = 0;
-							j.evaluated = false;
-						} // it's changed
-						else {
-							j.trees[x] = (i.trees[x].lightClone());
-							j.trees[x].owner = j;
-							j.trees[x].child = (GPNode) (i.trees[x].child
-									.clone());
-							j.trees[x].child.parent = j.trees[x];
-							j.trees[x].child.argposition = 0;
-						}
-					}
-				}
-
-				// add the new individual, replacing its previous source
-				inds[q] = j;
+			if (p1 instanceof Gate && p1.children[1] instanceof Gate) {
+				GPNode temp = p1.children[0];
+				p1.children[0] = p1.children[1].children[0];
+				p1.children[1].children[0] = temp;
 			}
 		}
 		return n;

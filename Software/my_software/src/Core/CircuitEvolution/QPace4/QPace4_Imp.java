@@ -121,22 +121,30 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 	private JLabel						ethL;
 	private final static String			ethStr			= "# of Evaluation Threads";
 	private final static int			ethDef			= 8;
-	private JTextArea					treedepthTA;
-	private JLabel						treedepthL;
-	private final static String			treedepthStr	= "Minimum Initial Tree Depth";
-	private final static int			treedepthDef	= 20;
+	private JTextArea					mintreedepthTA;
+	private JLabel						mintreedepthL;
+	private final static String			mintreedepthStr	= "Minimum Initial Tree Depth";
+	private final static int			mintreedepthDef	= 10;
+	private JTextArea					maxtreedepthTA;
+	private JLabel						maxtreedepthL;
+	private final static String			maxtreedepthStr	= "Minimum Initial Tree Depth";
+	private final static int			maxtreedepthDef	= 20;
+	private JTextArea					elTA;
+	private JLabel						elL;
+	private final static String			elStr	= "# of Elites";
+	private final static int			elDef	= 1;
+	private JTextArea					xoverTA;
+	private JLabel						xoverL;
+	private final static String			xoverStr			= "CrossOver Rate";
+	private final static double			xoverDef			= 0.9;
+	private JTextArea					mutTA;
+	private JLabel						mutL;
+	private final static String			mutStr			= "Mutation Rate";
+	private final static double			mutDef			= 0.1;
 	private boolean[]					enabledGate;
 
-	private JPanel						statsPanel;
-	private JLabel						timeL;
-	private JLabel						timeTA;
-	private static String				timeStr			= "Time Taken";
-	private JLabel						numGenL;
-	private JLabel						numGenTA;
-	private JLabel						fitL;
-	private JLabel						fitTA;
-	private static String				fitStr			= "Best Fitness";
-
+	private StatsPanel						statsPanel;
+	
 	/**
 	 * 
 	 */
@@ -175,7 +183,6 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 	 */
 	@Override
 	public synchronized void Evolve() {
-		updateState(SearchEngineState.Searching);
 		ParameterDatabase parameters;
 		KozaFitness to_return = null;
 		Individual best_ind = null;
@@ -207,26 +214,18 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 			// changing instance variables (except for job and
 			// runtimeArguments, please), etc.
 
+			updateState(SearchEngineState.Searching);
 			// now we let it go
+			statsPanel.setVisible(true);
+			statsPanel.setFitness(0.0f);
+			statsPanel.setTime(0);
+			((QPaceEvoState) evoState).setStatsPanel(statsPanel);
 			long startT = System.currentTimeMillis();
 			evoState.run(EvolutionState.C_STARTED_FRESH);
 			((QPaceEvoState) evoState).getProgressBar().setValue(
 					((QPaceEvoState) evoState).numGenerations);
 			long finishT = System.currentTimeMillis();
-			long dif = finishT - startT;
-			int days = (int) Math.floor(dif / (24 * 60 * 60 * 100.0));
-			dif = dif - days * (24 * 60 * 60 * 100);
-			int hours = (int) Math.floor(dif / (60 * 60 * 100.0));
-			dif = dif - hours * (60 * 60 * 100);
-			int mins = (int) Math.floor(dif / (60 * 100.0));
-			dif = dif - mins * (60 * 100);
-			int secs = (int) Math.floor(dif / (100.0));
-			dif = dif - secs * (100);
-			int millisecs = (int) dif;
-			timeTA.setText(days + "::" + hours + "::" + mins + "::" + secs
-					+ "." + millisecs);
-			numGenTA.setText(Integer.toString(((QPaceEvoState) evoState)
-					.getGens() + 1));
+			
 
 			for (Individual individual : evoState.population.subpops[0].individuals) {
 				if ((to_return == null)
@@ -236,8 +235,8 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 					to_return = ((KozaFitness) individual.fitness);
 				}
 			}
-			fitTA.setText(Float.toString(to_return.standardizedFitness()));
-			statsPanel.setVisible(true);
+			statsPanel.setFitness(to_return.standardizedFitness());
+			statsPanel.setTime(finishT - startT);
 
 			if ((best_ind != null)) {
 				al = ((QPace_Ind) best_ind).qa;
@@ -289,26 +288,29 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				SwingWorker<Boolean, Float> ev = new SwingWorker<Boolean, Float>() {
-
+				Thread ev = new Thread(new Runnable() {
+					
 					@Override
-					protected Boolean doInBackground() throws Exception {
+					public void run() {
 						Evolve();
-						return null;
 					}
-				};
+				});
 
 				try {
 					int gen = Integer.parseInt(genTA.getText());
 					int pop = Integer.parseInt(popTA.getText());
 					int bth = Integer.parseInt(bthTA.getText());
 					int eth = Integer.parseInt(ethTA.getText());
-					int treedepth = Integer.parseInt(treedepthTA.getText());
+					int mintreedepth = Integer.parseInt(mintreedepthTA.getText());
+					int maxtreedepth = Integer.parseInt(maxtreedepthTA.getText());
+					int el = Integer.parseInt(elTA.getText());
+					double xover = Double.parseDouble(xoverTA.getText());
+					double mut = Double.parseDouble(mutTA.getText());
 					System.out.println("gen " + gen + " pop " + pop + " bth "
-							+ bth + " eth " + eth + " tree depth " + treedepth);
+							+ bth + " eth " + eth + " minimum tree depth " + mintreedepth+ " maximum tree depth " + maxtreedepth + " xover rate " +xover + " mutation rate " + mut);
 
-					pw.updateParams(enabledGate, gen, pop, bth, eth, treedepth);
-					ev.execute();
+					pw.updateParams(enabledGate, gen, pop, bth, eth, mintreedepth, maxtreedepth,el, xover, mut);
+					ev.start();
 					evolveDialog.setVisible(false);
 				} catch (NumberFormatException ex) {
 					JOptionPane
@@ -413,7 +415,7 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 	private JPanel getParamsPanel() {
 
 		JPanel paramsPanel = new JPanel();
-		paramsPanel.setLayout(new WrapLayout());
+		paramsPanel.setLayout(new BoxLayout(paramsPanel, BoxLayout.PAGE_AXIS));
 		paramsPanel.setBorder(BorderFactory.createEtchedBorder());
 
 		genTA = new JTextArea(Integer.toString(genDef));
@@ -452,20 +454,68 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 		ethPanel.add(ethL);
 		ethPanel.add(ethTA);
 
-		treedepthTA = new JTextArea(Integer.toString(treedepthDef));
-		treedepthL = new JLabel(treedepthStr);
+		mintreedepthTA = new JTextArea(Integer.toString(mintreedepthDef));
+		mintreedepthL = new JLabel(mintreedepthStr);
 
-		JPanel treedepthPanel = new JPanel();
-		treedepthPanel.setLayout(new FlowLayout());
+		JPanel mintreedepthPanel = new JPanel();
+		mintreedepthPanel.setLayout(new FlowLayout());
 
-		treedepthPanel.add(treedepthL);
-		treedepthPanel.add(treedepthTA);
+		mintreedepthPanel.add(mintreedepthL);
+		mintreedepthPanel.add(mintreedepthTA);
 
-		paramsPanel.add(popPanel);
-		paramsPanel.add(genPanel);
-		paramsPanel.add(bthPanel);
-		paramsPanel.add(ethPanel);
-		paramsPanel.add(treedepthPanel);
+		maxtreedepthTA = new JTextArea(Integer.toString(maxtreedepthDef));
+		maxtreedepthL = new JLabel(maxtreedepthStr);
+
+		JPanel maxtreedepthPanel = new JPanel();
+		maxtreedepthPanel.setLayout(new FlowLayout());
+
+		maxtreedepthPanel.add(maxtreedepthL);
+		maxtreedepthPanel.add(maxtreedepthTA);
+
+		elTA = new JTextArea(Integer.toString(elDef));
+		elL = new JLabel(elStr);
+
+		JPanel elPanel = new JPanel();
+		elPanel.setLayout(new FlowLayout());
+
+		elPanel.add(elL);
+		elPanel.add(elTA);
+
+		xoverTA = new JTextArea(Double.toString(xoverDef));
+		xoverL = new JLabel(xoverStr);
+
+		JPanel xoverPanel = new JPanel();
+		xoverPanel.setLayout(new FlowLayout());
+
+		xoverPanel.add(xoverL);
+		xoverPanel.add(xoverTA);
+
+		mutTA = new JTextArea(Double.toString(mutDef));
+		mutL = new JLabel(mutStr);
+
+		JPanel mutPanel = new JPanel();
+		mutPanel.setLayout(new FlowLayout());
+
+		mutPanel.add(mutL);
+		mutPanel.add(mutTA);
+
+		JPanel upperPanel = new JPanel(new WrapLayout());
+		JPanel midPanel = new JPanel(new WrapLayout());
+		JPanel lowerPanel = new JPanel(new WrapLayout());
+		
+		upperPanel.add(popPanel);
+		upperPanel.add(genPanel);
+		upperPanel.add(bthPanel);
+		upperPanel.add(ethPanel);
+		midPanel.add(elPanel);
+		midPanel.add(mintreedepthPanel);
+		midPanel.add(maxtreedepthPanel);
+		lowerPanel.add(xoverPanel);
+		lowerPanel.add(mutPanel);
+		
+		paramsPanel.add(upperPanel);
+		paramsPanel.add(midPanel);
+		paramsPanel.add(lowerPanel);
 
 		return paramsPanel;
 	}
@@ -555,9 +605,13 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 			int pop = Integer.parseInt(popTA.getText());
 			int bth = Integer.parseInt(bthTA.getText());
 			int eth = Integer.parseInt(ethTA.getText());
-			int treedepthth = Integer.parseInt(treedepthTA.getText());
+			int mintreedepthth = Integer.parseInt(mintreedepthTA.getText());
+			int maxtreedepthth = Integer.parseInt(maxtreedepthTA.getText());
+			int el = Integer.parseInt(elTA.getText());
+			double xover = Double.parseDouble(xoverTA.getText());
+			double mut = Double.parseDouble(mutTA.getText());
 
-			pw.updateParams(enabledGate, gen, pop, bth, eth, treedepthth);
+			pw.updateParams(enabledGate, gen, pop, bth, eth, mintreedepthth, maxtreedepthth,el, xover, mut);
 		} catch (NumberFormatException ex) {
 			JOptionPane
 					.showMessageDialog(
@@ -611,42 +665,11 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 	 * 
 	 */
 	private void setupSearchStatisticsPanel() {
-		statsPanel = new JPanel();
-		statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.PAGE_AXIS));
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		statsPanel.setMaximumSize(new Dimension(
-				(int) (screenSize.width * MainPanel.right_perc),
-				screenSize.height / 2));
-		timeL = new JLabel(timeStr);
-		timeTA = new JLabel();
-		numGenL = new JLabel(genStr);
-		numGenTA = new JLabel();
-		fitL = new JLabel(fitStr);
-		fitTA = new JLabel();
-
-		JPanel tPanel = new JPanel();
-		tPanel.setLayout(new FlowLayout());
-		tPanel.add(timeL);
-		tPanel.add(timeTA);
-
-		JPanel ngPanel = new JPanel();
-		ngPanel.setLayout(new FlowLayout());
-		ngPanel.add(numGenTA);
-		ngPanel.add(numGenL);
-
-		JPanel fPanel = new JPanel();
-		fPanel.setLayout(new FlowLayout());
-		fPanel.add(fitL);
-		fPanel.add(fitTA);
-
-		statsPanel.add(tPanel);
-		statsPanel.add(ngPanel);
-		statsPanel.add(fPanel);
-
+		statsPanel = new StatsPanel();
 		statsPanel.setVisible(false);
 	}
 
-	private void updateState(SearchEngineState s) {
+	private synchronized void updateState(SearchEngineState s) {
 		this.state = s;
 		notifyObservers();
 	}

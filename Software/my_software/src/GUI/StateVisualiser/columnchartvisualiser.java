@@ -39,12 +39,12 @@ public class columnchartvisualiser extends JPanel implements stateVisualiser {
 	/**
 	 * 
 	 */
-	public columnchartvisualiser(Matrix initialState, int labelLength) {
+	public columnchartvisualiser(Matrix initialState, int labelLength, String name) {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		chartWidth = (int) (screenSize.width * 0.5);
+		chartWidth = (int) (screenSize.width * 0.45);
 		chartHeight = (screenSize.height / 4);
 		stateDataSet = new DefaultCategoryDataset();
-		stateChart = createChart();
+		stateChart = createChart(name);
 		chartPanel = new ChartPanel(stateChart);
 		chartPanel.setPreferredSize(new Dimension(chartWidth - 10,
 				chartHeight - 10));
@@ -58,10 +58,10 @@ public class columnchartvisualiser extends JPanel implements stateVisualiser {
 	 * 
 	 * @return The chart.
 	 */
-	private JFreeChart createChart() {
+	private JFreeChart createChart(String name) {
 
 		// create the chart...
-		final JFreeChart chart = ChartFactory.createBarChart(null, // chart
+		final JFreeChart chart = ChartFactory.createBarChart(name, // chart
 																	// title
 				"State", // domain axis label
 				"Probability Amplitude", // range axis label
@@ -127,8 +127,8 @@ public class columnchartvisualiser extends JPanel implements stateVisualiser {
 					b_str);
 
 		}
-
-		stateChart = createChart();
+		
+		stateChart = createChart(stateChart.getTitle().getText());
 		chartPanel.setChart(stateChart);
 
 	}

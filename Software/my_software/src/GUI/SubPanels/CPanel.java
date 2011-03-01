@@ -31,7 +31,6 @@ public class CPanel extends JPanel implements Observer {
 		backend = be;
 		stateExpectedTabPanel = new stateVisualiserTabPanel(backend);
 		stateFinalTabPanel = new finalStateVisualiserTabPanel(backend);
-		stateFinalTabPanel.setVisible(false);
 		resPanel = new ResultPanel(backend);
 		resPanel.setVisible(false);
 		backend.addObserver(this);
@@ -57,10 +56,8 @@ public class CPanel extends JPanel implements Observer {
 			}
 		} else if (arg1 instanceof circuitsearchengine) {
 			if (backend.getCurrentse().getState() == SearchEngineState.SearchCompleteResultAvailable) {
-				stateFinalTabPanel.setVisible(true);
 				resPanel.setVisible(true);
 			} else {
-				stateFinalTabPanel.setVisible(false);
 				resPanel.setVisible(false);
 			}
 		}

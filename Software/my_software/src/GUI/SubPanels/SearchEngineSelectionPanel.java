@@ -5,6 +5,7 @@ package GUI.SubPanels;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
@@ -54,15 +55,20 @@ public class SearchEngineSelectionPanel extends JPanel implements
 		}
 		selection_model = new DefaultComboBoxModel(options);
 
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		selection = new JComboBox(selection_model);
 		selection.addActionListener(this);
+		selection.setPreferredSize(new Dimension((int) (screenSize.width * MainPanel.left_perc),
+				30));
+		selection.setMaximumSize(new Dimension((int) (screenSize.width * MainPanel.left_perc),
+				30));
 
 		description = new JTextPane();
 		description.setEditable(false);
 		description_scroller = new JScrollPane(description);
 		description_scroller
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		description_scroller.setPreferredSize(new Dimension(250, 155));
+//		description_scroller.setPreferredSize(new Dimension(250, 155));
 		description_scroller.setMinimumSize(new Dimension(10, 10));
 
 		if (backend.getCurrentse() != null) {

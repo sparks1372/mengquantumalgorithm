@@ -21,6 +21,13 @@ public class ReplacementPipeline extends MutationPipeline {
 				thread);
 		GPInitializer initializer = ((GPInitializer) state.initializer);
 
+//		// should we bother?
+		if (!state.random[thread].nextBoolean(likelihood)) {
+			return reproduce(n, start, subpopulation, inds, state, thread,
+					false); // DON'T produce children from source -- we already
+							// did
+		}
+
 		// now let's mutate 'em
 		for (int q = start; q < n + start; q++) {
 			inds[q] = state.population.subpops[subpopulation].species

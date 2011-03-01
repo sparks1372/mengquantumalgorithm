@@ -19,7 +19,7 @@
 </matrix_element>
 <matrix_element><!-- 1-->
 <Real>0.0</Real>
-<Imag>0.5</Imag>
+<Imag>0.707</Imag>
 </matrix_element>
 </final_state>
 </testcase>

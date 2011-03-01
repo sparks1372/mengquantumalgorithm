@@ -24,10 +24,10 @@ public class MainPanel extends JPanel {
 	private final JPanel				right_panel;
 	private final Dimension				screen_size;
 	public static final double			left_perc		= 0.2;
-	public static final double			centre_perc		= 0.55;
+	public static final double			centre_perc		= 0.59;
 	public static final double			right_perc		= 0.2;
-	public static final double			height_perc		= 0.8;
-	public static final int				titleFontSize	= 28;
+	public static final double			height_perc		= 0.95;
+	public static final int				titleFontSize	= 25;
 	private final qcevolutionbackend	backend;
 
 	/**
@@ -44,12 +44,22 @@ public class MainPanel extends JPanel {
 		centre_panel.setBorder(BorderFactory.createEtchedBorder());
 		right_panel.setBorder(BorderFactory.createEtchedBorder());
 
-		left_panel.setSize((int) (screen_size.width * left_perc),
-				(int) (screen_size.height * height_perc));
-		centre_panel.setSize((int) (screen_size.width * centre_perc),
-				(int) (screen_size.height * height_perc));
-		right_panel.setSize((int) (screen_size.width * right_perc),
-				(int) (screen_size.height * height_perc));
+
+		left_panel.setPreferredSize(new Dimension((int) (screen_size.width * left_perc),
+				(int) (screen_size.height * height_perc)));
+		centre_panel.setPreferredSize(new Dimension((int) (screen_size.width * centre_perc),
+				(int) (screen_size.height * height_perc)));
+		right_panel.setPreferredSize(new Dimension((int) (screen_size.width * right_perc),
+				(int) (screen_size.height * height_perc)));
+
+		left_panel.setMaximumSize(new Dimension((int) (screen_size.width * left_perc),
+				(int) (screen_size.height * height_perc)));
+		centre_panel.setMaximumSize(new Dimension((int) (screen_size.width * centre_perc),
+				(int) (screen_size.height * height_perc)));
+		right_panel.setMaximumSize(new Dimension((int) (screen_size.width * right_perc),
+				(int) (screen_size.height * height_perc)));
+		
+		
 
 		this.add(left_panel, BorderLayout.LINE_START);
 		this.add(centre_panel, BorderLayout.CENTER);

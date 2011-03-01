@@ -26,12 +26,12 @@ import GUI.MainPanel;
  * 
  */
 public class finalStateVisualiserTabPanel extends JPanel implements Observer {
-	private final qcevolutionbackend	backend;
-	private static String				qubits_string	= " Qubit(s)";
-	private static String				psLabelStr		= "Actual Final State Visualisation";
-	private JLabel						psLabel;
-	private JPanel						labelPanel;
-	private final JTabbedPane			tabPane;
+	private final qcevolutionbackend backend;
+	private static String qubits_string = " Qubit(s)";
+	private static String psLabelStr = "Actual Final State Visualisation";
+	private JLabel psLabel;
+	private JPanel labelPanel;
+	private final JTabbedPane tabPane;
 
 	/**
 	 * 
@@ -47,9 +47,10 @@ public class finalStateVisualiserTabPanel extends JPanel implements Observer {
 		}
 
 		tabPane = new JTabbedPane();
+		tabPane.setVisible(false);
 		setupLabels();
 
-		this.add(labelPanel);
+//		this.add(labelPanel);
 		this.add(tabPane);
 	}
 
@@ -79,12 +80,24 @@ public class finalStateVisualiserTabPanel extends JPanel implements Observer {
 				backend.getCurrentse().addObserver(this);
 			}
 		} else if (arg instanceof circuitsearchengine) {
-			tabPane.removeAll();
 
 			if ((backend.getCurrentse().getState() == SearchEngineState.SearchCompleteResultAvailable)
 					&& (backend.getCurrentse().getBestAlgorithm() != null)) {
+				this.remove(tabPane);
+				this.validate();
+				tabPane.removeAll();
 				testsuite results = backend.getCireval().getResults(
 						backend.getCurrentse().getBestAlgorithm());
+				
+				while(results.getKeys().isEmpty()){
+					try {
+						wait(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					results = backend.getCireval().getResults(
+							backend.getCurrentse().getBestAlgorithm());
+				}
 
 				Set<Integer> keys = results.getKeys();
 
@@ -94,11 +107,20 @@ public class finalStateVisualiserTabPanel extends JPanel implements Observer {
 				while (iter.hasNext()) {
 					int numofqubits = iter.next();
 					tab = new stateVisualiserTab(
-							results.getTestcases(numofqubits));
+							results.getTestcases(numofqubits), "Actual final state");
 					tabPane.add(
 							Integer.toString(numofqubits).concat(qubits_string),
 							tab);
 				}
+				if (tabPane.getTabCount() > 0) {
+					tabPane.setVisible(true);
+				} else {
+					tabPane.setVisible(false);
+				}
+				this.add(tabPane);
+				this.validate();
+			} else {
+				tabPane.setVisible(false);
 			}
 		}
 	}
