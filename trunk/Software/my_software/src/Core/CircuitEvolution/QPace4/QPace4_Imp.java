@@ -26,7 +26,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.SwingWorker;
 
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Algorithms.QuantumInstructionEnum;
@@ -37,7 +36,6 @@ import Core.CircuitEvolution.SearchEngineState;
 import Core.CircuitEvolution.circuitsearchengine;
 import Core.CircuitEvolution.QPace4.Individual.QPace_Ind;
 import Core.CircuitEvolution.QPace4.State.QPaceEvoState;
-import GUI.MainPanel;
 import Utils.WrapLayout;
 import ec.EvolutionState;
 import ec.Evolve;
@@ -129,22 +127,25 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 	private JLabel						maxtreedepthL;
 	private final static String			maxtreedepthStr	= "Minimum Initial Tree Depth";
 	private final static int			maxtreedepthDef	= 20;
+	private JCheckBox					timeCB;
+	private boolean						time			= true;
+	private final static String			timeStr			= "Use Time as Seeds?";
 	private JTextArea					elTA;
 	private JLabel						elL;
-	private final static String			elStr	= "# of Elites";
-	private final static int			elDef	= 1;
+	private final static String			elStr			= "# of Elites";
+	private final static int			elDef			= 1;
 	private JTextArea					xoverTA;
 	private JLabel						xoverL;
-	private final static String			xoverStr			= "CrossOver Rate";
-	private final static double			xoverDef			= 0.9;
+	private final static String			xoverStr		= "CrossOver Rate";
+	private final static double			xoverDef		= 0.9;
 	private JTextArea					mutTA;
 	private JLabel						mutL;
 	private final static String			mutStr			= "Mutation Rate";
 	private final static double			mutDef			= 0.1;
 	private boolean[]					enabledGate;
 
-	private StatsPanel						statsPanel;
-	
+	private StatsPanel					statsPanel;
+
 	/**
 	 * 
 	 */
@@ -225,7 +226,6 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 			((QPaceEvoState) evoState).getProgressBar().setValue(
 					((QPaceEvoState) evoState).numGenerations);
 			long finishT = System.currentTimeMillis();
-			
 
 			for (Individual individual : evoState.population.subpops[0].individuals) {
 				if ((to_return == null)
@@ -289,7 +289,7 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 			public void actionPerformed(ActionEvent e) {
 
 				Thread ev = new Thread(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						Evolve();
@@ -301,15 +301,22 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 					int pop = Integer.parseInt(popTA.getText());
 					int bth = Integer.parseInt(bthTA.getText());
 					int eth = Integer.parseInt(ethTA.getText());
-					int mintreedepth = Integer.parseInt(mintreedepthTA.getText());
-					int maxtreedepth = Integer.parseInt(maxtreedepthTA.getText());
+					int mintreedepth = Integer.parseInt(mintreedepthTA
+							.getText());
+					int maxtreedepth = Integer.parseInt(maxtreedepthTA
+							.getText());
 					int el = Integer.parseInt(elTA.getText());
+
 					double xover = Double.parseDouble(xoverTA.getText());
 					double mut = Double.parseDouble(mutTA.getText());
 					System.out.println("gen " + gen + " pop " + pop + " bth "
-							+ bth + " eth " + eth + " minimum tree depth " + mintreedepth+ " maximum tree depth " + maxtreedepth + " xover rate " +xover + " mutation rate " + mut);
+							+ bth + " eth " + eth + " minimum tree depth "
+							+ mintreedepth + " maximum tree depth "
+							+ maxtreedepth + " xover rate " + xover
+							+ " mutation rate " + mut);
 
-					pw.updateParams(enabledGate, gen, pop, bth, eth, mintreedepth, maxtreedepth,el, xover, mut);
+					pw.updateParams(enabledGate, gen, pop, bth, eth,
+							mintreedepth, maxtreedepth, el, xover, mut, time);
 					ev.start();
 					evolveDialog.setVisible(false);
 				} catch (NumberFormatException ex) {
@@ -472,6 +479,15 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 		maxtreedepthPanel.add(maxtreedepthL);
 		maxtreedepthPanel.add(maxtreedepthTA);
 
+		timeCB = new JCheckBox(timeStr, time);
+		timeCB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				time = !time;
+
+			}
+		});
+
 		elTA = new JTextArea(Integer.toString(elDef));
 		elL = new JLabel(elStr);
 
@@ -502,7 +518,7 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 		JPanel upperPanel = new JPanel(new WrapLayout());
 		JPanel midPanel = new JPanel(new WrapLayout());
 		JPanel lowerPanel = new JPanel(new WrapLayout());
-		
+
 		upperPanel.add(popPanel);
 		upperPanel.add(genPanel);
 		upperPanel.add(bthPanel);
@@ -510,9 +526,10 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 		midPanel.add(elPanel);
 		midPanel.add(mintreedepthPanel);
 		midPanel.add(maxtreedepthPanel);
+		midPanel.add(timeCB);
 		lowerPanel.add(xoverPanel);
 		lowerPanel.add(mutPanel);
-		
+
 		paramsPanel.add(upperPanel);
 		paramsPanel.add(midPanel);
 		paramsPanel.add(lowerPanel);
@@ -611,7 +628,8 @@ public class QPace4_Imp extends Evolve implements circuitsearchengine {
 			double xover = Double.parseDouble(xoverTA.getText());
 			double mut = Double.parseDouble(mutTA.getText());
 
-			pw.updateParams(enabledGate, gen, pop, bth, eth, mintreedepthth, maxtreedepthth,el, xover, mut);
+			pw.updateParams(enabledGate, gen, pop, bth, eth, mintreedepthth,
+					maxtreedepthth, el, xover, mut, time);
 		} catch (NumberFormatException ex) {
 			JOptionPane
 					.showMessageDialog(

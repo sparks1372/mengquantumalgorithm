@@ -23,7 +23,7 @@ gp.breed.internal-xover.ns.1= ec.gp.koza.KozaNodeSelector
 gp.breed.internal-xover.tries = 2
 gp.breed.internal-xover.maxdepth = 200
 
-#pop.subpop.0.species.pipe.source.2.source.0.pick-worst=true
+pop.subpop.0.species.pipe.source.2.source.0.pick-worst=true
 
 gp.breed.instruction-reorder.source.0 = ec.select.TournamentSelection
 gp.breed.instruction-reorder.ns.0 = ec.gp.koza.KozaNodeSelector

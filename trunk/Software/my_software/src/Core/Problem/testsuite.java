@@ -7,7 +7,7 @@ import java.util.Set;
 public class testsuite {
 
 	/**
-	 * @uml.property name="testcases" multiplicity="(0 -1)" dimension="1"
+	 * @uml.property name="testsets" multiplicity="(0 -1)" dimension="1"
 	 */
 	private final HashMap<Integer, testset>	testsets;
 
@@ -19,11 +19,11 @@ public class testsuite {
 	}
 
 	/**
-	 * Setter of the property <tt>testcases</tt>
+	 * Setter of the property <tt>testsets</tt>
 	 * 
 	 * @param testcases
-	 *            The testcases to set.
-	 * @uml.property name="testcases"
+	 *            The testsets to set.
+	 * @uml.property name="testsets"
 	 */
 	public void addTestcases(testset ts) {
 		if (testsets.containsKey(ts.getNum_of_qubits())) {
@@ -45,7 +45,8 @@ public class testsuite {
 		Iterator<Integer> iter = testsets.keySet().iterator();
 		testset ts;
 		while (iter.hasNext()) {
-			ts = testsets.get(iter.next()).copy();
+			int key = iter.next();
+			ts = testsets.get(key).copy();
 			to_ret.addTestcases(ts);
 		}
 		return to_ret;
@@ -53,14 +54,13 @@ public class testsuite {
 
 	public Set<Integer> getKeys() {
 		return testsets.keySet();
-
 	}
 
 	/**
-	 * Getter of the property <tt>testcases</tt>
+	 * Getter of the property <tt>testsets</tt>
 	 * 
-	 * @return Returns the testcases.
-	 * @uml.property name="testcases"
+	 * @return Returns the testsets.
+	 * @uml.property name="testsets"
 	 */
 	public testset getTestcases(int qubit) {
 		return testsets.get(qubit);

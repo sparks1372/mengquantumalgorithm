@@ -1,6 +1,11 @@
 package Jama;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 import java.text.DecimalFormat;
@@ -75,13 +80,9 @@ public class Matrix implements Cloneable, java.io.Serializable {
 	 */
 
 	/**
-	 * Construct a matrix from a copy of a 2-D array.
 	 * 
-	 * @param A
-	 *            Two-dimensional array of doubles.
-	 * @exception IllegalArgumentException
-	 *                All rows must have the same length
 	 */
+	private static final long	serialVersionUID	= -6160230780405251708L;
 
 	public static Matrix constructWithCopy(Complex[][] A) {
 		int m = A.length;
@@ -166,6 +167,45 @@ public class Matrix implements Cloneable, java.io.Serializable {
 			e.printStackTrace();
 		}
 		return A;
+	}
+
+	/**
+	 * Construct a matrix from a copy of a 2-D array.
+	 * 
+	 * @param A
+	 *            Two-dimensional array of doubles.
+	 * @exception IllegalArgumentException
+	 *                All rows must have the same length
+	 */
+
+	public static void main(String[] args) {
+		Matrix a = Matrix.identity(3, 3);
+		FileOutputStream fos = null;
+		ObjectOutputStream out = null;
+		try {
+			fos = new FileOutputStream("test.xml");
+			out = new ObjectOutputStream(fos);
+			out.writeObject(a);
+			out.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		Matrix b;
+		FileInputStream fis = null;
+		ObjectInputStream in = null;
+		try {
+			fis = new FileInputStream("test.xml");
+			in = new ObjectInputStream(fis);
+			b = (Matrix) in.readObject();
+			in.close();
+			b.print(0, 0);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		}
+
 	}
 
 	/*

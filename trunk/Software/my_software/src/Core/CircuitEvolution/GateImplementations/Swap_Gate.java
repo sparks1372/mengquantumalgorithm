@@ -3,7 +3,7 @@ package Core.CircuitEvolution.GateImplementations;
 import Core.CircuitEvolution.multiqubitquantumgate;
 import Jama.Matrix;
 import Utils.Complex;
-import Utils.Tensor_Matrix;
+import Utils.MatrixUtils;
 
 public class Swap_Gate implements multiqubitquantumgate {
 	private static final String	labelStr	= "Swap";
@@ -48,12 +48,12 @@ public class Swap_Gate implements multiqubitquantumgate {
 
 		Matrix temp = Matrix.identity(1, 1);
 		for (int i = 1; i < Math.abs(targ1 - targ2); i++) {
-			temp = Tensor_Matrix.tensor_prod(temp, Matrix.identity(2, 2));
+			temp = MatrixUtils.tensor_prod(temp, Matrix.identity(2, 2));
 		}
-		A = Tensor_Matrix.tensor_prod(temp, A);
-		B = Tensor_Matrix.tensor_prod(temp, B);
-		C = Tensor_Matrix.tensor_prod(temp, C);
-		D = Tensor_Matrix.tensor_prod(temp, D);
+		A = MatrixUtils.tensor_prod(temp, A);
+		B = MatrixUtils.tensor_prod(temp, B);
+		C = MatrixUtils.tensor_prod(temp, C);
+		D = MatrixUtils.tensor_prod(temp, D);
 		int dim = A.getColumnDimension() * 2;
 		unitary = new Matrix(dim, dim);
 		unitary.setMatrix(0, A.getColumnDimension() - 1, 0,
@@ -66,7 +66,7 @@ public class Swap_Gate implements multiqubitquantumgate {
 				A.getColumnDimension(), dim - 1, D);
 
 		if (Math.min(targ1, targ2) != 1) {
-			unitary = Tensor_Matrix.tensor_prod(Matrix.identity(
+			unitary = MatrixUtils.tensor_prod(Matrix.identity(
 					(int) Math.pow(2, targ2 < targ1 ? targ2 - 1 : targ1 - 1),
 					(int) Math.pow(2, targ2 < targ1 ? targ2 - 1 : targ1 - 1)),
 					unitary);
@@ -79,7 +79,7 @@ public class Swap_Gate implements multiqubitquantumgate {
 
 		Matrix operation = unitary;
 		if (Math.max(targ1, targ2) != qubits) {
-			operation = Tensor_Matrix.tensor_prod(operation, Matrix.identity(
+			operation = MatrixUtils.tensor_prod(operation, Matrix.identity(
 					(int) (targ2 > targ1 ? Math.pow(2, qubits - targ2) : Math
 							.pow(2, qubits - targ1)),
 					(int) (targ2 > targ1 ? Math.pow(2, qubits - targ2) : Math

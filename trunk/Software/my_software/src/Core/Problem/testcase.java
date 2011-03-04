@@ -34,8 +34,8 @@ public class testcase {
 	 */
 	public testcase copy() {
 		testcase to_ret = new testcase(getId(), getLabel());
-		to_ret.setStartingstate(getStartingstate().copy());
-		to_ret.setFinalstate(getFinalstate().copy());
+		to_ret.setStartingstate(getStartingStateCopy());
+		to_ret.setFinalstate(getFinalStateCopy());
 		return to_ret;
 	}
 
@@ -47,6 +47,18 @@ public class testcase {
 	 */
 	public Matrix getFinalstate() {
 		return finalstate;
+	}
+
+	/**
+	 * Getter of the property <tt>finalstate</tt> BE CAREFULL WHEN USING, ONLY
+	 * TO BE USED WHEN EDITTING THE TEST CASE. FOR READ-ONLY USE getFinalstate
+	 * INSTEAD.
+	 * 
+	 * @return Returns the finalstate.
+	 * @uml.property name="finalstate"
+	 */
+	public Matrix getFinalStateCopy() {
+		return finalstate.copy();
 	}
 
 	/**
@@ -70,12 +82,24 @@ public class testcase {
 	}
 
 	/**
+	 * Getter of the property <tt>startingstate</tt> BE CAREFULL WHEN USING,
+	 * ONLY TO BE USED WHEN EDITTING THE TEST CASE. FOR READ-ONLY USE
+	 * getStartingStateCopy INSTEAD.
+	 * 
+	 * @return Returns the startingstate.
+	 * @uml.property name="startingstate"
+	 */
+	public Matrix getStartingState() {
+		return startingstate;
+	}
+
+	/**
 	 * Getter of the property <tt>startingstate</tt>
 	 * 
 	 * @return Returns the startingstate.
 	 * @uml.property name="startingstate"
 	 */
-	public Matrix getStartingstate() {
+	public Matrix getStartingStateCopy() {
 		return startingstate.copy();
 	}
 

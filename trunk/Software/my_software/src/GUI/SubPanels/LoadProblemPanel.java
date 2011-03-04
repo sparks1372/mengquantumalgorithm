@@ -24,6 +24,7 @@ import javax.swing.JTextArea;
 
 import Core.qcevolutionbackend;
 import GUI.ProblemEditor.Implementation.XMLFilter;
+import Utils.WindowUtils;
 
 /**
  * @author Sam Ratcliff
@@ -94,6 +95,7 @@ public class LoadProblemPanel extends JDialog implements ActionListener {
 		this.getContentPane().add(buttonPanel);
 
 		this.pack();
+		WindowUtils.centre(this);
 	}
 
 	@Override

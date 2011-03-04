@@ -35,15 +35,18 @@ public class TestSuiteToXML {
 				int num_of_qubits = qubit_num_iterator.next();
 				out.write("<testset NumQubits=\"" + num_of_qubits + "\">\n");
 				ts = testsuite.getTestcases(num_of_qubits);
+				if (num_of_qubits < 0) {
+					num_of_qubits = Math.abs(num_of_qubits);
+				}
 				Iterator<testcase> testcase_iter = ts.getTestcases();
 				while (testcase_iter.hasNext()) {
 					tc = testcase_iter.next();
 					out.write("<testcase><!--" + tc.getLabel() + "-->\n");
 					out.write("<starting_state>\n");
-					ss = tc.getStartingstate();
+					ss = tc.getStartingStateCopy();
 					for (index = 0; index < ss.getRowDimension(); index++) {
 						String b_str = Integer.toBinaryString(index);
-						while (b_str.length() != num_of_qubits) {
+						while (b_str.length() < num_of_qubits) {
 							b_str = zero_string.concat(b_str);
 						}
 						out.write("<matrix_element><!-- " + b_str + "-->\n");
@@ -58,10 +61,10 @@ public class TestSuiteToXML {
 					out.write("</starting_state>\n");
 
 					out.write("<final_state>\n");
-					fs = tc.getFinalstate();
+					fs = tc.getFinalStateCopy();
 					for (index = 0; index < fs.getRowDimension(); index++) {
 						String b_str = Integer.toBinaryString(index);
-						while (b_str.length() != num_of_qubits) {
+						while (b_str.length() < num_of_qubits) {
 							b_str = zero_string.concat(b_str);
 						}
 						out.write("<matrix_element><!-- " + b_str + "-->\n");

@@ -26,12 +26,12 @@ import GUI.MainPanel;
  * 
  */
 public class finalStateVisualiserTabPanel extends JPanel implements Observer {
-	private final qcevolutionbackend backend;
-	private static String qubits_string = " Qubit(s)";
-	private static String psLabelStr = "Actual Final State Visualisation";
-	private JLabel psLabel;
-	private JPanel labelPanel;
-	private final JTabbedPane tabPane;
+	private final qcevolutionbackend	backend;
+	private static String				qubits_string	= " Qubit(s)";
+	private static String				psLabelStr		= "Circuit Produced State Visualisation";
+	private JLabel						psLabel;
+	private JPanel						labelPanel;
+	private final JTabbedPane			tabPane;
 
 	/**
 	 * 
@@ -50,7 +50,7 @@ public class finalStateVisualiserTabPanel extends JPanel implements Observer {
 		tabPane.setVisible(false);
 		setupLabels();
 
-//		this.add(labelPanel);
+		this.add(labelPanel);
 		this.add(tabPane);
 	}
 
@@ -88,8 +88,8 @@ public class finalStateVisualiserTabPanel extends JPanel implements Observer {
 				tabPane.removeAll();
 				testsuite results = backend.getCireval().getResults(
 						backend.getCurrentse().getBestAlgorithm());
-				
-				while(results.getKeys().isEmpty()){
+
+				while (results.getKeys().isEmpty()) {
 					try {
 						wait(500);
 					} catch (InterruptedException e) {
@@ -107,7 +107,7 @@ public class finalStateVisualiserTabPanel extends JPanel implements Observer {
 				while (iter.hasNext()) {
 					int numofqubits = iter.next();
 					tab = new stateVisualiserTab(
-							results.getTestcases(numofqubits), "Actual final state");
+							results.getTestcases(numofqubits), "");
 					tabPane.add(
 							Integer.toString(numofqubits).concat(qubits_string),
 							tab);

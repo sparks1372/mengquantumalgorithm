@@ -24,6 +24,7 @@ public class InnerEditorPanel extends JPanel implements ListSelectionListener {
 	private JPanel					test_case_editor;
 	private final DefaultListModel	model;
 	private final JLabel			tc_label	= new JLabel("Starting State");
+	private final JLabel			final_label	= new JLabel("Final State");
 	private final TestCaseEditor	tce;
 
 	public InnerEditorPanel(testset tset) {
@@ -56,9 +57,14 @@ public class InnerEditorPanel extends JPanel implements ListSelectionListener {
 		left_panel.add(tc_label);
 		left_panel.add(listScroller);
 
+		JPanel finalPanel = new JPanel();
+		finalPanel.setLayout(new BoxLayout(finalPanel, BoxLayout.PAGE_AXIS));
+		finalPanel.add(final_label);
+		finalPanel.add(tce);
+
 		this.add(left_panel, BorderLayout.LINE_START);
 
-		this.add(tce, BorderLayout.CENTER);
+		this.add(finalPanel, BorderLayout.CENTER);
 
 	}
 
@@ -83,6 +89,6 @@ public class InnerEditorPanel extends JPanel implements ListSelectionListener {
 			}
 
 		}
-		tce.setTestCase(tc);
+		tce.setMatrix(tc.getFinalstate());
 	}
 }

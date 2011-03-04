@@ -1,5 +1,7 @@
 package Utils;
 
+import java.io.Serializable;
+
 /**
  * Complex implements a complex number and defines complex arithmetic and
  * mathematical functions Last Updated February 27, 2001 Copyright 1997-2001
@@ -7,7 +9,12 @@ package Utils;
  * @version 1.0
  * @author Andrew G. Bennett
  */
-public class Complex extends Object {
+public class Complex extends Object implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -4268415886956636625L;
 
 	public static Complex euclid(Complex a, Complex b) {
 		Complex to_return = new Complex(0, 0);
