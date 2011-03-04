@@ -52,7 +52,7 @@ public class PhaseSensitiveParsimoniousSimpleFitness implements FitnessFunction 
 				count++;
 			}
 		}
-		int size = circuit.getSize() + algo.getSize();
+		// int size = circuit.getSize() + algo.getSize();
 		// fit = fit * 100;
 		// fit = size + fit;
 		return new Fitness(fit, count);

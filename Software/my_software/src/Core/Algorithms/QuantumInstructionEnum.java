@@ -28,6 +28,12 @@ public enum QuantumInstructionEnum {
 	Create_CRZ,
 	Create_CRY,
 	Create_Zero;
+	// Create_Custom1,
+	// Create_Custom2,
+	// Create_Custom3,
+	// Create_CCustom1,
+	// Create_CCustom2,
+	// Create_CCustom3;
 	public static boolean hasPhase(QuantumInstructionEnum i) {
 		switch (i) {
 			case Create_P:
@@ -58,6 +64,9 @@ public enum QuantumInstructionEnum {
 			case Create_CY:
 			case Create_CZ:
 			case Create_SWAP:
+				// case Create_CCustom1:
+				// case Create_CCustom2:
+				// case Create_CCustom3:
 				return true;
 			default:
 				return false;

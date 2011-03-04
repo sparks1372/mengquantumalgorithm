@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,10 +44,16 @@ class ClockLabel extends JLabel implements ActionListener {
  */
 public class qcevolutionfrontend extends JFrame {
 
-	public static void main(String[] args) {
-		qcevolutionfrontend frame = new qcevolutionfrontend("Test", args[0],
-				args[1], args[2]);
-		frame.setVisible(true);
+	public static void main(final String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				qcevolutionfrontend frame = new qcevolutionfrontend("Test",
+						args[0], args[1], args[2]);
+				frame.setVisible(true);
+			}
+		});
+
 	}
 
 	/**

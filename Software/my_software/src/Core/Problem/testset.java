@@ -4,7 +4,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import Core.qcevolutionbackend;
+import Jama.Matrix;
+
 public class testset {
+
+	private final Matrix[]			customgates	= new Matrix[qcevolutionbackend.CUSTOMGATELIMIT];
 
 	/**
 	 * @uml.property name="testcases"
@@ -47,6 +52,22 @@ public class testset {
 		return to_ret;
 	}
 
+	public Matrix getCustomGate(int cgate) throws IllegalArgumentException {
+		if ((cgate >= customgates.length) || (cgate < 0)) {
+			throw new IllegalArgumentException();
+		}
+		return customgates[cgate];
+	}
+
+	public int getCustomGateSize(int cgate) throws IllegalArgumentException {
+		if ((cgate >= customgates.length) || (cgate < 0)) {
+			throw new IllegalArgumentException();
+		}
+		double qubits = Math.log(getCustomGate(cgate).getRowDimension())
+				/ Math.log(2);
+		return (int) Math.round(qubits);
+	}
+
 	/**
 	 * Getter of the property <tt>num_of_qubits</tt>
 	 * 
@@ -76,4 +97,13 @@ public class testset {
 	public Iterator<testcase> getTestcases() {
 		return testcases.listIterator();
 	}
+
+	public void setCustomGate(int cgate, Matrix m)
+			throws IllegalArgumentException {
+		if ((cgate >= customgates.length) || (cgate < 0)) {
+			throw new IllegalArgumentException();
+		}
+		customgates[cgate] = m;
+	}
+
 }

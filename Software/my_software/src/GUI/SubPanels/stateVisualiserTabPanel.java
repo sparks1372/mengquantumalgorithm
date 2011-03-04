@@ -26,7 +26,7 @@ import GUI.MainPanel;
 public class stateVisualiserTabPanel extends JPanel implements Observer {
 	private final qcevolutionbackend	backend;
 	private static String				qubits_string	= " Qubit(s)";
-	private static String				psLabelStr		= "Expected Final State Visualisation";
+	private static String				psLabelStr		= "Test Suite State Visualisation";
 	private JLabel						psLabel;
 	private JPanel						labelPanel;
 	private final JTabbedPane			tabPane;
@@ -44,7 +44,7 @@ public class stateVisualiserTabPanel extends JPanel implements Observer {
 		tabPane = new JTabbedPane();
 		setupLabels();
 
-//		this.add(labelPanel);
+		this.add(labelPanel);
 		this.add(tabPane);
 	}
 
@@ -79,7 +79,7 @@ public class stateVisualiserTabPanel extends JPanel implements Observer {
 			while (iter.hasNext()) {
 				int numofqubits = iter.next();
 				tab = new stateVisualiserTab(qp.getTestSuite().getTestcases(
-						numofqubits), "Expected final state");
+						numofqubits), "");
 				tabPane.add(
 						Integer.toString(numofqubits).concat(qubits_string),
 						tab);

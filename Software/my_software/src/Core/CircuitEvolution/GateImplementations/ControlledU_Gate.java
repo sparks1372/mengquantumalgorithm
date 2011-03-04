@@ -5,7 +5,7 @@ import Core.CircuitEvolution.multiqubitquantumgate;
 import Jama.Matrix;
 import Testing.predefined_states;
 import Utils.Complex;
-import Utils.Tensor_Matrix;
+import Utils.MatrixUtils;
 
 public class ControlledU_Gate implements multiqubitquantumgate {
 	public static void main(String[] args) {
@@ -49,31 +49,31 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 
 			Matrix spacing = Matrix.identity(1, 1);
 			for (int i = 1; i < Math.abs(targ - ctrl); i++) {
-				spacing = Tensor_Matrix.tensor_prod(spacing,
+				spacing = MatrixUtils.tensor_prod(spacing,
 						Matrix.identity(2, 2));
 			}
 
 			Matrix nonControlUnitary;
 			Matrix controlUnitary;
 			if (ctrl > targ) {
-				nonControlUnitary = Tensor_Matrix.tensor_prod(
+				nonControlUnitary = MatrixUtils.tensor_prod(
 						nonControlMat,
-						Tensor_Matrix.tensor_prod(spacing,
+						MatrixUtils.tensor_prod(spacing,
 								Matrix.identity(2, 2)));
-				controlUnitary = Tensor_Matrix.tensor_prod(controlMat,
-						Tensor_Matrix.tensor_prod(spacing, gateU));
+				controlUnitary = MatrixUtils.tensor_prod(controlMat,
+						MatrixUtils.tensor_prod(spacing, gateU));
 			} else {
-				nonControlUnitary = Tensor_Matrix.tensor_prod(
+				nonControlUnitary = MatrixUtils.tensor_prod(
 						Matrix.identity(2, 2),
-						Tensor_Matrix.tensor_prod(spacing, nonControlMat));
-				controlUnitary = Tensor_Matrix.tensor_prod(gateU,
-						Tensor_Matrix.tensor_prod(spacing, controlMat));
+						MatrixUtils.tensor_prod(spacing, nonControlMat));
+				controlUnitary = MatrixUtils.tensor_prod(gateU,
+						MatrixUtils.tensor_prod(spacing, controlMat));
 			}
 
 			unitary = nonControlUnitary.plus(controlUnitary);
 
 			if (Math.min(targ, ctrl) != 1) {
-				unitary = Tensor_Matrix.tensor_prod(unitary, Matrix.identity(
+				unitary = MatrixUtils.tensor_prod(unitary, Matrix.identity(
 						(int) Math.pow(2, ctrl < targ ? ctrl - 1 : targ - 1),
 						(int) Math.pow(2, ctrl < targ ? ctrl - 1 : targ - 1)));
 			}
@@ -93,7 +93,7 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 
 			Matrix operation = unitary;
 			if (Math.max(targ, ctrl) != qubits) {
-				operation = Tensor_Matrix.tensor_prod(Matrix.identity(
+				operation = MatrixUtils.tensor_prod(Matrix.identity(
 						(int) (ctrl > targ ? Math.pow(2, qubits - ctrl) : Math
 								.pow(2, qubits - targ)),
 						(int) (ctrl > targ ? Math.pow(2, qubits - ctrl) : Math

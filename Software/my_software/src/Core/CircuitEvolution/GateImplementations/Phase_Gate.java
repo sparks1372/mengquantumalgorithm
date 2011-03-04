@@ -6,7 +6,7 @@ import Core.Circuit.quantumgate;
 import Jama.Matrix;
 import Testing.predefined_states;
 import Utils.Complex;
-import Utils.Tensor_Matrix;
+import Utils.MatrixUtils;
 
 public class Phase_Gate implements quantumgate {
 	private static final String	labelStr	= "P";
@@ -138,9 +138,9 @@ public class Phase_Gate implements quantumgate {
 		Matrix iden = new Matrix(I);
 		for (int index = 1; index <= qubits; index++) {
 			if (index == targ) {
-				operation = Tensor_Matrix.tensor_prod(unitary, operation);
+				operation = MatrixUtils.tensor_prod(unitary, operation);
 			} else {
-				operation = Tensor_Matrix.tensor_prod(iden, operation);
+				operation = MatrixUtils.tensor_prod(iden, operation);
 			}
 		}
 		return operation.times(start_state);

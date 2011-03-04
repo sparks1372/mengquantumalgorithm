@@ -8,7 +8,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -30,6 +29,7 @@ import GUI.ProblemEditor.Implementation.InnerEditorPanel;
 import GUI.ProblemEditor.Implementation.TestSuiteToXML;
 import GUI.ProblemEditor.Implementation.XMLEditor;
 import GUI.ProblemEditor.Implementation.XMLFilter;
+import Utils.WindowUtils;
 
 /**
  * @author Sam Ratcliff
@@ -46,7 +46,8 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 	private JButton						okayButton;
 	private JButton						cancelButton;
 	private JButton						saveButton;
-	private JButton						addTestSetButton;
+	private JButton						addTestSetButton,
+			addSuperpositionTestSetButton;
 	private JButton						deleteTestSetButton;
 	private JLabel						nameLabel, descLabel, title;
 	private JTextArea					name;
@@ -59,9 +60,6 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 	public EditProblemPanel(qcevolutionbackend be, quantumproblem qp) {
 
 		backend = be;
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		setBounds(screenSize.width / 4, screenSize.height / 4,
-				screenSize.width / 2, screenSize.height / 2);
 		setUndecorated(true);
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		this.getContentPane().setLayout(
@@ -93,6 +91,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		editorButtonPanel.setLayout(new BoxLayout(editorButtonPanel,
 				BoxLayout.PAGE_AXIS));
 		editorButtonPanel.add(addTestSetButton);
+		editorButtonPanel.add(addSuperpositionTestSetButton);
 		editorButtonPanel.add(deleteTestSetButton);
 
 		JPanel editorTablePanel = new JPanel();
@@ -123,7 +122,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		this.getContentPane().add(buttonPanel);
 
 		this.pack();
-		centre();
+		WindowUtils.centre(this);
 
 	}
 
@@ -203,7 +202,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 				}
 				tsXmlEditor.addTestSet(q);
 				this.pack();
-				centre();
+				WindowUtils.centre(this);
 			}
 		} else if (e.getSource() == deleteTestSetButton) {
 			int q = ((InnerEditorPanel) (tsXmlEditor.getSelectedComponent()))
@@ -214,16 +213,25 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 			if (result == JOptionPane.YES_OPTION) {
 				tsXmlEditor.removeCurrentTestSet();
 				this.pack();
-				centre();
+				WindowUtils.centre(this);
 			}
+		} else if (e.getSource() == addSuperpositionTestSetButton) {
+			int s = Integer.parseInt((String) JOptionPane.showInputDialog(this,
+					"Add Test Set for how many Qubits?", "Qubit Number",
+					JOptionPane.PLAIN_MESSAGE, null, null, "1"));
+
+			if (s > 10) {
+				JOptionPane
+						.showMessageDialog(
+								this,
+								"Maximum number of Qubits is 10. Adding test set for 10 Qubits",
+								"Message", JOptionPane.INFORMATION_MESSAGE);
+				s = 10;
+			}
+			tsXmlEditor.addSuperpositionalTestSet(s);
+			this.pack();
+			WindowUtils.centre(this);
 		}
-	}
-
-	private void centre() {
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation(screenSize.width / 2 - this.getWidth() / 2,
-				screenSize.height / 2 - this.getHeight() / 2);
-
 	}
 
 	private void setupButtons() {
@@ -257,6 +265,12 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		deleteTestSetButton.addActionListener(this);
 		deleteTestSetButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		deleteTestSetButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+		addSuperpositionTestSetButton = new JButton(
+				"Add Superpositional TestSet");
+		addSuperpositionTestSetButton.addActionListener(this);
+		addSuperpositionTestSetButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		addSuperpositionTestSetButton.setAlignmentY(Component.CENTER_ALIGNMENT);
 
 	}
 

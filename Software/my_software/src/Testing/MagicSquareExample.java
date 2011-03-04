@@ -3,7 +3,7 @@ package Testing;
 //package Jama.examples;
 import Jama.Matrix;
 import Utils.Complex;
-import Utils.Tensor_Matrix;
+import Utils.MatrixUtils;
 
 /** Example of use of Tensor_Matrix Class, featuring magic squares. **/
 
@@ -178,7 +178,7 @@ public class MagicSquareExample {
 		Matrix iden = Matrix.identity(2, 2);
 		Matrix had_gate = new Matrix(hadamard);
 
-		Matrix tens_mat = Tensor_Matrix.tensor_prod(iden, had_gate);
+		Matrix tens_mat = MatrixUtils.tensor_prod(iden, had_gate);
 
 		tens_mat.print(5, 3);
 

@@ -21,6 +21,7 @@ import Core.qcevolutionbackend;
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Circuit.Circuit;
 import Core.CircuitEvolution.SearchEngineState;
+import GUI.CircuitEvaluation.StepByStepEvaluationDialog;
 import GUI.SubPanels.ResultPanels.AlgorithmPanel;
 import GUI.SubPanels.ResultPanels.CircuitParentPanel;
 import GUI.SubPanels.ResultPanels.QCircuitPanel;
@@ -37,8 +38,10 @@ public class ResultPanel extends JPanel implements Observer, ActionListener {
 	private final CircuitParentPanel	circuitPanel;
 	private final String				numQubitsLabelStr		= "Number of Qubits";
 	private final String				buildCircuitButtonStr	= "Rebuild Circuit";
+	private final String				debugCircuitButtonStr	= "Step-By-Step Evaluation";
 	private final JLabel				numQubitsLabel;
 	private final JButton				buildCircuitButton;
+	private final JButton				debugCircuitButton;
 	private final JTextArea				numQubits;
 	private int							numOfQubits				= 1;
 	private final JPanel				qubitPanel;
@@ -76,11 +79,16 @@ public class ResultPanel extends JPanel implements Observer, ActionListener {
 		buildCircuitButton.setText(buildCircuitButtonStr);
 		buildCircuitButton.addActionListener(this);
 
+		debugCircuitButton = new JButton();
+		debugCircuitButton.setText(debugCircuitButtonStr);
+		debugCircuitButton.addActionListener(this);
+
 		qubitPanel = new JPanel();
 		qubitPanel.setLayout(new FlowLayout());
 		qubitPanel.add(numQubitsLabel);
 		qubitPanel.add(numQubits);
 		qubitPanel.add(buildCircuitButton);
+		qubitPanel.add(debugCircuitButton);
 
 		circuitPanel.setPreferredSize(algoPanel.getSize());
 
@@ -101,15 +109,21 @@ public class ResultPanel extends JPanel implements Observer, ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		try {
-			numOfQubits = Integer.parseInt(this.numQubits.getText());
-			update(null, null);
-		} catch (NumberFormatException e) {
-			JOptionPane
-					.showMessageDialog(
-							this,
-							"The number of qubits cannot be correctly parsed. Please try again.",
-							"Message", JOptionPane.ERROR_MESSAGE);
+		if (arg0.getSource() == buildCircuitButton) {
+			try {
+				numOfQubits = Integer.parseInt(this.numQubits.getText());
+				update(null, null);
+			} catch (NumberFormatException e) {
+				JOptionPane
+						.showMessageDialog(
+								this,
+								"The number of qubits cannot be correctly parsed. Please try again.",
+								"Message", JOptionPane.ERROR_MESSAGE);
+			}
+		} else if (arg0.getSource() == debugCircuitButton) {
+			new StepByStepEvaluationDialog(backend.getCurrentse()
+					.getBestAlgorithm(), backend.getCurrentse().getCbuilder(),
+					backend.getCireval()).setVisible(true);
 		}
 
 	}

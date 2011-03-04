@@ -29,6 +29,14 @@ public class CircuitParentPanel extends JScrollPane {
 
 	}
 
+	public int circuitNextPosition() {
+		return cPanel.nextPosition();
+	}
+
+	public int circuitPreviousPosition() {
+		return cPanel.prevPosition();
+	}
+
 	@Override
 	public String getName() {
 		return nameStr;

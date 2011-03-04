@@ -7,16 +7,15 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
-import Core.Problem.testcase;
 import Jama.Matrix;
 import Utils.Complex;
 
-class MyTableModel extends AbstractTableModel {
+class MyTestCaseTableModel extends AbstractTableModel {
 	private final boolean	DEBUG		= false;
 	private final String[]	columnNames	= { "|State>", "Real", "Imaginary" };
 	private Object[][]		data;
 
-	public MyTableModel() {
+	public MyTestCaseTableModel() {
 		data = new Object[0][3];
 	}
 
@@ -120,34 +119,43 @@ class MyTableModel extends AbstractTableModel {
 }
 
 public class TestCaseEditor extends JPanel implements TableModelListener {
-	private final MyTableModel	tm;
-	private testcase			tc;
-	private final JTable		tctable;
-	private static String		zero_string	= "0";
+	private final MyTestCaseTableModel	tm;
+	private Matrix						m;
+	private final JTable				tctable;
+	private static String				zero_string	= "0";
 
 	public TestCaseEditor() {
-		tm = new MyTableModel();
+		tm = new MyTestCaseTableModel();
 		tm.addTableModelListener(this);
 		tctable = new JTable(tm);
 
 		JScrollPane scrollPane = new JScrollPane(tctable);
 		tctable.setFillsViewportHeight(true);
 
+		// tctable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		// int width = 100;
+		//
+		// for (int vColIndex = 0; vColIndex < tctable.getColumnCount();
+		// vColIndex++) {
+		// TableColumn col = tctable.getColumnModel().getColumn(vColIndex);
+		// col.setPreferredWidth(width);
+		// }
+
 		this.add(scrollPane);
 	}
 
-	public void setTestCase(testcase tc) {
-		this.tc = tc;
-		Matrix finalstate = tc.getFinalstate();
-		tm.reset(finalstate.getRowDimension());
-		for (int index = 0; index < finalstate.getRowDimension(); index++) {
+	public void setMatrix(Matrix m) {
+		double qubits = Math.log(m.getRowDimension()) / Math.log(2);
+		this.m = m;
+		tm.reset(m.getRowDimension());
+		for (int index = 0; index < m.getRowDimension(); index++) {
 			String b_str = Integer.toBinaryString(index);
-			while (b_str.length() != tc.getLabel().length()) {
+			while (b_str.length() < qubits) {
 				b_str = zero_string.concat(b_str);
 			}
 			tm.internalSetValueAt(b_str, index, 0);
-			tm.internalSetValueAt(finalstate.get(index, 0).real(), index, 1);
-			tm.internalSetValueAt(finalstate.get(index, 0).imag(), index, 2);
+			tm.internalSetValueAt(m.get(index, 0).real(), index, 1);
+			tm.internalSetValueAt(m.get(index, 0).imag(), index, 2);
 		}
 		tm.fireTableDataChanged();
 	}
@@ -157,6 +165,6 @@ public class TestCaseEditor extends JPanel implements TableModelListener {
 		int i = e.getFirstRow();
 		Complex s = new Complex((Double) tm.getValueAt(i, 1),
 				(Double) tm.getValueAt(i, 2));
-		tc.getFinalstate().set(i, 0, s);
+		m.set(i, 0, s);
 	}
 }

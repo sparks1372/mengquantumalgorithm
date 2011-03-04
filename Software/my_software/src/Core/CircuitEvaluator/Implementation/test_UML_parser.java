@@ -15,6 +15,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import Core.CircuitEvaluator.testparser;
+import Core.Problem.SuperPositionalTestSet;
 import Core.Problem.testcase;
 import Core.Problem.testset;
 import Core.Problem.testsuite;
@@ -174,15 +175,25 @@ public class test_UML_parser implements testparser {
 				// get the employee element
 				Element tsel = (Element) tsnl.item(i);
 				syssize = Integer.parseInt(tsel.getAttribute("NumQubits"));
-				tset = new testset(syssize);
+				if (syssize > 0) {
+					tset = new testset(syssize);
+				} else {
+					syssize = -syssize;
+					tset = new SuperPositionalTestSet(syssize);
+				}
 
 				// get a nodelist of <employee> elements
 				NodeList tcnl = tsel.getElementsByTagName("testcase");
 				if ((tcnl != null) && (tcnl.getLength() > 0)) {
 					for (int j = 0; j < tcnl.getLength(); j++) {
-						String b_str = Integer.toBinaryString(j);
-						while (b_str.length() != syssize) {
-							b_str = zero_string.concat(b_str);
+						String b_str;
+						if (tset instanceof SuperPositionalTestSet) {
+							b_str = "Test Case " + Integer.toString(j);
+						} else {
+							b_str = Integer.toBinaryString(j);
+							while (b_str.length() < syssize) {
+								b_str = zero_string.concat(b_str);
+							}
 						}
 						// get the employee element
 						Element tcel = (Element) tcnl.item(j);

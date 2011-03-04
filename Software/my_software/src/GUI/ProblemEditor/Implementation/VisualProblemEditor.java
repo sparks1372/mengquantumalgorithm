@@ -31,7 +31,7 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 
 		// Add content to the window.
 		frame.add(new VisualProblemEditor(frame));
-		frame.setSize(800, 550);
+		frame.setSize(1000, 550);
 
 		// Display the window.
 		// frame.pack();
@@ -52,7 +52,7 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 	}
 
 	JButton			newButton, openButton, saveButton, saveAsButton;
-	JButton			addTestSetButton;
+	JButton			addTestSetButton, addSuperpositionTestSetButton;
 	JFileChooser	fc;
 	Component		parent;
 	File			selected_file;
@@ -100,12 +100,20 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 
 		addTestSetButton = new JButton("Add TestSet");
 		addTestSetButton.addActionListener(this);
+
+		addSuperpositionTestSetButton = new JButton(
+				"Add Superpositional TestSet");
+		addSuperpositionTestSetButton.addActionListener(this);
 		midPanel = new JPanel();
 		midPanel.setLayout(new BoxLayout(midPanel, BoxLayout.PAGE_AXIS));
 
 		xmled = new XMLEditor();
 
-		midPanel.add(addTestSetButton);
+		JPanel buttonPanel1 = new JPanel();
+		buttonPanel1.add(addTestSetButton);
+		buttonPanel1.add(addSuperpositionTestSetButton);
+
+		midPanel.add(buttonPanel1);
 		midPanel.add(xmled);
 
 		// Add the buttons and the log to this panel.
@@ -157,6 +165,22 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 				s = 10;
 			}
 			xmled.addTestSet(s);
+		} else if (e.getSource() == addSuperpositionTestSetButton) {
+			int s = Integer
+					.parseInt((String) JOptionPane.showInputDialog(parent,
+							"Add Test Set for how many Qubits?",
+							"Qubit Number", JOptionPane.PLAIN_MESSAGE, null,
+							null, "1"));
+
+			if (s > 10) {
+				JOptionPane
+						.showMessageDialog(
+								parent,
+								"Maximum number of Qubits is 10. Adding test set for 10 Qubits",
+								"Message", JOptionPane.INFORMATION_MESSAGE);
+				s = 10;
+			}
+			xmled.addSuperpositionalTestSet(s);
 		}
 	}
 

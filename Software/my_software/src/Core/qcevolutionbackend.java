@@ -23,6 +23,8 @@ import Core.Problem.quantumproblem;
  */
 public class qcevolutionbackend extends Observable {
 
+	public static final int	CUSTOMGATELIMIT	= 3;
+
 	/**
 	 * @uml.property name="circuitBuilder"
 	 * @uml.associationEnd multiplicity="(0 -1)" dimension="1" ordering="true"
