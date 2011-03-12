@@ -373,7 +373,35 @@ The additional memory requirements are not likely to be excessive when viewed in
 The main reason for the choice was that the calculation of all ``current state''s is done once and can be accessed as many times without extra computation required.
 This should make the reponsiveness if the framework much better.
 
-\subsection{Distribution}
+There is also a second major design decision to be made with respect to the step-by-step evaluation, what the initial state should be to produce the trace.
+There are really two alternatives.
+The initial state could either be provided by the user explicitly or the test cases of the search problem could be used as the source of the initial  states.
+
+The decision was made to combine the two options.
+The framework accepts as an input to the step-by-step tracer a test suite data structure.
+The test suite can either be the same that was provided by the Search Problem and used by the suitability measure or can be a new test suite that has been created.
+This allows the client or third party application to provide either or both of the options.
+
+\subsection{Batch Processing}
+The framework produced is not expected to be used solely for Quantum Algorithm research.
+It is also expected to be used for research into the search techniques themselves.
+As a result the ability to carry out multiple iterations, a batch, and for the results to be collated to perform statistical analysis on them.
+To enable this the result of a search from Search Engine is returned in an array.
+This allows any number of results to be returned.
+
+The framework has been designed so as not to provide any additional help for batch processing for a very simple reason.
+The way that batch processing is carried out is therefore not constrained.
+This allows the researcher to select how each iteration should be processed and what statistics need to be collected at which stage.
+If the framework were to manage the batch operation researchers would be restricted.
+
+For example, the framework could be implemented to sequentially execute each iteration.
+For a researcher who has access to a cluster this could be highly frustrating.
+Equally if the framework were to provide a distributed computing mechanism, the researchers would be forced to use this.
+This would mean that even if the chosen framework would be highly inefficient for a specific search technique there would not be any option available to the researcher other than to modify the framework.
+This is obviously not desirable from a ``Plug and Play'' perspective.
+
+The prescription of a batch processing manager may also restrict the statistics that are required by the researcher.
+As a result of the reporting of statistcs is also not provided by the framework but expected of the Seach Engine.
 
 \section{Provided GUI}
 
@@ -398,12 +426,6 @@ The figure shows the main screen after a a search has been completed.
  \includegraphics[width=\textwidth]{GUIDesign.png}
 \caption{Main User Interface - After Search}
 \label{fig:MainGUIDesign}
-\end{figure}
-
-\begin{figure}
- \includegraphics[width=\textwidth]{GUIDesignProgress.png}
-\caption{Main User Interface - Before Search}
-\label{fig:MainGUIDesignProg}
 \end{figure}
 
 Each section of the GUI is explained separately with reference to the principles listed.
@@ -464,6 +486,17 @@ This implicitly ensures that each selection available to the user in the Search 
 This follows the \emph{Tolerance} principle.
 
 \subsection{Reporting Results}
+
+\begin{figure}
+ \includegraphics[width=\textwidth]{GUIDesignProgress.png}
+\caption{Main User Interface - Before Search}
+\label{fig:MainGUIDesignProg}
+\end{figure}
+\begin{figure}
+ \includegraphics[width=\textwidth]{AccurateReadOutMouseOver.png}
+\caption{Accurate State Readout}
+\label{fig:AccStateReadOut}
+\end{figure}
 When a Search Problem is selected, in the central area a visual representation of the test suite is produced.
 This representation can be seen in Figure \ref{fig:MainGUIDesignProg}.
 
@@ -472,7 +505,7 @@ This can be seen in Figure \ref{fig:MainGUIDesign}.
 Using a simple visualisation like this makes the comparison between ``desired'' final states and the final state produced by the algorithm found by the search.
 It is true that the visualisation could be too simple for small differences to be noticed.
 To counter this problem the visualisation allows the user to hover the mouse over each column to get an actual value.
-This can be seen in Figure \textbf{NEEDS A FIGURE}.
+This can be seen in Figure \ref{fig:AccStateReadOut}.
 
 This provides users with both a quick, simple and visual way to compare final states as well as an accurate way to compare final states.
 The accurate comparison method provided was implemented rather than a value table as part of following the \emph{simplicity} principle.
@@ -493,87 +526,114 @@ I feel the use of QCircuit is a better choice as the user then has control and i
 
 \subsection{Step-By-Step Evaluator}
 
-The way in which quantum algorithms and the circuits they produce work to correctly carry out the intended task is usually subtly and hard to understand by simply looking at the circuit.
-To improve the 
 
-\subsection{Custom Gate Editor}
+\begin{figure}
+ \includegraphics[width=\textwidth]{StepByStepEval.jpg}
+\caption{Step-By-Step Evaluation Dialog}
+\label{fig:StepByStepEval}
+\end{figure}
+The way in which quantum algorithms and the circuits they produce work is usually subtle and hard to understand by simply looking at the circuit.
+The framework provides a step-by-step evaluation trace when provided with the input states.
+The input states are provided to the framework in a test suite structure.
+It was decided that the provided GUI would provide the test suite of the respective Search Problem.
+This means that an evaluation trace is produced for each of the test cases, in each of the test suites.
 
+The step-by-step evaluator is provided in a dialog rather than integrated in the main frame, this dialog can be seen in Figure \ref{fig:StepByStepEval}.
+This was done so as to focus the users attention and to ensure that the addition of the functionality did not result in a cluttered GUI.
+This follows the \emph{structure} and \emph{visibility} principles.
 
+The step-by-step evaluation is performed with respect to a produced circuit.
+This requires the user to select the number of qubits the circuit should be produced for and the step-by-step evaluation is provided for all test cases of that number of qubits.
+Due to the design decision made for the framework, to provide a full trace rather than interactive evaluation, the test cases can be switched between at any step without returning to the start of the circuit.
 
-\subsubsection{The Structure Principle}
-As can be seen in Figure \ref{fig:MainGUIDesign} the layout separates the ``dissimilar things'' with the use of headings and borders.
-The interface can be viewed as structued so that the centre of the display contains the information of the highest importance, straffed by two control menus.
-This central panel collates all of the result information regarding the result of the latest search.
-The search statistics are shown in the right hand menu area.
-This separation ensures that the GUI does not become cluttered.
+The dialog provides a circuit diagram, an initial state selector and a visual representation of the state at the ``current step'' in the evaluation for the selected initial state.
+The circuit diagram is produced by reusing the circuit diagram drawn in the results pane of the main window.
+This ensure that the circuit is represented using the same standards as that shown in the results pane.
+The only difference is that the ``current step'' is indicated using a vertical line on the circuit diagram, this can be seen in Figure \ref{fig:StepByStepEval}.
+This follows the \emph{reuse}, \emph{feedback},  \emph{visibility} and \emph{simplicity} principles.
 
-This layout is also intended to take into account the recent move towards wide screen monitors.
-Wide screen monitors provide a new problem in GUI design.
-If a GUI fills the screen area and fills it fully with the display of information, it can appear stretched and distorted.
-If the GUI were to have a single menu along one side it also doesn't look ``right'', it looks excessively heavy on the non-menu side.
-This is a issue with standard monitors also but in my opinion is excasserbated by the wide screen ratios.
+The visual representation and initial state selector are the same as those used to report the final states produced for the test suite in the main window.
+The only difference is that only the test cases for the current number of qubits is shown.
+The use of the same visual representation ensure the user does not have to understand anything extra to use this functionality and follows the \emph{reuse} principle.
 
-As well as the main GUI, the dialogs used to Create, Load and Edit search problems are all structured in such a way so as to guide a user through the respective operation.
-
-The implemented search engine also provides a dialog box to configure a series of parameters.
-This dialog is split into two sections.
-One section contains a selection of all available gates while the second provides a series of GP parameters that the user may be interested in configuring, such as the number of generation and the population size.
-This separation follows the structure principle and clearly separates to the two distinct sets of configuration options.
-
-\subsubsection{The Simplicity Principle}
-The way in which the framework has been designed aids in making the user interface simple.
-The framework requires very little configuration.
-The only real configuration that is required is the selection of which search engine and suitability measure to use and what problem you want to try solve.
-These selections are provided in very simple drop down lists for the users seletion.
-
-The GUI provides a visual way to Create new and Edit existing search problems.
-A standalone editor is also provided.
-The editor provides a 
-
-The only other two aspects of the configuration are the problem editor and the configuration of the search parameters.
-These are justified separately.
-
-\subsubsection{The Visibility Principle}
-I think it is quite clear to see that the number of ``options'' visible to the user at any one time is minimised.
-The use of drop down boxes for selection naturally hides unwanted options until required.
-
-In the central area the available selections are visible but are also much more likely to be ``browsed'' by the user.
-The decision not to use drop down boxes for the initial state selection is due to the expected ``browsing'' of this data.
-I expect that the user is likely to flick through the various options available which is much easier when the options are always visible.
-The use of a drop down box would also have required two mouse clicks per selection, one to open the list and one to make the selection.
-With the options visible this is reduced to a single click.
-
-\subsubsection{The Feedback Principle}
-Once a selection is made for any of the selections available to the user the information on the display is updated accordingly.
-For example, the selection of a different search engine will update the contents of the search engine description area, selecting a different ``input state'' in the graph panels automatically updates the graph and the selection is highlighted.
-
-
-The user interface has been designed so that one user could leave it, a second user come to use it and understand very quickly the decisions that had already been made.
-It is not just the selection choices that are provided to the user as feedback.
-As can be seen in Figure \ref{fig:MainGUIDesignProg}, a progress bar is provided to indicate to the user how far through the current search the system is.
-
-\subsubsection{The Tolerance Principle}
-To meet the tolerance principle the user interface has been designed to ensure that any user input is either restricted to valid inputs or validated on acceptance, notifying the user of any invalid input.
-A good example of this is the way the user selects the Search Engine, Suitability Measure and Search Problem.
-These selections use drop-down lists.
-This ensures that, assuming a correct implementation, any selection made by the user is valid.
-
-For user input that is not limited to a small finite set of inputs, all user inputs are checked on and any incorrect input is brought to the users attention.
-This tolerance ensures that the system allows the user to correct any problems without loosing any other input.
-
-As is noted in Section \ref{sec:introtoquantcomp} all quantum gates must be unitary.
-To ensure the system complies with this, when creating custom matricies for custom gates, the editor checks the matrix to ensure that it represents a unitary operation.
+% \subsection{Custom Gate Editor}
 
 
 
-\subsubsection{The Reuse Principle}
-
-Visualisation of similar information is shown using the same techniques.
-The use of tabs is two-fold.
-In the column chart panels it is used to select the data to show using the chart.
-In the lowest panel it is used to switch between the different representations of the solution that the system provides.
-
-
-\begin{itemize}
- \item Extendible Library
-\end{itemize}
+% \subsubsection{The Structure Principle}
+% As can be seen in Figure \ref{fig:MainGUIDesign} the layout separates the ``dissimilar things'' with the use of headings and borders.
+% The interface can be viewed as structued so that the centre of the display contains the information of the highest importance, straffed by two control menus.
+% This central panel collates all of the result information regarding the result of the latest search.
+% The search statistics are shown in the right hand menu area.
+% This separation ensures that the GUI does not become cluttered.
+% 
+% This layout is also intended to take into account the recent move towards wide screen monitors.
+% Wide screen monitors provide a new problem in GUI design.
+% If a GUI fills the screen area and fills it fully with the display of information, it can appear stretched and distorted.
+% If the GUI were to have a single menu along one side it also doesn't look ``right'', it looks excessively heavy on the non-menu side.
+% This is a issue with standard monitors also but in my opinion is excasserbated by the wide screen ratios.
+% 
+% As well as the main GUI, the dialogs used to Create, Load and Edit search problems are all structured in such a way so as to guide a user through the respective operation.
+% 
+% The implemented search engine also provides a dialog box to configure a series of parameters.
+% This dialog is split into two sections.
+% One section contains a selection of all available gates while the second provides a series of GP parameters that the user may be interested in configuring, such as the number of generation and the population size.
+% This separation follows the structure principle and clearly separates to the two distinct sets of configuration options.
+% 
+% \subsubsection{The Simplicity Principle}
+% The way in which the framework has been designed aids in making the user interface simple.
+% The framework requires very little configuration.
+% The only real configuration that is required is the selection of which search engine and suitability measure to use and what problem you want to try solve.
+% These selections are provided in very simple drop down lists for the users seletion.
+% 
+% The GUI provides a visual way to Create new and Edit existing search problems.
+% A standalone editor is also provided.
+% The editor provides a 
+% 
+% The only other two aspects of the configuration are the problem editor and the configuration of the search parameters.
+% These are justified separately.
+% 
+% \subsubsection{The Visibility Principle}
+% I think it is quite clear to see that the number of ``options'' visible to the user at any one time is minimised.
+% The use of drop down boxes for selection naturally hides unwanted options until required.
+% 
+% In the central area the available selections are visible but are also much more likely to be ``browsed'' by the user.
+% The decision not to use drop down boxes for the initial state selection is due to the expected ``browsing'' of this data.
+% I expect that the user is likely to flick through the various options available which is much easier when the options are always visible.
+% The use of a drop down box would also have required two mouse clicks per selection, one to open the list and one to make the selection.
+% With the options visible this is reduced to a single click.
+% 
+% \subsubsection{The Feedback Principle}
+% Once a selection is made for any of the selections available to the user the information on the display is updated accordingly.
+% For example, the selection of a different search engine will update the contents of the search engine description area, selecting a different ``input state'' in the graph panels automatically updates the graph and the selection is highlighted.
+% 
+% 
+% The user interface has been designed so that one user could leave it, a second user come to use it and understand very quickly the decisions that had already been made.
+% It is not just the selection choices that are provided to the user as feedback.
+% As can be seen in Figure \ref{fig:MainGUIDesignProg}, a progress bar is provided to indicate to the user how far through the current search the system is.
+% 
+% \subsubsection{The Tolerance Principle}
+% To meet the tolerance principle the user interface has been designed to ensure that any user input is either restricted to valid inputs or validated on acceptance, notifying the user of any invalid input.
+% A good example of this is the way the user selects the Search Engine, Suitability Measure and Search Problem.
+% These selections use drop-down lists.
+% This ensures that, assuming a correct implementation, any selection made by the user is valid.
+% 
+% For user input that is not limited to a small finite set of inputs, all user inputs are checked on and any incorrect input is brought to the users attention.
+% This tolerance ensures that the system allows the user to correct any problems without loosing any other input.
+% 
+% As is noted in Section \ref{sec:introtoquantcomp} all quantum gates must be unitary.
+% To ensure the system complies with this, when creating custom matricies for custom gates, the editor checks the matrix to ensure that it represents a unitary operation.
+% 
+% 
+% 
+% \subsubsection{The Reuse Principle}
+% 
+% Visualisation of similar information is shown using the same techniques.
+% The use of tabs is two-fold.
+% In the column chart panels it is used to select the data to show using the chart.
+% In the lowest panel it is used to switch between the different representations of the solution that the system provides.
+% 
+% 
+% \begin{itemize}
+%  \item Extendible Library
+% \end{itemize}
