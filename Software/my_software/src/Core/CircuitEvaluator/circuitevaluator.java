@@ -1,5 +1,6 @@
 package Core.CircuitEvaluator;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 import Core.Algorithms.QuantumAlgorithm;
@@ -7,7 +8,7 @@ import Core.Problem.quantumproblem;
 import Core.Problem.testset;
 import Core.Problem.testsuite;
 
-public interface circuitevaluator {
+public interface circuitevaluator extends Serializable {
 
 	/**
 		 */

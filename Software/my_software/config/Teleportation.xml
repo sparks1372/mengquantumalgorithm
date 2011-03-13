@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="testset_xml_spec.xsd">
+<testset NumQubits="-3">
+<testcase><!--Test Case 0-->
+<starting_state>
+<matrix_element><!-- 000-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 001-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 010-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 011-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 100-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 101-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 110-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 111-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+</starting_state>
+<final_state>
+<matrix_element><!-- 000-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 001-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 010-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 011-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 100-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 101-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 110-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 111-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+</final_state>
+</testcase>
+<testcase><!--Test Case 1-->
+<starting_state>
+<matrix_element><!-- 000-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 001-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 010-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 011-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 100-->
+<Real>-0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 101-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 110-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 111-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+</starting_state>
+<final_state>
+<matrix_element><!-- 000-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 001-->
+<Real>-0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 010-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 011-->
+<Real>-0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 100-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 101-->
+<Real>-0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 110-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 111-->
+<Real>-0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+</final_state>
+</testcase>
+<testcase><!--Test Case 2-->
+<starting_state>
+<matrix_element><!-- 000-->
+<Real>0.816496581</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 001-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 010-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 011-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 100-->
+<Real>0.577350269</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 101-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 110-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 111-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+</starting_state>
+<final_state>
+<matrix_element><!-- 000-->
+<Real>0.816496581</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 001-->
+<Real>0.577350269</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 010-->
+<Real>0.816496581</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 011-->
+<Real>0.577350269</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 100-->
+<Real>0.816496581</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 101-->
+<Real>0.577350269</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 110-->
+<Real>0.816496581</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 111-->
+<Real>0.577350269</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+</final_state>
+</testcase>
+<testcase><!--Test Case 3-->
+<starting_state>
+<matrix_element><!-- 000-->
+<Real>0.577350269</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 001-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 010-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 011-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 100-->
+<Real>0.816496581</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 101-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 110-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 111-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+</starting_state>
+<final_state>
+<matrix_element><!-- 000-->
+<Real>0.577350269</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 001-->
+<Real>0.816496581</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 010-->
+<Real>0.577350269</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 011-->
+<Real>0.816496581</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 100-->
+<Real>0.577350269</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 101-->
+<Real>0.816496581</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 110-->
+<Real>0.577350269</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 111-->
+<Real>0.816496581</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+</final_state>
+</testcase>
+<testcase><!--TestSet 5-->
+<starting_state>
+<matrix_element><!-- 000-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 001-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 010-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 011-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 100-->
+<Real>0.0</Real>
+<Imag>0.707106781</Imag>
+</matrix_element>
+<matrix_element><!-- 101-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 110-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 111-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+</starting_state>
+<final_state>
+<matrix_element><!-- 000-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 001-->
+<Real>0.0</Real>
+<Imag>0.707106781</Imag>
+</matrix_element>
+<matrix_element><!-- 010-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 011-->
+<Real>0.0</Real>
+<Imag>0.707106781</Imag>
+</matrix_element>
+<matrix_element><!-- 100-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 101-->
+<Real>0.0</Real>
+<Imag>0.707106781</Imag>
+</matrix_element>
+<matrix_element><!-- 110-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 111-->
+<Real>0.0</Real>
+<Imag>0.707106781</Imag>
+</matrix_element>
+</final_state>
+</testcase>
+<testcase><!--TestSet 6-->
+<starting_state>
+<matrix_element><!-- 000-->
+<Real>0.0</Real>
+<Imag>0.707106781</Imag>
+</matrix_element>
+<matrix_element><!-- 001-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 010-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 011-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 100-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 101-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 110-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 111-->
+<Real>0.0</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+</starting_state>
+<final_state>
+<matrix_element><!-- 000-->
+<Real>0.0</Real>
+<Imag>0.707106781</Imag>
+</matrix_element>
+<matrix_element><!-- 001-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 010-->
+<Real>0.0</Real>
+<Imag>0.707106781</Imag>
+</matrix_element>
+<matrix_element><!-- 011-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 100-->
+<Real>0.0</Real>
+<Imag>0.707106781</Imag>
+</matrix_element>
+<matrix_element><!-- 101-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+<matrix_element><!-- 110-->
+<Real>0.0</Real>
+<Imag>0.707106781</Imag>
+</matrix_element>
+<matrix_element><!-- 111-->
+<Real>0.707106781</Real>
+<Imag>0.0</Imag>
+</matrix_element>
+</final_state>
+</testcase>
+</testset>
+</testsuite>

@@ -94,7 +94,7 @@ public class LoadProblemPanel extends JDialog implements ActionListener {
 		this.getContentPane().add(descPanel);
 		this.getContentPane().add(buttonPanel);
 
-		this.pack();
+		// this.pack();
 		WindowUtils.centre(this);
 	}
 

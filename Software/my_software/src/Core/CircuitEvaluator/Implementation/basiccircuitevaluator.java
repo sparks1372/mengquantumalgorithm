@@ -77,7 +77,8 @@ public class basiccircuitevaluator implements circuitevaluator {
 			return new Fitness(Float.MAX_VALUE, 0);
 		}
 		fitness_to_return = count != 0 ? fitness_to_return
-				/ ((double) count / possiblecount) : Float.MAX_VALUE;
+				/ ((double) count / possiblecount) : fitness_to_return
+				* possiblecount;
 
 		return new Fitness(fitness_to_return, count);
 	}
@@ -100,7 +101,6 @@ public class basiccircuitevaluator implements circuitevaluator {
 	 */
 	@Override
 	public testsuite getResults(QuantumAlgorithm alg) {
-		System.out.println(alg.print());
 		Circuit cir;
 		Iterator<quantumgate> qgate_iter;
 		testsuite ts = quantprob.getTestSuite();

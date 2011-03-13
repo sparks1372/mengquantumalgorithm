@@ -1,8 +1,9 @@
 package Core.Algorithms;
 
+import java.io.Serializable;
 import java.util.ListIterator;
 
-public interface QuantumAlgorithm {
+public interface QuantumAlgorithm extends Serializable {
 
 	public abstract void addInstruction(QuantumInstructionEnum inst,
 			exp_node gate1, exp_node gate2, exp_node phase,

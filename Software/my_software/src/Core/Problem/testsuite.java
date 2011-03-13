@@ -1,10 +1,11 @@
 package Core.Problem;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-public class testsuite {
+public class testsuite implements Serializable {
 
 	/**
 	 * @uml.property name="testsets" multiplicity="(0 -1)" dimension="1"

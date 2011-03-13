@@ -120,7 +120,7 @@ public class Problem_Manager extends Observable {
 			saved = true;
 			setChanged();
 			notifyObservers();
-			} catch (IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

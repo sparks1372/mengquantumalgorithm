@@ -74,7 +74,7 @@ public class InnerSuperpositionalEditorPanel extends JPanel implements
 		addTestCase.addActionListener(this);
 
 		JScrollPane listScroller = new JScrollPane(test_case_list);
-		listScroller.setPreferredSize(new Dimension(75, 80));
+		listScroller.setPreferredSize(new Dimension(250, 80));
 
 		JPanel left_panel = new JPanel();
 		left_panel.setLayout(new BoxLayout(left_panel, BoxLayout.PAGE_AXIS));
@@ -153,7 +153,7 @@ public class InnerSuperpositionalEditorPanel extends JPanel implements
 		Matrix m;
 		testcase tc;
 		m = new Matrix(vectorSize, 1);
-		String b_str = "TestSet ".concat(Integer
+		String b_str = "Test Case ".concat(Integer
 				.toString(num_of_currect_test_case + 1));
 
 		tc = new testcase(num_of_currect_test_case, b_str);

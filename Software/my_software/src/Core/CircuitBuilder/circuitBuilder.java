@@ -1,9 +1,11 @@
 package Core.CircuitBuilder;
 
+import java.io.Serializable;
+
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Circuit.Circuit;
 
-public interface circuitBuilder {
+public interface circuitBuilder extends Serializable {
 
 	/**
 		 */

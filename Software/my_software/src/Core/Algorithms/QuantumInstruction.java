@@ -1,6 +1,11 @@
 package Core.Algorithms;
 
-public interface QuantumInstruction {
+import java.io.Serializable;
+
+/**
+ * @uml.dependency supplier="Core.Algorithms.QuantumInstructionEnum"
+ */
+public interface QuantumInstruction extends Serializable {
 
 	/**
 	 * @return Returns the phase.

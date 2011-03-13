@@ -9,7 +9,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 
 import Core.qcevolutionbackend;
 import Core.CircuitEvolution.SearchEngineState;
@@ -33,8 +32,7 @@ public class EvolveButton extends JButton implements Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JDialog evDialog = backend.getCurrentse().getEvolveDialog();
-				evDialog.setVisible(true);
+				backend.getCurrentse().search();
 			}
 
 		});
@@ -59,7 +57,7 @@ public class EvolveButton extends JButton implements Observer {
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public synchronized void update(Observable arg0, Object arg1) {
 		if (arg0 instanceof qcevolutionbackend) {
 			if (null != backend.getCurrentse()) {
 				backend.getCurrentse().removeObserver(this);
