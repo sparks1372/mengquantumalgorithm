@@ -14,7 +14,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import Core.CircuitEvaluator.testparser;
 import Core.Problem.SuperPositionalTestSet;
 import Core.Problem.testcase;
 import Core.Problem.testset;
@@ -26,7 +25,7 @@ import Utils.Complex;
  * @author Sam Ratcliff
  * 
  */
-public class test_UML_parser implements testparser {
+public class test_UML_parser {
 	static String	zero_string	= "0";
 
 	public static void main(String[] args) {
@@ -153,12 +152,6 @@ public class test_UML_parser implements testparser {
 		return textVal;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see Core.CircuitEvaluator.testparser#parse(java.lang.String)
-	 */
-	@Override
 	public testsuite parse() {
 		testset tset;
 		testcase tc;

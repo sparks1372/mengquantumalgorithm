@@ -3,29 +3,24 @@
  */
 package Core.CircuitEvolution.QPace4.State;
 
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
+import java.io.Serializable;
 
 import Core.CircuitBuilder.circuitBuilder;
 import Core.CircuitEvaluator.circuitevaluator;
-import Core.CircuitEvolution.QPace4.StatsPanel;
 import ec.simple.SimpleEvolutionState;
 
 /**
  * @author Sam Ratcliff
  * 
  */
-public class QPaceEvoState extends SimpleEvolutionState {
+public class QPaceEvoState extends SimpleEvolutionState implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 704242492846236496L;
 	public circuitBuilder		cir_builder;
 	public circuitevaluator		cir_evaluator;
-	private final JProgressBar	progressBar	= new JProgressBar();
 	private int					gens;
-	private StatsPanel						statsPanel;
-
-	
-	public StatsPanel getStatsPanel() {
-		return statsPanel;
-	}
 
 	/**
 	 * @return the gens
@@ -33,23 +28,6 @@ public class QPaceEvoState extends SimpleEvolutionState {
 	public int getGens() {
 		System.out.println("gens  = " + gens);
 		return gens;
-	}
-
-	/**
-	 * @return the progressBar
-	 */
-	public JProgressBar getProgressBar() {
-		return progressBar;
-	}
-
-	/**
-	 * 
-	 */
-	private void resetProgressBar() {
-		progressBar.setMaximum(numGenerations);
-		System.out.println("numGenerations = " + numGenerations);
-		progressBar.setValue(0);
-		progressBar.setStringPainted(true);
 	}
 
 	/**
@@ -64,7 +42,6 @@ public class QPaceEvoState extends SimpleEvolutionState {
 	public void startFresh() {
 		output.message("Setting up");
 		setup(this, null); // a garbage Parameter
-		resetProgressBar();
 
 		// POPULATION INITIALIZATION
 		output.message("Initializing Generation 0");
@@ -77,12 +54,6 @@ public class QPaceEvoState extends SimpleEvolutionState {
 		// an attempt is made to connect to island models etc.
 		exchanger.initializeContacts(this);
 		evaluator.initializeContacts(this);
-	}
-
-
-
-	public void setStatsPanel(StatsPanel statsPanel2) {
-		statsPanel = statsPanel2;
 	}
 
 }

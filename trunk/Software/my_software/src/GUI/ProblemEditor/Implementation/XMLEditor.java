@@ -82,7 +82,7 @@ public class XMLEditor extends JTabbedPane {
 		testcase tc;
 		testset tset = new SuperPositionalTestSet(num_of_qubits);
 
-		String b_str = "TestSet 1";
+		String b_str = "Test Case 1";
 
 		m = new Matrix(num_of_possible_states, 1);
 

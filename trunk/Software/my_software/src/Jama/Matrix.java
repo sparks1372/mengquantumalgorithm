@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.io.StreamTokenizer;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -73,7 +74,12 @@ import Utils.Complex;
  * @version 5 August 1998
  */
 
-public class Matrix implements Cloneable, java.io.Serializable {
+public class Matrix implements Cloneable, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -6160230780405251708L;
 
 	/*
 	 * ------------------------ Class variables ------------------------
@@ -82,7 +88,6 @@ public class Matrix implements Cloneable, java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= -6160230780405251708L;
 
 	public static Matrix constructWithCopy(Complex[][] A) {
 		int m = A.length;

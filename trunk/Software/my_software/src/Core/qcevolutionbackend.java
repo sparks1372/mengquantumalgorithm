@@ -9,12 +9,8 @@ import Core.CircuitEvaluator.FitnessFunction;
 import Core.CircuitEvaluator.circuitevaluator;
 import Core.CircuitEvaluator.fitnessfunctionmanager;
 import Core.CircuitEvaluator.Implementation.basiccircuitevaluator;
-import Core.CircuitEvaluator.Implementation.test_UML_parser;
-import Core.CircuitEvaluator.PhaseSensitiveParsimoniousSimpleFitness.PhaseSensitiveParsimoniousSimpleFitness;
 import Core.CircuitEvolution.circuitsearchengine;
 import Core.CircuitEvolution.searchenginemanager;
-import Core.CircuitEvolution.QPace4.QPace4_Imp;
-import Core.Implementation.simpleqcproblem;
 import Core.Problem.Problem_Manager;
 import Core.Problem.quantumproblem;
 
@@ -23,7 +19,7 @@ import Core.Problem.quantumproblem;
  */
 public class qcevolutionbackend extends Observable {
 
-	public static final int	CUSTOMGATELIMIT	= 3;
+	public static final int			CUSTOMGATELIMIT	= 3;
 
 	/**
 	 * @uml.property name="circuitBuilder"
@@ -32,46 +28,46 @@ public class qcevolutionbackend extends Observable {
 	 *                     "qcevolutionbackend:Core.CircuitBuilder.circuitBuilder"
 	 */
 
-	public static void main(String[] args) {
+	// public static void main(String[] args) {
+	//
+	// qcevolutionbackend be = new qcevolutionbackend();
+	//
+	// circuitBuilder cirbui = new basiccircuitbuilder();
+	// circuitevaluator cireval = new basiccircuitevaluator(cirbui);
+	// FitnessFunction ff = (new PhaseSensitiveParsimoniousSimpleFitness(
+	// "PPSF"));
+	// // cireval.setQfitnessfunction(new ParsimoniousSimpleFitness());
+	// // cireval.setQfitnessfunction(new SimpleFitness());
+	// // cireval.setQproblem(be.getQproblem());
+	// boolean[] temp = new boolean[QuantumInstructionEnum.values().length];
+	// for (int i = 0; i < temp.length; i++) {
+	// if (// (i == QuantumInstructionEnum.Create_Zero.ordinal())
+	// // || (i == QuantumInstructionEnum.Create_CRX.ordinal())
+	// // || (i == QuantumInstructionEnum.Create_CRY.ordinal())
+	// // || (i == QuantumInstructionEnum.Create_CRZ.ordinal())
+	// // || (i == QuantumInstructionEnum.Create_RX.ordinal())
+	// // || (i == QuantumInstructionEnum.Create_RY.ordinal())
+	// // || (i == QuantumInstructionEnum.Create_RZ.ordinal())
+	// /* || */(i == QuantumInstructionEnum.Create_P.ordinal())) {
+	// temp[i] = false;
+	// } else {
+	// temp[i] = true;
+	// }
+	// }
+	// be.setCurrentse(new QPace4_Imp());
+	// be.setCirbui(cirbui);
+	// be.setCireval(cireval);
+	// be.setCurrentff(ff);
+	// be.setQproblem(new simpleqcproblem("Hadamard"));
+	// test_UML_parser tup = new test_UML_parser(args[0]);
+	// be.getQproblem().setTestSuite(tup.parse());
+	//
+	// be.getCurrentse().getEvolveDialog().setVisible(true);
+	// }
 
-		qcevolutionbackend be = new qcevolutionbackend();
-
-		circuitBuilder cirbui = new basiccircuitbuilder();
-		circuitevaluator cireval = new basiccircuitevaluator(cirbui);
-		FitnessFunction ff = (new PhaseSensitiveParsimoniousSimpleFitness(
-				"PPSF"));
-		// cireval.setQfitnessfunction(new ParsimoniousSimpleFitness());
-		// cireval.setQfitnessfunction(new SimpleFitness());
-		// cireval.setQproblem(be.getQproblem());
-		boolean[] temp = new boolean[QuantumInstructionEnum.values().length];
-		for (int i = 0; i < temp.length; i++) {
-			if (// (i == QuantumInstructionEnum.Create_Zero.ordinal())
-			// || (i == QuantumInstructionEnum.Create_CRX.ordinal())
-			// || (i == QuantumInstructionEnum.Create_CRY.ordinal())
-			// || (i == QuantumInstructionEnum.Create_CRZ.ordinal())
-			// || (i == QuantumInstructionEnum.Create_RX.ordinal())
-			// || (i == QuantumInstructionEnum.Create_RY.ordinal())
-			// || (i == QuantumInstructionEnum.Create_RZ.ordinal())
-			/* || */(i == QuantumInstructionEnum.Create_P.ordinal())) {
-				temp[i] = false;
-			} else {
-				temp[i] = true;
-			}
-		}
-		be.setCurrentse(new QPace4_Imp());
-		be.setCirbui(cirbui);
-		be.setCireval(cireval);
-		be.setCurrentff(ff);
-		be.setQproblem(new simpleqcproblem("Hadamard"));
-		test_UML_parser tup = new test_UML_parser(args[0]);
-		be.getQproblem().setTestSuite(tup.parse());
-
-		be.getCurrentse().getEvolveDialog().setVisible(true);
-	}
-
-	private circuitBuilder			cirbui;
-	private circuitevaluator		cireval;
-	boolean[]						available_gates	= new boolean[QuantumInstructionEnum
+	protected circuitBuilder		cirbui;
+	protected circuitevaluator		cireval;
+	private final boolean[]			available_gates	= new boolean[QuantumInstructionEnum
 															.values().length];
 
 	/**
@@ -98,22 +94,9 @@ public class qcevolutionbackend extends Observable {
 	 * 
 	 */
 	public qcevolutionbackend() {
-		cirbui = new basiccircuitbuilder();
-		cireval = new basiccircuitevaluator(cirbui);
-
+		init();
 		for (int i = 0; i < available_gates.length; i++) {
-			if (// (i == QuantumInstructionEnum.Create_Zero.ordinal())
-			// || (i == QuantumInstructionEnum.Create_CRX.ordinal())
-			// || (i == QuantumInstructionEnum.Create_CRY.ordinal())
-			// || (i == QuantumInstructionEnum.Create_CRZ.ordinal())
-			// || (i == QuantumInstructionEnum.Create_RX.ordinal())
-			// || (i == QuantumInstructionEnum.Create_RY.ordinal())
-			// || (i == QuantumInstructionEnum.Create_RZ.ordinal())
-			/* || */(i == QuantumInstructionEnum.Create_P.ordinal())) {
-				available_gates[i] = false;
-			} else {
-				available_gates[i] = true;
-			}
+			available_gates[i] = true;
 		}
 	}
 
@@ -183,6 +166,11 @@ public class qcevolutionbackend extends Observable {
 	 */
 	public searchenginemanager getSemanager() {
 		return semanager;
+	}
+
+	protected void init() {
+		cirbui = new basiccircuitbuilder();
+		cireval = new basiccircuitevaluator(cirbui);
 	}
 
 	private void seinit() {

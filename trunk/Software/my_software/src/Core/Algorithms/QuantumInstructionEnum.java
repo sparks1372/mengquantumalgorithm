@@ -1,6 +1,8 @@
 package Core.Algorithms;
 
-public enum QuantumInstructionEnum {
+import java.io.Serializable;
+
+public enum QuantumInstructionEnum implements Serializable {
 	// Gate instructions
 	Create_H,
 	Create_X,

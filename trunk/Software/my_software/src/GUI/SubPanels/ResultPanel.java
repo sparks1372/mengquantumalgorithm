@@ -6,8 +6,6 @@ package GUI.SubPanels;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,7 +18,6 @@ import javax.swing.JTextArea;
 import Core.qcevolutionbackend;
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Circuit.Circuit;
-import Core.CircuitEvolution.SearchEngineState;
 import GUI.CircuitEvaluation.StepByStepEvaluationDialog;
 import GUI.SubPanels.ResultPanels.AlgorithmPanel;
 import GUI.SubPanels.ResultPanels.CircuitParentPanel;
@@ -30,7 +27,7 @@ import GUI.SubPanels.ResultPanels.QCircuitPanel;
  * @author Sam Ratcliff
  * 
  */
-public class ResultPanel extends JPanel implements Observer, ActionListener {
+public class ResultPanel extends JPanel implements ActionListener {
 	private final qcevolutionbackend	backend;
 	private final JTabbedPane			tabPanel;
 	private final AlgorithmPanel		algoPanel;
@@ -45,11 +42,12 @@ public class ResultPanel extends JPanel implements Observer, ActionListener {
 	private final JTextArea				numQubits;
 	private int							numOfQubits				= 1;
 	private final JPanel				qubitPanel;
+	private final int					resultIndex;
 
 	/**
 	 * 
 	 */
-	public ResultPanel(qcevolutionbackend be) {
+	public ResultPanel(qcevolutionbackend be, int index_in) {
 		backend = be;
 
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -59,12 +57,7 @@ public class ResultPanel extends JPanel implements Observer, ActionListener {
 		algoPanel = new AlgorithmPanel();
 		qcircuitPanel = new QCircuitPanel();
 		circuitPanel = new CircuitParentPanel();
-
-		backend.addObserver(this);
-
-		if (null != backend.getCurrentse()) {
-			backend.getCurrentse().addObserver(this);
-		}
+		resultIndex = index_in;
 
 		tabPanel.add(algoPanel);
 		tabPanel.add(circuitPanel);
@@ -91,7 +84,7 @@ public class ResultPanel extends JPanel implements Observer, ActionListener {
 		qubitPanel.add(debugCircuitButton);
 
 		circuitPanel.setPreferredSize(algoPanel.getSize());
-
+		init();
 		this.add(qubitPanel);
 		this.add(tabPanel);
 	}
@@ -112,7 +105,7 @@ public class ResultPanel extends JPanel implements Observer, ActionListener {
 		if (arg0.getSource() == buildCircuitButton) {
 			try {
 				numOfQubits = Integer.parseInt(this.numQubits.getText());
-				update(null, null);
+				init();
 			} catch (NumberFormatException e) {
 				JOptionPane
 						.showMessageDialog(
@@ -121,34 +114,63 @@ public class ResultPanel extends JPanel implements Observer, ActionListener {
 								"Message", JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (arg0.getSource() == debugCircuitButton) {
-			new StepByStepEvaluationDialog(backend.getCurrentse()
-					.getBestAlgorithm(), backend.getCurrentse().getCbuilder(),
-					backend.getCireval()).setVisible(true);
+			// new StepByStepEvaluationDialog(backend.getCurrentse()
+			// .getBestAlgorithm(), backend.getCurrentse().getCbuilder(),
+			// backend.getCireval()).setVisible(true);
+			StepByStepEvaluationDialog sbsevald = new StepByStepEvaluationDialog(
+					backend.getCurrentse().getResults()[resultIndex].getQa(),
+					backend.getCurrentse().getCbuilder(), backend.getCireval());
+			sbsevald.setTitle("Step-by-Step Evaluation for iteration "
+					+ resultIndex);
+			sbsevald.setVisible(true);
 		}
 
 	}
 
-	@Override
-	public void update(Observable o, Object arg) {
+	private void init() {
 
-		if (o instanceof qcevolutionbackend) {
-			if (null != backend.getCurrentse()) {
-				backend.getCurrentse().removeObserver(this);
-				backend.getCurrentse().addObserver(this);
-			}
-		}
+		QuantumAlgorithm qa = backend.getCurrentse().getResults()[resultIndex]
+				.getQa();
+		algoPanel.update(qa);
 
-		if ((backend.getCurrentse() != null)
-				&& (backend.getCurrentse().getState() == SearchEngineState.SearchCompleteResultAvailable)
-				&& (backend.getCurrentse().getBestAlgorithm() != null)) {
-			QuantumAlgorithm qa = backend.getCurrentse().getBestAlgorithm();
-			algoPanel.update(qa);
+		Circuit cir = backend.getCirbui().Build(qa, numOfQubits);
 
-			Circuit cir = backend.getCirbui().Build(qa, numOfQubits);
+		qcircuitPanel.update(cir.toLatex(numOfQubits));
 
-			qcircuitPanel.update(cir.toLatex(numOfQubits));
+		circuitPanel.update(cir, numOfQubits);
 
-			circuitPanel.update(cir, numOfQubits);
-		}
 	}
+
+	// @Override
+	// public void update(Observable o, Object arg) {
+	//
+	// if (o instanceof qcevolutionbackend) {
+	// if (null != backend.getCurrentse()) {
+	// backend.getCurrentse().removeObserver(this);
+	// backend.getCurrentse().addObserver(this);
+	// }
+	// }
+	// //
+	// // if ((backend.getCurrentse() != null)
+	// // && (backend.getCurrentse().getState() ==
+	// // SearchEngineState.SearchCompleteResultAvailable)
+	// // && (backend.getCurrentse().getBestAlgorithm() != null)) {
+	// // QuantumAlgorithm qa = backend.getCurrentse().getBestAlgorithm();
+	//
+	// if ((backend.getCurrentse() != null)
+	// && (backend.getCurrentse().getState() ==
+	// SearchEngineState.SearchCompleteResultAvailable)
+	// && (backend.getCurrentse().getResults() != null)
+	// && (backend.getCurrentse().getResults()[resultIndex].getQa() != null)) {
+	// QuantumAlgorithm qa = backend.getCurrentse().getResults()[resultIndex]
+	// .getQa();
+	// algoPanel.update(qa);
+	//
+	// Circuit cir = backend.getCirbui().Build(qa, numOfQubits);
+	//
+	// qcircuitPanel.update(cir.toLatex(numOfQubits));
+	//
+	// circuitPanel.update(cir, numOfQubits);
+	// }
+	// }
 }

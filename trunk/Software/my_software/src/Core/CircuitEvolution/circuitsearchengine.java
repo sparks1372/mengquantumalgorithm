@@ -5,18 +5,15 @@ import java.util.Observer;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import Core.Algorithms.QuantumAlgorithm;
 import Core.CircuitBuilder.circuitBuilder;
 import Core.CircuitEvaluator.circuitevaluator;
 
 /**
  * @uml.dependency supplier="Core.CircuitBuilder.circuitBuilder"
  */
-public interface circuitsearchengine {
+public abstract interface circuitsearchengine {
 
 	public void addObserver(Observer ob);
-
-	public void Evolve();
 
 	/**
 	 * @return Returns the availableinstructions.
@@ -24,12 +21,6 @@ public interface circuitsearchengine {
 	 *               dimension="1"
 	 */
 	public boolean[] getAvailableinstructions();
-
-	/**
-	 * @return Returns the best Algorithm.
-	 * @uml.property name="BestAlgorithm" readOnly="true"
-	 */
-	public QuantumAlgorithm getBestAlgorithm();
 
 	/**
 	 * @return Returns the cbuilder.
@@ -43,14 +34,6 @@ public interface circuitsearchengine {
 	 */
 	public circuitevaluator getCevaluator();
 
-	public JDialog getEvolveDialog();
-
-	/**
-	 * @return Returns the evotype.
-	 * @uml.property name="evotype" readOnly="true"
-	 */
-	public EvolutionType getEvotype();
-
 	/**
 	 * @return Returns the name.
 	 * @uml.property name="Name" readOnly="true"
@@ -58,6 +41,12 @@ public interface circuitsearchengine {
 	public String getName();
 
 	public JPanel getProgressBar();
+
+	/**
+	 * @return Returns the Search Results.
+	 * @uml.property name="SearchResult" readOnly="true"
+	 */
+	public SearchResult[] getResults();
 
 	public JPanel getSearchStatisticsPanel();
 
@@ -73,12 +62,18 @@ public interface circuitsearchengine {
 	public void removeObserver(Observer ob);
 
 	/**
-	 * Setter of the property <tt>availableinstructions</tt>
-	 * 
-	 * @param availableinstructions
-	 *            The availableinstructions to set.
-	 * @uml.property name="availableinstructions"
+	 * Initiate search For use with a GUI
 	 */
-	public void setAvailableinstructions(boolean[] availableinstructions);
+	public void search();
+
+	/**
+	 * Initiate search For use without a GUI
+	 */
+	public void search(boolean[] availableinstructions, String[] params);
+
+	/**
+	 * @return
+	 */
+	public JDialog getStatsDialog();
 
 }

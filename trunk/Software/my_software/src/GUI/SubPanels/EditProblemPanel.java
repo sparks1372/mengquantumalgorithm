@@ -58,7 +58,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 	private XMLEditor					tsXmlEditor;
 
 	public EditProblemPanel(qcevolutionbackend be, quantumproblem qp) {
-
+		System.out.println("EditProblemPanel constructor");
 		backend = be;
 		setUndecorated(true);
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
@@ -121,8 +121,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		this.getContentPane().add(descPanel);
 		this.getContentPane().add(buttonPanel);
 
-		this.pack();
-		WindowUtils.centre(this);
+		setupSizes();
 
 	}
 
@@ -201,8 +200,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 					q = 10;
 				}
 				tsXmlEditor.addTestSet(q);
-				this.pack();
-				WindowUtils.centre(this);
+				setupSizes();
 			}
 		} else if (e.getSource() == deleteTestSetButton) {
 			int q = ((InnerEditorPanel) (tsXmlEditor.getSelectedComponent()))
@@ -212,8 +210,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 							+ " Qubits");
 			if (result == JOptionPane.YES_OPTION) {
 				tsXmlEditor.removeCurrentTestSet();
-				this.pack();
-				WindowUtils.centre(this);
+				setupSizes();
 			}
 		} else if (e.getSource() == addSuperpositionTestSetButton) {
 			int s = Integer.parseInt((String) JOptionPane.showInputDialog(this,
@@ -229,8 +226,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 				s = 10;
 			}
 			tsXmlEditor.addSuperpositionalTestSet(s);
-			this.pack();
-			WindowUtils.centre(this);
+			setupSizes();
 		}
 	}
 
@@ -298,6 +294,19 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		}
 	}
 
+	private void setupSizes() {
+		WindowUtils.centre(this);
+
+		name.setSize(new Dimension(this.getWidth() - 50, 20));
+		name.setMinimumSize(new Dimension(this.getWidth() - 50, 20));
+		name.setPreferredSize(new Dimension(this.getWidth() - 50, 20));
+		desc.setSize(new Dimension(this.getWidth() - 50, 100));
+		desc.setMinimumSize(new Dimension(this.getWidth() - 50, 100));
+		desc.setPreferredSize(new Dimension(this.getWidth() - 50, 100));
+
+		WindowUtils.centre(this);
+	}
+
 	private void setupTextAreas(quantumproblem qp) {
 		if (qp != null) {
 			name = new JTextArea(backend.getProbmanager().getProblemTag(
@@ -305,8 +314,6 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		} else {
 			name = new JTextArea();
 		}
-		name.setSize(new Dimension(this.getWidth() - 50, 20));
-		name.setPreferredSize(new Dimension(this.getWidth() - 50, 20));
 		name.setBorder(BorderFactory.createRaisedBevelBorder());
 		name.setEditable(false);
 
@@ -316,8 +323,6 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		} else {
 			desc = new JTextArea();
 		}
-		desc.setSize(new Dimension(this.getWidth() - 50, 100));
-		desc.setPreferredSize(new Dimension(this.getWidth() - 50, 100));
 		desc.setBorder(BorderFactory.createRaisedBevelBorder());
 		desc.setEditable(false);
 	}

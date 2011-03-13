@@ -13,8 +13,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Observer;
 import java.util.Vector;
 
@@ -26,29 +24,25 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
-import org.jppf.client.JPPFClient;
-import org.jppf.client.JPPFJob;
-import org.jppf.server.protocol.JPPFTask;
-
+import Core.Algorithms.QuantumAlgorithm;
 import Core.Algorithms.QuantumInstructionEnum;
 import Core.CircuitBuilder.circuitBuilder;
 import Core.CircuitEvaluator.circuitevaluator;
 import Core.CircuitEvolution.SearchEngineState;
 import Core.CircuitEvolution.SearchResult;
 import Core.CircuitEvolution.circuitsearchengine;
-import Utils.JPPFHelper;
-import Utils.SendMail;
 import Utils.WindowUtils;
 import Utils.WrapLayout;
-import ec.util.ParameterDatabase;
+import ec.EvolutionState;
+import ec.Evolve;
 
 /**
  * @author Sam Ratcliff
  * 
  */
-public class QPace4_Imp implements circuitsearchengine {
+public class QPace4_Batch extends Evolve implements circuitsearchengine {
 
 	class tickBoxListener implements ItemListener {
 		int	index;
@@ -94,112 +88,62 @@ public class QPace4_Imp implements circuitsearchengine {
 	private circuitevaluator		ce;
 	private static final String		NAME			= "QPace 4 Implementation";
 
-	private QPaceSearchResult[]		searchres;
+	private QuantumAlgorithm		al;
 	private static final String		filename		= "config/ecparams.params";
 	private Params_Writer			pw				= null;
 	private SearchEngineState		state			= SearchEngineState.Start;
 	private final Vector<Observer>	observers		= new Vector<Observer>();
 
+	private EvolutionState			evoState;
 	private final JPanel			progressPanel;
 	private JDialog					evolveDialog;
-	private JTextField				genTA;
+	private JTextArea				genTA;
 	private JLabel					genL;
 	private final static String		genStr			= "Generations";
 	private final static int		genDef			= 128;
-	private JTextField				popTA;
+	private JTextArea				popTA;
 	private JLabel					popL;
 	private final static String		popStr			= "Population Size";
 	private final static int		popDef			= 128;
-	private JTextField				bthTA;
+	private JTextArea				bthTA;
 	private JLabel					bthL;
 	private final static String		bthStr			= "# of Breeder Threads";
 	private final static int		bthDef			= 8;
-	private JTextField				ethTA;
+	private JTextArea				ethTA;
 	private JLabel					ethL;
 	private final static String		ethStr			= "# of Evaluation Threads";
 	private final static int		ethDef			= 8;
-	private JTextField				mintreedepthTA;
+	private JTextArea				mintreedepthTA;
 	private JLabel					mintreedepthL;
 	private final static String		mintreedepthStr	= "Minimum Initial Tree Depth";
 	private final static int		mintreedepthDef	= 10;
-	private JTextField				maxtreedepthTA;
+	private JTextArea				maxtreedepthTA;
 	private JLabel					maxtreedepthL;
 	private final static String		maxtreedepthStr	= "Minimum Initial Tree Depth";
 	private final static int		maxtreedepthDef	= 20;
 	private JCheckBox				timeCB;
 	private boolean					time			= true;
 	private final static String		timeStr			= "Use Time as Seeds?";
-	private JTextField				elTA;
+	private JTextArea				elTA;
 	private JLabel					elL;
 	private final static String		elStr			= "# of Elites";
 	private final static int		elDef			= 1;
-	private JTextField				xoverTA;
+	private JTextArea				xoverTA;
 	private JLabel					xoverL;
 	private final static String		xoverStr		= "CrossOver Rate";
 	private final static double		xoverDef		= 0.9;
-	private JTextField				mutTA;
+	private JTextArea				mutTA;
 	private JLabel					mutL;
 	private final static String		mutStr			= "Mutation Rate";
 	private final static double		mutDef			= 0.1;
-	private JTextField				iterTA;
-	private JLabel					iterL;
-	private final static String		iterStr			= "Number of Iterations";
-	private final static int		iterDef			= 1;
-	private JTextField				emailTA;
-	private JLabel					emailL;
-	private final static String		emailStr		= "Email Address for Completion Email. Leave blank if email is not required";
 	private boolean[]				enabledGate;
 
-	private int						gen;
-	private int						pop;
-	private int						bth;
-	private int						eth;
-	private int						mintreedepth;
-	private int						maxtreedepth;
-	private int						el;
-	private double					xover;
-	private double					mut;
-	private int						iterval;
-
-	private final String			from			= "mengquantum@gmail.com";
-	private String					to;
-	private final String			subject			= "Quantum Algorithm Search Complete";
-	private final String			message			= "Your search has completed for Quantum Problem : ";
-
 	private StatsPanel				statsPanel;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * Core.CircuitEvolution.circuitsearchengine#setAvailableinstructions(boolean
-	 * [])
-	 */
-	private static final int		GEN_INDEX		= 0;
-
-	private static final int		POP_INDEX		= 1;
-
-	private static final int		BTH_INDEX		= 2;
-
-	private static final int		ETH_INDEX		= 3;
-
-	private static final int		MINTREE_INDEX	= 4;
-
-	private static final int		MAXTREE_INDEX	= 5;
-
-	private static final int		EL_INDEX		= 6;
-
-	private static final int		XOVER_INDEX		= 7;
-
-	private static final int		MUT_INDEX		= 8;
-
-	private static final int		ITER_INDEX		= 9;
-	private static final int		TO_INDEX		= 10;
 
 	/**
 	 * 
 	 */
-	public QPace4_Imp() {
+	public QPace4_Batch() {
 		progressPanel = new JPanel();
 		enabledGate = new boolean[QuantumInstructionEnum.values().length];
 		for (int i = 0; i < enabledGate.length; i++) {
@@ -216,10 +160,15 @@ public class QPace4_Imp implements circuitsearchengine {
 	 * Core.CircuitEvolution.circuitsearchengine#addObserver(java.util.Observer)
 	 */
 	@Override
-	public synchronized void addObserver(Observer ob) {
-		synchronized (observers) {
-			observers.add(ob);
-		}
+	public void addObserver(Observer ob) {
+		observers.add(ob);
+	}
+
+	private void centre() {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		evolveDialog.setLocation(screenSize.width / 2 - evolveDialog.getWidth()
+				/ 2, screenSize.height / 2 - evolveDialog.getHeight() / 2);
+
 	}
 
 	/*
@@ -227,7 +176,6 @@ public class QPace4_Imp implements circuitsearchengine {
 	 * 
 	 * @see Core.CircuitEvolution.circuitsearchengine#getAvailableinstructions()
 	 */
-
 	@Override
 	public boolean[] getAvailableinstructions() {
 		return enabledGate;
@@ -244,20 +192,27 @@ public class QPace4_Imp implements circuitsearchengine {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				Thread ev = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						search();
+					}
+				});
+
 				try {
-					gen = Integer.parseInt(genTA.getText());
-					pop = Integer.parseInt(popTA.getText());
-					bth = Integer.parseInt(bthTA.getText());
-					eth = Integer.parseInt(ethTA.getText());
-					mintreedepth = Integer.parseInt(mintreedepthTA.getText());
-					maxtreedepth = Integer.parseInt(maxtreedepthTA.getText());
-					el = Integer.parseInt(elTA.getText());
+					int gen = Integer.parseInt(genTA.getText());
+					int pop = Integer.parseInt(popTA.getText());
+					int bth = Integer.parseInt(bthTA.getText());
+					int eth = Integer.parseInt(ethTA.getText());
+					int mintreedepth = Integer.parseInt(mintreedepthTA
+							.getText());
+					int maxtreedepth = Integer.parseInt(maxtreedepthTA
+							.getText());
+					int el = Integer.parseInt(elTA.getText());
 
-					xover = Double.parseDouble(xoverTA.getText());
-					mut = Double.parseDouble(mutTA.getText());
-					iterval = Integer.parseInt(iterTA.getText());
-					to = emailTA.getText();
-
+					double xover = Double.parseDouble(xoverTA.getText());
+					double mut = Double.parseDouble(mutTA.getText());
 					System.out.println("gen " + gen + " pop " + pop + " bth "
 							+ bth + " eth " + eth + " minimum tree depth "
 							+ mintreedepth + " maximum tree depth "
@@ -266,7 +221,7 @@ public class QPace4_Imp implements circuitsearchengine {
 
 					pw.updateParams(enabledGate, gen, pop, bth, eth,
 							mintreedepth, maxtreedepth, el, xover, mut, time);
-					startSearch();
+					ev.start();
 					evolveDialog.setVisible(false);
 				} catch (NumberFormatException ex) {
 					JOptionPane
@@ -354,8 +309,7 @@ public class QPace4_Imp implements circuitsearchengine {
 		paramsPanel.setLayout(new BoxLayout(paramsPanel, BoxLayout.PAGE_AXIS));
 		paramsPanel.setBorder(BorderFactory.createEtchedBorder());
 
-		genTA = new JTextField(Integer.toString(genDef));
-		genTA.setPreferredSize(new Dimension(65, 25));
+		genTA = new JTextArea(Integer.toString(genDef));
 		genL = new JLabel(genStr);
 
 		JPanel genPanel = new JPanel();
@@ -364,8 +318,7 @@ public class QPace4_Imp implements circuitsearchengine {
 		genPanel.add(genL);
 		genPanel.add(genTA);
 
-		popTA = new JTextField(Integer.toString(popDef));
-		popTA.setPreferredSize(new Dimension(65, 25));
+		popTA = new JTextArea(Integer.toString(popDef));
 		popL = new JLabel(popStr);
 
 		JPanel popPanel = new JPanel();
@@ -374,8 +327,7 @@ public class QPace4_Imp implements circuitsearchengine {
 		popPanel.add(popL);
 		popPanel.add(popTA);
 
-		bthTA = new JTextField(Integer.toString(bthDef));
-		bthTA.setPreferredSize(new Dimension(45, 25));
+		bthTA = new JTextArea(Integer.toString(bthDef));
 		bthL = new JLabel(bthStr);
 
 		JPanel bthPanel = new JPanel();
@@ -384,8 +336,7 @@ public class QPace4_Imp implements circuitsearchengine {
 		bthPanel.add(bthL);
 		bthPanel.add(bthTA);
 
-		ethTA = new JTextField(Integer.toString(ethDef));
-		ethTA.setPreferredSize(new Dimension(45, 25));
+		ethTA = new JTextArea(Integer.toString(ethDef));
 		ethL = new JLabel(ethStr);
 
 		JPanel ethPanel = new JPanel();
@@ -394,8 +345,7 @@ public class QPace4_Imp implements circuitsearchengine {
 		ethPanel.add(ethL);
 		ethPanel.add(ethTA);
 
-		mintreedepthTA = new JTextField(Integer.toString(mintreedepthDef));
-		mintreedepthTA.setPreferredSize(new Dimension(45, 25));
+		mintreedepthTA = new JTextArea(Integer.toString(mintreedepthDef));
 		mintreedepthL = new JLabel(mintreedepthStr);
 
 		JPanel mintreedepthPanel = new JPanel();
@@ -404,8 +354,7 @@ public class QPace4_Imp implements circuitsearchengine {
 		mintreedepthPanel.add(mintreedepthL);
 		mintreedepthPanel.add(mintreedepthTA);
 
-		maxtreedepthTA = new JTextField(Integer.toString(maxtreedepthDef));
-		maxtreedepthTA.setPreferredSize(new Dimension(45, 25));
+		maxtreedepthTA = new JTextArea(Integer.toString(maxtreedepthDef));
 		maxtreedepthL = new JLabel(maxtreedepthStr);
 
 		JPanel maxtreedepthPanel = new JPanel();
@@ -423,8 +372,7 @@ public class QPace4_Imp implements circuitsearchengine {
 			}
 		});
 
-		elTA = new JTextField(Integer.toString(elDef));
-		elTA.setPreferredSize(new Dimension(45, 25));
+		elTA = new JTextArea(Integer.toString(elDef));
 		elL = new JLabel(elStr);
 
 		JPanel elPanel = new JPanel();
@@ -433,8 +381,7 @@ public class QPace4_Imp implements circuitsearchengine {
 		elPanel.add(elL);
 		elPanel.add(elTA);
 
-		xoverTA = new JTextField(Double.toString(xoverDef));
-		xoverTA.setPreferredSize(new Dimension(45, 25));
+		xoverTA = new JTextArea(Double.toString(xoverDef));
 		xoverL = new JLabel(xoverStr);
 
 		JPanel xoverPanel = new JPanel();
@@ -443,8 +390,7 @@ public class QPace4_Imp implements circuitsearchengine {
 		xoverPanel.add(xoverL);
 		xoverPanel.add(xoverTA);
 
-		mutTA = new JTextField(Double.toString(mutDef));
-		mutTA.setPreferredSize(new Dimension(45, 25));
+		mutTA = new JTextArea(Double.toString(mutDef));
 		mutL = new JLabel(mutStr);
 
 		JPanel mutPanel = new JPanel();
@@ -452,16 +398,6 @@ public class QPace4_Imp implements circuitsearchengine {
 
 		mutPanel.add(mutL);
 		mutPanel.add(mutTA);
-
-		iterTA = new JTextField(Integer.toString(iterDef));
-		iterTA.setPreferredSize(new Dimension(45, 25));
-		iterL = new JLabel(iterStr);
-
-		JPanel iterPanel = new JPanel();
-		iterPanel.setLayout(new FlowLayout());
-
-		iterPanel.add(iterL);
-		iterPanel.add(iterTA);
 
 		JPanel upperPanel = new JPanel(new WrapLayout());
 		JPanel midPanel = new JPanel(new WrapLayout());
@@ -477,7 +413,6 @@ public class QPace4_Imp implements circuitsearchengine {
 		midPanel.add(timeCB);
 		lowerPanel.add(xoverPanel);
 		lowerPanel.add(mutPanel);
-		lowerPanel.add(iterPanel);
 
 		paramsPanel.add(upperPanel);
 		paramsPanel.add(midPanel);
@@ -496,11 +431,15 @@ public class QPace4_Imp implements circuitsearchengine {
 		return progressPanel;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.CircuitEvolution.circuitsearchengine#getResults()
+	 */
 	@Override
-	public SearchResult[] getResults()
-
-	{
-		return searchres;
+	public SearchResult[] getResults() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*
@@ -517,20 +456,8 @@ public class QPace4_Imp implements circuitsearchengine {
 	 * @return the state
 	 */
 	@Override
-	public synchronized SearchEngineState getState() {
+	public SearchEngineState getState() {
 		return state;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see Core.CircuitEvolution.circuitsearchengine#statsDialog()
-	 */
-	@Override
-	public JDialog getStatsDialog() {
-		return new QPaceStatsDialog(gen, pop, bth, eth, mintreedepth,
-				maxtreedepth, el, xover, mut, iterval, enabledGate, searchres);
-
 	}
 
 	@Override
@@ -545,13 +472,10 @@ public class QPace4_Imp implements circuitsearchengine {
 		}
 	}
 
-	private synchronized void notifyObservers() {
-		synchronized (observers) {
-			Observer[] iter = new Observer[observers.size()];
-			iter = observers.toArray(iter);
-			for (Observer ob : iter) {
-				ob.update(null, this);
-			}
+	private void notifyObservers() {
+		Iterator<Observer> iter = observers.iterator();
+		while (iter.hasNext()) {
+			iter.next().update(null, this);
 		}
 	}
 
@@ -561,10 +485,8 @@ public class QPace4_Imp implements circuitsearchengine {
 	 * @see Core.CircuitEvolution.circuitsearchengine#removeAllObservers()
 	 */
 	@Override
-	public synchronized void removeAllObservers() {
-		synchronized (observers) {
-			observers.removeAllElements();
-		}
+	public void removeAllObservers() {
+		observers.removeAllElements();
 	}
 
 	/*
@@ -575,10 +497,8 @@ public class QPace4_Imp implements circuitsearchengine {
 	 * )
 	 */
 	@Override
-	public synchronized void removeObserver(Observer ob) {
-		synchronized (observers) {
-			observers.remove(ob);
-		}
+	public void removeObserver(Observer ob) {
+		observers.remove(ob);
 	}
 
 	/*
@@ -593,26 +513,30 @@ public class QPace4_Imp implements circuitsearchengine {
 		evolveDialog.setVisible(true);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * Core.CircuitEvolution.circuitsearchengine#setAvailableinstructions(boolean
+	 * [])
+	 */
 	@Override
 	public void search(boolean[] availableinstructions, String[] params) {
 		enabledGate = availableinstructions;
 		setupEvolveDialog();
 		try {
-			gen = Integer.parseInt(params[GEN_INDEX]);
-			pop = Integer.parseInt(params[POP_INDEX]);
-			bth = Integer.parseInt(params[BTH_INDEX]);
-			eth = Integer.parseInt(params[ETH_INDEX]);
-			mintreedepth = Integer.parseInt(params[MINTREE_INDEX]);
-			maxtreedepth = Integer.parseInt(params[MAXTREE_INDEX]);
-			el = Integer.parseInt(params[EL_INDEX]);
-			xover = Double.parseDouble(params[XOVER_INDEX]);
-			mut = Double.parseDouble(params[MUT_INDEX]);
-			iterval = Integer.parseInt(params[ITER_INDEX]);
-			to = (params[TO_INDEX]);
+			int gen = Integer.parseInt(genTA.getText());
+			int pop = Integer.parseInt(popTA.getText());
+			int bth = Integer.parseInt(bthTA.getText());
+			int eth = Integer.parseInt(ethTA.getText());
+			int mintreedepthth = Integer.parseInt(mintreedepthTA.getText());
+			int maxtreedepthth = Integer.parseInt(maxtreedepthTA.getText());
+			int el = Integer.parseInt(elTA.getText());
+			double xover = Double.parseDouble(xoverTA.getText());
+			double mut = Double.parseDouble(mutTA.getText());
 
-			pw.updateParams(enabledGate, gen, pop, bth, eth, mintreedepth,
-					maxtreedepth, el, xover, mut, time);
-			startSearch();
+			pw.updateParams(enabledGate, gen, pop, bth, eth, mintreedepthth,
+					maxtreedepthth, el, xover, mut, time);
 		} catch (NumberFormatException ex) {
 			JOptionPane
 					.showMessageDialog(
@@ -655,20 +579,11 @@ public class QPace4_Imp implements circuitsearchengine {
 
 		buttonPanel = getButtonPanel();
 
-		emailL = new JLabel(emailStr);
-		emailTA = new JTextField();
-		emailTA.setPreferredSize(new Dimension(250, 25));
-		JPanel emailPanelL = new JPanel();
-		emailPanelL.add(emailL);
-		JPanel emailPanelA = new JPanel();
-		emailPanelA.add(emailTA);
-
 		evolveDialog.getContentPane().add(allowedGatePanel);
 		evolveDialog.getContentPane().add(paramsPanel);
-		evolveDialog.getContentPane().add(emailPanelL);
-		evolveDialog.getContentPane().add(emailPanelA);
 		evolveDialog.getContentPane().add(buttonPanel);
-		WindowUtils.centre(evolveDialog);
+		evolveDialog.pack();
+		centre();
 	}
 
 	/**
@@ -679,129 +594,19 @@ public class QPace4_Imp implements circuitsearchengine {
 		statsPanel.setVisible(false);
 	}
 
-	private void startSearch() {
-		updateState(SearchEngineState.Searching);
-		String[] pstr = { "-file", filename };
-		ParameterDatabase pd = QPaceSearchCore.loadParameterDatabase(pstr);
-		// SearchEngineCore sec = new QPaceSearchCore(pd, cb, ce);
-		// Thread t = new Thread(sec);
-		// t.start();
-		searchres = new QPaceSearchResult[iterval];
-		boolean block = false;
-
-		List<JPPFTask> results = new LinkedList<JPPFTask>();
-		JPPFClient jppfClient = null;
-		try {
-			jppfClient = new JPPFClient();
-			// create a JPPF job
-			final JPPFJob job = new JPPFJob();
-
-			// give this job a readable unique id that we can use to monitor and
-			// manage it.
-			job.setId("QPaceSearch");
-
-			for (int i = 0; i < iterval; i++) {
-				// add a task to the job.
-				job.addTask(new QPaceSearchCore(pd, cb, ce));
-			}
-			// add more tasks here ..
-
-			// create a runner instance.
-			final JPPFHelper runner = new JPPFHelper();
-
-			if (block) {
-				// execute a blocking job
-				results = runner.executeBlockingJob(jppfClient, job);
-				List<JPPFTask> jppfli = results;
-				Iterator<JPPFTask> iter = jppfli.listIterator();
-				int index = 0;
-				while (iter.hasNext()) {
-					QPaceSearchResult sr = (QPaceSearchResult) iter.next()
-							.getResult();
-					if (sr != null) {
-						searchres[index] = sr;
-						// System.out.println("sr!=null");
-						// System.out.println(searchres[index].getQa().print());
-						// } else {
-						// System.out.println("sr==null jppfli.size == "
-						// + jppfli.size());
-					}
-					index++;
-				}
-				// System.out.println("searchres.length = " + searchres.length
-				// + " jppfli.size = " + jppfli.size());
-				if (!to.equalsIgnoreCase("")) {
-					SendMail sendMail = new SendMail(from, to, subject,
-							message.concat(this.ce.getQproblem().getName()));
-					sendMail.send();
-				}
-				updateState(SearchEngineState.SearchCompleteResultAvailable);
-			} else {
-				final JPPFClient da = jppfClient;
-				final String probname = this.ce.getQproblem().getName();
-				// execute a non-blocking job
-				Thread t = new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-
-						List<JPPFTask> jppfli;
-						try {
-							jppfli = runner.executeBlockingJob(da, job);
-							Iterator<JPPFTask> iter = jppfli.listIterator();
-							int index = 0;
-							while (iter.hasNext()) {
-								QPaceSearchResult sr = (QPaceSearchResult) iter
-										.next().getResult();
-								if (sr != null) {
-									searchres[index] = sr;
-									// System.out.println("sr!=null");
-									// System.out.println(searchres[index].getQa()
-									// .print());
-									// } else {
-									// System.out
-									// .println("sr==null jppfli.size == "
-									// + jppfli.size());
-								}
-								index++;
-							}
-							// System.out.println("searchres.length = "
-							// + searchres.length + " jppfli.size = "
-							// + jppfli.size());
-							updateState(SearchEngineState.SearchCompleteResultAvailable);
-						} catch (Exception e) {
-							e.printStackTrace();
-							updateState(SearchEngineState.Start);
-						} finally {
-							if (da != null) {
-								da.close();
-							}
-						}
-
-						if (!to.equalsIgnoreCase("")) {
-							SendMail sendMail = new SendMail(from, to, subject,
-									message.concat(probname));
-							sendMail.send();
-						}
-					}
-				});
-				t.start();
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (block && (jppfClient != null)) {
-				jppfClient.close();
-			}
-		}
-
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.CircuitEvolution.circuitsearchengine#statsDialog()
+	 */
+	@Override
+	public JDialog getStatsDialog() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private synchronized void updateState(SearchEngineState s) {
 		this.state = s;
-
 		notifyObservers();
 	}
-
 }

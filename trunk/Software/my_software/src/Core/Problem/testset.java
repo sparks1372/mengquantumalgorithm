@@ -1,5 +1,6 @@
 package Core.Problem;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 import Core.qcevolutionbackend;
 import Jama.Matrix;
 
-public class testset {
+public class testset implements Serializable {
 
 	private final Matrix[]			customgates	= new Matrix[qcevolutionbackend.CUSTOMGATELIMIT];
 

@@ -23,6 +23,47 @@ public class Complex extends Object implements Serializable {
 		return to_return;
 	}
 
+	public static void main(String[] args) {
+		System.out.println(parseComplex("1").toString());
+		System.out.println(parseComplex("1i").toString());
+		System.out.println(parseComplex("-1").toString());
+		System.out.println(parseComplex("-1i").toString());
+		System.out.println(parseComplex("1+1i").toString());
+		System.out.println(parseComplex("1-1i").toString());
+		System.out.println(parseComplex("0.07072546156-1i").toString());
+	}
+
+	public static Complex parseComplex(String p) {
+		Double real = 0.0, imag = 0.0;
+		String rem;
+		if ((p.charAt(0) == '-') || (p.charAt(0) == '+')) {
+			rem = p.substring(1);
+		} else {
+			rem = p;
+		}
+
+		String realStr = null;
+		String imagStr = null;
+		if (rem.contains("-")) {
+			realStr = p.substring(0, rem.indexOf("-"));
+			imagStr = p.substring(rem.indexOf("-"), rem.indexOf("i"));
+
+		} else if (rem.contains("+")) {
+			realStr = p.substring(0, rem.indexOf("+"));
+			imagStr = p.substring(rem.indexOf("+") + 1, rem.indexOf("i"));
+
+		} else if (rem.contains("i")) {
+			realStr = "0.0";
+			imagStr = p.substring(0, p.length() - 1);
+		} else {
+			realStr = p;
+			imagStr = "0.0";
+		}
+		real = Double.parseDouble(realStr);
+		imag = Double.parseDouble(imagStr);
+		return new Complex(real, imag);
+	}
+
 	protected double	x;
 
 	protected double	y;

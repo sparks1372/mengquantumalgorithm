@@ -1,6 +1,8 @@
 package Core.Problem;
 
-public interface quantumproblem {
+import java.io.Serializable;
+
+public interface quantumproblem extends Serializable {
 
 	/**
 	 * @return Returns the name.
@@ -12,6 +14,7 @@ public interface quantumproblem {
 	 * @return Returns the testset.
 	 * @uml.property name="testset"
 	 */
+
 	public testsuite getTestSuite();
 
 	/**

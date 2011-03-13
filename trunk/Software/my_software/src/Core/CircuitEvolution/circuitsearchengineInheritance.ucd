@@ -10,7 +10,7 @@
       <children xsi:type="editmodel:AttributeEditModel" name="evotype" id="Core.CircuitEvolution/circuitsearchengine#evotype"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="66,18">
-      <children xsi:type="editmodel:MethodEditModel" name="Evolve" id="Core.CircuitEvolution/circuitsearchengine#Evolve()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="Evolve" id="Core.CircuitEvolution/circuitsearchengine#search([[Z)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>

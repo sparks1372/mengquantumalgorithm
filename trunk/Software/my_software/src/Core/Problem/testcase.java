@@ -1,8 +1,10 @@
 package Core.Problem;
 
+import java.io.Serializable;
+
 import Jama.Matrix;
 
-public class testcase {
+public class testcase implements Serializable {
 
 	/**
 	 * @uml.property name="startingstate"
