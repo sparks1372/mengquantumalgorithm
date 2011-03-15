@@ -1,4 +1,7 @@
 pdflatex mengreport
+mpost mengreport
+mptopdf mengreport
+pdflatex mengreport
 bibtex mengreport
 pdflatex mengreport
 pdflatex mengreport

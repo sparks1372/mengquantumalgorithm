@@ -1,13 +1,22 @@
 \documentclass[authoryearcitations]{UoYCSproject}
 
-\usepackage[margin=2cm]{geometry}
+\usepackage[driver=pdftex,margin=2cm]{geometry}
 \usepackage[matrix,frame,arrow]{xypic}
-\usepackage{graphicx,array}
+\ifx\pdftexversion\undefined
+\usepackage[dvips]{graphicx}
+\else
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\fi
+\usepackage{array}
 \usepackage{qtree}
 \usepackage{listings}
 \usepackage{appendix}
 \usepackage{color}
 \usepackage{longtable} 
+\usepackage{subfig}
+\usepackage{emp}
+\usepackage{pdflscape}
 \input{Qcircuit}
 
 \vfuzz2pt % Don't report over-full v-boxes if over-edge is small
@@ -27,6 +36,11 @@
 }
 \setcounter{tocdepth}{2}
 \begin{document}
+\begin{empfile}
+\begin{empcmds}
+input metauml;
+\end{empcmds}
+
 \pagenumbering{Roman}
 \maketitle
 %PUT THESE BACK IN
@@ -45,44 +59,15 @@
 
 \input{Design}
 
-\input{Implementation}
+% \input{Implementation}
 
 \input{Testing}
 
 \bibliography{mengreport}
 
 \appendix
-\chapter{Full Requirements}
-\label{sec:reqs}
-\section{Framework}
-\section{Fully Functional Tool}
-\section{Client and GUI}
 
-\chapter{XML Outlines}
-\section{Search Engine XML Outline}
-\label{sec:semanspecxml}
-\lstset{language = XML}
-\begin{lstlisting}
- <searchengine>
-	<se>
-	  <Name>SEARCH ENGINE NAMES</Name>
-	  <Class>IMPLEMENTING FULLY QUALIFIED CLASS NAME</Class>
-	  <Desc>SEARCH ENGINE DESCRIPTION</Desc>
-	</se>
-</searchengine>
-\end{lstlisting}
+\input{Appendices}
 
-\section{Problem Definition XML Outline}
-\label{sec:probmanspecxml}
-\lstset{language = XML}
-\begin{lstlisting}
-<Problems>
-	<prob>
-	  <Name>PROBLEM NAME</Name>
-	  <DefFile>PROBLEM DEFINITION FILE</DefFile>
-	  <Desc>PROBLEM DESCRIPTION</Desc>
-	</prob>
-</Problems>
-\end{lstlisting}
-
+\end{empfile}
 \end{document}

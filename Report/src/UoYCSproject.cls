@@ -36,7 +36,7 @@
 
 % Koma-script report style
 \PassOptionsToPackage{twoside}{typearea}
-\LoadClass[11pt,a4paper,twoside,abstracton,pointlessnumbers,BCOR13mm,DIVcalc]{scrreprt}
+\LoadClass[11pt,twoside,abstracton,pointlessnumbers,BCOR13mm,DIVcalc, pagesize=auto, paper=a4]{scrreprt}
 
 \RequirePackage[T1]{fontenc} % prevents < in text mode turning into
 \RequirePackage{textcomp}    % ?', etc
