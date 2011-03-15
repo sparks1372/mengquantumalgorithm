@@ -1,7 +1,18 @@
-\chapter{Design}
+\chapter{Design and Implementation}
+\lstset{language=Java}
+This section shall include both design decisions and implmentation decisions.
+Java was selected as the programming language for the implementation.
+The main reason for this choice is that Java is widely adopted by many researchers.
+The level of tool support is significantly higher than many other programming languages providing better development environments and support tools, debuggers and profilers for example. 
+As a result of the requirement for portability, Java provides much simpler support for portability without numerous versions required for each operating system.
+
+Also considered was the availability of libraries likely to be used by researchers.
+The research inspiring this framework are all evolutionary search techniques, as a result the availability of the ECJ\cite{ecjtool} strengthed the decision to implement the framework in Java.
+As part of the development, a search engine based loosely on the QPACE IV search engine introduced by Massey\cite{masseythesis}.
+This search engine implementation is done using ECJ.
 
 \section{Framework}
-In this section I will outline the design decisions that directly effect only the framework produced.
+In this section I will outline the design decisions that only directly effect the framework produced and how it was implemented.
 
 \subsection{Complex Numbers}
 Complex numbers are central to Quantum Computing.
@@ -28,6 +39,13 @@ If the documentation of the software produced by the two researchers did not men
 The third researcher is likely to receive very confusing and highly misleading results.
 The provision of a Complex class that is used throughout the framework where complex numbers need to be used will reduce the risk of such an event.
 
+The implementation of the Complex class is based on an implementation provided as part of a ``Complex Function Grapher''\cite{compimp}.
+The Complex class provides both Cartesian form $real + imaginary$, through \lstinline{real()} and \lstinline{imag()} returning the real and imaginary components respectively, and Polar form $re^{i\theta}$, through \lstinline{mod()} and \lstinline{arg()} returning $r$ and $\theta$ respectively.
+The implementation has been adapted to better suit this application.
+A calculation of the euclidean distance between two complex numbers is provided.
+A second addition is the ability to parseComplex in a similar way to parseInt or parseDouble provided by the standard Integer and Double classes respectively.
+This allows a string such as ``$2+3i$'' to be input by a user and for a Complex object to be created with a real component of $2$ and imaginary component of $3$.
+
 \subsection{Matrices}
 As seen in Equation \ref{eq:notexplanded} the application of a quantum gate is simply the application of a unitary operation, represented as a matrix, to a quantum state.
 This adds the requirement on the framework to provide a manner in which matrices will be represented.
@@ -40,6 +58,17 @@ The justification is identical to that discussed above.
 Matrix operations are easy to get wrong in implementation and there are matrix libraries for many languages.
 The incomplete documentation argument also holds with matrices.
 If the framework were to just simply represent matrices as two dimensional arrays, two researchers could order the dimensions differently leading to similar problems to that of conflicting complex representations for the third researcher.
+
+The implementation of the Matrix used in the application is based on the JAMA Matrix package\cite{javamatrix}.
+The JAMA Matrix package provides matrices of double values.
+For use in the framework this needed to be updated so that it provides matrices of Complex objects and performs all the required operations as though they are matricies of complex numbers.
+
+The JAMA Matrix package provides extra functionality for matricies of doubles that are not required for the framework.
+In the conversion from double matrices to Complex matrices this additional functionality was removed.
+This was due to the functionality not being required and therefore can be seen as dead code so should be removed.
+
+One matrix operation that was not included in the JAMA Matrix package was the tensor product operation.
+This operation is used heavily when applying a single qubit gates to multi-qubit systems and therefore necessary for the framework.
 
 \subsection{State}
 With a representation of matrices defined, the definition of a quantum state naturally followed.
@@ -64,6 +93,7 @@ All test cases are held within a test set.
 
 A test suite is used to hold all the test sets produced for the same problem.
 There is only one test set for each distinct value of $n$.
+The implemented structure can be seen in Figure \ref{fig:testsuiteclassdiag}.
 
 The test suite is fully defined in a single XML file.
 The XML in Figure \ref{code:paulixtestset} is a sample of such a file.
@@ -99,21 +129,71 @@ It is easy to see file structure reflects the internal structure of test suites 
     </testset>
 </testsuite>
  \end{lstlisting}
-\label{code:paulixtestset}
 \caption{Partial Test Set for Pauli X Gate}
+\label{code:paulixtestset}
 \end{figure}
 
+The use of a seperate files to specify the test suite for each Search Problem rather than including it in the Search Problem Manager configuration file, discussed in Section \ref{sec:manclasses}, ensures that the files remain readable.
+It also ensure that researchers can distribute Test Suite easier than if all Search Problems were fully specified in a single file.
+
+\begin{figure}
+\centering
+\begin{emp}[classdiag](20, 20)
+Class.A("TestCase")("-StartState:Matrix","-FinalState:Matrix","-Label:String","-Id:int")();
+Class.B("TestSet")("-NumberOfQubits:int")();
+Class.C("TestSuite")()();
+Class.D("SuperPositionalTestSet")()();
+leftToRight(75)(C, B, A);
+D.n = B.s - (0, 50);
+drawObjects(D, C, B, A);
+clink(association)(C, B);
+item(iAssoc)("1")(obj.nw = C.e);
+item(iAssoc)("1..*")(obj.ne = B.w);
+clink(association)(B, A);
+item(iAssoc)("1")(obj.nw = B.e);
+item(iAssoc)("1..*")(obj.ne = A.w);
+link(inheritance)(D.n -- B.s)
+\end{emp}
+\caption{Test Suite Class Diagram}
+\label{fig:testsuiteclassdiag}
+\end{figure}
+
+It can be seen in the class diagram, in Figure \ref{fig:testsuiteclassdiag}, that an additional class, SuperPositionalTestSet, is included as a subclass of the TestSet class.
+In the framework the test cases that have starting states in a superposition are held within SuperPositionalTestSets.
+A SuperPositionalTestSet for 2 qubits returns ``-2'' to indicate the superposition starting state.
+This initially doesn't seem that useful as both a superpositional and non-superpositional test case contain both a start and final state that are treated exactly the same during evaluation.
+This is however useful for GUI's and 3rd party software and also for the creation of test cases from the XML files.
+The labelling of non-superpositional test cases, to make most sense to users, are set to the binary value of the input state.
+For example, the label for the input state $\begin{pmatrix}1\\0\end{pmatrix}$ is set as $0$ and for the input state $\begin{pmatrix}0\\1\end{pmatrix}$ the label is set as $1$.
+However, for superpositional test cases the use of the expanded superpositional state, $\begin{pmatrix}\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}\end{pmatrix}$ to $\frac{1}{\sqrt{2}}\ket{0}+\frac{1}{\sqrt{2}}\ket{1}$, is not sensible due to the exponential increase in size as the number of qubits increases, therefore reducing readability.
+For the superpositional test cases the labels are therefore set as ``Test Case $0$'' to ``Test Case $n-1$''.
+
+The negation of the ``NumQubits'' attribute is used to specify in the XML file that the test set is of superpositional input states.
+This negation is required for the labels of the test cases to be set correctly.
+
+Alongside the framework, an independant test suite graphical editor is provided.
+A user can use this to produce the XML file and therefore do not need to explicitly consider the XML file.
+The separation of test cases between superpositional and non-superpositional test cases improved the design and implementation of this editor.
+The design and implementation of the graphical editor can be found in Section \ref{sec:indtestsuiteeditor}.
+
+The contents of a test suite are not fixed.
+If a user finds an error or wishes to add test cases, either a third party application or the provided test suite graphical editor can be used to update the respective test suite elements.
+These changes need to be reflected in the XML file to become persistant so to ensure that the updated XML file is well formed the framework provides a class to produce from a given test suite.
+This class is used in the independant test suite graphical editor and is recommended for use by any third party application.
+
 \subsection{Manager Classes}
-As can be seen in the architecture diagram of the framework, Appendix REF???, that there are several classes with names suffixed with ``Manager''.
+\label{sec:manclasses}
+As can be seen in the architecture diagram of the framework, Appendix \ref{sec:archdesign}, there are several classes with names suffixed with ``Manager''.
 These classes provide access to the extendible areas of the framework.
-There is a Manager class for the Fitness Functions, the Search Engines and the Problems.
+There is a Manager class for the Fitness Functions, the Search Engines and the Search Problems.
 Each of these are a specific site of expansion.
 
 Each Manager is configured using an XML file specfying all options for the specific Manager.
-The Fitness Function Manager will be configured for all the available Fitness Functions, the Search Engine Manager for all the available Search Engines, and the Problem manager for all the available Problems.
+The Fitness Function Manager will be configured for all the available Fitness Functions, the Search Engine Manager for all the available Search Engines, and the Problem manager for all the available Search Problems.
+The Search Problem Manager class is outlined in detail in Section \ref{sec:problemman}.
 
 This configuration is performed at runtime rather than at compile time.
-it was designed as such so as to provide the ability to add, for example, extra Fitness Functions without altering the code of the framework.
+It was designed to allow researchers to add, for example, extra Fitness Functions without altering the code of the framework.
 This independence of the framework implementation and the results of research, specific Fitness Funcitons etc, has been identified as one of the key foundations of the framework concept.
 The inclusion of this knowledge separation encourages the use of the standardised interfaces specified for each expansion site.
 
@@ -136,7 +216,30 @@ The XML outline shown in Figure \ref{code:fitfuntmanconfig} is an outline of the
 The XML files specifying the available Search Engines and the available Problems can be found in Appendix \ref{sec:semanspecxml} and \ref{sec:probmanspecxml}.
 
 These XML files are used to regiser the available implementations with the respective Managers.
-The Manager classes use these registrations to provide the choice of available instantiations of Search Engines, Fitness Functions and Problems.
+The Manager classes use these registrations to provide the choice of available instantiations of Search Engines and Fitness Functions.
+
+\begin{figure}
+\centering
+\begin{emp}[classdiag](20, 20)
+Class.E("XYTag")("-Name:String","-Description:String","-ClassName:String")();
+Class.F("XYManager")()("+getAvailableXYs():Set<String>","+getXY(String key):XY","+getSearchEngineDesc(String key):String");
+leftToRight(75)(E, F);
+drawObjects(E, F);
+clink(association)(E, F);
+item(iAssoc)("1")(obj.nw = E.e);
+item(iAssoc)("1..*")(obj.ne = F.w);
+clink(association)(F, E);
+\end{emp}
+\caption{Manager - Tag Class Diagram}
+\label{fig:mantagclassdiag}
+\end{figure}
+
+Both the Search Engine and Search Problem Manager classes are implemented in the same way.
+The class diagram in Figure \ref{fig:mantagclassdiag} shows the Manager design.
+A mapping between the Name of the registered options and Tag objects is held in each Manager.
+A Tag contains the information within the \lstinline{<XYTag> </XYTag>} element of the XML file.
+The getAvailableXYs() method returns a set of strings, the registered names, rather than the XY Tags to ensure the Manager classes have full control over the creation of the managed elements.
+To provide an XY object when requested using thegetXY(key) method, the Manager classes use reflection to instantiate an object of the respective class, the value of the ClassName variable of the Tag registered with $Name=key$.
 
 \subsection{Multiple Search Engines}
 The framework is aimed to be used universally by Quantum Algorithm researchers.
@@ -171,6 +274,7 @@ It was deemed detrimental and in contradiction of the frameworks purpose to limi
 
 
 \subsection{Multiple Problems and Problem Specification}
+\label{sec:problemman}
 As has been mentioned on several occasions, one of the foundation principles of the framework is the ability to ``Plug and Play'' the work of other researchers without the proplem of integration.
 With Search Engines and Fitness Functions developed to adhere to the respective interfaces, a user should be able to work with the toolkit and treat it as a ``Black Box''.
 
@@ -203,6 +307,15 @@ Providing a problem manager allows the framework to be used for different proble
 \label{code:probmanconfig}
 \end{figure}
 
+The Search Problem Manager works in a similar way to the Search Engine and Fitness Function Managers detailed in Section \ref{sec:manclasses}.
+However, the difference between the registered Search Problems is the test suite configuration XML file rather than the implementing class.
+A second difference is that the registered options are not static, a third party application can interact with the Manager to create new Search Problems and update the already registered Search Problems.
+Therefore, the Search Problem Manager has to be able to produce an updated Search Problem Manager configuration file so the changes made are persistent.
+The changes that the Seach Problem Manager is concerned with is only updates to the values in the Search Problem Manager configuration file.
+Any changes made to the set of Test Cases are not maintained by the Search Problem Manager.
+This ensures that the different concerns are separated.
+The update of Test Cases is detailed in Section \ref{sec:testsuitestruc}.
+
 \subsection{Quantum Algorithms}
 The result of the search engines are quantum algorithms.
 To maintain the ``Plug and Play'' nature of the framework, the representation of these algorithms needed to be specifed and standardised.
@@ -214,7 +327,85 @@ Using this there are no limitations on the structures used internal to the searc
 
 The use of the standardised quantum algorithm also ensures that the reporting of an algorithm to the user is consistent.
 
+\begin{figure}
+\centering
+ \begin{tabular}{|c|c|c|c|c|}
+  \hline
+Instruction & Gate1 & Gate2 & Phase & Sub-Algorithms \\
+QuantumInstruction(Enumeration)&expnode&expnode&expnode&QuantumAlgorithm[]\\
+\hline
+ \end{tabular}
+\caption{Quantum Instruction Structure}
+\label{tab:quantinststruct}
+\end{figure}
+
+\begin{figure}
+\centering
+ \begin{tabular}{|c|c|}
+\hline
+$exp \rightarrow e + e$ & $e \rightarrow exp$ \\
+$exp \rightarrow e - e$ &  $e \rightarrow SystemSize$ \\
+$exp \rightarrow e * e$ &  $e \rightarrow Value$ \\
+$exp \rightarrow \frac{e}{e}$ &   \\
+$exp \rightarrow e^e$ &   \\
+$exp \rightarrow \frac{\pi}{2^e}$ &   \\
+$exp \rightarrow LoopVars[e]$ &   \\
+\hline
+ \end{tabular}
+\caption{expnode Context Free Grammar}
+\label{tab:expnodecontext}
+\end{figure}
+
+An algorithm is a list of instructions.
+The instructions that are used in the standardised quantum algorithms take the form shown in Figure \ref{tab:quantinststruct}.
+The list of values that the Instruction element can take can be found in Appendix \ref{sec:alginstructionlist}.
+
+$Gate1$, $Gate2$ and $Phase$ are all listed as being of type \emph{expnode}.
+The final type for $Gate1$ and $Gate2$ is integer and for $Phase$ is double.
+They are not explicitly these types to increase the expressive power of the algorithms.
+The grammar that defines the \emph{expnode} type can be seen in Figure \ref{tab:expnodecontext}.
+The \emph{expnode} type is needed so that the algorithms can react to the parameterisation that provides the increased power when compared to quantum circuits.
+As the circuit size is a variable a constant cannot be used for $Gate1$, $Gate2$ or $Phase$ as the value may depend on the circuit size and have to be calculated when a circuit is being built using the algorithm.
+
+\lstset{numbers=left,language=Java}
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}
+for(int i = 0; i < n ; i++){
+  // You can use i here
+  for(int j = 0; j < n ; j++){
+    // You can use i and j here
+  }
+}
+\end{lstlisting}
+\end{tabular}
+\end{center}
+
+With the inclusion of an loop control construct in the form of the \emph{iterate} and \emph{reviterate} instructions additional parameters are introduced.
+In Java and many programming languages, as can be seen in the example of Java code above, when using nested loops access to all loop variables is provided.
+This means that at line 2 the loop variable $i$ is able to be used but at line 4 both loop variable $i$ and $j$ can be used.
+This nesting is quite a powerful language feature.
+With the inclusion of the iterate instructions and therefore the posibility of nested iterations this loop variable access could be implemented in one of two ways.
+The most na\"{\i}ve implementation would be to just allow access to the ``closest'' loop variable.
+This would mean that the code at line 2 wouldn't be effected but the code at line 4 would no longer be able to use the $i$ variable.
+The more sophisticated option, that is implemented, is to provide access to all loop variables.
+This is a second parameter that requires the use of the \emph{expnode} type.
+All current iteration variables are provided in a \emph{LoopVars} array.
+As can be seen in Figure \ref{tab:expnodecontext} the array is indexed by the value of a sub-expression.
+To ensure that all indicies requested are valid the value of the sub-expression is calculated using modulus \emph{LoopVars.length()}.
+
+The difference between the \emph{iterate} and \emph{reviterate} instructions is that \emph{iterate} counts from $1$ to $Gate1$ and \emph{reviterate} counts from $Gate1$ to $1$.
+As is explained in Section \ref{sec:qubitnum}, the qubits are numbered from $1$ to $n$ which is why the iteration instructions count to and from $1$ rather than $0$ as is normal in Computer Science.
+The two different interate instructions are needed as they can express some looping constructs in a much simpler form that would be possible with just one of them.
+
+For all \emph{Create\_*} instructions, $Gate1$ is used to index the qubit the actual gate should be assigned to.
+Gate2 is only used by \emph{Create\_C*} and \emph{Create\_SWAP} instructions to index the control qubit and second qubit respectively.
+For the \emph{Iteration} instruction, Gate1 is used for the number of iterations, $n$.
+For the \emph{Create\_R*}, \emph{Create\_CR*}, \emph{Create\_P} and  \emph{Create\_CP} instructions, the Phase element is used to parameterise those gate to specify the amount of rotation applied by the resulting gate.
+
+
 \subsection{Qubit Numbering}
+\label{sec:qubitnum}
 One of the major decisions made relating to the way in which the produced quantum algorithms are produced was that of which way the qubits should be numbered.
 The two options were obviously in accending or decending order.
 
@@ -256,6 +447,8 @@ It also reduced the potential errors involving the interpretation of a more comp
 
 The circuits also provide a Latex representation to allow the circuit to be visualised.
 The Latex representation uses the QCircuit package that can be freely obtained at \cite{QCsite}.
+
+The circuit implementation provided in the framework 
 
 \subsection{Quantum Gates}
 \label{sec:quantumgates}
@@ -402,6 +595,14 @@ This is obviously not desirable from a ``Plug and Play'' perspective.
 
 The prescription of a batch processing manager may also restrict the statistics that are required by the researcher.
 As a result of the reporting of statistcs is also not provided by the framework but expected of the Seach Engine.
+
+\section{Provided Tools}
+\subsection{Graphical Test Suite Editor}
+\label{sec:indtestsuiteeditor}
+
+\subsection{Graphical Matrix Editor}
+\label{sec:indmatrixeditor}
+
 
 \section{Provided GUI}
 
