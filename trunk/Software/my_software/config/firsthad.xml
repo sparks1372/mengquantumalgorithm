@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="testset_xml_spec.xsd">
+<testsuite NumCustomGates="0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="testset_xml_spec.xsd">
 <testset NumQubits="1">
-<testcase><!--00-->
+<testcase><!--0-->
 <starting_state>
-<matrix_element><!-- 00-->
+<matrix_element><!-- 0-->
 <Real>1.0</Real>
 <Imag>0.0</Imag>
 </matrix_element>
-<matrix_element><!-- 01-->
+<matrix_element><!-- 1-->
 <Real>0.0</Real>
 <Imag>0.0</Imag>
 </matrix_element>

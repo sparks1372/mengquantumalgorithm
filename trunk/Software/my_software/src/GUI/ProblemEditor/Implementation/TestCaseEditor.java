@@ -12,11 +12,11 @@ import Utils.Complex;
 
 class MyTestCaseTableModel extends AbstractTableModel {
 	private final boolean	DEBUG		= false;
-	private final String[]	columnNames	= { "|State>", "Real", "Imaginary" };
+	private final String[]	columnNames	= { "|State>", "Probability Amplitude" };
 	private Object[][]		data;
 
 	public MyTestCaseTableModel() {
-		data = new Object[0][3];
+		data = new Object[0][2];
 	}
 
 	/*
@@ -95,7 +95,7 @@ class MyTestCaseTableModel extends AbstractTableModel {
 	}
 
 	public void reset(int testcases) {
-		data = new Object[testcases][3];
+		data = new Object[testcases][2];
 	}
 
 	/*
@@ -154,8 +154,7 @@ public class TestCaseEditor extends JPanel implements TableModelListener {
 				b_str = zero_string.concat(b_str);
 			}
 			tm.internalSetValueAt(b_str, index, 0);
-			tm.internalSetValueAt(m.get(index, 0).real(), index, 1);
-			tm.internalSetValueAt(m.get(index, 0).imag(), index, 2);
+			tm.internalSetValueAt(m.get(index, 0).toString(), index, 1);
 		}
 		tm.fireTableDataChanged();
 	}
@@ -163,8 +162,8 @@ public class TestCaseEditor extends JPanel implements TableModelListener {
 	@Override
 	public void tableChanged(TableModelEvent e) {
 		int i = e.getFirstRow();
-		Complex s = new Complex((Double) tm.getValueAt(i, 1),
-				(Double) tm.getValueAt(i, 2));
+		Complex s = Complex.parseComplex((String) tm.getValueAt(i, 1));
 		m.set(i, 0, s);
+		tm.internalSetValueAt(s, i, 1);
 	}
 }

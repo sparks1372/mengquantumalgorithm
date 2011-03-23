@@ -1,5 +1,7 @@
 package Core;
 
+import Core.Problem.testsuite;
+
 public interface quantumproblem {
 
 	/**

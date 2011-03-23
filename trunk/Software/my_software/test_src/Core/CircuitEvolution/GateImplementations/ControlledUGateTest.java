@@ -38,7 +38,7 @@ public class ControlledUGateTest {
 		state_array[2][0] = new Complex(0, 0);
 		state_array[3][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_0",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -49,7 +49,7 @@ public class ControlledUGateTest {
 		state_array[2][0] = new Complex(0, 0);
 		state_array[3][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_1",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -61,7 +61,7 @@ public class ControlledUGateTest {
 		state_array[2][0] = new Complex(0, 0);
 		state_array[3][0] = new Complex(1, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_2",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -72,7 +72,7 @@ public class ControlledUGateTest {
 		state_array[2][0] = new Complex(1, 0);
 		state_array[3][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_3",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -85,7 +85,7 @@ public class ControlledUGateTest {
 		state_array[2][0] = new Complex(0, 0);
 		state_array[3][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_0",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -96,7 +96,7 @@ public class ControlledUGateTest {
 		state_array[2][0] = new Complex(0, 0);
 		state_array[3][0] = new Complex(1, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_1",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -108,7 +108,7 @@ public class ControlledUGateTest {
 		state_array[2][0] = new Complex(1, 0);
 		state_array[3][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_2",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -119,7 +119,7 @@ public class ControlledUGateTest {
 		state_array[2][0] = new Complex(0, 0);
 		state_array[3][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_3",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -136,7 +136,7 @@ public class ControlledUGateTest {
 		state_array[6][0] = new Complex(0, 0);
 		state_array[7][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_3q_0",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -151,7 +151,7 @@ public class ControlledUGateTest {
 		state_array[6][0] = new Complex(0, 0);
 		state_array[7][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_3q_1",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -166,7 +166,7 @@ public class ControlledUGateTest {
 		state_array[6][0] = new Complex(0, 0);
 		state_array[7][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_3q_2",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -181,7 +181,7 @@ public class ControlledUGateTest {
 		state_array[6][0] = new Complex(0, 0);
 		state_array[7][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_3q_3",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -196,7 +196,7 @@ public class ControlledUGateTest {
 		state_array[6][0] = new Complex(0, 0);
 		state_array[7][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_3q_4",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -211,7 +211,7 @@ public class ControlledUGateTest {
 		state_array[6][0] = new Complex(0, 0);
 		state_array[7][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_3q_5",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -226,7 +226,7 @@ public class ControlledUGateTest {
 		state_array[6][0] = new Complex(0, 0);
 		state_array[7][0] = new Complex(1, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_3q_6",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -241,7 +241,7 @@ public class ControlledUGateTest {
 		state_array[6][0] = new Complex(1, 0);
 		state_array[7][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_3q_7",
 				Matrix.equal(result, new Matrix(state_array)));
 	}

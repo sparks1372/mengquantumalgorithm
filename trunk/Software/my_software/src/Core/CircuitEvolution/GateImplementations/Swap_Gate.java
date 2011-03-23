@@ -74,7 +74,7 @@ public class Swap_Gate implements multiqubitquantumgate {
 	}
 
 	@Override
-	public Matrix apply(Matrix start_state) {
+	public Matrix apply(Matrix start_state, String[] customGateDefs) {
 		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
 
 		Matrix operation = unitary;
@@ -119,7 +119,7 @@ public class Swap_Gate implements multiqubitquantumgate {
 	}
 
 	@Override
-	public Matrix getUnitary_operation() {
+	public Matrix getUnitary_operation(String[] customGateDefs) {
 		return unitary;
 	}
 

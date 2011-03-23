@@ -11,15 +11,22 @@ public interface quantumproblem extends Serializable {
 	public String getName();
 
 	/**
-	 * @return Returns the testset.
-	 * @uml.property name="testset"
+	 * @return Returns the number of qubits.
+	 * @uml.property name="numOfQubits"
+	 */
+
+	public int getNumOfQubits();
+
+	/**
+	 * @return Returns the testsuite.
+	 * @uml.property name="testsuite"
 	 */
 
 	public testsuite getTestSuite();
 
 	/**
-	 * @arg the testset.
-	 * @uml.property name="testset"
+	 * @arg the testsuite.
+	 * @uml.property name="testsuite"
 	 */
 	public void setTestSuite(testsuite tsin);
 

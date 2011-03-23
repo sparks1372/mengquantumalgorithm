@@ -64,9 +64,11 @@ public class Problem_Manager extends Observable {
 
 		if (!instatiatedproblems.containsKey(key)) {
 			ProblemTag selected = availableproblems.get(key);
-			to_ret = new simpleqcproblem(selected.Name);
 			test_UML_parser tp = new test_UML_parser(selected.Def_File);
-			to_ret.setTestSuite(tp.parse());
+			testsuite ts = tp.parse();
+			to_ret = new simpleqcproblem(selected.Name,
+					ts.getNumOfCustomGates());
+			to_ret.setTestSuite(ts);
 			instatiatedproblems.put(key, to_ret);
 		} else {
 			to_ret = instatiatedproblems.get(key);
@@ -121,7 +123,6 @@ public class Problem_Manager extends Observable {
 			setChanged();
 			notifyObservers();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

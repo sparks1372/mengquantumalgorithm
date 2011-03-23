@@ -18,43 +18,43 @@ public class Phase_Gate implements quantumgate {
 		System.out.println("2 qubits state 00, Phase Gate PI/4 Qubit 1");
 		Matrix test_state = predefined_states.get_2q_0();
 		test_state.print_state(0, 0);
-		Matrix result = test.apply(test_state);
+		Matrix result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("2 qubits state 01, Phase Gate PI/4 Qubit 1");
 		test_state = predefined_states.get_2q_1();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("2 qubits state 10, Phase Gate PI/4 Qubit 1");
 		test_state = predefined_states.get_2q_3();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 000, Phase Gate PI/4 Qubit 1");
 		test_state = predefined_states.get_3q_0();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 001, Phase Gate PI/4 Qubit 1");
 		test_state = predefined_states.get_3q_1();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 010, Phase Gate PI/4 Qubit 1");
 		test_state = predefined_states.get_3q_3();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 100, Phase Gate PI/4 Qubit 1");
 		test_state = predefined_states.get_3q_5();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		test = new Phase_Gate(2, Math.PI / 2);
@@ -62,43 +62,43 @@ public class Phase_Gate implements quantumgate {
 		System.out.println("2 qubits state 00, Phase Gate PI/4 Qubit 2");
 		test_state = predefined_states.get_2q_0();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("2 qubits state 01, Phase Gate PI/4 Qubit 2");
 		test_state = predefined_states.get_2q_1();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("2 qubits state 10, Phase Gate PI/4 Qubit 2");
 		test_state = predefined_states.get_2q_3();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 000, Phase Gate PI/4 Qubit 2");
 		test_state = predefined_states.get_3q_0();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 001, Phase Gate PI/4 Qubit 2");
 		test_state = predefined_states.get_3q_1();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 010, Phase Gate PI/4 Qubit 2");
 		test_state = predefined_states.get_3q_3();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 100, Phase Gate PI/4 Qubit 2");
 		test_state = predefined_states.get_3q_5();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 	}
 
@@ -125,7 +125,7 @@ public class Phase_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix apply(Matrix start_state) {
+	public Matrix apply(Matrix start_state, String[] customGateDefs) {
 		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
 		Complex[][] init = new Complex[1][1];
 		init[0][0] = new Complex(1, 0);
@@ -162,7 +162,7 @@ public class Phase_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix getUnitary_operation() {
+	public Matrix getUnitary_operation(String[] customGateDefs) {
 		return unitary;
 	}
 

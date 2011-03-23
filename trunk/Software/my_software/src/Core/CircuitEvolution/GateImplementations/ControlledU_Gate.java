@@ -10,14 +10,14 @@ import Utils.MatrixUtils;
 public class ControlledU_Gate implements multiqubitquantumgate {
 	public static void main(String[] args) {
 		ControlledU_Gate cu = new ControlledU_Gate(new Pauli_X(1), 2, 1);
-		cu.apply(predefined_states.get_2q_3());
+		cu.apply(predefined_states.get_2q_3(), null);
 	}
 
 	private final String	labelStr;
 
-	private int				ctrl;
-	private int				targ;
-	private String			latex;
+	private final int		ctrl;
+	private final int		targ;
+	private final String	latex;
 	private quantumgate		innergate		= null;
 	/**
 	 * @uml.property name="u_node"
@@ -39,44 +39,14 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 		 */
 	public ControlledU_Gate(quantumgate gate, int t, int c) {
 		labelStr = gate.getlabel();
-		if (t != c) {
-			targ = t;
-			ctrl = c;
-			latex = gate.toLatex();
-			controlMat.set(0, 0, new Complex(0, 0));
-			nonControlMat.set(1, 1, new Complex(0, 0));
-			Matrix gateU = gate.getUnitary_operation();
-
-			Matrix spacing = Matrix.identity(1, 1);
-			for (int i = 1; i < Math.abs(targ - ctrl); i++) {
-				spacing = MatrixUtils.tensor_prod(spacing,
-						Matrix.identity(2, 2));
-			}
-
-			Matrix nonControlUnitary;
-			Matrix controlUnitary;
-			if (ctrl > targ) {
-				nonControlUnitary = MatrixUtils.tensor_prod(
-						nonControlMat,
-						MatrixUtils.tensor_prod(spacing,
-								Matrix.identity(2, 2)));
-				controlUnitary = MatrixUtils.tensor_prod(controlMat,
-						MatrixUtils.tensor_prod(spacing, gateU));
-			} else {
-				nonControlUnitary = MatrixUtils.tensor_prod(
-						Matrix.identity(2, 2),
-						MatrixUtils.tensor_prod(spacing, nonControlMat));
-				controlUnitary = MatrixUtils.tensor_prod(gateU,
-						MatrixUtils.tensor_prod(spacing, controlMat));
-			}
-
-			unitary = nonControlUnitary.plus(controlUnitary);
-
-			if (Math.min(targ, ctrl) != 1) {
-				unitary = MatrixUtils.tensor_prod(unitary, Matrix.identity(
-						(int) Math.pow(2, ctrl < targ ? ctrl - 1 : targ - 1),
-						(int) Math.pow(2, ctrl < targ ? ctrl - 1 : targ - 1)));
-			}
+		targ = t;
+		ctrl = c;
+		latex = gate.toLatex();
+		controlMat.set(0, 0, new Complex(0, 0));
+		nonControlMat.set(1, 1, new Complex(0, 0));
+		if (!(gate instanceof Custom_Gate)) {
+			Matrix gateU = gate.getUnitary_operation(null);
+			setUnitary(gateU);
 		} else {
 			innergate = gate;
 		}
@@ -86,10 +56,9 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 		 */
 
 	@Override
-	public Matrix apply(Matrix start_state) {
+	public Matrix apply(Matrix start_state, String[] customGateDefs) {
+		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
 		if (innergate == null) {
-			double qubits = Math.log(start_state.getRowDimension())
-					/ Math.log(2);
 
 			Matrix operation = unitary;
 			if (Math.max(targ, ctrl) != qubits) {
@@ -105,7 +74,23 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 			// operation.print(0, 0);
 			return operation.times(start_state);
 		} else {
-			return innergate.apply(start_state);
+			Matrix gateU = innergate.getUnitary_operation(customGateDefs);
+			double gateSize = Math.log(gateU.getRowDimension()) / Math.log(2);
+			if ((ctrl > targ) && (ctrl <= (targ + gateSize))) {
+				return innergate.apply(start_state, customGateDefs);
+			} else {
+				setUnitary(gateU);
+
+				Matrix operation = unitary;
+				if (Math.max(targ, ctrl) != qubits) {
+					operation = MatrixUtils.tensor_prod(Matrix.identity(
+							(int) (ctrl > targ ? Math.pow(2, qubits - ctrl)
+									: Math.pow(2, qubits - targ)),
+							(int) (ctrl > targ ? Math.pow(2, qubits - ctrl)
+									: Math.pow(2, qubits - targ))), operation);
+				}
+				return operation.times(start_state);
+			}
 		}
 	}
 
@@ -135,8 +120,44 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 	}
 
 	@Override
-	public Matrix getUnitary_operation() {
+	public Matrix getUnitary_operation(String[] customGateDefs) {
 		return unitary;
+	}
+
+	private void setUnitary(Matrix gateU) {
+		Matrix spacing = Matrix.identity(1, 1);
+		double gateSize = Math.log(gateU.getRowDimension()) / Math.log(2);
+
+		Matrix nonControlUnitary;
+		Matrix controlUnitary;
+		if (ctrl > targ) {
+
+			for (int i = 0; i < ctrl - (targ + gateSize); i++) {
+				spacing = MatrixUtils.tensor_prod(spacing,
+						Matrix.identity(2, 2));
+			}
+			nonControlUnitary = MatrixUtils.tensor_prod(nonControlMat,
+					MatrixUtils.tensor_prod(spacing, Matrix.identity(2, 2)));
+			controlUnitary = MatrixUtils.tensor_prod(controlMat,
+					MatrixUtils.tensor_prod(spacing, gateU));
+		} else {
+			for (int i = 1; i < targ - ctrl; i++) {
+				spacing = MatrixUtils.tensor_prod(spacing,
+						Matrix.identity(2, 2));
+			}
+			nonControlUnitary = MatrixUtils.tensor_prod(Matrix.identity(2, 2),
+					MatrixUtils.tensor_prod(spacing, nonControlMat));
+			controlUnitary = MatrixUtils.tensor_prod(gateU,
+					MatrixUtils.tensor_prod(spacing, controlMat));
+		}
+
+		unitary = nonControlUnitary.plus(controlUnitary);
+
+		if (Math.min(targ, ctrl) != 1) {
+			unitary = MatrixUtils.tensor_prod(unitary, Matrix.identity(
+					(int) Math.pow(2, ctrl < targ ? ctrl - 1 : targ - 1),
+					(int) Math.pow(2, ctrl < targ ? ctrl - 1 : targ - 1)));
+		}
 	}
 
 	@Override

@@ -9,36 +9,52 @@ public class testcase implements Serializable {
 	/**
 	 * @uml.property name="startingstate"
 	 */
-	private Matrix			startingstate;
+	private Matrix		startingstate;
 
 	/**
 	 * @uml.property name="label"
 	 */
-	private final String	label;
+	private String		label;
 
 	/**
 	 * @uml.property name="id"
 	 */
-	private final int		id;
+	private int			id;
 
 	/**
 	 * @uml.property name="finalstate"
 	 */
-	private Matrix			finalstate;
+	private Matrix		finalstate;
 
-	public testcase(int id, String label) {
+	private String[]	customGates;
+
+	public testcase(int id, String label, int numCustomGates) {
 		this.id = id;
 		this.label = label;
+		customGates = new String[numCustomGates];
+	}
+
+	public testcase(int id, String label, String[] customGates) {
+		this.id = id;
+		this.label = label;
+		this.customGates = customGates;
 	}
 
 	/**
 	 * @return
 	 */
 	public testcase copy() {
-		testcase to_ret = new testcase(getId(), getLabel());
+		testcase to_ret = new testcase(getId(), getLabel(), getCustomGates());
 		to_ret.setStartingstate(getStartingStateCopy());
 		to_ret.setFinalstate(getFinalStateCopy());
 		return to_ret;
+	}
+
+	/**
+	 * @return the customGates
+	 */
+	public String[] getCustomGates() {
+		return customGates.clone();
 	}
 
 	/**
@@ -106,6 +122,22 @@ public class testcase implements Serializable {
 	}
 
 	/**
+	 * @param customGates
+	 *            the customGates to set
+	 */
+	public void setCustomGates(int index, String customGates) {
+		this.customGates[index] = customGates;
+	}
+
+	/**
+	 * @param customGates
+	 *            the customGates to set
+	 */
+	private void setCustomGates(String[] customGates) {
+		this.customGates = customGates;
+	}
+
+	/**
 	 * Setter of the property <tt>finalstate</tt>
 	 * 
 	 * @param finalstate
@@ -114,6 +146,22 @@ public class testcase implements Serializable {
 	 */
 	public void setFinalstate(Matrix finalstate) {
 		this.finalstate = finalstate.copy();
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @param label
+	 *            the label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	/**

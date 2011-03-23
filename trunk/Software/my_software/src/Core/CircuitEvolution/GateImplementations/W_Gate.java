@@ -16,19 +16,19 @@ public class W_Gate implements quantumgate {
 		System.out.println("2 qubits state 00, Pauli X Qubit 1");
 		Matrix test_state = predefined_states.get_2q_0();
 		test_state.print_state(0, 0);
-		Matrix result = test.apply(test_state);
+		Matrix result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("2 qubits state 01, Pauli X Qubit 1");
 		test_state = predefined_states.get_2q_1();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("2 qubits state 10, Pauli X Qubit 1");
 		test_state = predefined_states.get_2q_3();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 	}
 
@@ -51,7 +51,7 @@ public class W_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix apply(Matrix start_state) {
+	public Matrix apply(Matrix start_state, String[] customGateDefs) {
 		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
 		Complex[][] init = new Complex[1][1];
 		init[0][0] = new Complex(1, 0);
@@ -88,7 +88,7 @@ public class W_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix getUnitary_operation() {
+	public Matrix getUnitary_operation(String[] customGateDefs) {
 		return unitary;
 	}
 

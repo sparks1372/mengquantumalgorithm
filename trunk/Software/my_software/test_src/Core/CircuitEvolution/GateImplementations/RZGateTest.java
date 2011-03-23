@@ -38,7 +38,7 @@ public class RZGateTest {
 				Math.sin(-theta / 2));
 		state_array[1][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 
 		assertTrue("Fail on get_1q_0",
 				Matrix.equal(result, new Matrix(state_array)));
@@ -48,7 +48,7 @@ public class RZGateTest {
 		state_array[1][0] = new Complex(Math.cos(theta / 2),
 				Math.sin(theta / 2));
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_1q_1",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -62,7 +62,7 @@ public class RZGateTest {
 		state_array[2][0] = new Complex(0, 0);
 		state_array[3][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_0",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -74,7 +74,7 @@ public class RZGateTest {
 		state_array[2][0] = new Complex(0, 0);
 		state_array[3][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_1",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -87,7 +87,7 @@ public class RZGateTest {
 				Math.sin(theta / 2));
 		state_array[3][0] = new Complex(0, 0);
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_2",
 				Matrix.equal(result, new Matrix(state_array)));
 
@@ -99,7 +99,7 @@ public class RZGateTest {
 		state_array[3][0] = new Complex(Math.cos(theta / 2),
 				Math.sin(theta / 2));
 
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_3",
 				Matrix.equal(result, new Matrix(state_array)));
 	}

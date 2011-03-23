@@ -106,6 +106,7 @@ public class MatrixEditor extends Observable implements TableModelListener,
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		editorPane.setVisible(false);
 		if (arg0.getSource() == newMatrixButton) {
 			String qubit_number_string = (String) JOptionPane.showInputDialog(
 					parent, "Add Custom Gate acting on how many Qubits?",
@@ -122,9 +123,10 @@ public class MatrixEditor extends Observable implements TableModelListener,
 
 					newMatrixButton.setEnabled(true);
 					loadMatrixButton.setEnabled(true);
-					saveMatrixButton.setEnabled(true);
+					saveMatrixButton.setEnabled(false);
 					saveAsMatrixButton.setEnabled(true);
 				}
+				selected_file = null;
 			}
 		} else if (arg0.getSource() == loadMatrixButton) {
 			int returnVal = fc.showOpenDialog(null);
@@ -176,6 +178,7 @@ public class MatrixEditor extends Observable implements TableModelListener,
 		if (selected_file != null) {
 			fname.setText(selected_file.getAbsolutePath());
 		}
+		editorPane.setVisible(true);
 		if (parent != null) {
 			WindowUtils.centre(parent);
 		}
@@ -254,8 +257,7 @@ public class MatrixEditor extends Observable implements TableModelListener,
 		JTable editor = new JTable(tm);
 		for (int r = 0; r < mat.getRowDimension(); r++) {
 			for (int c = 0; c < mat.getColumnDimension(); c++) {
-				tm.internalSetValueAt(mat.get(r, c).real(), r, 2 * c);
-				tm.internalSetValueAt(mat.get(r, c).imag(), r, 2 * c + 1);
+				tm.internalSetValueAt(mat.get(r, c).toString(), r, c);
 			}
 		}
 		editor.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -279,14 +281,9 @@ public class MatrixEditor extends Observable implements TableModelListener,
 		int i = e.getFirstRow();
 		int j = e.getColumn();
 		Complex s;
-		if (j % 2 == 0) {
-			s = new Complex((Double) tm.getValueAt(i, j),
-					(Double) tm.getValueAt(i, j + 1));
-		} else {
-			s = new Complex((Double) tm.getValueAt(i, j - 1),
-					(Double) tm.getValueAt(i, j));
-		}
-		mat.set(i, j / 2, s);
+		s = Complex.parseComplex((String) tm.getValueAt(i, j));
+		mat.set(i, j, s);
+		tm.internalSetValueAt(s.toString(), i, j);
 
 		if (selected_file != null) {
 			newMatrixButton.setEnabled(true);
@@ -358,13 +355,7 @@ class MyMatixTableModel extends AbstractTableModel {
 	 */
 	@Override
 	public boolean isCellEditable(int row, int col) {
-		// Note that the data/cell address is constant,
-		// no matter where the cell appears onscreen.
-		if (col == 0) {
-			return false;
-		} else {
-			return true;
-		}
+		return true;
 	}
 
 	private void printDebugData() {
@@ -382,11 +373,10 @@ class MyMatixTableModel extends AbstractTableModel {
 	}
 
 	public void reset(int dim) {
-		data = new Object[dim][dim * 2];
-		columnNames = new String[dim * 2];
+		data = new Object[dim][dim];
+		columnNames = new String[dim];
 		for (int i = 0; i < dim; i++) {
-			columnNames[2 * i] = "Real";
-			columnNames[2 * i + 1] = "Imaginary";
+			columnNames[i] = "";
 		}
 	}
 

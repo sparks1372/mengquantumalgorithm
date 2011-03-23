@@ -35,6 +35,7 @@ public class Complex extends Object implements Serializable {
 
 	public static Complex parseComplex(String p) {
 		Double real = 0.0, imag = 0.0;
+		p = p.toLowerCase();
 		String rem;
 		if ((p.charAt(0) == '-') || (p.charAt(0) == '+')) {
 			rem = p.substring(1);

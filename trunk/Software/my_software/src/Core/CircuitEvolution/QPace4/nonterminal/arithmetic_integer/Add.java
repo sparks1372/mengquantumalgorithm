@@ -52,13 +52,17 @@ public class Add extends GPNode {
 		children[1].eval(state, thread, input, stack, individual, problem);
 		c2 = rd.ex;
 		c2Const = rd.exConst;
+		try {
+			if (c1Const && c2Const) {
+				rd.ex = new val(c1.evaluate(0, new int[0])
+						+ c2.evaluate(0, new int[0]));
+			} else {
 
-		if (c1Const && c2Const) {
-			rd.ex = new val(c1.evaluate(0, new int[0])
-					+ c2.evaluate(0, new int[0]));
-		} else {
-
-			rd.ex = new add(c1, c2);
+				rd.ex = new add(c1, c2);
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			System.out.println(this.makeCTree(true, true, true));
 		}
 	}
 

@@ -46,8 +46,7 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 	private JButton						okayButton;
 	private JButton						cancelButton;
 	private JButton						saveButton;
-	private JButton						addTestSetButton,
-			addSuperpositionTestSetButton;
+	private JButton						addTestSetButton;
 	private JButton						deleteTestSetButton;
 	private JLabel						nameLabel, descLabel, title;
 	private JTextArea					name;
@@ -91,7 +90,6 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		editorButtonPanel.setLayout(new BoxLayout(editorButtonPanel,
 				BoxLayout.PAGE_AXIS));
 		editorButtonPanel.add(addTestSetButton);
-		editorButtonPanel.add(addSuperpositionTestSetButton);
 		editorButtonPanel.add(deleteTestSetButton);
 
 		JPanel editorTablePanel = new JPanel();
@@ -212,21 +210,6 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 				tsXmlEditor.removeCurrentTestSet();
 				setupSizes();
 			}
-		} else if (e.getSource() == addSuperpositionTestSetButton) {
-			int s = Integer.parseInt((String) JOptionPane.showInputDialog(this,
-					"Add Test Set for how many Qubits?", "Qubit Number",
-					JOptionPane.PLAIN_MESSAGE, null, null, "1"));
-
-			if (s > 10) {
-				JOptionPane
-						.showMessageDialog(
-								this,
-								"Maximum number of Qubits is 10. Adding test set for 10 Qubits",
-								"Message", JOptionPane.INFORMATION_MESSAGE);
-				s = 10;
-			}
-			tsXmlEditor.addSuperpositionalTestSet(s);
-			setupSizes();
 		}
 	}
 
@@ -261,12 +244,6 @@ public class EditProblemPanel extends JDialog implements ActionListener {
 		deleteTestSetButton.addActionListener(this);
 		deleteTestSetButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		deleteTestSetButton.setAlignmentY(Component.CENTER_ALIGNMENT);
-
-		addSuperpositionTestSetButton = new JButton(
-				"Add Superpositional TestSet");
-		addSuperpositionTestSetButton.addActionListener(this);
-		addSuperpositionTestSetButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		addSuperpositionTestSetButton.setAlignmentY(Component.CENTER_ALIGNMENT);
 
 	}
 

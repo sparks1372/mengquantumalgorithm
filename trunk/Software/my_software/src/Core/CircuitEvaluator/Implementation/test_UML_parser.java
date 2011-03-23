@@ -14,7 +14,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import Core.Problem.SuperPositionalTestSet;
 import Core.Problem.testcase;
 import Core.Problem.testset;
 import Core.Problem.testsuite;
@@ -42,7 +41,7 @@ public class test_UML_parser {
  */
 	public test_UML_parser(String filename) {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		ts = new testsuite();
+		ts = new testsuite(0);
 
 		// Validator validator = schema.newValidator();
 		try {
@@ -61,6 +60,24 @@ public class test_UML_parser {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
+	}
+
+	/**
+	 * @param tcel
+	 * @return
+	 */
+	private String[] getCustomGates(Element tcel, int custGates) {
+		String[] toReturn = new String[custGates];
+
+		NodeList startmat = tcel.getElementsByTagName("custom_gate");
+		for (int i = 0; (custGates == startmat.getLength())
+				&& (i < startmat.getLength()); i++) {
+			Element smel = (Element) startmat.item(i);
+			toReturn[i] = smel.getNodeValue();
+
+		}
+
+		return toReturn;
 	}
 
 	/**
@@ -156,9 +173,12 @@ public class test_UML_parser {
 		testset tset;
 		testcase tc;
 		int syssize;
+		int custGates;
 
 		// get the root elememt
 		Element docEle = dom.getDocumentElement();
+		custGates = Integer.parseInt(docEle.getAttribute("NumCustomGates"));
+		ts.setNumOfCustomGates(custGates);
 
 		// get a nodelist of <employee> elements
 		NodeList tsnl = docEle.getElementsByTagName("testset");
@@ -167,33 +187,22 @@ public class test_UML_parser {
 
 				// get the employee element
 				Element tsel = (Element) tsnl.item(i);
-				syssize = Integer.parseInt(tsel.getAttribute("NumQubits"));
-				if (syssize > 0) {
-					tset = new testset(syssize);
-				} else {
-					syssize = -syssize;
-					tset = new SuperPositionalTestSet(syssize);
-				}
+				syssize = Math.abs(Integer.parseInt(tsel
+						.getAttribute("NumQubits")));
+				tset = new testset(syssize);
 
 				// get a nodelist of <employee> elements
 				NodeList tcnl = tsel.getElementsByTagName("testcase");
 				if ((tcnl != null) && (tcnl.getLength() > 0)) {
 					for (int j = 0; j < tcnl.getLength(); j++) {
 						String b_str;
-						if (tset instanceof SuperPositionalTestSet) {
-							b_str = "Test Case " + Integer.toString(j);
-						} else {
-							b_str = Integer.toBinaryString(j);
-							while (b_str.length() < syssize) {
-								b_str = zero_string.concat(b_str);
-							}
-						}
+						b_str = "Test Case " + Integer.toString(j);
 						// get the employee element
 						Element tcel = (Element) tcnl.item(j);
-						tc = new testcase(j, b_str);
+						tc = new testcase(j, b_str, getCustomGates(tcel,
+								custGates));
 						tc.setStartingstate(getStartState(tcel, syssize));
 						tc.setFinalstate(getFinalState(tcel, syssize));
-
 						tset.addTestcases(tc);
 					}
 				}
