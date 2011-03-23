@@ -11,7 +11,6 @@ import Core.CircuitBuilder.circuitBuilder;
 import Core.CircuitEvaluator.Fitness;
 import Core.CircuitEvaluator.FitnessFunction;
 import Core.CircuitEvaluator.circuitevaluator;
-import Core.Problem.SuperPositionalTestSet;
 import Core.Problem.quantumproblem;
 import Core.Problem.testcase;
 import Core.Problem.testset;
@@ -49,9 +48,6 @@ public class basiccircuitevaluator implements circuitevaluator {
 		while (kiter.hasNext()) {
 			int numofqubits = kiter.next();
 			testset tempts = ts.getTestcases(numofqubits);
-			if (tempts instanceof SuperPositionalTestSet) {
-				numofqubits = Math.abs(numofqubits);
-			}
 			cir = cb.Build(alg, numofqubits);
 			Iterator<testcase> tciter = tempts.getTestcases();
 			quantumgate qg;
@@ -62,7 +58,7 @@ public class basiccircuitevaluator implements circuitevaluator {
 				Matrix state = tc.getStartingStateCopy().copy();
 				while (qgate_iter.hasNext()) {
 					qg = qgate_iter.next();
-					state = qg.apply(state);
+					state = qg.apply(state, tc.getCustomGates());
 				}
 
 				temp = ff.evaluate(tc.getStartingStateCopy(), state,
@@ -104,7 +100,7 @@ public class basiccircuitevaluator implements circuitevaluator {
 		Circuit cir;
 		Iterator<quantumgate> qgate_iter;
 		testsuite ts = quantprob.getTestSuite();
-		testsuite to_return = new testsuite();
+		testsuite to_return = new testsuite(ts.getNumOfCustomGates());
 		testcase tc;
 		testcase tc_toadd;
 		testset ts_toadd;
@@ -116,24 +112,20 @@ public class basiccircuitevaluator implements circuitevaluator {
 			int numofqubits = kiter.next();
 			testset tempts = ts.getTestcases(numofqubits);
 
-			if (tempts instanceof SuperPositionalTestSet) {
-				numofqubits = Math.abs(numofqubits);
-				ts_toadd = new SuperPositionalTestSet(numofqubits);
-			} else {
-				ts_toadd = new testset(numofqubits);
-			}
+			ts_toadd = new testset(numofqubits);
 			cir = cb.Build(alg, numofqubits);
 			Iterator<testcase> tciter = tempts.getTestcases();
 			quantumgate qg;
 			while (tciter.hasNext()) {
 				tc = tciter.next();
-				tc_toadd = new testcase(tc.getId(), tc.getLabel());
+				tc_toadd = new testcase(tc.getId(), tc.getLabel(),
+						tc.getCustomGates());
 				qgate_iter = cir.getCircuitlayout();
 				cir.getSize();
 				Matrix state = tc.getStartingStateCopy();
 				while (qgate_iter.hasNext()) {
 					qg = qgate_iter.next();
-					state = qg.apply(state);
+					state = qg.apply(state, tc.getCustomGates());
 				}
 				tc_toadd.setStartingstate(tc.getStartingStateCopy());
 				tc_toadd.setFinalstate(state);
@@ -175,7 +167,8 @@ public class basiccircuitevaluator implements circuitevaluator {
 				quantumgate qg;
 				while (tciter.hasNext()) {
 					testcase next = tciter.next();
-					testcase temp = new testcase(id++, next.getLabel());
+					testcase temp = new testcase(id++, next.getLabel(),
+							next.getCustomGates());
 					temp.setStartingstate(next.getStartingStateCopy());
 					temp.setFinalstate(next.getFinalStateCopy());
 					// System.out.println("basic circuit eval ID : "
@@ -189,7 +182,7 @@ public class basiccircuitevaluator implements circuitevaluator {
 					x++;
 					while (qgate_iter.hasNext()) {
 						qg = qgate_iter.next();
-						state = qg.apply(state);
+						state = qg.apply(state, tc[x].getCustomGates());
 						tc[x] = temp.copy();
 						tc[x].setFinalstate(state.copy());
 						x++;

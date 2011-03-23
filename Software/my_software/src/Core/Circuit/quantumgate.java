@@ -6,7 +6,7 @@ public interface quantumgate {
 
 	/**
 	 */
-	public abstract Matrix apply(Matrix start_state);
+	public abstract Matrix apply(Matrix start_state, String[] customGateDefs);
 
 	/**
 	 */
@@ -23,7 +23,7 @@ public interface quantumgate {
 	 * @uml.property name="unitary_operation" readOnly="true"
 	 *               default="new Jama.Matrix()"
 	 */
-	public Matrix getUnitary_operation();
+	public Matrix getUnitary_operation(String[] customGateDefs);
 
 	/**
 				 */

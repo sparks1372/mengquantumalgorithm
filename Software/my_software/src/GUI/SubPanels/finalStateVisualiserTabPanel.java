@@ -36,6 +36,9 @@ public class finalStateVisualiserTabPanel extends JPanel {
 	public finalStateVisualiserTabPanel(qcevolutionbackend be, int index_in) {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		backend = be;
+		if (backend == null) {
+			System.out.println("WHAT THE HELL");
+		}
 		// update(null, null);
 		resultIndex = index_in;
 
@@ -48,10 +51,37 @@ public class finalStateVisualiserTabPanel extends JPanel {
 	}
 
 	private void init() {
+		int x = 0;
+		if (backend == null) {
+			System.out.println(x);
+		}
+		x++;
+		if (backend.getCurrentse() == null) {
+			System.out.println(x);
+		}
+		x++;
+		if (backend.getCurrentse().getResults() == null) {
+			System.out.println(x);
+		}
+		x++;
+		if (backend.getCurrentse().getResults()[resultIndex] == null) {
+			System.out.println(x);
+		}
+		x++;
+		if (backend.getCurrentse().getResults()[resultIndex].getQa() == null) {
+			System.out.println(x);
+		}
+		x++;
+		if (backend.getCireval() == null) {
+			System.out.println(x);
+		}
+		x++;
+		if (backend.getCireval().getResults(
+				backend.getCurrentse().getResults()[resultIndex].getQa()) == null) {
+			System.out.println(x);
+		}
+		x++;
 		testsuite results = backend.getCireval().getResults(
-				backend.getCurrentse().getResults()[resultIndex].getQa());
-
-		results = backend.getCireval().getResults(
 				backend.getCurrentse().getResults()[resultIndex].getQa());
 
 		Set<Integer> keys = results.getKeys();

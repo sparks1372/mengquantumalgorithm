@@ -17,6 +17,7 @@ public enum QuantumInstructionEnum implements Serializable {
 	Create_RZ,
 	// Control instructions
 	Iterate,
+	RevIterate,
 	Body,
 	// Root,
 	Create_CH,
@@ -29,13 +30,14 @@ public enum QuantumInstructionEnum implements Serializable {
 	Create_CV,
 	Create_CRZ,
 	Create_CRY,
-	Create_Zero;
-	// Create_Custom1,
-	// Create_Custom2,
-	// Create_Custom3,
-	// Create_CCustom1,
-	// Create_CCustom2,
-	// Create_CCustom3;
+	Create_Zero,
+	// Custom Gates
+	Create_Custom1,
+	Create_Custom2,
+	Create_Custom3,
+	Create_CCustom1,
+	Create_CCustom2,
+	Create_CCustom3;
 	public static boolean hasPhase(QuantumInstructionEnum i) {
 		switch (i) {
 			case Create_P:
@@ -66,9 +68,9 @@ public enum QuantumInstructionEnum implements Serializable {
 			case Create_CY:
 			case Create_CZ:
 			case Create_SWAP:
-				// case Create_CCustom1:
-				// case Create_CCustom2:
-				// case Create_CCustom3:
+			case Create_CCustom1:
+			case Create_CCustom2:
+			case Create_CCustom3:
 				return true;
 			default:
 				return false;

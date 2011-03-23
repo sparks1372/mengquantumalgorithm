@@ -11,12 +11,14 @@ public class testsuite implements Serializable {
 	 * @uml.property name="testsets" multiplicity="(0 -1)" dimension="1"
 	 */
 	private final HashMap<Integer, testset>	testsets;
+	private int								numOfCustomGates;
 
 	/**
 	 * 
 	 */
-	public testsuite() {
+	public testsuite(int cg) {
 		testsets = new HashMap<Integer, testset>();
+		numOfCustomGates = cg;
 	}
 
 	/**
@@ -30,19 +32,24 @@ public class testsuite implements Serializable {
 		if (testsets.containsKey(ts.getNum_of_qubits())) {
 			testset current = testsets.get(ts.getNum_of_qubits());
 			Iterator<testcase> iter = ts.getTestcases();
+			int numtcs = current.getNumberOfTestcases();
 			while (iter.hasNext()) {
-				current.addTestcases(iter.next());
+				testcase next = iter.next();
+				next.setId(numtcs++);
+				next.setLabel("Test Case " + next.getId());
+				current.addTestcases(next);
 			}
 		} else {
 			testsets.put(ts.getNum_of_qubits(), ts);
 		}
+		this.setNumOfCustomGates(getNumOfCustomGates());
 	}
 
 	/**
 	 * @return
 	 */
 	public testsuite copy() {
-		testsuite to_ret = new testsuite();
+		testsuite to_ret = new testsuite(numOfCustomGates);
 		Iterator<Integer> iter = testsets.keySet().iterator();
 		testset ts;
 		while (iter.hasNext()) {
@@ -58,6 +65,13 @@ public class testsuite implements Serializable {
 	}
 
 	/**
+	 * @return the numOfCustomGates
+	 */
+	public int getNumOfCustomGates() {
+		return numOfCustomGates;
+	}
+
+	/**
 	 * Getter of the property <tt>testsets</tt>
 	 * 
 	 * @return Returns the testsets.
@@ -69,6 +83,20 @@ public class testsuite implements Serializable {
 
 	public void removeTestSet(testset ts) {
 		testsets.remove(ts.getNum_of_qubits());
+	}
+
+	/**
+	 * @param numOfCustomGates
+	 *            the numOfCustomGates to set
+	 */
+	public void setNumOfCustomGates(int numOfCustomGates) {
+		this.numOfCustomGates = numOfCustomGates;
+		Iterator<Integer> iter = testsets.keySet().iterator();
+		testset ts;
+		while (iter.hasNext()) {
+			int key = iter.next();
+			testsets.get(key).setNumOfCustomGates(numOfCustomGates);
+		}
 	}
 
 }

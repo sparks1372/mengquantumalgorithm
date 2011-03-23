@@ -53,12 +53,17 @@ public class Div extends GPNode {
 		c2 = rd.ex;
 		c2Const = rd.exConst;
 
-		if (c1Const && c2Const) {
-			int t2 = (int) c2.evaluate(0, new int[0]);
-			int val = (int) (t2 != 0 ? c1.evaluate(0, new int[0]) / t2 : t2);
-			rd.ex = new val(val);
-		} else {
-			rd.ex = new div(c1, c2);
+		try {
+			if (c1Const && c2Const) {
+				int t2 = (int) c2.evaluate(0, new int[0]);
+				int val = (int) (t2 != 0 ? c1.evaluate(0, new int[0]) / t2 : t2);
+				rd.ex = new val(val);
+			} else {
+				rd.ex = new div(c1, c2);
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			System.out.println(this.makeCTree(true, true, true));
 		}
 	}
 

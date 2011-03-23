@@ -15,43 +15,43 @@ public class Hadamard_Gate implements quantumgate {
 		System.out.println("2 qubits state 00, Hadamard Gate Qubit 1");
 		Matrix test_state = predefined_states.get_2q_0();
 		test_state.print_state(0, 0);
-		Matrix result = test.apply(test_state);
+		Matrix result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("2 qubits state 01, Hadamard Gate Qubit 1");
 		test_state = predefined_states.get_2q_1();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("2 qubits state 10, Hadamard Gate Qubit 1");
 		test_state = predefined_states.get_2q_3();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 000, Hadamard Gate Qubit 1");
 		test_state = predefined_states.get_3q_0();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 001, Hadamard Gate Qubit 1");
 		test_state = predefined_states.get_3q_1();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 010, Hadamard Gate Qubit 1");
 		test_state = predefined_states.get_3q_3();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 100, Hadamard Gate Qubit 1");
 		test_state = predefined_states.get_3q_5();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		test = new Hadamard_Gate(2);
@@ -59,19 +59,19 @@ public class Hadamard_Gate implements quantumgate {
 		System.out.println("2 qubits state 00, Hadamard Gate Qubit 2");
 		test_state = predefined_states.get_2q_0();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("2 qubits state 01, Hadamard Gate Qubit 2");
 		test_state = predefined_states.get_2q_1();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("2 qubits state 10, Hadamard Gate Qubit 2");
 		test_state = predefined_states.get_2q_3();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		test = new Hadamard_Gate(3);
@@ -79,25 +79,25 @@ public class Hadamard_Gate implements quantumgate {
 		System.out.println("3 qubits state 000, Hadamard Gate Qubit 3");
 		test_state = predefined_states.get_3q_0();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 001, Hadamard Gate Qubit 3");
 		test_state = predefined_states.get_3q_1();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 010, Hadamard Gate Qubit 3");
 		test_state = predefined_states.get_3q_3();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 
 		System.out.println("3 qubits state 100, Hadamard Gate Qubit 3");
 		test_state = predefined_states.get_3q_5();
 		test_state.print_state(0, 0);
-		result = test.apply(test_state);
+		result = test.apply(test_state, null);
 		result.print_state(0, 0);
 	}
 
@@ -122,7 +122,7 @@ public class Hadamard_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix apply(Matrix start_state) {
+	public Matrix apply(Matrix start_state, String[] customGateDefs) {
 		Matrix to_return = start_state.copy();
 		Complex temp0;
 		Complex temp1;
@@ -169,7 +169,7 @@ public class Hadamard_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix getUnitary_operation() {
+	public Matrix getUnitary_operation(String[] customGateDefs) {
 		return unitary;
 	}
 

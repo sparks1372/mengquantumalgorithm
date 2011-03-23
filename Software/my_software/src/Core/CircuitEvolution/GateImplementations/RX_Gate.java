@@ -31,7 +31,7 @@ public class RX_Gate implements quantumgate {
 		I[1][0] = new Complex(0, 0);
 		Matrix iden = new Matrix(I);
 
-		Matrix X = new Pauli_X(1).getUnitary_operation();
+		Matrix X = new Pauli_X(1).getUnitary_operation(null);
 
 		iden = iden.times(new Complex(Math.cos(th / 2), 0));
 		X = X.times(new Complex(0, 1).times(new Complex(Math.sin(th / 2), 0)));
@@ -40,7 +40,7 @@ public class RX_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix apply(Matrix start_state) {
+	public Matrix apply(Matrix start_state, String[] customGateDefs) {
 		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
 		Complex[][] init = new Complex[1][1];
 		init[0][0] = new Complex(1, 0);
@@ -77,7 +77,7 @@ public class RX_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix getUnitary_operation() {
+	public Matrix getUnitary_operation(String[] customGateDefs) {
 		return unitary;
 	}
 

@@ -53,11 +53,16 @@ public class Pow extends GPNode {
 		c2 = rd.ex;
 		c2Const = rd.exConst;
 
-		if (c1Const && c2Const) {
-			rd.ex = new val((int) Math.pow(c1.evaluate(0, new int[0]),
-					c2.evaluate(0, new int[0])));
-		} else {
-			rd.ex = new pow(c1, c2);
+		try {
+			if (c1Const && c2Const) {
+				rd.ex = new val((int) Math.pow(c1.evaluate(0, new int[0]),
+						c2.evaluate(0, new int[0])));
+			} else {
+				rd.ex = new pow(c1, c2);
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			System.out.println(this.makeCTree(true, true, true));
 		}
 	}
 

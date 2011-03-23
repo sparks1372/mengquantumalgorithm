@@ -9,6 +9,7 @@ import Core.Circuit.Circuit;
 import Core.Circuit.Implementation.basiccircuit;
 import Core.CircuitBuilder.circuitBuilder;
 import Core.CircuitEvolution.GateImplementations.ControlledU_Gate;
+import Core.CircuitEvolution.GateImplementations.Custom_Gate;
 import Core.CircuitEvolution.GateImplementations.Hadamard_Gate;
 import Core.CircuitEvolution.GateImplementations.Pauli_X;
 import Core.CircuitEvolution.GateImplementations.Pauli_Y;
@@ -24,7 +25,11 @@ import Core.CircuitEvolution.GateImplementations.Zero_Gate;
 import Core.CircuitEvolution.QPace4.terminal.Variables.SystemSize;
 
 public class basiccircuitbuilder implements circuitBuilder {
-	private final int	Builder_ID;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 5642773511675685318L;
+	private final int			Builder_ID;
 
 	public basiccircuitbuilder() {
 		Random rand = new Random();
@@ -46,6 +51,7 @@ public class basiccircuitbuilder implements circuitBuilder {
 		int Int1 = 0;
 		int Int2 = 0;
 		double Double1 = 0.0;
+		int[] new_itervals;
 
 		ListIterator<QuantumInstruction> iter = quantumAlgorithm
 				.getInstructions();
@@ -53,8 +59,8 @@ public class basiccircuitbuilder implements circuitBuilder {
 		while (iter.hasNext()) {
 			next_instruction = iter.next();
 			if (next_instruction.getInteger1() != null) {
-				Int1 = (int) next_instruction.getInteger1().evaluate(
-						num_qubits, loopvars);
+				Int1 = Math.round((float) next_instruction.getInteger1()
+						.evaluate(num_qubits, loopvars));
 				if (loopvars.length != 0) {
 					Int1 = (Int1 < 0) ? loopvars[Math.abs(Int1)
 							% loopvars.length] : Int1;
@@ -63,8 +69,8 @@ public class basiccircuitbuilder implements circuitBuilder {
 						: Int1;
 			}
 			if (next_instruction.getInteger2() != null) {
-				Int2 = (int) next_instruction.getInteger2().evaluate(
-						num_qubits, loopvars);
+				Int2 = Math.round((float) next_instruction.getInteger2()
+						.evaluate(num_qubits, loopvars));
 				if (loopvars.length != 0) {
 					Int2 = (Int2 < 0) ? loopvars[Math.abs(Int2)
 							% loopvars.length] : Int2;
@@ -127,6 +133,15 @@ public class basiccircuitbuilder implements circuitBuilder {
 						break;
 					case Create_Zero:
 						to_return.addGate(Builder_ID, new Zero_Gate(Int1));
+						break;
+					case Create_Custom1:
+						to_return.addGate(Builder_ID, new Custom_Gate(Int1, 0));
+						break;
+					case Create_Custom2:
+						to_return.addGate(Builder_ID, new Custom_Gate(Int1, 1));
+						break;
+					case Create_Custom3:
+						to_return.addGate(Builder_ID, new Custom_Gate(Int1, 2));
 						break;
 					case Create_CH:
 						if ((Int1 != Int2) && (Int2 <= num_qubits)
@@ -198,6 +213,27 @@ public class basiccircuitbuilder implements circuitBuilder {
 									(new W_Gate(1)), Int1, Int2));
 						}
 						break;
+					case Create_CCustom1:
+						if ((Int1 != Int2) && (Int2 <= num_qubits)
+								&& (Int2 >= 1)) {
+							to_return.addGate(Builder_ID, new ControlledU_Gate(
+									(new Custom_Gate(1, 0)), Int1, Int2));
+						}
+						break;
+					case Create_CCustom2:
+						if ((Int1 != Int2) && (Int2 <= num_qubits)
+								&& (Int2 >= 1)) {
+							to_return.addGate(Builder_ID, new ControlledU_Gate(
+									(new Custom_Gate(1, 1)), Int1, Int2));
+						}
+						break;
+					case Create_CCustom3:
+						if ((Int1 != Int2) && (Int2 <= num_qubits)
+								&& (Int2 >= 1)) {
+							to_return.addGate(Builder_ID, new ControlledU_Gate(
+									(new Custom_Gate(1, 2)), Int1, Int2));
+						}
+						break;
 					// case Root:
 					case Body:
 						qcarray = next_instruction.getSubalg();
@@ -209,16 +245,34 @@ public class basiccircuitbuilder implements circuitBuilder {
 						break;
 					case Iterate:
 						qcarray = next_instruction.getSubalg();
-						int[] new_itervals = new int[loopvars.length + 1];
-						int j;
-						for (j = 0; j < loopvars.length;) {
-							new_itervals[j] = loopvars[j];
-							j++;
+						new_itervals = new int[loopvars.length + 1];
+						for (int j = 0; j < loopvars.length; j++) {
+							new_itervals[j + 1] = loopvars[j];
 						}
 
 						for (int i = 1; (qcarray.length > 0) && (i <= Int1); i++) {
 							try {
-								new_itervals[j] = i;
+								new_itervals[0] = i;
+								temp = internal_builder.Build(qcarray[0],
+										num_qubits, new_itervals);
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+							}
+							to_return.addCircuit(Builder_ID, temp);
+						}
+						break;
+					case RevIterate:
+						qcarray = next_instruction.getSubalg();
+						new_itervals = new int[loopvars.length + 1];
+						int k;
+						for (k = 1; k <= loopvars.length;) {
+							new_itervals[k] = loopvars[k];
+							k++;
+						}
+
+						for (int i = Int1; (qcarray.length > 0) && (1 <= i); i--) {
+							try {
+								new_itervals[0] = i;
 								temp = internal_builder.Build(qcarray[0],
 										num_qubits, new_itervals);
 							} catch (NullPointerException e) {

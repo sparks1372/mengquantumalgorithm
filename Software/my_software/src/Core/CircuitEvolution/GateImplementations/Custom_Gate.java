@@ -5,38 +5,18 @@ import Jama.Matrix;
 import Utils.Complex;
 import Utils.MatrixUtils;
 
-public class RY_Gate implements quantumgate {
-	private static final String	labelStr	= "RY";
+public class Custom_Gate implements quantumgate {
+	private static final String	labelStr	= "C";
 	private final int			targ;
-	private final double		theta;
-	private final Matrix		unitary;
+	private Matrix				unitary;
+	private final int			cgate_index;
 
 	/**
 		 */
-	public RY_Gate(int target, double th) {
+	public Custom_Gate(int target, int cindex) {
 		// System.out.println(this.getClass().getName());
 		this.targ = Math.abs(target);
-		this.theta = th;
-		// [row][column]
-		Complex[][] ry_theta = new Complex[2][2];
-		ry_theta[0][0] = new Complex(Math.cos(theta / 2), 0);
-		ry_theta[0][1] = new Complex(-Math.sin(theta / 2), 0);
-		ry_theta[1][0] = new Complex(Math.sin(theta / 2), 0);
-		ry_theta[1][1] = new Complex(Math.cos(theta / 2), 0);
-
-		Complex[][] I = new Complex[2][2];
-		I[0][0] = new Complex(1, 0);
-		I[1][1] = new Complex(1, 0);
-		I[0][1] = new Complex(0, 0);
-		I[1][0] = new Complex(0, 0);
-		Matrix iden = new Matrix(I);
-
-		Matrix X = new Pauli_Y(1).getUnitary_operation(null);
-
-		iden = iden.times(new Complex(Math.cos(th / 2), 0));
-		X = X.times(new Complex(0, 1).times(new Complex(Math.sin(th / 2), 0)));
-
-		unitary = iden.minus(X);
+		this.cgate_index = cindex;
 	}
 
 	@Override
@@ -51,11 +31,20 @@ public class RY_Gate implements quantumgate {
 		I[0][1] = new Complex(0, 0);
 		I[1][0] = new Complex(0, 0);
 		Matrix iden = new Matrix(I);
-		for (int index = 1; index <= qubits; index++) {
+		if (cgate_index < customGateDefs.length) {
+			unitary = getUnitary_operation(customGateDefs);
+		} else {
+			unitary = Matrix.identity(2, 2);
+		}
+		double unitaryqubits = Math.log(unitary.getRowDimension())
+				/ Math.log(2);
+		for (int index = 1; index <= qubits;) {
 			if (index == targ) {
 				operation = MatrixUtils.tensor_prod(unitary, operation);
+				index += unitaryqubits;
 			} else {
 				operation = MatrixUtils.tensor_prod(iden, operation);
+				index++;
 			}
 		}
 		return operation.times(start_state);
@@ -68,7 +57,7 @@ public class RY_Gate implements quantumgate {
 	 */
 	@Override
 	public String getlabel() {
-		return labelStr;
+		return labelStr.concat(Integer.toString(cgate_index));
 	}
 
 	@Override
@@ -78,12 +67,16 @@ public class RY_Gate implements quantumgate {
 
 	@Override
 	public Matrix getUnitary_operation(String[] customGateDefs) {
-		return unitary;
+		if ((customGateDefs != null) && (cgate_index < customGateDefs.length)) {
+			return MatrixUtils.fromFile(customGateDefs[cgate_index]);
+		} else {
+			return Matrix.identity(2, 2);
+		}
 	}
 
 	@Override
 	public String toLatex() {
-		return "\\gate{RY(" + theta + ")}&";
+		return "\\gate{C" + cgate_index + "}&";
 	}
 
 }

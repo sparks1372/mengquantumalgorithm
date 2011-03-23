@@ -725,6 +725,8 @@ public class QPace4_Imp implements circuitsearchengine {
 						// } else {
 						// System.out.println("sr==null jppfli.size == "
 						// + jppfli.size());
+					} else {
+						System.out.println("sr==null index==" + index);
 					}
 					index++;
 				}
@@ -744,7 +746,6 @@ public class QPace4_Imp implements circuitsearchengine {
 
 					@Override
 					public void run() {
-
 						List<JPPFTask> jppfli;
 						try {
 							jppfli = runner.executeBlockingJob(da, job);
@@ -762,6 +763,9 @@ public class QPace4_Imp implements circuitsearchengine {
 									// System.out
 									// .println("sr==null jppfli.size == "
 									// + jppfli.size());
+								} else {
+									System.out.println("sr==null index=="
+											+ index);
 								}
 								index++;
 							}

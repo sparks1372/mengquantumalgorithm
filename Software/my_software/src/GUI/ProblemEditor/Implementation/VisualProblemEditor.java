@@ -1,7 +1,7 @@
 package GUI.ProblemEditor.Implementation;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -19,6 +19,7 @@ import javax.swing.UIManager;
 import Core.Problem.quantumproblem;
 import Core.Problem.testsuite;
 import GUI.ProblemEditor.problemeditor;
+import Utils.WindowUtils;
 
 public class VisualProblemEditor extends JPanel implements problemeditor,
 		ActionListener {
@@ -36,6 +37,7 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 		// Display the window.
 		// frame.pack();
 		frame.setVisible(true);
+		WindowUtils.centre(frame);
 	}
 
 	public static void main(String[] args) {
@@ -52,9 +54,9 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 	}
 
 	JButton			newButton, openButton, saveButton, saveAsButton;
-	JButton			addTestSetButton, addSuperpositionTestSetButton;
+	JButton			addTestSetButton;
 	JFileChooser	fc;
-	Component		parent;
+	Window			parent;
 	File			selected_file;
 	JLabel			filename;
 	JPanel			upperPanel;
@@ -63,7 +65,7 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 
 	XMLEditor		xmled;
 
-	public VisualProblemEditor(Component p) {
+	public VisualProblemEditor(Window p) {
 		super(new BorderLayout());
 
 		parent = p;
@@ -101,9 +103,6 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 		addTestSetButton = new JButton("Add TestSet");
 		addTestSetButton.addActionListener(this);
 
-		addSuperpositionTestSetButton = new JButton(
-				"Add Superpositional TestSet");
-		addSuperpositionTestSetButton.addActionListener(this);
 		midPanel = new JPanel();
 		midPanel.setLayout(new BoxLayout(midPanel, BoxLayout.PAGE_AXIS));
 
@@ -111,7 +110,6 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 
 		JPanel buttonPanel1 = new JPanel();
 		buttonPanel1.add(addTestSetButton);
-		buttonPanel1.add(addSuperpositionTestSetButton);
 
 		midPanel.add(buttonPanel1);
 		midPanel.add(xmled);
@@ -137,7 +135,17 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 
 			// Handle save button action.
 		} else if (e.getSource() == newButton) {
-			xmled.setTestSuite(new testsuite());
+			Object[] selectionValues = { "0", "1", "2", "3" };
+			String initialSelection = "0";
+			Object selection = JOptionPane.showInputDialog(null,
+					"Please select the number of custom gates", "",
+					JOptionPane.QUESTION_MESSAGE, null, selectionValues,
+					initialSelection);
+			try {
+				int index = Integer.parseInt((String) selection);
+				xmled.setTestSuite(new testsuite(index));
+			} catch (NumberFormatException ex) {
+			}
 		} else if (e.getSource() == saveButton) {
 			saveFile(selected_file);
 		} else if (e.getSource() == saveAsButton) {
@@ -150,38 +158,29 @@ public class VisualProblemEditor extends JPanel implements problemeditor,
 				}
 			}
 		} else if (e.getSource() == addTestSetButton) {
-			int s = Integer
-					.parseInt((String) JOptionPane.showInputDialog(parent,
-							"Add Test Set for how many Qubits?",
-							"Qubit Number", JOptionPane.PLAIN_MESSAGE, null,
-							null, "1"));
+			try {
+				int s = Integer.parseInt((String) JOptionPane.showInputDialog(
+						parent, "Add Test Set for how many Qubits?",
+						"Qubit Number", JOptionPane.PLAIN_MESSAGE, null, null,
+						"1"));
 
-			if (s > 10) {
-				JOptionPane
-						.showMessageDialog(
-								parent,
-								"Maximum number of Qubits is 10. Adding test set for 10 Qubits",
-								"Message", JOptionPane.INFORMATION_MESSAGE);
-				s = 10;
+				if (s > 10) {
+					JOptionPane
+							.showMessageDialog(
+									parent,
+									"Maximum number of Qubits is 10. Adding test set for 10 Qubits",
+									"Message", JOptionPane.INFORMATION_MESSAGE);
+					s = 10;
+				}
+				xmled.addTestSet(s);
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(parent,
+						"The number entered cannot be parsed. Try again.",
+						"Message", JOptionPane.INFORMATION_MESSAGE);
 			}
-			xmled.addTestSet(s);
-		} else if (e.getSource() == addSuperpositionTestSetButton) {
-			int s = Integer
-					.parseInt((String) JOptionPane.showInputDialog(parent,
-							"Add Test Set for how many Qubits?",
-							"Qubit Number", JOptionPane.PLAIN_MESSAGE, null,
-							null, "1"));
-
-			if (s > 10) {
-				JOptionPane
-						.showMessageDialog(
-								parent,
-								"Maximum number of Qubits is 10. Adding test set for 10 Qubits",
-								"Message", JOptionPane.INFORMATION_MESSAGE);
-				s = 10;
-			}
-			xmled.addSuperpositionalTestSet(s);
 		}
+		this.validate();
+		WindowUtils.centre(parent);
 	}
 
 	@Override

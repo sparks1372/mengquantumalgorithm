@@ -23,7 +23,10 @@ public class TestSuiteToXML {
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(filename));
 			out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-			out.write("<testsuite xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"testset_xml_spec.xsd\">\n");
+			out.write("<testsuite");
+			out.write(" NumCustomGates=");
+			out.write(Integer.toString(testsuite.getNumOfCustomGates()));
+			out.write(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"testset_xml_spec.xsd\">\n");
 			Iterator<Integer> qubit_num_iterator = testsuite.getKeys()
 					.iterator();
 			testset ts;
