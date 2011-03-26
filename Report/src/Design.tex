@@ -70,6 +70,12 @@ This was due to the functionality not being required and therefore can be seen a
 One matrix operation that was not included in the JAMA Matrix package was the tensor product operation.
 This operation is used heavily when applying a single qubit gates to multi-qubit systems and therefore necessary for the framework.
 
+As is explained in Section \ref{sec:testsuitestruc} custom unitary matrices are needed and used as part of the test cases.
+This requires these unitary matrices to be stored in a form that can be distributed between researchers.
+As with all elements of this framework that needs to be distrubutable, XML is used to store these matrices.
+The XML structure can be seen in Figure \ref{}.
+The use of XML was used rather than the Java Serializable interface to ensure that 3rd party applications can be used to modify the stored matrices if required.
+
 \subsection{State}
 With a representation of matrices defined, the definition of a quantum state naturally followed.
 Using the matrix representation, quantum states are defined simply as $2^n\times1$ matrices, vectors.
@@ -85,15 +91,29 @@ As such it was chosen that a test case would be represented as a pair of state v
 The application of a quantum gate is a simple mapping from a starting state to a resulting state.
 When a circuit can be defined as a single unitary operation, a custom quantum gate, this representation seems a natural choice.
 
+For some problems, such as the Deutsch and Deutsch-Jozsa problems, the starting and final state are not information but pure data, they have no context.
+As is shown in Section \ref{sec:quantumgates} there is no gate $f$ as is used in the Deutsch and Deutsch-Jozsa algorithms.
+This may initially seem a rather strange ommision.
+However, the $f$ in the Deutsch and Deutsch-Jozsa algorithms are not fixed gates, they are arbitary unitary operations that are guaranteed to be either constant or balanced.
+Therefore it is not sufficient for the test cases to be just the starting and final state but must provide a way for custom unitary matrices to be specified.
+With these custom matrices specifed, the starting and final states in the test cases for the Deutsch and Deutsch-Jozsa problems are given context and therefore are transformed into meaningful information.
+
 Each circuit produced by the Quantum Algorithms has $n$ qubits.
 This means that it can only be evaluated using test cases for $n$ qubits.
-Test cases for any other number of qubits would not produce useful results.
+Test cases for any other number of qubits would not produce useful results, and are potentially incomputatable due to incorrect matrix dimensions for multiplication.
 The notion of a test set was introduced to hold all test cases for a specific $n$.
 All test cases are held within a test set.
 
+However, the power of a quantum algorithm over a quantum circuit is the generality of the algorithm for any $n$.
+This means that a single test set is not suitable as it would only evaluate the algorithm for test cases for a single $n$.
+The notion of a test suite is introduced.
 A test suite is used to hold all the test sets produced for the same problem.
 There is only one test set for each distinct value of $n$.
 The implemented structure can be seen in Figure \ref{fig:testsuiteclassdiag}.
+
+The number of custom gates that are available to use are constant for all the test cases in the test suite.
+This number cannot vary as the algorithms produced must be able to contain only the gates available.
+If each test case were able to have a different number of custom gates an algorithm produced could contain the instruction to include ``Custom Gate 4'' but a test case could only provide two custom gates.
 
 The test suite is fully defined in a single XML file.
 The XML in Figure \ref{code:paulixtestset} is a sample of such a file.
@@ -134,45 +154,45 @@ It is easy to see file structure reflects the internal structure of test suites 
 \end{figure}
 
 The use of a seperate files to specify the test suite for each Search Problem rather than including it in the Search Problem Manager configuration file, discussed in Section \ref{sec:manclasses}, ensures that the files remain readable.
-It also ensure that researchers can distribute Test Suite easier than if all Search Problems were fully specified in a single file.
+It also ensure that researchers can distribute Test Suites easier than if all Search Problems were fully specified in a single file.
 
 \begin{figure}
 \centering
 \begin{emp}[classdiag](20, 20)
-Class.A("TestCase")("-StartState:Matrix","-FinalState:Matrix","-Label:String","-Id:int")();
-Class.B("TestSet")("-NumberOfQubits:int")();
-Class.C("TestSuite")()();
-Class.D("SuperPositionalTestSet")()();
+Class.A("TestCase")("-StartState:Matrix","-FinalState:Matrix","-Label:String","-Id:int","-CustomMatrices:String[]")();
+Class.B("TestSet")("-NumberOfQubits:int","-NumberOfCustomGates:int")();
+Class.C("TestSuite")("-NumberOfCustomGates:int")();
+% Class.D("SuperPositionalTestSet")()();
 leftToRight(75)(C, B, A);
-D.n = B.s - (0, 50);
-drawObjects(D, C, B, A);
+% D.n = B.s - (0, 50);
+drawObjects(C, B, A);
 clink(association)(C, B);
 item(iAssoc)("1")(obj.nw = C.e);
 item(iAssoc)("1..*")(obj.ne = B.w);
 clink(association)(B, A);
 item(iAssoc)("1")(obj.nw = B.e);
 item(iAssoc)("1..*")(obj.ne = A.w);
-link(inheritance)(D.n -- B.s)
+% link(inheritance)(D.n -- B.s)
 \end{emp}
 \caption{Test Suite Class Diagram}
 \label{fig:testsuiteclassdiag}
 \end{figure}
 
-It can be seen in the class diagram, in Figure \ref{fig:testsuiteclassdiag}, that an additional class, SuperPositionalTestSet, is included as a subclass of the TestSet class.
-In the framework the test cases that have starting states in a superposition are held within SuperPositionalTestSets.
-A SuperPositionalTestSet for 2 qubits returns ``-2'' to indicate the superposition starting state.
-This initially doesn't seem that useful as both a superpositional and non-superpositional test case contain both a start and final state that are treated exactly the same during evaluation.
-This is however useful for GUI's and 3rd party software and also for the creation of test cases from the XML files.
-The labelling of non-superpositional test cases, to make most sense to users, are set to the binary value of the input state.
-For example, the label for the input state $\begin{pmatrix}1\\0\end{pmatrix}$ is set as $0$ and for the input state $\begin{pmatrix}0\\1\end{pmatrix}$ the label is set as $1$.
-However, for superpositional test cases the use of the expanded superpositional state, $\begin{pmatrix}\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}\end{pmatrix}$ to $\frac{1}{\sqrt{2}}\ket{0}+\frac{1}{\sqrt{2}}\ket{1}$, is not sensible due to the exponential increase in size as the number of qubits increases, therefore reducing readability.
-For the superpositional test cases the labels are therefore set as ``Test Case $0$'' to ``Test Case $n-1$''.
+% It can be seen in the class diagram, in Figure \ref{fig:testsuiteclassdiag}, that an additional class, SuperPositionalTestSet, is included as a subclass of the TestSet class.
+% In the framework the test cases that have starting states in a superposition are held within SuperPositionalTestSets.
+% A SuperPositionalTestSet for 2 qubits returns ``-2'' to indicate the superposition starting state.
+% This initially doesn't seem that useful as both a superpositional and non-superpositional test case contain both a start and final state that are treated exactly the same during evaluation.
+% This is however useful for GUI's and 3rd party software and also for the creation of test cases from the XML files.
+% The labelling of non-superpositional test cases, to make most sense to users, are set to the binary value of the input state.
+% For example, the label for the input state $\begin{pmatrix}1\\0\end{pmatrix}$ is set as $0$ and for the input state $\begin{pmatrix}0\\1\end{pmatrix}$ the label is set as $1$.
+% However, for superpositional test cases the use of the expanded superpositional state, $\begin{pmatrix}\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}\end{pmatrix}$ to $\frac{1}{\sqrt{2}}\ket{0}+\frac{1}{\sqrt{2}}\ket{1}$, is not sensible due to the exponential increase in size as the number of qubits increases, therefore reducing readability.
+% For the superpositional test cases the labels are therefore set as ``Test Case $0$'' to ``Test Case $n-1$''.
 
-The negation of the ``NumQubits'' attribute is used to specify in the XML file that the test set is of superpositional input states.
-This negation is required for the labels of the test cases to be set correctly.
+% The negation of the ``NumQubits'' attribute is used to specify in the XML file that the test set is of superpositional input states.
+% This negation is required for the labels of the test cases to be set correctly.
 
 Alongside the framework, an independant test suite graphical editor is provided.
-A user can use this to produce the XML file and therefore do not need to explicitly consider the XML file.
+A user can use this to produce the XML file and therefore do not need to explicitly create the XML file.
 The separation of test cases between superpositional and non-superpositional test cases improved the design and implementation of this editor.
 The design and implementation of the graphical editor can be found in Section \ref{sec:indtestsuiteeditor}.
 
@@ -406,7 +426,7 @@ For the \emph{Create\_R*}, \emph{Create\_CR*}, \emph{Create\_P} and  \emph{Creat
 
 \subsection{Qubit Numbering}
 \label{sec:qubitnum}
-One of the major decisions made relating to the way in which the produced quantum algorithms are produced was that of which way the qubits should be numbered.
+One of the major decisions made relating to the way in which the quantum algorithms are produced was that of which way the qubits should be numbered.
 The two options were obviously in accending or decending order.
 
 The chosen approach was the decending order.
@@ -603,6 +623,15 @@ As a result of the reporting of statistcs is also not provided by the framework 
 \subsection{Graphical Matrix Editor}
 \label{sec:indmatrixeditor}
 
+\section{Search Engine Implementations}
+\subsection{Q-Pace IV Based Search Engine}
+
+\section{Fitness Function Implementations}
+\subsection{Simple Fitness Function}
+
+\subsection{Phase Aware Fitness Function}
+
+\subsection{Simple Parsimonious Fitness Function}
 
 \section{Provided GUI}
 
