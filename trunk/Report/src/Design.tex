@@ -468,7 +468,8 @@ It also reduced the potential errors involving the interpretation of a more comp
 The circuits also provide a Latex representation to allow the circuit to be visualised.
 The Latex representation uses the QCircuit package that can be freely obtained at \cite{QCsite}.
 
-The circuit implementation provided in the framework 
+The circuit implementation, \emph{}, provided in the framework is implemented as a simple ordered list.
+It uses the Java provided \emph{LinkedList} implementation.
 
 \subsection{Quantum Gates}
 \label{sec:quantumgates}
@@ -527,6 +528,8 @@ The use of these tricks is not specified but the interface has been designed to 
 Each gate must also provide a QCircuit represenation for use by the circuit to produce the QCircuit representation of the complete circuit.
 
 The implementation of gates effecting two qubits are hidden by an extended interface to provide access to the identifier of the second qubit but ensures that all standard gate operations are also available.
+
+
 
 % \subsection{Custom Gates}
 % 
