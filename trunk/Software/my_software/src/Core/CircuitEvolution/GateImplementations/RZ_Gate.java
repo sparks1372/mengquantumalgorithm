@@ -1,6 +1,7 @@
 package Core.CircuitEvolution.GateImplementations;
 
 import Core.Circuit.quantumgate;
+import Core.Problem.testcase;
 import Jama.Matrix;
 import Testing.predefined_states;
 import Utils.Complex;
@@ -61,7 +62,7 @@ public class RZ_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix apply(Matrix start_state, String[] customGateDefs) {
+	public Matrix apply(Matrix start_state, testcase tc) {
 		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
 		Complex[][] init = new Complex[1][1];
 		init[0][0] = new Complex(1, 0);
@@ -98,7 +99,7 @@ public class RZ_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix getUnitary_operation(String[] customGateDefs) {
+	public Matrix getUnitary_operation(testcase tc) {
 		return unitary;
 	}
 

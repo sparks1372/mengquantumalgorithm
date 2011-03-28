@@ -1,6 +1,7 @@
 package Core.CircuitEvolution.GateImplementations;
 
 import Core.Circuit.quantumgate;
+import Core.Problem.testcase;
 import Jama.Matrix;
 import Utils.Complex;
 import Utils.MatrixUtils;
@@ -20,7 +21,8 @@ public class Custom_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix apply(Matrix start_state, String[] customGateDefs) {
+	public Matrix apply(Matrix start_state, testcase tc) {
+		String[] customGateDefs = tc.getCustomGates();
 		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
 		Complex[][] init = new Complex[1][1];
 		init[0][0] = new Complex(1, 0);
@@ -32,7 +34,7 @@ public class Custom_Gate implements quantumgate {
 		I[1][0] = new Complex(0, 0);
 		Matrix iden = new Matrix(I);
 		if (cgate_index < customGateDefs.length) {
-			unitary = getUnitary_operation(customGateDefs);
+			unitary = getUnitary_operation(tc);
 		} else {
 			unitary = Matrix.identity(2, 2);
 		}
@@ -66,7 +68,8 @@ public class Custom_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix getUnitary_operation(String[] customGateDefs) {
+	public Matrix getUnitary_operation(testcase tc) {
+		String[] customGateDefs = tc.getCustomGates();
 		if ((customGateDefs != null) && (cgate_index < customGateDefs.length)) {
 			return MatrixUtils.fromFile(customGateDefs[cgate_index]);
 		} else {

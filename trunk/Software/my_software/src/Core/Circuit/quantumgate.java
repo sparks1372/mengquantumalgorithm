@@ -1,16 +1,17 @@
 package Core.Circuit;
 
+import Core.Problem.testcase;
 import Jama.Matrix;
 
 public interface quantumgate {
 
 	/**
 	 */
-	public abstract Matrix apply(Matrix start_state, String[] customGateDefs);
+	public Matrix apply(Matrix start_state, testcase tc);
 
 	/**
 	 */
-	public abstract String getlabel();
+	public String getlabel();
 
 	/**
 	 * @return Returns the target.
@@ -23,10 +24,10 @@ public interface quantumgate {
 	 * @uml.property name="unitary_operation" readOnly="true"
 	 *               default="new Jama.Matrix()"
 	 */
-	public Matrix getUnitary_operation(String[] customGateDefs);
+	public Matrix getUnitary_operation(testcase tc);
 
 	/**
 				 */
-	public abstract String toLatex();
+	public String toLatex();
 
 }

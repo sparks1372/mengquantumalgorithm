@@ -594,9 +594,9 @@ public class QPace4_Imp implements circuitsearchengine {
 	}
 
 	@Override
-	public void search(boolean[] availableinstructions, String[] params) {
+	public void search(boolean[] availableinstructions, Object[] p) {
 		enabledGate = availableinstructions;
-		setupEvolveDialog();
+		String[] params = (String[]) p;
 		try {
 			gen = Integer.parseInt(params[GEN_INDEX]);
 			pop = Integer.parseInt(params[POP_INDEX]);

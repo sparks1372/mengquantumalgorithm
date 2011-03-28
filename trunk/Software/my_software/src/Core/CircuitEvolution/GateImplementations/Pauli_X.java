@@ -1,6 +1,7 @@
 package Core.CircuitEvolution.GateImplementations;
 
 import Core.Circuit.quantumgate;
+import Core.Problem.testcase;
 import Jama.Matrix;
 import Testing.predefined_states;
 import Utils.Complex;
@@ -118,7 +119,7 @@ public class Pauli_X implements quantumgate {
 	}
 
 	@Override
-	public Matrix apply(Matrix start_state, String[] customGateDefs) {
+	public Matrix apply(Matrix start_state, testcase tc) {
 		Complex temp;
 
 		for (int k = 0; k < start_state.getRowDimension(); k += Math.pow(2,
@@ -153,7 +154,7 @@ public class Pauli_X implements quantumgate {
 	}
 
 	@Override
-	public Matrix getUnitary_operation(String[] customGateDefs) {
+	public Matrix getUnitary_operation(testcase tc) {
 		return unitary;
 	}
 

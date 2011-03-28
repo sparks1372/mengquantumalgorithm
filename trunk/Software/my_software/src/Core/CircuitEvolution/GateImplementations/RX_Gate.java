@@ -1,6 +1,7 @@
 package Core.CircuitEvolution.GateImplementations;
 
 import Core.Circuit.quantumgate;
+import Core.Problem.testcase;
 import Jama.Matrix;
 import Utils.Complex;
 import Utils.MatrixUtils;
@@ -18,11 +19,11 @@ public class RX_Gate implements quantumgate {
 		this.targ = Math.abs(target);
 		this.theta = th;
 		// [row][column]
-		Complex[][] rx_theta = new Complex[2][2];
-		rx_theta[0][0] = new Complex(Math.cos(theta / 2), 0);
-		rx_theta[0][1] = new Complex(0, -Math.sin(theta / 2));
-		rx_theta[1][0] = new Complex(0, -Math.sin(theta / 2));
-		rx_theta[1][1] = new Complex(Math.cos(theta / 2), 0);
+		// Complex[][] rx_theta = new Complex[2][2];
+		// rx_theta[0][0] = new Complex(Math.cos(theta / 2), 0);
+		// rx_theta[0][1] = new Complex(0, -Math.sin(theta / 2));
+		// rx_theta[1][0] = new Complex(0, -Math.sin(theta / 2));
+		// rx_theta[1][1] = new Complex(Math.cos(theta / 2), 0);
 
 		Complex[][] I = new Complex[2][2];
 		I[0][0] = new Complex(1, 0);
@@ -40,7 +41,7 @@ public class RX_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix apply(Matrix start_state, String[] customGateDefs) {
+	public Matrix apply(Matrix start_state, testcase tc) {
 		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
 		Complex[][] init = new Complex[1][1];
 		init[0][0] = new Complex(1, 0);
@@ -77,7 +78,7 @@ public class RX_Gate implements quantumgate {
 	}
 
 	@Override
-	public Matrix getUnitary_operation(String[] customGateDefs) {
+	public Matrix getUnitary_operation(testcase tc) {
 		return unitary;
 	}
 
