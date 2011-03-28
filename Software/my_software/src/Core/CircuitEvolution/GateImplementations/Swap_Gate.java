@@ -1,6 +1,7 @@
 package Core.CircuitEvolution.GateImplementations;
 
 import Core.CircuitEvolution.multiqubitquantumgate;
+import Core.Problem.testcase;
 import Jama.Matrix;
 import Utils.Complex;
 import Utils.MatrixUtils;
@@ -9,27 +10,27 @@ public class Swap_Gate implements multiqubitquantumgate {
 	private static final String	labelStr	= "Swap";
 	private final int			targ1;
 	private final int			targ2;
-	private Matrix				unitary;
+	private final Matrix		unitary;
 	/**
 	 * @uml.property name="a"
 	 * @uml.associationEnd
 	 */
-	Matrix						A			= Matrix.identity(2, 2);
+	private Matrix				A			= Matrix.identity(2, 2);
 	/**
 	 * @uml.property name="b"
 	 * @uml.associationEnd
 	 */
-	Matrix						B			= Matrix.identity(2, 2);
+	private Matrix				B			= Matrix.identity(2, 2);
 	/**
 	 * @uml.property name="c"
 	 * @uml.associationEnd
 	 */
-	Matrix						C			= Matrix.identity(2, 2);
+	private Matrix				C			= Matrix.identity(2, 2);
 	/**
 	 * @uml.property name="d"
 	 * @uml.associationEnd
 	 */
-	Matrix						D			= Matrix.identity(2, 2);
+	private Matrix				D			= Matrix.identity(2, 2);
 
 	public Swap_Gate(int target, int target2) {
 		// System.out.println(this.getClass().getName());
@@ -65,27 +66,20 @@ public class Swap_Gate implements multiqubitquantumgate {
 		unitary.setMatrix(A.getColumnDimension(), dim - 1,
 				A.getColumnDimension(), dim - 1, D);
 
-		if (Math.min(targ1, targ2) != 1) {
-			unitary = MatrixUtils.tensor_prod(Matrix.identity(
-					(int) Math.pow(2, targ2 < targ1 ? targ2 - 1 : targ1 - 1),
-					(int) Math.pow(2, targ2 < targ1 ? targ2 - 1 : targ1 - 1)),
-					unitary);
-		}
 	}
 
 	@Override
-	public Matrix apply(Matrix start_state, String[] customGateDefs) {
+	public Matrix apply(Matrix start_state, testcase tc) {
 		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
-
-		Matrix operation = unitary;
-		if (Math.max(targ1, targ2) != qubits) {
-			operation = MatrixUtils.tensor_prod(operation, Matrix.identity(
-					(int) (targ2 > targ1 ? Math.pow(2, qubits - targ2) : Math
-							.pow(2, qubits - targ1)),
-					(int) (targ2 > targ1 ? Math.pow(2, qubits - targ2) : Math
-							.pow(2, qubits - targ1))));
+		Matrix operation = Matrix.identity(1, 1);
+		Matrix iden = Matrix.identity(2, 2);
+		for (int index = 1; index <= qubits; index++) {
+			if (index == targ1) {
+				operation = MatrixUtils.tensor_prod(unitary, operation);
+			} else if ((index < targ1) || (index > targ2)) {
+				operation = MatrixUtils.tensor_prod(iden, operation);
+			}
 		}
-
 		return operation.times(start_state);
 	}
 
@@ -119,7 +113,7 @@ public class Swap_Gate implements multiqubitquantumgate {
 	}
 
 	@Override
-	public Matrix getUnitary_operation(String[] customGateDefs) {
+	public Matrix getUnitary_operation(testcase tc) {
 		return unitary;
 	}
 

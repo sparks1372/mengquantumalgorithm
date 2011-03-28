@@ -52,6 +52,11 @@ public abstract interface circuitsearchengine {
 
 	public SearchEngineState getState();
 
+	/**
+	 * @return
+	 */
+	public JDialog getStatsDialog();
+
 	public void init(circuitBuilder cb, circuitevaluator ce, boolean[] ai);
 
 	/**
@@ -62,18 +67,13 @@ public abstract interface circuitsearchengine {
 	public void removeObserver(Observer ob);
 
 	/**
-	 * Initiate search For use with a GUI
+	 * Initiate search for use with a GUI
 	 */
 	public void search();
 
 	/**
-	 * Initiate search For use without a GUI
+	 * Initiate search for use without a GUI
 	 */
-	public void search(boolean[] availableinstructions, String[] params);
-
-	/**
-	 * @return
-	 */
-	public JDialog getStatsDialog();
+	public void search(boolean[] availableinstructions, Object[] params);
 
 }

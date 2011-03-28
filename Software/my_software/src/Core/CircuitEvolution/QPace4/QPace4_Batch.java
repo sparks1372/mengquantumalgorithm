@@ -460,6 +460,17 @@ public class QPace4_Batch extends Evolve implements circuitsearchengine {
 		return state;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.CircuitEvolution.circuitsearchengine#statsDialog()
+	 */
+	@Override
+	public JDialog getStatsDialog() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Override
 	public void init(circuitBuilder cb, circuitevaluator ce, boolean[] ai) {
 		this.cb = cb;
@@ -521,9 +532,9 @@ public class QPace4_Batch extends Evolve implements circuitsearchengine {
 	 * [])
 	 */
 	@Override
-	public void search(boolean[] availableinstructions, String[] params) {
+	public void search(boolean[] availableinstructions, Object[] p) {
 		enabledGate = availableinstructions;
-		setupEvolveDialog();
+		String[] params = (String[]) p;
 		try {
 			int gen = Integer.parseInt(genTA.getText());
 			int pop = Integer.parseInt(popTA.getText());
@@ -592,17 +603,6 @@ public class QPace4_Batch extends Evolve implements circuitsearchengine {
 	private void setupSearchStatisticsPanel() {
 		statsPanel = new StatsPanel();
 		statsPanel.setVisible(false);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see Core.CircuitEvolution.circuitsearchengine#statsDialog()
-	 */
-	@Override
-	public JDialog getStatsDialog() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	private synchronized void updateState(SearchEngineState s) {

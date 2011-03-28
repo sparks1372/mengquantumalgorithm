@@ -58,7 +58,7 @@ public class basiccircuitevaluator implements circuitevaluator {
 				Matrix state = tc.getStartingStateCopy().copy();
 				while (qgate_iter.hasNext()) {
 					qg = qgate_iter.next();
-					state = qg.apply(state, tc.getCustomGates());
+					state = qg.apply(state, tc);
 				}
 
 				temp = ff.evaluate(tc.getStartingStateCopy(), state,
@@ -125,7 +125,7 @@ public class basiccircuitevaluator implements circuitevaluator {
 				Matrix state = tc.getStartingStateCopy();
 				while (qgate_iter.hasNext()) {
 					qg = qgate_iter.next();
-					state = qg.apply(state, tc.getCustomGates());
+					state = qg.apply(state, tc);
 				}
 				tc_toadd.setStartingstate(tc.getStartingStateCopy());
 				tc_toadd.setFinalstate(state);
@@ -182,7 +182,7 @@ public class basiccircuitevaluator implements circuitevaluator {
 					x++;
 					while (qgate_iter.hasNext()) {
 						qg = qgate_iter.next();
-						state = qg.apply(state, tc[x].getCustomGates());
+						state = qg.apply(state, tc[x]);
 						tc[x] = temp.copy();
 						tc[x].setFinalstate(state.copy());
 						x++;

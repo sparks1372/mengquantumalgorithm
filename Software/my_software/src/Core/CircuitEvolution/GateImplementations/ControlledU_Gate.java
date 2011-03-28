@@ -2,6 +2,7 @@ package Core.CircuitEvolution.GateImplementations;
 
 import Core.Circuit.quantumgate;
 import Core.CircuitEvolution.multiqubitquantumgate;
+import Core.Problem.testcase;
 import Jama.Matrix;
 import Testing.predefined_states;
 import Utils.Complex;
@@ -56,7 +57,7 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 		 */
 
 	@Override
-	public Matrix apply(Matrix start_state, String[] customGateDefs) {
+	public Matrix apply(Matrix start_state, testcase tc) {
 		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
 		if (innergate == null) {
 
@@ -74,10 +75,10 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 			// operation.print(0, 0);
 			return operation.times(start_state);
 		} else {
-			Matrix gateU = innergate.getUnitary_operation(customGateDefs);
+			Matrix gateU = innergate.getUnitary_operation(tc);
 			double gateSize = Math.log(gateU.getRowDimension()) / Math.log(2);
 			if ((ctrl > targ) && (ctrl <= (targ + gateSize))) {
-				return innergate.apply(start_state, customGateDefs);
+				return innergate.apply(start_state, tc);
 			} else {
 				setUnitary(gateU);
 
@@ -120,7 +121,7 @@ public class ControlledU_Gate implements multiqubitquantumgate {
 	}
 
 	@Override
-	public Matrix getUnitary_operation(String[] customGateDefs) {
+	public Matrix getUnitary_operation(testcase tc) {
 		return unitary;
 	}
 
