@@ -461,7 +461,7 @@ It also reduced the potential errors involving the interpretation of a more comp
 The circuits also provide a Latex representation to allow the circuit to be visualised.
 The Latex representation uses the QCircuit package that can be freely obtained at \cite{QCsite}.
 
-The circuit implementation, \emph{}, provided in the framework is implemented as a simple ordered list.
+The circuit implementation, \emph{basiccircuit}, provided in the framework is implemented as a simple ordered list.
 It uses the Java provided \emph{LinkedList} implementation.
 
 \subsection{Quantum Gates}
@@ -517,6 +517,8 @@ This is also true for a Pauli X gate on any other qubit, just the definition of 
 \end{figure}
 
 The use of these tricks is not specified but the interface has been designed to ensure that the gate implementations can use such tricks or matrix multiplication interchangeably.
+The interface includes an \emph{apply} method that takes an initial state and returns the state after the application of the gate.
+This ensures that only the gate implementation needs to understand how the circuit should be applied.
 
 Each gate must also provide a QCircuit represenation for use by the circuit to produce the QCircuit representation of the complete circuit.
 
@@ -664,6 +666,34 @@ This desgin ensures that third party software shall be loosely coupled with the 
 Likewise, all internal modules (algorithms, circuit builders, circuits, gates, circuit evaluations, etc) are also designed to view each other as black box modules.
 This improves the modularity and reduces the coupling between these internal modules.
 
+\subsection{Algorithm and Circuit Evaluation}
+\label{sec:cireval}
+When an algorithm is produced by a search engine, the circuit is built for each test set.
+This circuit then needs to be evaluated against all test cases held in the respective test set.
+As mentioned in Section \ref{sec:testsuitestruc} the framework uses a start and final state pair to define the desired operation of the algorithm.
+Therefore the framework must provide the simulation of an arbitary circuit on and arbitary start state.
+
+Due to the design decisions taken previously all the functionality is provided and just needs a simple management process.
+With the circuit interface providing an ordered iterator over the gates in the circuit, and each gate providing an \emph{apply} method the management just needs to work through all the gates in the iterator and calling the \emph{apply} method with the returned state of the previous call.
+To evaluate the circuit against a test case, the process simply needs to use the start state provided by the test case as the argument of the \emph{apply} method of the first gate.
+The state returned by the final call to the \emph{apply} method is a state equivalent to the quantum state that would exist if the circuit were to be produced and provided with the same initial state.
+
+The suitability measures have a very simple interface.
+They only provide a method to retrieve the name of the suitability measure and a method to produce a numerical measure of similarity between two quantum states.
+
+Using the selected suitability measure  the final state produced by the management process is compared to the expected final state defined in the test case.
+Repeating this process for all available test cases in the current test suite, a numerical and therefore comparable suitability value can be assigned to any algorithm produced by the search engine.
+
+This is one example where the design of the framework ensures that the when combining all the elements of the framework (the gate, the circuit, the test cases etc) the logic required is simple.
+This improves the readability of the code and therefore is likely to improve the quality of the code.
+With higher readability the number of software bugs are likely to be reduced due to higher levels of understanding.
+
+It is assumed that when a researcher creates a test suite, the test cases that are included are those that the have a higher interest in.
+As a results it can also be assumed that the researcher would be interested in the final state produced by the best solution found by the search engine for all the start states provided by the test suite.
+The circuit evaluator interface provides a simple method call to produce these.
+The \emph{getResults} method returns a test suite data structure that is almost identical to that provided by the search problem used in the search.
+The only difference is that the final state of each test case in the returned structure is not the desired theoretical state but the actual final quantum state produced by the circuit simulation.
+
 \subsection{Step-By-Step Evaluation}
 The framework is required to provide a step-by-step evaluation facility.
 There are two abstract ways this can be provided.
@@ -686,7 +716,7 @@ However this is not the case for arbitrary gates requiring the inverse of aribit
 The main disadvantage of the trace method is that the memory requirements are not constant, they are linear with respect to the number of gates in the circuit but exponentially with respect to the number of qubits in the system.
 The second disadvantage is that although stepping through a circuit does not require the application of gates to the ``current state'', the full trace has to be produced before the step-by-step evaluation can be performed.
 This means that if the circuit produced is large and complex, the start up and initialisation time could be significant.
-The requirement for the full circuit to be evaluated irrespective of howmany steps are taken in the step-by-step evaluation could lead to trace elements never being reached.
+The requirement for the full circuit to be evaluated irrespective of how many steps are taken in the step-by-step evaluation could lead to trace elements never being reached.
 
 The way the framework has been designed is to include the second of these two options.
 The additional memory requirements are not likely to be excessive when viewed in respect to the amount of RAM available in the average PC.
@@ -702,33 +732,112 @@ The framework accepts as an input to the step-by-step tracer a test suite data s
 The test suite can either be the same that was provided by the Search Problem and used by the suitability measure or can be a new test suite that has been created.
 This allows the client or third party application to provide either or both of the options.
 
-\subsection{Batch Processing}
+The circuit evaluator interface provides the \emph{getTrace} method that provides a list of test sets.
+The step-by-step evaluation is performed on a circuit rather than an algorithm.
+This means that only test cases for a specific number of qubits can be stepped through together, this is why the list is of test sets rather than test suites.
+It would have been possible to produce the traces for all test sets in the test suite and then returned a list of test suites.
+This was not implemented as it is likely that a reasearcher would try and understand each circuit in turn and then look for how they related as a second phase.
+The step-by-step evaluation is expected to aid in the understanding of the circuits rather than the comparisions.
+Therefore if a researcher had produced a large test suite, and is only concerned with the understanding of an imparticular circuit, the wait for the trace to be produced for the full test suite is likely to be significantly longer than for just the relevant test set.
+
+The implementation of the circuit evaluator that provides this trace runs through each test case in turn.
+After each gate has been applied, the ``current state'' is set as the final state attribute of a cloned version of the current test case that is subsequently added to the returned data structure.
+The implementation is purely concerned with providing the trace, not suitability measure evaluation is performed.
+
+As mentioned in Section \ref{sec:cireval}, the design of the framework makes the creation of this trace much simpler.
+The separation of concerns makes the tracing logic much simpler and much less obscured than it would have been if design decisions regarding the gate and circuit interfaces had not been made.
+
+\subsection{Batch and Distributed Processing}
 The framework produced is not expected to be used solely for Quantum Algorithm research.
 It is also expected to be used for research into the search techniques themselves.
-As a result the ability to carry out multiple iterations, a batch, and for the results to be collated to perform statistical analysis on them.
-To enable this the result of a search from Search Engine is returned in an array.
-This allows any number of results to be returned.
+Therefore, the framework had to provide a managed solution to perform multiple iterations, a batch, and for the results to be collated for statistical analysis.
+
+The search engine interface provides a \emph{getResults} method that returns an array of search results produced by the last call to a \emph{search} method.
+The \emph{search} methods do not return the array themselves so the method is not a blocking call.
+To ensure clients are informed when the results are available, the search engine requires any client to register as an observer.
+This decision was taken so that clients did not have to provide the non-blocking mechanism.
 
 The framework has been designed so as not to provide any additional help for batch processing for a very simple reason.
-The way that batch processing is carried out is therefore not constrained.
+The way that batch processing is carried out is not constrained.
 This allows the researcher to select how each iteration should be processed and what statistics need to be collected at which stage.
-If the framework were to manage the batch operation researchers would be restricted.
+If the framework were to fully manage the batch operation researchers would be restricted.
 
 For example, the framework could be implemented to sequentially execute each iteration.
 For a researcher who has access to a cluster this could be highly frustrating.
-Equally if the framework were to provide a distributed computing mechanism, the researchers would be forced to use this.
-This would mean that even if the chosen framework would be highly inefficient for a specific search technique there would not be any option available to the researcher other than to modify the framework.
+Due to the complete separation of each iteration, there is no inter-iteration communication, it is perfectly suited to distribution.
+It is effectively a Monte Carlo experiment.
+However, if the framework were to provide a distributed computing mechanism, the researchers would be forced to use this.
+This would mean that even if the chosen framework would be highly inefficient for a specific search technique or even if it was highly inefficient when running in a local mode there would not be any option available to the researcher other than to modify the framework.
 This is obviously not desirable from a ``Plug and Play'' perspective.
+
+This does however have the impact that different researchers could use different distribution frameworks.
+If they are fully managed by the search engine this is not a problem but if they require additional configuration it does detract form the ``Plug and Play'' nature of the framework.
+As a result a recommendation is placed on all search engines produced for the framework.
+It is simply that a local version should also be provided.
+This means that if a reasearcher wishes to use the search engine on a single machine or on an incorrectly configured cluster the application can still proceed.
+This is likely to have an impact on performance when compared to it the same search being performed on a correctly configured cluster.
 
 The prescription of a batch processing manager may also restrict the statistics that are required by the researcher.
 As a result of the reporting of statistcs is also not provided by the framework but expected of the Seach Engine.
 
+Both of these decisions may appear to reduce the power of the framework and the reasons to use it.
+However, it is easy to argue that the management of batch distribution and statistical reporting would increase the power of the framework but seriously undermine the usability of the framework and therefore is unlikely to be adpoted by researchers.
+
 \section{Provided Tools}
+The research framework is accompanied with two independant tools.
+These are not intended to take the place of a third party client.
+
+All of the configurations for manager classes and encodings of stored test suites and matrices are stored in XML.
+The configuration files for the manager classes are reletively simple and are unlikely to be hard to produce manually.
+However, the encoded test suites and matrices are likely to require longer XML files.
+To improve the efficiency of the researcher and to reduce the probability of simple, but hard to spot, errors being introduced graphical editors are provided alongside the framework.
+
 \subsection{Graphical Test Suite Editor}
 \label{sec:indtestsuiteeditor}
+A meaningful test set is likely to contain at least 4 test cases, but usually many more.
+Say for example that the 4 test cases are all for the system syze of 2.
+This results in 4 test cases, each with 2 matrices each containing 4 complex numbers.
+This would require an XML file to contain 64 floating point numbers, as complex numbers are stored in the XML file as two floating point values.
+Remember that this is a test suite of just 4 test cases acting on 2 qubits, the number quickly increases with the system syze and number of test cases.
+Writing this XML file by hand in a text editor is not only tedious, but error prone.
+
+To reduce the tedium of the process and the number of errors a graphical user interface is provided.
+The interface is simple and clear, not providing the user with anything that is not necessary.
+The interface allows the user to either edit a test suite that is already encoded in a file, or to create a new test suite from scratch for up to 10 qubits.
+The limit is not imposed by the framework but by the editor.
+Any test suite containing test cases of greater than ten qubits, the final state is likely to have been calculated by a thrid party application and manual input of $2^{11}$ complex numbers for both a starting and final state is likely to introduce errors.
+Therefore it is recommended that time is spent integrating the third party software and the framework so the test suite can be automatically generated.
+
+A user can add and remove test sets and test cases.
+Each test set is provided on a separate tab.
+The state is represented by a $2^n\times{1}$ matrix.
+This makes the simple tabular visualisation used to edit the starting and final states the natural choice.
+Two tables are used, one to edit the starting state and one to edit the final state.
+The complex numbers are not listed as two separate floating point values but in cartesian form.
+When a user has created or emade the changes, the test suite can be saved to an XML file.
+The XML file is one that matches the format defined in Section \ref{sec:problemman} and also contains comments to try and improve the understanding if it were to be read using a simple text editor.
+
+The design of the editor follows the user interface design principles, see Section \ref{sec:provgui}.
+The editor is very simple with no extraneous functionality.
+The use of tabs ensures that the editor design is structured, all related test cases are shown together and all user controls are also grouped whether they act on the test suite as a whole or the current test set and test case.
+The two tables use the same class and each tab is also of the same class ensuring consistent visual representation and component reuse.
 
 \subsection{Graphical Matrix Editor}
 \label{sec:indmatrixeditor}
+As with the number of floating point values required to define a test suite, the number required to define a matrix rapidly grows with the number of qubits.
+This makes the manual production of the defining XML files again tedious and error prone.
+The matrix encoding in file is optimised so that only non-zero values are stored in the file potentially reducing the number of values required.
+This improves the process slightly but is can still be seen as rather tedious and error prone.
+
+The framework provides a very simple editor that can be used to create the XML files in a much more familiar way.
+The editor allows users to edit a matrix currently encoded in a file or to create a matrix of up to four qubits from scratch.
+This is not a limit imposed by the framework.
+It is to try and encourage the integration with third party applications.
+For gates acting on four qubits the matrix contains $256$ complex numbers, for gates acting on five qubits this increases to $1024$.
+Manually inputing $1024$ complex numbers into a table with $32$ columns and $32$ rows makes it very easy to make a mistake.
+For operations of this size it is likely the matrix would have been calculated by a third party application.
+This limit on the editor is to try and increase the integration with third party applications and therefore reduce errors.
+
 
 \section{Search Engine Implementations}
 \subsection{Q-Pace IV Based Search Engine}
