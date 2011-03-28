@@ -178,22 +178,15 @@ item(iAssoc)("1..*")(obj.ne = A.w);
 \label{fig:testsuiteclassdiag}
 \end{figure}
 
-% It can be seen in the class diagram, in Figure \ref{fig:testsuiteclassdiag}, that an additional class, SuperPositionalTestSet, is included as a subclass of the TestSet class.
-% In the framework the test cases that have starting states in a superposition are held within SuperPositionalTestSets.
-% A SuperPositionalTestSet for 2 qubits returns ``-2'' to indicate the superposition starting state.
-% This initially doesn't seem that useful as both a superpositional and non-superpositional test case contain both a start and final state that are treated exactly the same during evaluation.
-% This is however useful for GUI's and 3rd party software and also for the creation of test cases from the XML files.
-% The labelling of non-superpositional test cases, to make most sense to users, are set to the binary value of the input state.
-% For example, the label for the input state $\begin{pmatrix}1\\0\end{pmatrix}$ is set as $0$ and for the input state $\begin{pmatrix}0\\1\end{pmatrix}$ the label is set as $1$.
-% However, for superpositional test cases the use of the expanded superpositional state, $\begin{pmatrix}\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}\end{pmatrix}$ to $\frac{1}{\sqrt{2}}\ket{0}+\frac{1}{\sqrt{2}}\ket{1}$, is not sensible due to the exponential increase in size as the number of qubits increases, therefore reducing readability.
-% For the superpositional test cases the labels are therefore set as ``Test Case $0$'' to ``Test Case $n-1$''.
-
-% The negation of the ``NumQubits'' attribute is used to specify in the XML file that the test set is of superpositional input states.
-% This negation is required for the labels of the test cases to be set correctly.
+The implementation of the test suite structure can be seen in Figure \ref{fig:testsuiteclassdiag}.
+The custom matrices are held as an array of Strings not of Matrix objects.
+This is for no other reason than trying to recreate a test suite definition XML file in the form shown in Figure \ref{code:paulixtestset} requires the file name of the XML file specifying the custom unitary matricies.
+If the array were an array of Matrix objects the file names would be lost or require an additional array.
+The inclusion of a second array was discounted as it would introduce an unnecessary source of potential bugs concerning the two arrays being ``out of sync''.
+This would mean the Matix objects may not represent the matrix encoded in the respective file as the Matrix objects are able to be modified and altered by the program without the file being updated.
 
 Alongside the framework, an independant test suite graphical editor is provided.
 A user can use this to produce the XML file and therefore do not need to explicitly create the XML file.
-The separation of test cases between superpositional and non-superpositional test cases improved the design and implementation of this editor.
 The design and implementation of the graphical editor can be found in Section \ref{sec:indtestsuiteeditor}.
 
 The contents of a test suite are not fixed.
@@ -529,36 +522,147 @@ Each gate must also provide a QCircuit represenation for use by the circuit to p
 
 The implementation of gates effecting two qubits are hidden by an extended interface to provide access to the identifier of the second qubit but ensures that all standard gate operations are also available.
 
+\begin{figure}
+\[
+\begin{tabular}{ | c || c | }
+\hline
+\textbf{Matrix Manipulation} & \textbf{Bit Manipulation} \\ \hline
+Phase Gate & Hadamard \\ \hline
+RX Gate & Pauli X \\ \hline
+RY Gate & Pauli Y \\ \hline
+RZ Gate & Pauli Z \\ \hline
+V Gate & \\ \hline
+W Gate & \\ \hline
+Custom U Gate & \\ \hline
+Controlled U Gate & \\ \hline
+Swap & \\ \hline
+\end{tabular}
+\]
+\caption{Gate Implementation}
+\label{fig:gateimps}
+\end{figure}
 
+As has been mentioned, a number of the gates shown in Figure \ref{fig:providedgates} can be implemented either as a matrix multiplication or a bit manipulation.
+Several of the gate implementations in the framework use the bit manipulation and others use the matrix multiplication.
+The table in Figure \ref{fig:gateimps} shows which of the provided gates are implemented using the matrix manipulation and which use the bit manipulation.
+For all gates that use matrix multiplication their equivalent unitary is based on those listed in Figure \ref{fig:providedgates} but has to adapt to the qubit they are applied to and the system size.
+The equivalent matrix is calculated in two phases.
+The initial phase is the constuction of the matrix listed in Figure \ref{fig:providedgates}.
+This initial phase is calculated in the constructor of each gate.
+The gate on which the gate is applied is provided as an argument to the constructor of the gate.
+Unfortunately a Java interface cannot specify the signiture of the contructor of implementing classes and abstract classes require the constructor to be fully defined which is not possible when the constructor needs to perform this first phase.
+As a result this cannot be ensured but is expected as part of implementing the interface.
+The second phase is the combination of the matrix constructed in the initial phase and identity matrices for all qubits not effected by the gate.
+This second phase is performed as part of the \emph{apply} method.
 
-% \subsection{Custom Gates}
-% 
-% 
-% To allow users to introduce their own gates a limited number of custom gates can be included.
-% Is limited due to the use of enumeration types in the specification of algorithms.
-% Custom gates are like any other gate, a class implementing the correct interface, are specifed through xml specification.
+There are several gate implemetations that deserve a more detailed summary.
+To produce the unitary matricies shown in Figure \ref{fig:providedgates} for the RX, RY and RZ gates the matrices of other gates are used.
+Equations \ref{eq:rxcalc} - \ref{eq:rzcalc} shows the details of these matrix calculations.
+These equations are taken directly from Lecture 9 of \cite{QIPLect}.
+\begin{eqnarray}
+\label{eq:rxcalc}
+ R_x(\theta)&=&\cos{\frac{\theta}{2}}I-i\sin{\frac{\theta}{2}}X \\
+\label{eq:rycalc}
+ R_y(\theta)&=&\cos{\frac{\theta}{2}}I-i\sin{\frac{\theta}{2}}Y \\
+\label{eq:rzcalc}
+ R_z(\theta)&=&\cos{\frac{\theta}{2}}I-i\sin{\frac{\theta}{2}}Z 
+\end{eqnarray}
+
+The second gate implementation that requires a more detailed summary is the Controlled U Gate.
+The implementation of the gates cannot assume that the circuit that is produced by an algorithm is correct.
+Placing all the restrictions on the search process that need to be placed on the circuit would have a serious impact on certain search processes.
+Therefore all the restictions need to be handled by elements of the framework.
+The restriction for Controlled U Gates is that the control qubit cannot be a qubit that is effected by the U operation.
+If the specifed qubit would be affected by the U operation the implementation acts as though it was not controlled.
+A second consideration for the design and implementation is if U is a custom gate the U matrix can change.
+This means that the calculation of the matrix that represents the controlled version of U needs to be able to update depending on the test case.
+
+A major implementation detail is how the matrix that represents a controlled version of unitary U is calculated.
+The calculation changes depending on the relative position of control qubit.
+If the control qubit is a higher significant qubit the calculation is different than if the control bit is a lower significant qubit.
+Equation \ref{eq:clu} is the calculation if the control qubit is a lower significant qubit.
+Equation \ref{eq:chu} is the calculationif the control qubit is a higher significant qubit.
+$S1$ is an identity matrix of the size $2^n$ where $n$ is the number of lower significant qubits that aren't effected by the Controled U gate, a control bit or between the conrtol qubits and effected gates.
+$S2$ is an identity matrix of the size $2^n$ where $n$ is the number of higher significant qubits that aren't effected by the Controled U gate, a control bit or between the conrtol qubits and effected gates.
+U is the matrix that defines the operation of the gate under control.
+This unitary matrix is retrieved using the \emph{getUnitary} operation on an object of the correct class.
+The \emph{getUnitary} operation returns the matrix created by the first phase explained previously.
+
+\begin{eqnarray}
+\label{eq:clu}
+ CU&=& (\begin{pmatrix}1&0\\0&0\end{pmatrix})\otimes S1 + \begin{pmatrix}0&0\\0&1\end{pmatrix}\otimes U) \otimes S2 \\
+\label{eq:chu}
+ CU&=& ( S1 \otimes \begin{pmatrix}1&0\\0&0\end{pmatrix}) +U \otimes \begin{pmatrix}0&0\\0&1\end{pmatrix}) \otimes S2
+\end{eqnarray}
+
+Equations \ref{eq:clu} and \ref{eq:chu} are generalisations of the Controlled U gate that have not previously been published.
+
+As with standard gates, the calculation of the full matrix is performed in two stages as previously decribed in this section.
+If U is a Custom gate then the full matrix is performed in a single stage as described in Section \ref{sec:custgates}.
+
+\subsection{Custom Gates}
+\label{sec:custgates}
+
+As has been explained in Section \ref{sec:testsuitestruc}, the framework has to provide a way to include custom gates.
+The way of specifying the custom unitary matrices is explained fully in Section \ref{sec:testsuitestruc}.
+To use these custom unitary matrices, the framework provides a gate implementation called \emph{Custom\_Gate}.
+This is significantly different from all other gates in one particular feature.
+All gates listed in Figure \ref{fig:providedgates} have a fixed unitary matrix and only have to adapt for the number of higher significant qubits that are not effected by the gate.
+This is not so for custom gates, their operation change on a test case by test case basis and therefore both the ``phases'' mentioned in Secion \ref{sec:quantumgates} are performed during the \emph{apply} method.
+
+The \emph{apply} method in the Gate interface has two parameters, one is the quantum state on which the custom operation is applied and one that is the test case.
+The test case is provided to extract the array of matrx definition file names.
+An alternative would be to pass an array of the Matrx objects encoded in the files refered to in the test case.
+The custom matricies are held in the test case objects an array of strings to ensure that the information about which file encodes the matrix is not lost.
+The decision to pass in the test case rather than an array of Matrix objects or even the file name strings is for the same reason.
+If an array of matrices were passed in then it would be possible for the matrices to be inconsistent with the matrices encoded in the files specifed in the test case.
+If an array of file names, strings, were passes as an argument then it would be possible for the file names to be inconsistent with the file names specified in the test case.
+
+Using the test case that is supplied as an argument, the \emph{apply} method uses an argument provided to the constructor of the gate as in index into the array of file names held in the test case.
+The file is decoded to produce the unitary matrix, using this the full matrix, including identity padding for uneffected qubits, is produced and multiplied with the state.
+This could be seen as slightly wasteful requiring the matricies to be created from file each time but it was decided that the integrity of the evaluation, ensuring the matrix used is that encoded in the file, is of higher importance than a slight increase in efficiency.
+
+The \emph{getUnitary} method also uses the test case provided to retrieve the matrix from file using the file name stored in the test case rather than an array of file names or Matrix objects for the same reasons as the \emph{apply} method.
 
 \subsection{Search Engine Parameters}
 With many search techniques there are a number of parameters that can be configured and altered, sometimes having dramatic effects on the search results.
 To enable the configuration of these parameters through the framework a suitable, and flexible method had to be introduced into the design.
 Not all search techniques have the same number of parameters to configure and due to search engines being developed potentially by different researchers, even if the parameters are the same, their internal representation may be different.
-To ensure that all parameters that any particular search engine requires can be configured, the user interface for the configuration is provided by the search engine.
-The user interface is set to be an onscreen dialog box to ensure that the configuration is controlled by the search engine rather than any third party software or the framework.
 
-This option was chosen as it is fair to assume that the person with best understanding of the parameters provided by a search engine is the same person who implemented the search engine using the parameters.
-It therefore follows that to reduce the risk of misunderstanding between GUI developers and search engine developers, who could be spacially and temporally separated, the search engine configuration should be tightly maintained within the search engine implementation.
+The framework requires a search engine to provide two \emph{search} methods, the initiator of the algorithm search process using current settings.
+The first takes two arguments.
+The first argument is a boolean array.
+This is an array with a length equal to the number of gates in the \emph{QuantumInstructionEnum} enumeration.
+The value at each index indicates whether the element of the \emph{QuantumInstructionEnum} enumeration with the same index should be included in the search and therefore allowed in the result.
+The second is a Object array.
+This second array is provided to allow search engine researchers to have search engine parameters that are configured by a third party application.
+It is not possible to use to make the array more specific without restricting the parameters available for the researchers to provide.
+It does place the responsibility on the researcher to provide adequate documentation and explicit error messages with regards to the ordering and the type of the parameters required by the search engine.
+
+The second takes no arguments and is intended for search engines that require no parameters and search engines that provide their own interface to collect the parameters.
+The documentation provided by researchers for each search engine must specify which of the two options applies to each search engine.
+
+If a search engine comes under the second category and is providing a graphical user interface, the system must be run on a system configured to allow GUIs to be displayed.
+The configuration of the user interface is controlled entirely by the search engine rather, than any third party software or the framework.
+This option was chosen as it is assumed that the person with best understanding of the parameters provided by a search engine is the same person who implemented the search engine.
+This is to improve the user interface with respect to the structure principle, see Section \ref{sec:provgui}.
+The ordering of parameters in the Object array of the first \emph{search} method cannot be assumed to be a good indication of grouping and there is no indicated separation of groups.
+As a result if the framework, or a third party client, were to provide an the user interface, semantically linked parameters may not be grouped by the user interface.
 
 A second justification for this based on the ``Plug and Play'' nature that is a foundataion of the framework.
-If the configuration were provided by third party software providing a GUI for the framework, or embedding it in a larger software suite, the third party software would have to be adapted for each search engine implementation.
-This would not be acceptable and is totally against the motivation behind the framework.
+If the configuration were provided by third party software providing a GUI for the framework, or embedding it in a larger software suite, the third party software would have to be adapted for each search engine implementation or automatically generated.
+Automatic generation is unlikely to produce a ``principled'' user interface, see Section \ref{sec:provgui}.
+Framework and third party client modification for each search engine is not acceptable and is totally incompatible the motivation behind the framework.
 With such a design it is likely that the research community would see no advantage to using the framwork than working as they are now, in complete isolation.
-
 
 \subsection{Design as a Black Box}
 The framework is design to be used as a black box.
 All external code is only allowed access through the use of interfaces and final or abstract class types.
 The implementation of the internal framework functionality is hidden and not required by third party software.
 This desgin ensures that third party software shall be loosely coupled with the framework.
+
+Likewise, all internal modules (algorithms, circuit builders, circuits, gates, circuit evaluations, etc) are also designed to view each other as black box modules.
+This improves the modularity and reduces the coupling between these internal modules.
 
 \subsection{Step-By-Step Evaluation}
 The framework is required to provide a step-by-step evaluation facility.
@@ -637,7 +741,7 @@ As a result of the reporting of statistcs is also not provided by the framework 
 \subsection{Simple Parsimonious Fitness Function}
 
 \section{Provided GUI}
-
+\label{sec:provgui}
 To design the provided GUI I followed the following principles:
 \begin{itemize}
  \item \textbf{The structure principle:} Design should organize the user interface purposefully, in meaningful and useful ways based on clear, consistent models that are apparent and recognizable to users, putting related things together and separating unrelated things, differentiating dissimilar things and making similar things resemble one another. 
