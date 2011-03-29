@@ -838,9 +838,23 @@ Manually inputing $1024$ complex numbers into a table with $32$ columns and $32$
 For operations of this size it is likely the matrix would have been calculated by a third party application.
 This limit on the editor is to try and increase the integration with third party applications and therefore reduce errors.
 
-
 \section{Search Engine Implementations}
 \subsection{Q-Pace IV Based Search Engine}
+Alongside the framework, a search engine based in the Q-Pace IV search engine featured in \cite{masseythesis} has been developed.
+This is a Genetic Programming based search engine using the ECJ\cite{ecjtool} system.
+
+The search engine is provided in both local and distributed versions.
+The local verision uses separate threads to serially perform interations.
+The distributed version uses the JPPF Framework to perform iterations in parallel using all resources available.
+To ensure that the function of both the local and distributed versions are the same, the two versions are based on the same code parameterised by the container class for the processing, Thread or JPPFJob.
+The processing unit is implemented as a search engine core that implements the JPPFTask interface, which inherits the Runnable interface.
+This allows the processing unit to be used both for the local and distributed version ensuring consistency.
+
+The JPPF Framework was chosen for the distribution as it is very simple to configure and provides the functionality required in a very easy to userstand way ensuring code readability is maintained.
+There are many other frameworks available as well as producing a bespoke distribution system.
+The bespoke solution was discarded as it is completely opposed to the philosophy behind the framework.
+The other open source frameworks, including Apache Hadoop\cite{apahadoop}, were not chosen as they provided much more functionality than was required and as a result were much more complex and intrusive in the source code.
+
 
 \section{Fitness Function Implementations}
 \subsection{Simple Fitness Function}
@@ -917,15 +931,13 @@ The combination of the description and the consistency were included for the \em
 
 \subsection{Search Problem Creator and Editor}
 As mentioned above, the creation of Search Problems is provided by an on-screen dialog.
-The creation and editing of Search Problems is also provided by a standalone application.
-The inclusion of a standalone application was thought to be useful as the framework is intended to be used within third party software so having to run the full GUI to create a Search Problem isn't desirable.
-This also allows a third party application to integrate the standalone editor.
+The creation and editing of Search Problems is also provided by a standalone application, see Section \ref{sec:indtestsuiteeditor}.
 
 The integrated editor and the standalone application use the same components and overall design.
 The same components are also used when creating a new Search Problem and when editing an existing Search Problem.
 
 Not only are the individual components reused but each dialog follows the same design layout.
-This promotes the \emph{reuse} \emph{structure} principles.
+This promotes the \emph{reuse} and \emph{structure} principles.
 
 The dialogs ensure that the user has entered values for the required fields and ensures that each entry is valid.
 This implicitly ensures that each selection available to the user in the Search Problem drop down list is a valid option.
