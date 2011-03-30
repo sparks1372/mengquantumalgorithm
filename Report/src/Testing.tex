@@ -1,8 +1,166 @@
 \chapter{Testing}
 \section{Unit Tests}
+\label{sec:unittests}
 Many of the components created for the framework were tested by unit testing.
 With the framework created in Java, JUnit 4\cite{junitweb} was used to produce and run the unit tests.
+Not all components were suitable for unit testing due to them being less functional and more control classes.
+Therefore unit tests were not created for these components but they were tested as part of the integration testing.
+
+The components that were tested are listed below:
+\begin{itemize}
+ \item Complex class
+ \item Matrix class
+ \item All gate implementations
+ \item Circuit implementation
+ \item Expnode implementation
+ \item Algorithm implementation
+ \item Suitability measures
+ \item Manager classes
+\end{itemize}
+
+In the unit tests the test values were chosen in accordance with partition testing to ensure that the test were more complete and tested for the incorrect and the correct partitions with equal weight.
+
+\subsection{Complex Number Implementation Unit Tests}
+Due to the Complex class underpinning the functionality of the framework a thorough test was required; reliance on the testing performed on the third party library was to much of a risk.
+The unit tests were simple with a range of positive, negative, integer and decimal values used in the construction of the complex classes.
+
+The test oracles used for the \emph{toString} and \emph{parseComplex} methods were created in combination with the other of these two methods.
+Additional test oracles were also used but this mutal dependance ensures that the strings produce by the \emph{toString} method are well formed and can be parsed by \emph{parseComplex}.
+It also ensures that the \emph{parseComplex} method is correct and creates a Complex object that represents the string passed as its argument.
+
+For the numeric methods, Octave\cite{octweb} was used to create test oracles.
+
+\subsection{Matrix Implementation Unit Tests}
+The Matrix is based on a third party implementation but due to both its importance to the correct operation of the framework and the extent of the modification made to it, extensive unit testing was performed.
+Even though the framework only requires the correct operation of unitary matrices the testing was not restricted to unitary matrices.
+Test matrices were created as real only,  imaginary only and real and imaginary complex values with both positive and negative values.
+
+The Matrix unit tests include testing of the MatrixUtil class that provides the encoding and decoding of matrices to XML files and tensor product of two matrices.
+
+For the arithmetic methods, Octave\cite{octweb} was used to create test oracles.
+
+\subsection{Gate Implementation Unit Tests}
+Unit testing the gate implementations is a reletively simple process.
+The correct operation of the all gates, excluding the custom gates, are statically defined as in Figure \ref{fig:providedgates}.
+Therefore creating the unit tests are a series of tests to ensure that with predefined input states, the output states are correct with respect to the gate's definition.
+To reduce the probability of errors being introduced into the test oracles used by the unit tests, the test oracles were calculated by Octave\cite{octweb} using Quantum Computing Functions(QCF) for Matlab\cite{qcfweb}.
+
+QCF does not provide all of the gates defined in Figure \ref{fig:providedgates}.
+For the missing gates, Matlab functions were created using the definitions in Figure \ref{fig:providedgates}.
+
+To test the custom gate implementation XML files were created with the definitions of all single qubit gates.
+Custom gates were created using these XML files and all the unit tests for the respective gate were applied.
+This ensured that the operation of the custom gate is functionally equivalent to the non-custom gates.
+The custom gate is not going to ne non-functionally equivalent as some of the non-custom gates exploit bit manipulation rather than matrix multiplication, see Section \ref{sec:custgates}, where as the custom gate can only perform matrix multiplication.
+
+Alongside the \emph{apply} operation performed on quantum states, all other methods are also tested by the unit tests.
+The test oracles are much simpler to define.
+The \emph{getTarget} method is required to return the integer value set as the target qubit ID in the constructor.
+A number of test cases including positive, negative and zero values.
+Only positive values should be accepted by the constructor as there are no qubits with a negative or zero ID.
+The returned value of each of the other operations are known either implicitly or explicitly by Figure \ref{fig:providedgates} and the QCircuit\cite{QCsite} documentation.
+
+\subsection{Circuit Implementation Unit Tests}
+The unit tests for the circuit implmentation followed the following scenarios:
+\begin{itemize}
+ \item Add a gate
+ \item Add a subcircuit
+ \item Add a gate and ensure the Latex representation is correct
+ \item Add a subcircuit and ensure the Latex representation is correct
+ \item Add a gate and ensure the circuit size is correct
+ \item Add a subcircuit and ensure the circuit size is correct
+ \item Add a gate and ensure the gate in the iterator is correct
+ \item Add a subcircuit and ensure the gates in the iterator are correct and in the correct order
+\end{itemize}
+
+\subsection{Expnode Implementation Unit Tests}
+These unit tests concern the implementation of the Expnode context free grammar shown in Figure \ref{tab:expnodecontext}.
+The unit tests were based on the expressions that can be seen in Figure \ref{tab:expnodetestexps}.
+A collection of values are used as SystemSize including positive, negative, integer and decimal values.
+LoopVars shal also be set as one of a collection of arrays with lengths $0$, $1$, $2$ and $3$.
+The $0$ length array is important as there is no restriction placed on the search engines stating that the loop variables can only be requested in a loop.
+This is to that the search is not restricted.
+If the array is of length $0$ the result is $0$ irrespective of the index requested.
+If the index requested is greater than the length of the array, modulus is used with the array length to produce a valid index.
+This is defined in Section \ref{sec:quantalgs}.
+
+The test oracles are calculated in the test cases to ensure that precision rounding is handled by the test cases.
+
+\begin{figure}
+\centering
+ \begin{tabular}{|c|c|c|c|}
+\hline
+$0$ & $2+SystemSize$ &  $LoopVars[0]$ &$2+LoopVars[2+SystemSize]$\\
+$2$ & $2-SystemSize$ &   $LoopVars[1]$ & $2-LoopVars[2+SystemSize]$\\
+$-2$ & $2*SystemSize$ &   $LoopVars[-1]$ & $2*LoopVars[2+SystemSize]$ \\
+&$2/SystemSize$ &  $LoopVars[SystemSize]$ & $2/LoopVars[2+SystemSize]$ \\
+&&  $LoopVars[2+SystemSize]$ & \\
+\hline
+ \end{tabular}
+\caption{Expnode Test Expressions}
+\label{tab:expnodetestexps}
+\end{figure}
+
+\subsection{Algorithm Implementation Unit Tests}
+The unit tests for the algorithm implementation followed the following scenarios:
+\begin{itemize}
+ \item Add an instruction
+ \item Add four different instructions
+ \item Add a instruction and ensure the algorithm size is correct
+ \item Add four different instructions and ensure the algorithm size is correct
+ \item Add a instruction and ensure the instruction in the iterator is correct
+ \item Add four different instructions and ensure the instructions in the iterator are correct and in the correct order
+ \item Add a instruction and ensure the printed algorithm is correct
+ \item Add four different instructions and ensure the printed algorithm contains the correct instructions, including correct expressions to calculate the numeric vales, are correct and they are printed in the correct order
+\end{itemize}
+
+\subsection{Suitability Measure Unit Tests}
+There are three suitability measures provided with the framework, see Section \ref{sec:provsuitmeas}.
+Each of these needed to be tested to ensure that the implementation was consistent with their definitions.
+
+A series of $2^n\times1$ matrices were created and provided to the suitability measure.
+The theoretical value, the test oracle, was calculated using Oracle.
+The matrices used in the testing were not necessarily correct quantum states, they may not have a modulus square equal to $1$.
+This is because even though the operation of gates are by definition unitary, the starting state nor the expected final states defined in test cases are restricted to quantum states that have a modulus square equal to $1$.
+As a result the suitability measure tests were not restricted to ``correct'' quantum states.
+
+\subsection{Test Suite Unit Tests}
+The test suite data structure is a combination of three classes not covered by other unit tests.
+Although the test will cover three classes this is still being classed as a unit test as it is effectively a test of the data structure unit rather than the classes.
+
+The tests covered the following scenarios:
+\begin{itemize}
+ \item (Three tests) Create a new test suite and insert a single test case for 1/2/3 qubits, check test suite data structure against the oracle.
+ \item Create a new test suite and insert a single test case for 1 qubit and another test case for 2 qubits, check test suite data structure against the oracle.
+ \item Create two new test suite (A and B), insert a single test case for 1 qubit in test suite A and 1 qubit in test suite B, add the test set from test suite B to test suite A. Check test suite A and B data structures against the oracles.
+ \item Create a new test suite and insert a single test case for 1 qubit and another test case for 2 qubits, encode the test suite as an XML file, check the test suite XML file against the oracle.
+ \item Decode a predefined test suite XML file, check the test suite data structure against the oracle.
+\end{itemize}
+
+The scenario consisting of two test suites checks both test suites to ensure that the merge of test sets, and therefore the modification of labels and IDs, does not effect the test suite that is not being modified.
+
+\subsection{Manager Classes Unit Tests}
+For each of the manager classes, a series of XML configuration files were created for testing purposes only.
+For the Search Engine and Suitability Measure Manager classes the tests contained several checks:
+\begin{itemize}
+ \item Check the list of available implementations against the oracle
+ \item Select each implementation in turn and check against the oracle the class of the object provided by the manager
+\end{itemize}
+
+For the Problem Manager the checks were slightly more in depth due to the returned object containing a test suite data structure.
+The test suite implementation includes an \emph{equal} method which provides a ``deep equality'' check.
+This is used by the unit test to ensure that the object created by the manager against an oracle.
+
 \section{Integration Tests}
+As mentioned in Section \ref{sec:unittests}, the framework contains classes that coordinate the interaction between the functional classes.
+The integration tests were designed to test these classes in particular.
+These classes in particular were:
+\begin{itemize}
+ \item The circuit builder implementation - \emph{basiccircuitbuilder}
+ \item The circuit evaluator implementation - \emph{basiccircuitevaluator}
+\end{itemize}
+
+
+
 \section{System Testing}
-\section{User Acceptance Tests}
 
