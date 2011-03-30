@@ -194,6 +194,13 @@ If a user finds an error or wishes to add test cases, either a third party appli
 These changes need to be reflected in the XML file to become persistant so to ensure that the updated XML file is well formed the framework provides a class to produce from a given test suite.
 This class is used in the independant test suite graphical editor and is recommended for use by any third party application.
 
+When editing a test suite, if a test set for $n$ qubits is added to the test suite and the test suite already contains a test set for $n$ qubits, the two test sets are merged.
+The test cases of the test set being added have their ID and labels modified so that they continue the sequence of the existing test cases already in the test suite.
+When the test sets have to be merged the test cases are cloned.
+This is incase the test set is used in a different test suite.
+If this were not done, when the ID and label were modified they would also be updated in the second test suite.
+This would cause unpredicatable behaviour.
+
 \subsection{Manager Classes}
 \label{sec:manclasses}
 As can be seen in the architecture diagram of the framework, Appendix \ref{sec:archdesign}, there are several classes with names suffixed with ``Manager''.
@@ -330,6 +337,7 @@ This ensures that the different concerns are separated.
 The update of Test Cases is detailed in Section \ref{sec:testsuitestruc}.
 
 \subsection{Quantum Algorithms}
+\label{sec:quantalgs}
 The result of the search engines are quantum algorithms.
 To maintain the ``Plug and Play'' nature of the framework, the representation of these algorithms needed to be specifed and standardised.
 However, the representation also had to ensure that it was not limiting the search engines.
@@ -365,7 +373,7 @@ $exp \rightarrow \frac{\pi}{2^e}$ &   \\
 $exp \rightarrow LoopVars[e]$ &   \\
 \hline
  \end{tabular}
-\caption{expnode Context Free Grammar}
+\caption{Expnode Context Free Grammar}
 \label{tab:expnodecontext}
 \end{figure}
 
@@ -406,6 +414,7 @@ This is a second parameter that requires the use of the \emph{expnode} type.
 All current iteration variables are provided in a \emph{LoopVars} array.
 As can be seen in Figure \ref{tab:expnodecontext} the array is indexed by the value of a sub-expression.
 To ensure that all indicies requested are valid the value of the sub-expression is calculated using modulus \emph{LoopVars.length()}.
+If the \emph{LoopVars} array has a of length $0$ the result is $0$ irrespective of the index requested.
 
 The difference between the \emph{iterate} and \emph{reviterate} instructions is that \emph{iterate} counts from $1$ to $Gate1$ and \emph{reviterate} counts from $Gate1$ to $1$.
 As is explained in Section \ref{sec:qubitnum}, the qubits are numbered from $1$ to $n$ which is why the iteration instructions count to and from $1$ rather than $0$ as is normal in Computer Science.
@@ -856,12 +865,13 @@ The bespoke solution was discarded as it is completely opposed to the philosophy
 The other open source frameworks, including Apache Hadoop\cite{apahadoop}, were not chosen as they provided much more functionality than was required and as a result were much more complex and intrusive in the source code.
 
 
-\section{Fitness Function Implementations}
-\subsection{Simple Fitness Function}
+\section{Suitability Measure Implementations}
+\label{sec:provsuitmeas}
+\subsection{Simple Suitability Measure}
 
-\subsection{Phase Aware Fitness Function}
+\subsection{Phase Aware Suitability Measure}
 
-\subsection{Simple Parsimonious Fitness Function}
+\subsection{Simple Parsimonious Suitability Measure}
 
 \section{Provided GUI}
 \label{sec:provgui}
