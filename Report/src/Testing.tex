@@ -155,12 +155,28 @@ This is used by the unit test to ensure that the object created by the manager a
 As mentioned in Section \ref{sec:unittests}, the framework contains classes that coordinate the interaction between the functional classes.
 The integration tests were designed to test these classes in particular.
 These classes in particular were:
-\begin{itemize}
+\begin{enumerate}
  \item The circuit builder implementation - \emph{basiccircuitbuilder}
  \item The circuit evaluator implementation - \emph{basiccircuitevaluator}
+\end{enumerate}
+
+The approach that was taken was a bottom-up approach.
+The tests were also performed in the order they are listed.
+This is becuase the circuit builder is used by the circuit evaluator and therefore it imposes a dependency.
+
+\subsection{Circuit Builder Integration Tests}
+The circuit builder integration test combined:
+\begin{itemize}
+ \item Gate implementations
+ \item Circuit implementation
+ \item Algorithm implementation
 \end{itemize}
 
+Due to the simplicity of the circuit builder interface, the tests that were carried out were also simple.
+The circuit builder interface provides 
 
+
+\subsection{Circuit Evaluator Integration Tests}
 
 \section{System Testing}
 
