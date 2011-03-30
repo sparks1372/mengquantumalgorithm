@@ -43,7 +43,11 @@ import org.jppf.server.protocol.JPPFTask;
  * @author Laurent Cohen
  */
 public class TemplateJPPFTask extends JPPFTask {
-	private final int	i;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -1401024228416844356L;
+	private final int			i;
 
 	/**
 	 * Perform initializations on the client side, before the task is executed

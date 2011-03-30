@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import Core.CircuitBuilder.circuitBuilder;
 import Core.CircuitEvaluator.circuitevaluator;
+import Core.CircuitEvolution.QPace4.StatsPanel;
 import ec.simple.SimpleEvolutionState;
 
 /**
@@ -22,12 +23,24 @@ public class QPaceEvoState extends SimpleEvolutionState implements Serializable 
 	public circuitevaluator		cir_evaluator;
 	private int					gens;
 
+	private StatsPanel			statsPanel;
+
 	/**
 	 * @return the gens
 	 */
 	public int getGens() {
-		System.out.println("gens  = " + gens);
 		return gens;
+	}
+
+	public StatsPanel getStatsPanel() {
+		return statsPanel;
+	}
+
+	public void incProgressBar() {
+		if ((statsPanel != null) && (statsPanel.getProgressBar() != null)) {
+			statsPanel.getProgressBar().setValue(
+					statsPanel.getProgressBar().getValue() + 1);
+		}
 	}
 
 	/**
@@ -38,10 +51,15 @@ public class QPaceEvoState extends SimpleEvolutionState implements Serializable 
 		this.gens = gens;
 	}
 
+	public void setStatsPanel(StatsPanel statsPanel2) {
+		statsPanel = statsPanel2;
+	}
+
 	@Override
 	public void startFresh() {
 		output.message("Setting up");
 		setup(this, null); // a garbage Parameter
+		// resetProgressBar();
 
 		// POPULATION INITIALIZATION
 		output.message("Initializing Generation 0");

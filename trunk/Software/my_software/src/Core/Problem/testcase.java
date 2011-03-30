@@ -50,6 +50,30 @@ public class testcase implements Serializable {
 		return to_ret;
 	}
 
+	public boolean equal(testcase tc) {
+		if (!Matrix.equal(startingstate, tc.startingstate)) {
+			return false;
+		}
+		if (!Matrix.equal(finalstate, tc.finalstate)) {
+			return false;
+		}
+		if (!(id == tc.id)) {
+			return false;
+		}
+		if (!(label == tc.label)) {
+			return false;
+		}
+		if (!(customGates.length == tc.customGates.length)) {
+			return false;
+		}
+		for (int i = 0; i < customGates.length; i++) {
+			if (!customGates[i].equalsIgnoreCase(tc.customGates[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	/**
 	 * @return the customGates
 	 */

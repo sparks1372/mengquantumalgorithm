@@ -114,6 +114,15 @@ public class Complex extends Object implements Serializable {
 	}
 
 	/**
+	 * Creates a copy of the complex number
+	 * 
+	 * @return A copy of this
+	 */
+	public Complex copy() {
+		return new Complex(x, y);
+	}
+
+	/**
 	 * Cosine of this Complex number (doesn't change this Complex number).
 	 * &lt;br&gt;cos(z) = (exp(i*z)+exp(-i*z))/ 2.
 	 * 

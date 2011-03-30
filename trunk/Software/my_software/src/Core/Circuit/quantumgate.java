@@ -10,6 +10,8 @@ public interface quantumgate {
 	public Matrix apply(Matrix start_state, testcase tc);
 
 	/**
+	 * @return Return the gate label to appear in the circuit diagrams
+	 * @uml.property name="target" readOnly="true"
 	 */
 	public String getlabel();
 
@@ -27,7 +29,9 @@ public interface quantumgate {
 	public Matrix getUnitary_operation(testcase tc);
 
 	/**
-				 */
+	 * @return Returns the QCircuit representation of the gate
+	 * @uml.property name="target" readOnly="true"
+	 */
 	public String toLatex();
 
 }

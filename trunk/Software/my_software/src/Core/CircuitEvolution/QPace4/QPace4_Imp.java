@@ -3,6 +3,7 @@
  */
 package Core.CircuitEvolution.QPace4;
 
+import java.awt.Component;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,9 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Observer;
 import java.util.Vector;
 
@@ -26,11 +24,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JTextField;
-
-import org.jppf.client.JPPFClient;
-import org.jppf.client.JPPFJob;
-import org.jppf.server.protocol.JPPFTask;
 
 import Core.Algorithms.QuantumInstructionEnum;
 import Core.CircuitBuilder.circuitBuilder;
@@ -38,17 +33,14 @@ import Core.CircuitEvaluator.circuitevaluator;
 import Core.CircuitEvolution.SearchEngineState;
 import Core.CircuitEvolution.SearchResult;
 import Core.CircuitEvolution.circuitsearchengine;
-import Utils.JPPFHelper;
-import Utils.SendMail;
 import Utils.WindowUtils;
 import Utils.WrapLayout;
-import ec.util.ParameterDatabase;
 
 /**
  * @author Sam Ratcliff
  * 
  */
-public class QPace4_Imp implements circuitsearchengine {
+public abstract class QPace4_Imp implements circuitsearchengine {
 
 	class tickBoxListener implements ItemListener {
 		int	index;
@@ -79,29 +71,20 @@ public class QPace4_Imp implements circuitsearchengine {
 
 	}
 
-	public static void main(String[] args) {
-		boolean[] temp = new boolean[QuantumInstructionEnum.values().length];
-		for (int i = 0; i < temp.length; i++) {
-			if (i % 2 != 0) {
-				temp[i] = true;
-			}
-		}
-
-		// new QPace4_Imp(null, null, temp);
-	}
-
-	private circuitBuilder			cb;
-	private circuitevaluator		ce;
+	private JProgressBar			progressBar;
+	protected circuitBuilder		cb;
+	protected circuitevaluator		ce;
 	private static final String		NAME			= "QPace 4 Implementation";
 
-	private QPaceSearchResult[]		searchres;
-	private static final String		filename		= "config/ecparams.params";
+	protected QPaceSearchResult[]	searchres;
+	protected static final String	filename		= "config/ecparams.params";
 	private Params_Writer			pw				= null;
 	private SearchEngineState		state			= SearchEngineState.Start;
 	private final Vector<Observer>	observers		= new Vector<Observer>();
 
 	private final JPanel			progressPanel;
 	private JDialog					evolveDialog;
+	private JPanel					allowedGatePanel;
 	private JTextField				genTA;
 	private JLabel					genL;
 	private final static String		genStr			= "Generations";
@@ -150,7 +133,7 @@ public class QPace4_Imp implements circuitsearchengine {
 	private final static String		emailStr		= "Email Address for Completion Email. Leave blank if email is not required";
 	private boolean[]				enabledGate;
 
-	private int						gen;
+	protected int					gen;
 	private int						pop;
 	private int						bth;
 	private int						eth;
@@ -159,12 +142,12 @@ public class QPace4_Imp implements circuitsearchengine {
 	private int						el;
 	private double					xover;
 	private double					mut;
-	private int						iterval;
+	protected int					iterval;
 
-	private final String			from			= "mengquantum@gmail.com";
-	private String					to;
-	private final String			subject			= "Quantum Algorithm Search Complete";
-	private final String			message			= "Your search has completed for Quantum Problem : ";
+	protected final String			from			= "mengquantum@gmail.com";
+	protected String				to;
+	protected final String			subject			= "Quantum Algorithm Search Complete";
+	protected final String			message			= "Your search has completed for Quantum Problem : ";
 
 	private StatsPanel				statsPanel;
 
@@ -200,6 +183,7 @@ public class QPace4_Imp implements circuitsearchengine {
 	 * 
 	 */
 	public QPace4_Imp() {
+
 		progressPanel = new JPanel();
 		enabledGate = new boolean[QuantumInstructionEnum.values().length];
 		for (int i = 0; i < enabledGate.length; i++) {
@@ -227,6 +211,29 @@ public class QPace4_Imp implements circuitsearchengine {
 	 * 
 	 * @see Core.CircuitEvolution.circuitsearchengine#getAvailableinstructions()
 	 */
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#finalize()
+	 */
+	@Override
+	protected void finalize() throws Throwable {
+		System.out.println("HERE");
+		statsPanel = null;
+		Component[] carray = allowedGatePanel.getComponents();
+		for (Component element : carray) {
+			if (element instanceof JCheckBox) {
+				JCheckBox c = (JCheckBox) element;
+				ItemListener[] ilarray = c.getItemListeners();
+				for (ItemListener element2 : ilarray) {
+					c.removeItemListener(element2);
+				}
+			}
+		}
+		evolveDialog = null;
+		super.finalize();
+	}
 
 	@Override
 	public boolean[] getAvailableinstructions() {
@@ -313,7 +320,7 @@ public class QPace4_Imp implements circuitsearchengine {
 
 	private JPanel getGatePanel() {
 
-		JPanel allowedGatePanel = new JPanel();
+		allowedGatePanel = new JPanel();
 		allowedGatePanel.setLayout(new WrapLayout());
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -581,6 +588,15 @@ public class QPace4_Imp implements circuitsearchengine {
 		}
 	}
 
+	/**
+	 * 
+	 */
+	protected void resetProgressBar() {
+		progressBar.setMaximum(gen * iterval);
+		progressBar.setValue(0);
+		progressBar.setStringPainted(true);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -675,134 +691,15 @@ public class QPace4_Imp implements circuitsearchengine {
 	 * 
 	 */
 	private void setupSearchStatisticsPanel() {
-		statsPanel = new StatsPanel();
+		progressBar = new JProgressBar();
+		progressBar.setMaximumSize(new Dimension(200, 20));
+		statsPanel = new StatsPanel(progressBar);
 		statsPanel.setVisible(false);
 	}
 
-	private void startSearch() {
-		updateState(SearchEngineState.Searching);
-		String[] pstr = { "-file", filename };
-		ParameterDatabase pd = QPaceSearchCore.loadParameterDatabase(pstr);
-		// SearchEngineCore sec = new QPaceSearchCore(pd, cb, ce);
-		// Thread t = new Thread(sec);
-		// t.start();
-		searchres = new QPaceSearchResult[iterval];
-		boolean block = false;
+	protected abstract void startSearch();
 
-		List<JPPFTask> results = new LinkedList<JPPFTask>();
-		JPPFClient jppfClient = null;
-		try {
-			jppfClient = new JPPFClient();
-			// create a JPPF job
-			final JPPFJob job = new JPPFJob();
-
-			// give this job a readable unique id that we can use to monitor and
-			// manage it.
-			job.setId("QPaceSearch");
-
-			for (int i = 0; i < iterval; i++) {
-				// add a task to the job.
-				job.addTask(new QPaceSearchCore(pd, cb, ce));
-			}
-			// add more tasks here ..
-
-			// create a runner instance.
-			final JPPFHelper runner = new JPPFHelper();
-
-			if (block) {
-				// execute a blocking job
-				results = runner.executeBlockingJob(jppfClient, job);
-				List<JPPFTask> jppfli = results;
-				Iterator<JPPFTask> iter = jppfli.listIterator();
-				int index = 0;
-				while (iter.hasNext()) {
-					QPaceSearchResult sr = (QPaceSearchResult) iter.next()
-							.getResult();
-					if (sr != null) {
-						searchres[index] = sr;
-						// System.out.println("sr!=null");
-						// System.out.println(searchres[index].getQa().print());
-						// } else {
-						// System.out.println("sr==null jppfli.size == "
-						// + jppfli.size());
-					} else {
-						System.out.println("sr==null index==" + index);
-					}
-					index++;
-				}
-				// System.out.println("searchres.length = " + searchres.length
-				// + " jppfli.size = " + jppfli.size());
-				if (!to.equalsIgnoreCase("")) {
-					SendMail sendMail = new SendMail(from, to, subject,
-							message.concat(this.ce.getQproblem().getName()));
-					sendMail.send();
-				}
-				updateState(SearchEngineState.SearchCompleteResultAvailable);
-			} else {
-				final JPPFClient da = jppfClient;
-				final String probname = this.ce.getQproblem().getName();
-				// execute a non-blocking job
-				Thread t = new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-						List<JPPFTask> jppfli;
-						try {
-							jppfli = runner.executeBlockingJob(da, job);
-							Iterator<JPPFTask> iter = jppfli.listIterator();
-							int index = 0;
-							while (iter.hasNext()) {
-								QPaceSearchResult sr = (QPaceSearchResult) iter
-										.next().getResult();
-								if (sr != null) {
-									searchres[index] = sr;
-									// System.out.println("sr!=null");
-									// System.out.println(searchres[index].getQa()
-									// .print());
-									// } else {
-									// System.out
-									// .println("sr==null jppfli.size == "
-									// + jppfli.size());
-								} else {
-									System.out.println("sr==null index=="
-											+ index);
-								}
-								index++;
-							}
-							// System.out.println("searchres.length = "
-							// + searchres.length + " jppfli.size = "
-							// + jppfli.size());
-							updateState(SearchEngineState.SearchCompleteResultAvailable);
-						} catch (Exception e) {
-							e.printStackTrace();
-							updateState(SearchEngineState.Start);
-						} finally {
-							if (da != null) {
-								da.close();
-							}
-						}
-
-						if (!to.equalsIgnoreCase("")) {
-							SendMail sendMail = new SendMail(from, to, subject,
-									message.concat(probname));
-							sendMail.send();
-						}
-					}
-				});
-				t.start();
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (block && (jppfClient != null)) {
-				jppfClient.close();
-			}
-		}
-
-	}
-
-	private synchronized void updateState(SearchEngineState s) {
+	protected synchronized void updateState(SearchEngineState s) {
 		this.state = s;
 
 		notifyObservers();

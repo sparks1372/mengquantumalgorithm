@@ -36,6 +36,7 @@ public class QPaceSearchCore extends SearchEngineCore {
 	private final circuitevaluator	ce;
 	private final ParameterDatabase	parameters;
 	private QPaceEvoState			evoState;
+	private final StatsPanel		statsPanel;
 
 	public final static String		P_PRINTACCESSEDPARAMETERS	= "print-accessed-params";
 
@@ -44,6 +45,7 @@ public class QPaceSearchCore extends SearchEngineCore {
 	public final static String		P_PRINTALLPARAMETERS		= "print-all-params";
 
 	public final static String		P_PRINTUNUSEDPARAMETERS		= "print-unused-params";
+
 	public final static String		P_PRINTUNACCESSEDPARAMETERS	= "print-unaccessed-params";
 	/** The argument indicating that we're starting up from a checkpoint file. */
 	public static final String		A_CHECKPOINT				= "-checkpoint";
@@ -54,7 +56,6 @@ public class QPaceSearchCore extends SearchEngineCore {
 	public static final String		A_FILE						= "-file";
 	/** evalthreads parameter */
 	public static final String		P_EVALTHREADS				= "evalthreads";
-
 	/** breedthreads parameter */
 	public static final String		P_BREEDTHREADS				= "breedthreads";
 
@@ -388,11 +389,12 @@ public class QPaceSearchCore extends SearchEngineCore {
 	}
 
 	public QPaceSearchCore(ParameterDatabase params, circuitBuilder cb,
-			circuitevaluator ce) {
+			circuitevaluator ce, StatsPanel st) {
 		super();
 		this.cb = cb;
 		this.ce = ce;
 		this.parameters = params;
+		this.statsPanel = st;
 	}
 
 	@Override
@@ -422,6 +424,15 @@ public class QPaceSearchCore extends SearchEngineCore {
 			// changing values in state.parameters,
 			// changing instance variables (except for job and
 			// runtimeArguments, please), etc.
+			if (statsPanel != null) {
+				statsPanel.setVisible(true);
+				if (statsPanel != null) {
+					statsPanel.incIter();
+				}
+				statsPanel.setFitness(0.0f);
+				statsPanel.setTime(0);
+				(evoState).setStatsPanel(statsPanel);
+			}
 			long starttime = System.currentTimeMillis();
 			evoState.run(EvolutionState.C_STARTED_FRESH);
 			long finishtime = System.currentTimeMillis();
@@ -434,15 +445,18 @@ public class QPaceSearchCore extends SearchEngineCore {
 					to_return = ((KozaFitness) individual.fitness);
 				}
 			}
-
+			if (statsPanel != null) {
+				statsPanel.setFitness(to_return.standardizedFitness());
+				statsPanel.setTime(finishtime - starttime);
+			}
 			if ((best_ind != null)) {
 				this.setResult(new QPaceSearchResult(((QPace_Ind) best_ind).qa,
 						to_return.standardizedFitness(),
 						finishtime - starttime, evoState.getGens()));
-				System.out.println("best_ind != null");
-				System.out.println(((QPace_Ind) best_ind).qa.print());
+				// System.out.println("best_ind != null");
+				// System.out.println(((QPace_Ind) best_ind).qa.print());
 			} else {
-				System.out.println("best_ind == null");
+				// System.out.println("best_ind == null");
 			}
 			cleanup(evoState); // flush and close various streams,
 								// print out

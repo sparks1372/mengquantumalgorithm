@@ -90,9 +90,18 @@ public class QPACE_stats extends SimpleStatistics {
 
 			state.output.message("Subpop " + x
 					+ " mean fitness of generation: " + avfit[x]);
+			if (((QPaceEvoState) state).getStatsPanel() != null) {
+				((QPaceEvoState) state).getStatsPanel().setFitness(
+						((KozaFitness) best_of_run[x].fitness)
+								.standardizedFitness());
+			}
 		}
 
 		((QPaceEvoState) state).setGens(state.generation);
+		((QPaceEvoState) state).incProgressBar();
+		if (((QPaceEvoState) state).getStatsPanel() != null) {
+			((QPaceEvoState) state).getStatsPanel().setGens(state.generation);
+		}
 
 	}
 

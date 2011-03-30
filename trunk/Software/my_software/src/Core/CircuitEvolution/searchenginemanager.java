@@ -1,6 +1,5 @@
 package Core.CircuitEvolution;
 
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -31,10 +30,7 @@ public class searchenginemanager {
 		try {
 			SearchEngineTag selected = availablesearchengines.get(key);
 			Class<?> cls = Class.forName(selected.Class);
-			Class<?> partypes[] = new Class[0];
-			Constructor<?> ct = cls.getConstructor(partypes);
-			Object arglist[] = new Object[0];
-			retobj = ct.newInstance(arglist);
+			retobj = cls.newInstance();
 		} catch (Throwable e) {
 			System.err.println(e);
 			e.printStackTrace();

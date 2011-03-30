@@ -4,7 +4,13 @@ import java.util.Iterator;
 
 public interface Circuit {
 
-	public abstract String toLatex(int qubits);
+	/**
+		 */
+	public void addCircuit(int builder_id, Circuit circuit);
+
+	/**
+		 */
+	public void addGate(int builder_id, quantumgate quantumgate);
 
 	/**
 	 * @return Returns the circuitlayout.
@@ -15,14 +21,8 @@ public interface Circuit {
 
 	/**
 			 */
-	public abstract int getSize();
+	public int getSize();
 
-	/**
-		 */
-	public abstract void addGate(int builder_id, quantumgate quantumgate);
-
-	/**
-		 */
-	public abstract void addCircuit(int builder_id, Circuit circuit);
+	public String toLatex(int qubits);
 
 }
