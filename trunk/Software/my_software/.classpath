@@ -33,5 +33,7 @@
 	<classpathentry kind="lib" path="/home/sam/Project/javamail-1.4.4/lib/mailapi.jar"/>
 	<classpathentry kind="lib" path="/home/sam/Project/javamail-1.4.4/lib/pop3.jar"/>
 	<classpathentry kind="lib" path="/home/sam/Project/javamail-1.4.4/lib/smtp.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="src" path="srcTest"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
