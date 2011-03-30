@@ -49,6 +49,25 @@ public class testset implements Serializable {
 		return to_ret;
 	}
 
+	public boolean equal(testset ts) {
+		Iterator<testcase> keyset = testcases.iterator();
+		while (keyset.hasNext()) {
+			testcase key = keyset.next();
+			boolean cont = true;
+			Iterator<testcase> tskeyset = testcases.iterator();
+			while (cont && tskeyset.hasNext()) {
+				if (key.equal(tskeyset.next())) {
+					cont = false;
+				}
+			}
+			if (cont) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	/**
 	 * Getter of the property <tt>num_of_qubits</tt>
 	 * 
@@ -93,5 +112,4 @@ public class testset implements Serializable {
 	public void setNumOfCustomGates(int numOfCustomGates) {
 		this.numOfCustomGates = numOfCustomGates;
 	}
-
 }

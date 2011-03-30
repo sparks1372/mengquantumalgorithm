@@ -34,7 +34,7 @@ public class testsuite implements Serializable {
 			Iterator<testcase> iter = ts.getTestcases();
 			int numtcs = current.getNumberOfTestcases();
 			while (iter.hasNext()) {
-				testcase next = iter.next();
+				testcase next = iter.next().copy();
 				next.setId(numtcs++);
 				next.setLabel("Test Case " + next.getId());
 				current.addTestcases(next);
@@ -58,6 +58,20 @@ public class testsuite implements Serializable {
 			to_ret.addTestcases(ts);
 		}
 		return to_ret;
+	}
+
+	public boolean equal(testsuite ts) {
+		Iterator<Integer> keyset = testsets.keySet().iterator();
+		while (keyset.hasNext()) {
+			int key = keyset.next();
+			if (!ts.testsets.containsKey(key)) {
+				return false;
+			} else if (!testsets.get(key).equal(ts.testsets.get(key))) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public Set<Integer> getKeys() {
