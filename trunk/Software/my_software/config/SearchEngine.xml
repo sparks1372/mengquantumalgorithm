@@ -3,12 +3,12 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.w3schools.com searchengine_spec.xsd">
 	<se>
-	  <Name>Genetic Programming - QPace 4 Local</Name>
+	  <Name>Genetic Programming - QPace Local</Name>
 	  <Class>Core.CircuitEvolution.QPace4.QPace4_Local</Class>
 	  <Desc>config/gp_qp4_desc.txt</Desc>
 	</se>
 	<se>
-	  <Name>Genetic Programming - QPace 4 JPPF</Name>
+	  <Name>Genetic Programming - QPace JPPF</Name>
 	  <Class>Core.CircuitEvolution.QPace4.QPace4_JPPF</Class>
 	  <Desc>config/gp_qp4_desc.txt</Desc>
 	</se>
