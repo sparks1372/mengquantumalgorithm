@@ -27,6 +27,10 @@ import Core.CircuitEvolution.circuitsearchengine;
  * 
  */
 public class CPanel extends JPanel implements Observer, ActionListener {
+	/**
+	 * 
+	 */
+	private static final long				serialVersionUID	= -4172206248272080881L;
 	private final qcevolutionbackend		backend;
 	private final stateVisualiserTabPanel	stateExpectedTabPanel;
 	private final JPanel					resultPanel;
@@ -36,7 +40,7 @@ public class CPanel extends JPanel implements Observer, ActionListener {
 	private ResultPanel						resPanel;
 	private final DefaultComboBoxModel		aModel;
 	private final JButton					statsButton;
-	private static final String				statsButtonStr	= "Statistics";
+	private static final String				statsButtonStr		= "Statistics";
 	private final JPanel					selectAndStatPanel;
 
 	/**
@@ -56,6 +60,7 @@ public class CPanel extends JPanel implements Observer, ActionListener {
 		resSelector = new JComboBox();
 		resSelector.setModel(aModel);
 		resSelector.addActionListener(this);
+		resSelector.setMaximumRowCount(15);
 
 		statsButton = new JButton(statsButtonStr);
 		statsButton.addActionListener(this);

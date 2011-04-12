@@ -83,26 +83,26 @@ public class Matrix implements Cloneable, Serializable {
 	 * ------------------------ Class variables ------------------------
 	 */
 
-	/**
-	 * 
-	 */
-
-	public static Matrix constructWithCopy(Complex[][] A) {
-		int m = A.length;
-		int n = A[0].length;
-		Matrix X = new Matrix(m, n);
-		Complex[][] C = X.getArray();
-		for (int i = 0; i < m; i++) {
-			if (A[i].length != n) {
-				throw new IllegalArgumentException(
-						"All rows must have the same length.");
-			}
-			for (int j = 0; j < n; j++) {
-				C[i][j] = A[i][j];
-			}
-		}
-		return X;
-	}
+	// /**
+	// *
+	// */
+	//
+	// public static Matrix constructWithCopy(Complex[][] A) {
+	// int m = A.length;
+	// int n = A[0].length;
+	// Matrix X = new Matrix(m, n);
+	// Complex[][] C = X.getArray();
+	// for (int i = 0; i < m; i++) {
+	// if (A[i].length != n) {
+	// throw new IllegalArgumentException(
+	// "All rows must have the same length.");
+	// }
+	// for (int j = 0; j < n; j++) {
+	// C[i][j] = A[i][j];
+	// }
+	// }
+	// return X;
+	// }
 
 	public static boolean equal(Matrix A, Matrix B) {
 		try {
@@ -265,71 +265,71 @@ public class Matrix implements Cloneable, Serializable {
 	 * ------------------------ Public Methods ------------------------
 	 */
 
-	/**
-	 * Construct a matrix from a one-dimensional packed array
-	 * 
-	 * @param vals
-	 *            One-dimensional array of doubles, packed by columns (ala
-	 *            Fortran).
-	 * @param m
-	 *            Number of rows.
-	 * @exception IllegalArgumentException
-	 *                Array length must be a multiple of m.
-	 */
-
-	public Matrix(Complex vals[], int m) {
-		this.m = m;
-		n = (m != 0 ? vals.length / m : 0);
-		if (m * n != vals.length) {
-			throw new IllegalArgumentException(
-					"Array length must be a multiple of m.");
-		}
-		A = new Complex[m][n];
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				A[i][j] = vals[i + j * m];
-			}
-		}
-	}
-
-	/**
-	 * Construct a matrix from a 2-D array.
-	 * 
-	 * @param A
-	 *            Two-dimensional array of doubles.
-	 * @exception IllegalArgumentException
-	 *                All rows must have the same length
-	 * @see #constructWithCopy
-	 */
-
-	public Matrix(Complex[][] A) {
-		m = A.length;
-		n = A[0].length;
-		for (int i = 0; i < m; i++) {
-			if (A[i].length != n) {
-				throw new IllegalArgumentException(
-						"All rows must have the same length.");
-			}
-		}
-		this.A = A;
-	}
-
-	/**
-	 * Construct a matrix quickly without checking arguments.
-	 * 
-	 * @param A
-	 *            Two-dimensional array of doubles.
-	 * @param m
-	 *            Number of rows.
-	 * @param n
-	 *            Number of colums.
-	 */
-
-	public Matrix(Complex[][] A, int m, int n) {
-		this.A = A;
-		this.m = m;
-		this.n = n;
-	}
+	// /**
+	// * Construct a matrix from a one-dimensional packed array
+	// *
+	// * @param vals
+	// * One-dimensional array of doubles, packed by columns (ala
+	// * Fortran).
+	// * @param m
+	// * Number of rows.
+	// * @exception IllegalArgumentException
+	// * Array length must be a multiple of m.
+	// */
+	//
+	// public Matrix(Complex vals[], int m) {
+	// this.m = m;
+	// n = (m != 0 ? vals.length / m : 0);
+	// if (m * n != vals.length) {
+	// throw new IllegalArgumentException(
+	// "Array length must be a multiple of m.");
+	// }
+	// A = new Complex[m][n];
+	// for (int i = 0; i < m; i++) {
+	// for (int j = 0; j < n; j++) {
+	// A[i][j] = vals[i + j * m];
+	// }
+	// }
+	// }
+	//
+	// /**
+	// * Construct a matrix from a 2-D array.
+	// *
+	// * @param A
+	// * Two-dimensional array of doubles.
+	// * @exception IllegalArgumentException
+	// * All rows must have the same length
+	// * @see #constructWithCopy
+	// */
+	//
+	// public Matrix(Complex[][] A) {
+	// m = A.length;
+	// n = A[0].length;
+	// for (int i = 0; i < m; i++) {
+	// if (A[i].length != n) {
+	// throw new IllegalArgumentException(
+	// "All rows must have the same length.");
+	// }
+	// }
+	// this.A = A;
+	// }
+	//
+	// /**
+	// * Construct a matrix quickly without checking arguments.
+	// *
+	// * @param A
+	// * Two-dimensional array of doubles.
+	// * @param m
+	// * Number of rows.
+	// * @param n
+	// * Number of colums.
+	// */
+	//
+	// public Matrix(Complex[][] A, int m, int n) {
+	// this.A = A;
+	// this.m = m;
+	// this.n = n;
+	// }
 
 	/**
 	 * Construct an m-by-n matrix of zeros.
@@ -793,22 +793,6 @@ public class Matrix implements Cloneable, Serializable {
 						.abs((A[i][j]).imag())));
 			}
 			f = new Complex(Math.max(f.mod(), s.mod()), 0);
-		}
-		return f;
-	}
-
-	/**
-	 * Frobenius norm
-	 * 
-	 * @return sqrt of sum of squares of all elements.
-	 */
-
-	public Complex normF() {
-		Complex f = new Complex(0, 0);
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				f = Complex.euclid(f, A[i][j]);
-			}
 		}
 		return f;
 	}
@@ -1308,7 +1292,8 @@ public class Matrix implements Cloneable, Serializable {
 	public Matrix times(Matrix B) {
 		if (B.m != n) {
 			throw new IllegalArgumentException(
-					"Matrix inner dimensions must agree.");
+					"Matrix inner dimensions must agree. B.m = " + B.m
+							+ " n = " + n);
 		}
 		Matrix X = new Matrix(m, B.n);
 		Complex[][] C = X.getArray();

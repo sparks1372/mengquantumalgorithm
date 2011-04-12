@@ -17,7 +17,11 @@ import Core.Algorithms.QuantumAlgorithm;
  * 
  */
 public class AlgorithmPanel extends JPanel {
-	private static final String	nameStr	= "Algorithm";
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 9219235475209840392L;
+	private static final String	nameStr				= "Algorithm";
 	private final JTextArea		algoListing;
 	private final JScrollPane	scrollPane;
 

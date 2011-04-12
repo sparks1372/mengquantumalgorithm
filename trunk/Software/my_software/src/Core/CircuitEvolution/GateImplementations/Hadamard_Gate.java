@@ -113,13 +113,12 @@ public class Hadamard_Gate implements quantumgate {
 			System.out.println("Something is really really wrong");
 		}
 		this.targ = target;
-		Complex[][] hadamard = new Complex[2][2];
-		hadamard[0][0] = new Complex(1 / Math.sqrt(2), 0);
-		hadamard[0][1] = new Complex(1 / Math.sqrt(2), 0);
-		hadamard[1][0] = new Complex(1 / Math.sqrt(2), 0);
-		hadamard[1][1] = new Complex(-1 / Math.sqrt(2), 0);
 
-		unitary = new Matrix(hadamard);
+		unitary = new Matrix(2, 2);
+		unitary.set(0, 0, new Complex(1 / Math.sqrt(2), 0));
+		unitary.set(0, 1, new Complex(1 / Math.sqrt(2), 0));
+		unitary.set(1, 0, new Complex(1 / Math.sqrt(2), 0));
+		unitary.set(1, 1, new Complex(-1 / Math.sqrt(2), 0));
 	}
 
 	@Override

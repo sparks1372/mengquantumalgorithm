@@ -18,7 +18,11 @@ import Core.Problem.testsuite;
  * 
  */
 public class currentStateVisualiserTabPanel extends JPanel {
-	private static String		qubits_string	= " Qubit(s)";
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -2646703096590848391L;
+	private static String		qubits_string		= " Qubit(s)";
 	private final JTabbedPane	tabPane;
 
 	/**

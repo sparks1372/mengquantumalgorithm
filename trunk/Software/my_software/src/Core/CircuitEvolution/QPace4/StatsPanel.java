@@ -87,6 +87,13 @@ public class StatsPanel extends JPanel {
 		iterTA.setText(Integer.toString(Integer.parseInt(iterTA.getText()) + 1));
 	}
 
+	public void resetStatsPanel() {
+		setIter(-1);
+		setTime(-1);
+		setGens(-1);
+		fitTA.setText("");
+	}
+
 	public synchronized void setFitness(float fit) {
 		fitTA.setText(Float.toString(fit));
 	}

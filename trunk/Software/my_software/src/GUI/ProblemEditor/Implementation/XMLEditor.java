@@ -16,17 +16,19 @@ import Utils.Complex;
 
 public class XMLEditor extends JTabbedPane {
 
-	private static String	zero_string		= "0";
-	private static String	qubits_string	= " Qubit(s)";
-	private testsuite		tsuite;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -6010150877522496616L;
+	private static String		qubits_string		= " Qubit(s)";
+	private testsuite			tsuite;
 
 	public XMLEditor() {
-		super();
 		tsuite = new testsuite(0);
+		update_tabs();
 	}
 
 	public XMLEditor(File f) {
-		super();
 		test_UML_parser ts_parser = new test_UML_parser(f.getAbsolutePath());
 		tsuite = ts_parser.parse();
 		update_tabs();
@@ -77,7 +79,7 @@ public class XMLEditor extends JTabbedPane {
 
 		Matrix m;
 		testcase tc;
-		Complex c1 = new Complex(1.0, 0.0);
+		new Complex(1.0, 0.0);
 		testset tset = new testset(num_of_qubits);
 
 		String b_str = "Test Case 1";

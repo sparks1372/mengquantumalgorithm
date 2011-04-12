@@ -1,8 +1,11 @@
 package Core.CircuitEvaluator.Implementation;
 
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
+import java.util.Vector;
 
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Circuit.Circuit;
@@ -17,7 +20,12 @@ import Core.Problem.testset;
 import Core.Problem.testsuite;
 import Jama.Matrix;
 
-public class basiccircuitevaluator implements circuitevaluator {
+public class basiccircuitevaluator extends Observable implements
+		circuitevaluator {
+	/**
+	 * 
+	 */
+	private static final long		serialVersionUID	= 2422792156137250094L;
 	private quantumproblem			quantprob;
 	private FitnessFunction			ff;
 	private final circuitBuilder	cb;
@@ -144,18 +152,15 @@ public class basiccircuitevaluator implements circuitevaluator {
 	 * QuantumAlgorithm)
 	 */
 	@Override
-	public LinkedList<testset> getTrace(QuantumAlgorithm alg, int numofqubits) {
-		LinkedList<testset> toReturn = new LinkedList<testset>();
+	public List<testset> getTrace(QuantumAlgorithm alg, int numofqubits) {
+		List<testset> toReturn = new Vector<testset>();
 		Circuit cir;
 		Iterator<quantumgate> qgate_iter;
 		int id = 0;
 
 		testsuite ts = quantprob.getTestSuite();
 		cir = cb.Build(alg, numofqubits);
-		testcase tc[] = new testcase[cir.getSize() + 1];
-		for (testcase element : tc) {
-			toReturn.add(new testset(numofqubits));
-		}
+		testcase tc;
 		Set<Integer> keys = ts.getKeys();
 
 		Iterator<Integer> kiter = keys.iterator();
@@ -177,24 +182,40 @@ public class basiccircuitevaluator implements circuitevaluator {
 					cir.getSize();
 					Matrix state = next.getStartingStateCopy();
 					int x = 0;
-					tc[x] = temp.copy();
-					tc[x].setFinalstate(state.copy());
+					if (toReturn.size() < x + 1) {
+						toReturn.add(x, new testset(numofqubits));
+					}
+					tc = temp.copy();
+					tc.setFinalstate(state.copy());
+					toReturn.get(x).addTestcases(tc);
 					x++;
 					while (qgate_iter.hasNext()) {
+						if (toReturn.size() < x + 1) {
+							toReturn.add(x, new testset(numofqubits));
+						}
 						qg = qgate_iter.next();
-						state = qg.apply(state, tc[x]);
-						tc[x] = temp.copy();
-						tc[x].setFinalstate(state.copy());
+						state = qg.apply(state, tc);
+						tc = temp.copy();
+						tc.setFinalstate(state.copy());
+						toReturn.get(x).addTestcases(tc);
 						x++;
-					}
-					for (int i = 0; i < tc.length; i++) {
-						toReturn.get(i).addTestcases(tc[i]);
 					}
 				}
 			}
 		}
 
 		return toReturn;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * Core.CircuitEvaluator.circuitevaluator#removeObserver(java.util.Observer)
+	 */
+	@Override
+	public void removeObserver(Observer ob) {
+		super.deleteObserver(ob);
 	}
 
 	@Override
@@ -205,6 +226,7 @@ public class basiccircuitevaluator implements circuitevaluator {
 	@Override
 	public void setQproblem(quantumproblem qproblem) {
 		quantprob = qproblem;
+		setChanged();
+		notifyObservers();
 	}
-
 }

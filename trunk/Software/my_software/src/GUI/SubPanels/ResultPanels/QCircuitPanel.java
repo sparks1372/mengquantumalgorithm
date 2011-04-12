@@ -15,7 +15,11 @@ import javax.swing.JTextArea;
  * 
  */
 public class QCircuitPanel extends JPanel {
-	private static final String	nameStr	= "QCircuit Representation";
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 6809659226104762074L;
+	private static final String	nameStr				= "QCircuit Representation";
 	private final JTextArea		qcircuitLising;
 	private final JScrollPane	scrollPane;
 

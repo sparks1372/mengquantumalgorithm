@@ -109,13 +109,10 @@ public class Pauli_X implements quantumgate {
 	public Pauli_X(int target) {
 		// System.out.println(this.getClass().getName());
 		this.targ = Math.abs(target);
-		Complex[][] pauli_x = new Complex[2][2];
-		pauli_x[0][0] = new Complex(0, 0);
-		pauli_x[0][1] = new Complex(1, 0);
-		pauli_x[1][0] = new Complex(1, 0);
-		pauli_x[1][1] = new Complex(0, 0);
 
-		unitary = new Matrix(pauli_x);
+		unitary = new Matrix(2, 2);
+		unitary.set(0, 1, new Complex(1, 0));
+		unitary.set(1, 0, new Complex(1, 0));
 	}
 
 	@Override

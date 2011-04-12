@@ -109,19 +109,13 @@ public class Pauli_Z implements quantumgate {
 	public Pauli_Z(int target) {
 		// System.out.println(this.getClass().getName());
 		this.targ = target;
-		Complex[][] pauli_z = new Complex[2][2];
-		pauli_z[0][0] = new Complex(1, 0);
-		pauli_z[0][1] = new Complex(0, 0);
-		pauli_z[1][0] = new Complex(0, 0);
-		pauli_z[1][1] = new Complex(-1, 0);
 
-		unitary = new Matrix(pauli_z);
+		unitary = Matrix.identity(2, 2);
+		unitary.set(1, 1, new Complex(-1, 0));
 	}
 
 	@Override
 	public Matrix apply(Matrix start_state, testcase tc) {
-
-		Complex temp;
 
 		for (int k = 0; k < start_state.getRowDimension(); k += Math.pow(2,
 				targ)) {

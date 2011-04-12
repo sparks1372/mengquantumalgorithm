@@ -11,9 +11,14 @@ import Jama.Matrix;
 import Utils.Complex;
 
 class MyTestCaseTableModel extends AbstractTableModel {
-	private final boolean	DEBUG		= false;
-	private final String[]	columnNames	= { "|State>", "Probability Amplitude" };
-	private Object[][]		data;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 8274803920514840224L;
+	private final boolean		DEBUG				= false;
+	private final String[]		columnNames			= { "|State>",
+			"Probability Amplitude"				};
+	private Object[][]			data;
 
 	public MyTestCaseTableModel() {
 		data = new Object[0][2];
@@ -54,8 +59,9 @@ class MyTestCaseTableModel extends AbstractTableModel {
 	 */
 	public void internalSetValueAt(Object value, int row, int col) {
 		if (DEBUG) {
-			System.out.println("Setting value at " + row + "," + col + " to "
-					+ value + " (an instance of " + value.getClass() + ")");
+			System.out.println("internalSetValueAt Setting value at " + row
+					+ "," + col + " to " + value + " (an instance of "
+					+ value.getClass() + ")");
 		}
 
 		data[row][col] = value;
@@ -74,8 +80,14 @@ class MyTestCaseTableModel extends AbstractTableModel {
 		// Note that the data/cell address is constant,
 		// no matter where the cell appears onscreen.
 		if (col == 0) {
+			if (DEBUG) {
+				System.out.println("false row " + row + " col " + col);
+			}
 			return false;
 		} else {
+			if (DEBUG) {
+				System.out.println("true row " + row + " col " + col);
+			}
 			return true;
 		}
 	}
@@ -104,8 +116,9 @@ class MyTestCaseTableModel extends AbstractTableModel {
 	@Override
 	public void setValueAt(Object value, int row, int col) {
 		if (DEBUG) {
-			System.out.println("Setting value at " + row + "," + col + " to "
-					+ value + " (an instance of " + value.getClass() + ")");
+			System.out.println("setValueAt Setting value at " + row + "," + col
+					+ " to " + value + " (an instance of " + value.getClass()
+					+ ")");
 		}
 
 		data[row][col] = value;
@@ -119,17 +132,21 @@ class MyTestCaseTableModel extends AbstractTableModel {
 }
 
 public class TestCaseEditor extends JPanel implements TableModelListener {
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID	= 4829740933162797256L;
 	private final MyTestCaseTableModel	tm;
 	private Matrix						m;
-	private final JTable				tctable;
-	private static String				zero_string	= "0";
+	private static String				zero_string			= "0";
 
 	public TestCaseEditor() {
 		tm = new MyTestCaseTableModel();
 		tm.addTableModelListener(this);
-		tctable = new JTable(tm);
+		JTable tctable = new JTable(tm);
 
-		JScrollPane scrollPane = new JScrollPane(tctable);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView(tctable);
 		tctable.setFillsViewportHeight(true);
 
 		// tctable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -155,6 +172,8 @@ public class TestCaseEditor extends JPanel implements TableModelListener {
 			}
 			tm.internalSetValueAt(b_str, index, 0);
 			tm.internalSetValueAt(m.get(index, 0).toString(), index, 1);
+			// tm.internalSetValueAt(Double.toString(m.get(index, 0).real()),
+			// index, 1);
 		}
 		tm.fireTableDataChanged();
 	}
@@ -163,7 +182,9 @@ public class TestCaseEditor extends JPanel implements TableModelListener {
 	public void tableChanged(TableModelEvent e) {
 		int i = e.getFirstRow();
 		Complex s = Complex.parseComplex((String) tm.getValueAt(i, 1));
+		// Double s = Double.parseDouble((String) tm.getValueAt(i, 1));
 		m.set(i, 0, s);
-		tm.internalSetValueAt(s, i, 1);
+		// m.set(i, 0, new Complex(s, 0));
+		tm.internalSetValueAt(s.toString(), i, 1);
 	}
 }

@@ -69,12 +69,11 @@ public class test_UML_parser {
 	private String[] getCustomGates(Element tcel, int custGates) {
 		String[] toReturn = new String[custGates];
 
-		NodeList startmat = tcel.getElementsByTagName("custom_gate");
-		for (int i = 0; (custGates == startmat.getLength())
-				&& (i < startmat.getLength()); i++) {
-			Element smel = (Element) startmat.item(i);
-			toReturn[i] = smel.getNodeValue();
-
+		NodeList gateNodes = tcel.getElementsByTagName("custom_gate");
+		for (int i = 0; (custGates == gateNodes.getLength())
+				&& (i < gateNodes.getLength()); i++) {
+			Element smel = (Element) gateNodes.item(i);
+			toReturn[i] = smel.getFirstChild().getNodeValue();
 		}
 
 		return toReturn;

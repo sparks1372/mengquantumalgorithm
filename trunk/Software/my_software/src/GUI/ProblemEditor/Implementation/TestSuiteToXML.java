@@ -24,15 +24,16 @@ public class TestSuiteToXML {
 			BufferedWriter out = new BufferedWriter(new FileWriter(filename));
 			out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 			out.write("<testsuite");
-			out.write(" NumCustomGates=");
+			out.write(" NumCustomGates=\"");
 			out.write(Integer.toString(testsuite.getNumOfCustomGates()));
-			out.write(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"testset_xml_spec.xsd\">\n");
+			out.write("\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"testset_xml_spec.xsd\">\n");
 			Iterator<Integer> qubit_num_iterator = testsuite.getKeys()
 					.iterator();
 			testset ts;
 			testcase tc;
 			Matrix ss;
 			Matrix fs;
+			String[] custGates;
 			int index;
 			while (qubit_num_iterator.hasNext()) {
 				int num_of_qubits = qubit_num_iterator.next();
@@ -44,7 +45,12 @@ public class TestSuiteToXML {
 				Iterator<testcase> testcase_iter = ts.getTestcases();
 				while (testcase_iter.hasNext()) {
 					tc = testcase_iter.next();
+					custGates = tc.getCustomGates();
 					out.write("<testcase><!--" + tc.getLabel() + "-->\n");
+					for (index = 0; index < custGates.length; index++) {
+						out.write("<custom_gate>" + custGates[index]
+								+ "</custom_gate>\n");
+					}
 					out.write("<starting_state>\n");
 					ss = tc.getStartingStateCopy();
 					for (index = 0; index < ss.getRowDimension(); index++) {

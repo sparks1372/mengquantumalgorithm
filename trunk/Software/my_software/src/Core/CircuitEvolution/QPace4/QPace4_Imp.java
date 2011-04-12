@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
+import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
 
@@ -40,7 +41,7 @@ import Utils.WrapLayout;
  * @author Sam Ratcliff
  * 
  */
-public abstract class QPace4_Imp implements circuitsearchengine {
+public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 
 	class tickBoxListener implements ItemListener {
 		int	index;
@@ -66,7 +67,8 @@ public abstract class QPace4_Imp implements circuitsearchengine {
 			} else {
 				enabledGate[index] = true;
 			}
-
+			System.out.println("enabledGate[" + index + "] = "
+					+ enabledGate[index]);
 		}
 
 	}
@@ -107,7 +109,7 @@ public abstract class QPace4_Imp implements circuitsearchengine {
 	private final static int		mintreedepthDef	= 10;
 	private JTextField				maxtreedepthTA;
 	private JLabel					maxtreedepthL;
-	private final static String		maxtreedepthStr	= "Minimum Initial Tree Depth";
+	private final static String		maxtreedepthStr	= "Maximum Initial Tree Depth";
 	private final static int		maxtreedepthDef	= 20;
 	private JCheckBox				timeCB;
 	private boolean					time			= true;
@@ -186,11 +188,22 @@ public abstract class QPace4_Imp implements circuitsearchengine {
 
 		progressPanel = new JPanel();
 		enabledGate = new boolean[QuantumInstructionEnum.values().length];
-		for (int i = 0; i < enabledGate.length; i++) {
+
+		QuantumInstructionEnum[] gates = QuantumInstructionEnum.getStandard();
+		int i = 0;
+		for (; i < gates.length; i++) {
 			enabledGate[i] = true;
 		}
-		setupEvolveDialog();
-		setupSearchStatisticsPanel();
+		int j = i;
+		gates = QuantumInstructionEnum.getControl();
+		for (; i < j + gates.length; i++) {
+			enabledGate[i] = true;
+		}
+		j = i;
+		gates = QuantumInstructionEnum.getFlowControl();
+		for (; i < j + gates.length; i++) {
+			enabledGate[i] = true;
+		}
 	}
 
 	/*
@@ -202,7 +215,9 @@ public abstract class QPace4_Imp implements circuitsearchengine {
 	@Override
 	public synchronized void addObserver(Observer ob) {
 		synchronized (observers) {
-			observers.add(ob);
+			if (!observers.contains(ob)) {
+				observers.add(ob);
+			}
 		}
 	}
 
@@ -327,20 +342,91 @@ public abstract class QPace4_Imp implements circuitsearchengine {
 		allowedGatePanel.setSize(new Dimension(screenSize.width / 2,
 				screenSize.height));
 
-		QuantumInstructionEnum[] gates = QuantumInstructionEnum.values();
+		QuantumInstructionEnum[] gates = QuantumInstructionEnum.getStandard();
 		JLabel l;
 		JCheckBox cb;
-		JPanel p;
-		for (int i = 0; i < gates.length; i++) {
+		JPanel individualGatePanel;
+		JPanel collectiveGatePanel = new JPanel();
+		collectiveGatePanel.setLayout(new FlowLayout());
+		int j = 0;
+		int i;
+		for (i = 0; i < gates.length; i++) {
 			l = new JLabel(gates[i].name());
-			cb = new JCheckBox("", enabledGate[i]);
-			cb.addItemListener(new tickBoxListener(i));
-			p = new JPanel();
-			p.setLayout(new FlowLayout());
-			p.add(l);
-			p.add(cb);
-			allowedGatePanel.add(p);
+			cb = new JCheckBox("", enabledGate[QuantumInstructionEnum.valueOf(
+					gates[i].name()).ordinal()]);
+			cb.addItemListener(new tickBoxListener(QuantumInstructionEnum
+					.valueOf(gates[i].name()).ordinal()));
+			individualGatePanel = new JPanel();
+			individualGatePanel.setLayout(new FlowLayout());
+			individualGatePanel.add(l);
+			individualGatePanel.add(cb);
+			collectiveGatePanel.add(individualGatePanel);
 		}
+		allowedGatePanel.add(collectiveGatePanel);
+		j = i;
+		collectiveGatePanel = new JPanel();
+		collectiveGatePanel.setLayout(new FlowLayout());
+		gates = QuantumInstructionEnum.getControl();
+		for (i = 0; i < gates.length; i++) {
+			l = new JLabel(gates[i].name());
+			cb = new JCheckBox("", enabledGate[QuantumInstructionEnum.valueOf(
+					gates[i].name()).ordinal()]);
+			cb.addItemListener(new tickBoxListener(QuantumInstructionEnum
+					.valueOf(gates[i].name()).ordinal()));
+			individualGatePanel = new JPanel();
+			individualGatePanel.setLayout(new FlowLayout());
+			individualGatePanel.add(l);
+			individualGatePanel.add(cb);
+			collectiveGatePanel.add(individualGatePanel);
+		}
+		allowedGatePanel.add(collectiveGatePanel);
+		j = i;
+		collectiveGatePanel = new JPanel();
+		collectiveGatePanel.setLayout(new FlowLayout());
+		gates = QuantumInstructionEnum.getFlowControl();
+		for (i = 0; i < gates.length; i++) {
+			l = new JLabel(gates[i].name());
+			cb = new JCheckBox("", enabledGate[QuantumInstructionEnum.valueOf(
+					gates[i].name()).ordinal()]);
+			cb.addItemListener(new tickBoxListener(QuantumInstructionEnum
+					.valueOf(gates[i].name()).ordinal()));
+			individualGatePanel = new JPanel();
+			individualGatePanel.setLayout(new FlowLayout());
+			individualGatePanel.add(l);
+			individualGatePanel.add(cb);
+			collectiveGatePanel.add(individualGatePanel);
+		}
+		allowedGatePanel.add(collectiveGatePanel);
+		collectiveGatePanel = new JPanel();
+		collectiveGatePanel.setLayout(new FlowLayout());
+		gates = QuantumInstructionEnum.getCustom();
+		for (i = 0; i < this.ce.getQproblem().getNumOfCustomGates(); i++) {
+			l = new JLabel(gates[2 * i].name());
+			enabledGate[QuantumInstructionEnum.valueOf(gates[2 * i].name())
+					.ordinal()] = true;
+			cb = new JCheckBox("", enabledGate[QuantumInstructionEnum.valueOf(
+					gates[2 * i].name()).ordinal()]);
+			cb.addItemListener(new tickBoxListener(QuantumInstructionEnum
+					.valueOf(gates[2 * i].name()).ordinal()));
+			individualGatePanel = new JPanel();
+			individualGatePanel.setLayout(new FlowLayout());
+			individualGatePanel.add(l);
+			individualGatePanel.add(cb);
+			collectiveGatePanel.add(individualGatePanel);
+			l = new JLabel(gates[2 * i + 1].name());
+			enabledGate[QuantumInstructionEnum.valueOf(gates[2 * i + 1].name())
+					.ordinal()] = true;
+			cb = new JCheckBox("", enabledGate[QuantumInstructionEnum.valueOf(
+					gates[2 * i + 1].name()).ordinal()]);
+			cb.addItemListener(new tickBoxListener(QuantumInstructionEnum
+					.valueOf(gates[2 * i + 1].name()).ordinal()));
+			individualGatePanel = new JPanel();
+			individualGatePanel.setLayout(new FlowLayout());
+			individualGatePanel.add(l);
+			individualGatePanel.add(cb);
+			collectiveGatePanel.add(individualGatePanel);
+		}
+		allowedGatePanel.add(collectiveGatePanel);
 
 		return allowedGatePanel;
 	}
@@ -550,6 +636,11 @@ public abstract class QPace4_Imp implements circuitsearchengine {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		if (ce.getQproblem() != null) {
+			setupEvolveDialog();
+		}
+		setupSearchStatisticsPanel();
+		ce.addObserver(this);
 	}
 
 	private synchronized void notifyObservers() {
@@ -595,6 +686,7 @@ public abstract class QPace4_Imp implements circuitsearchengine {
 		progressBar.setMaximum(gen * iterval);
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
+		statsPanel.resetStatsPanel();
 	}
 
 	/*
@@ -699,10 +791,21 @@ public abstract class QPace4_Imp implements circuitsearchengine {
 
 	protected abstract void startSearch();
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		if (ce.getQproblem() != null) {
+			setupEvolveDialog();
+		}
+	}
+
 	protected synchronized void updateState(SearchEngineState s) {
 		this.state = s;
 
 		notifyObservers();
 	}
-
 }

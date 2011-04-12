@@ -3,12 +3,15 @@
  */
 package GUI.SubPanels;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 
 import javax.swing.BoxLayout;
@@ -21,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 import Core.qcevolutionbackend;
+import Core.CircuitEvolution.SearchEngineState;
 import GUI.MainPanel;
 
 /**
@@ -28,13 +32,17 @@ import GUI.MainPanel;
  * 
  */
 public class SearchEngineSelectionPanel extends JPanel implements
-		ActionListener {
+		ActionListener, Observer {
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID	= 4691811963577024360L;
 	private final JComboBox				selection;
 	private final ComboBoxModel			selection_model;
 	private final JTextPane				description;
 	private final JScrollPane			description_scroller;
 	private final qcevolutionbackend	backend;
-	private static String				psLabelStr	= "Search Engine Selection";
+	private static String				psLabelStr			= "Search Engine Selection";
 	private JLabel						psLabel;
 	private JPanel						labelPanel;
 
@@ -42,7 +50,7 @@ public class SearchEngineSelectionPanel extends JPanel implements
 	 * 
 	 */
 	public SearchEngineSelectionPanel(qcevolutionbackend be) {
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		this.setLayout(new BorderLayout());
 		backend = be;
 
 		Set<String> probs = backend.getSemanager().getAvailableSearchEngines();
@@ -58,17 +66,17 @@ public class SearchEngineSelectionPanel extends JPanel implements
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		selection = new JComboBox(selection_model);
 		selection.addActionListener(this);
-		selection.setPreferredSize(new Dimension((int) (screenSize.width * MainPanel.left_perc),
-				30));
-		selection.setMaximumSize(new Dimension((int) (screenSize.width * MainPanel.left_perc),
-				30));
+		selection.setPreferredSize(new Dimension(
+				(int) (screenSize.width * MainPanel.left_perc), 30));
+		selection.setMaximumSize(new Dimension(
+				(int) (screenSize.width * MainPanel.left_perc), 30));
 
 		description = new JTextPane();
 		description.setEditable(false);
 		description_scroller = new JScrollPane(description);
 		description_scroller
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//		description_scroller.setPreferredSize(new Dimension(250, 155));
+		// description_scroller.setPreferredSize(new Dimension(250, 155));
 		description_scroller.setMinimumSize(new Dimension(10, 10));
 
 		if (backend.getCurrentse() != null) {
@@ -78,11 +86,20 @@ public class SearchEngineSelectionPanel extends JPanel implements
 					.setText(backend.getSemanager().getSearchEngineDesc(key));
 		}
 
+		backend.addObserver(this);
+		if (null != backend.getCurrentse()) {
+			backend.getCurrentse().addObserver(this);
+		}
+
 		setupLabels();
 
-		this.add(labelPanel);
-		this.add(selection);
-		this.add(description_scroller);
+		JPanel npanel = new JPanel();
+		npanel.setLayout(new BoxLayout(npanel, BoxLayout.PAGE_AXIS));
+		npanel.add(labelPanel);
+		npanel.add(selection);
+
+		this.add(npanel, BorderLayout.NORTH);
+		this.add(description_scroller, BorderLayout.CENTER);
 
 	}
 
@@ -114,5 +131,28 @@ public class SearchEngineSelectionPanel extends JPanel implements
 		labelPanel = new JPanel();
 		labelPanel.add(psLabel);
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		if (o instanceof qcevolutionbackend) {
+			if (null != backend.getCurrentse()) {
+				backend.getCurrentse().addObserver(this);
+			}
+		} else {
+			if (backend.getCurrentse() != null) {
+				if (backend.getCurrentse().getState() == SearchEngineState.Searching) {
+					selection.setEnabled(false);
+				} else {
+					selection.setEnabled(true);
+				}
+				validate();
+			}
+		}
 	}
 }

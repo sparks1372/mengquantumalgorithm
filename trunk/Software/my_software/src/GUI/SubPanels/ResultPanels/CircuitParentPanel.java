@@ -15,7 +15,11 @@ import GUI.SubPanels.ResultPanels.Util.CircuitPanel;
  * 
  */
 public class CircuitParentPanel extends JScrollPane {
-	private static final String	nameStr	= "Circuit";
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 188924310281950586L;
+	private static final String	nameStr				= "Circuit";
 	private CircuitPanel		cPanel;
 
 	/**

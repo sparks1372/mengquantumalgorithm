@@ -19,6 +19,7 @@ public class QPace4_Local extends QPace4_Imp {
 	@Override
 	protected void startSearch() {
 		resetProgressBar();
+
 		updateState(SearchEngineState.Searching);
 		String[] pstr = { "-file", filename };
 		final ParameterDatabase pd = QPaceSearchCore

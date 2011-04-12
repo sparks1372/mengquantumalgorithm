@@ -36,11 +36,15 @@ import Utils.WindowUtils;
  * 
  */
 public class EditProblemPanel extends JDialog implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID	= -9090044543138511945L;
 	private final qcevolutionbackend	backend;
-	private static final String			nm			= "    Name   ";
-	private static final String			dsc			= "Description";
-	private static final String			nullStr		= "";
-	private static final String			titleStr	= "Edit Current Problem and Test Suite";
+	private static final String			nm					= "    Name   ";
+	private static final String			dsc					= "Description";
+	private static final String			nullStr				= "";
+	private static final String			titleStr			= "Edit Current Problem and Test Suite";
 
 	private JButton						openButton;
 	private JButton						okayButton;
