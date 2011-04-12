@@ -15,8 +15,12 @@ import Core.qcevolutionbackend;
  * 
  */
 public class CreateProblemSetButton extends JButton {
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID	= 3283339198359310469L;
 	private final qcevolutionbackend	backend;
-	private static final String			text	= "Create";
+	private static final String			text				= "Create";
 
 	/**
 	 * 

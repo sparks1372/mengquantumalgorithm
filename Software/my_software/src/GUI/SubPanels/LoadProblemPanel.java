@@ -31,11 +31,15 @@ import Utils.WindowUtils;
  * 
  */
 public class LoadProblemPanel extends JDialog implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID	= 8405271636211472180L;
 	private final qcevolutionbackend	backend;
-	private static final String			nm			= "    Name   ";
-	private static final String			dsc			= "Description";
-	private static final String			nullStr		= " ";
-	private static final String			titleStr	= "Load Test Suite to Create Problem";
+	private static final String			nm					= "    Name   ";
+	private static final String			dsc					= "Description";
+	private static final String			nullStr				= " ";
+	private static final String			titleStr			= "Load Test Suite to Create Problem";
 
 	private JButton						openButton;
 	private JButton						okayButton;

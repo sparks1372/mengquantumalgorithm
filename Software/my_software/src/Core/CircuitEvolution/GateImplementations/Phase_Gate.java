@@ -121,22 +121,15 @@ public class Phase_Gate implements quantumgate {
 		zero[1][0] = new Complex(0, 0);
 		zero[1][1] = new Complex(Math.cos(2 * theta), Math.sin(2 * theta));
 
-		unitary = new Matrix(zero);
-		// unitary.print(0, 0);
+		unitary = Matrix.identity(2, 2);
+		unitary.set(1, 1, new Complex(Math.cos(2 * theta), Math.sin(2 * theta)));
 	}
 
 	@Override
 	public Matrix apply(Matrix start_state, testcase tc) {
 		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
-		Complex[][] init = new Complex[1][1];
-		init[0][0] = new Complex(1, 0);
-		Matrix operation = new Matrix(init);
-		Complex[][] I = new Complex[2][2];
-		I[0][0] = new Complex(1, 0);
-		I[1][1] = new Complex(1, 0);
-		I[0][1] = new Complex(0, 0);
-		I[1][0] = new Complex(0, 0);
-		Matrix iden = new Matrix(I);
+		Matrix operation = Matrix.identity(1, 1);
+		Matrix iden = Matrix.identity(2, 2);
 		for (int index = 1; index <= qubits; index++) {
 			if (index == targ) {
 				operation = MatrixUtils.tensor_prod(unitary, operation);

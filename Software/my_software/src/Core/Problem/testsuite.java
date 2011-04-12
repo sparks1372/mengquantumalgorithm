@@ -8,6 +8,10 @@ import java.util.Set;
 public class testsuite implements Serializable {
 
 	/**
+	 * 
+	 */
+	private static final long				serialVersionUID	= 1034384689497780033L;
+	/**
 	 * @uml.property name="testsets" multiplicity="(0 -1)" dimension="1"
 	 */
 	private final HashMap<Integer, testset>	testsets;
@@ -106,7 +110,6 @@ public class testsuite implements Serializable {
 	public void setNumOfCustomGates(int numOfCustomGates) {
 		this.numOfCustomGates = numOfCustomGates;
 		Iterator<Integer> iter = testsets.keySet().iterator();
-		testset ts;
 		while (iter.hasNext()) {
 			int key = iter.next();
 			testsets.get(key).setNumOfCustomGates(numOfCustomGates);

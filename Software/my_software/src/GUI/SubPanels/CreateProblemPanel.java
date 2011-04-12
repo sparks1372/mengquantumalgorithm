@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import Core.qcevolutionbackend;
+import Core.Problem.testsuite;
 import GUI.ProblemEditor.Implementation.InnerEditorPanel;
 import GUI.ProblemEditor.Implementation.TestSuiteToXML;
 import GUI.ProblemEditor.Implementation.XMLEditor;
@@ -35,11 +36,15 @@ import Utils.WindowUtils;
  * 
  */
 public class CreateProblemPanel extends JDialog implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID	= -1591002125774750046L;
 	private final qcevolutionbackend	backend;
-	private static final String			nm			= "    Name   ";
-	private static final String			dsc			= "Description";
-	private static final String			nullStr		= "";
-	private static final String			titleStr	= "Create Problem and Test Suite";
+	private static final String			nm					= "    Name   ";
+	private static final String			dsc					= "Description";
+	private static final String			nullStr				= "";
+	private static final String			titleStr			= "Create Problem and Test Suite";
 
 	private JButton						openButton;
 	private JButton						okayButton;
@@ -192,6 +197,7 @@ public class CreateProblemPanel extends JDialog implements ActionListener {
 				setupSizes();
 			}
 		}
+		WindowUtils.centre(this);
 	}
 
 	private void setupButtons() {
@@ -268,7 +274,18 @@ public class CreateProblemPanel extends JDialog implements ActionListener {
 	 * 
 	 */
 	private void setupXmlEditor() {
-		tsXmlEditor = new XMLEditor();
+
+		Object[] selectionValues = { "0", "1", "2", "3" };
+		String initialSelection = "0";
+		Object selection = JOptionPane.showInputDialog(null,
+				"Please select the number of custom gates", "",
+				JOptionPane.QUESTION_MESSAGE, null, selectionValues,
+				initialSelection);
+		try {
+			int index = Integer.parseInt((String) selection);
+			tsXmlEditor = new XMLEditor(new testsuite(index));
+		} catch (NumberFormatException ex) {
+		}
 	}
 
 }

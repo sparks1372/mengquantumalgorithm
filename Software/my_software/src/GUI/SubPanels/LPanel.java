@@ -13,7 +13,10 @@ import Core.qcevolutionbackend;
  * 
  */
 public class LPanel extends JPanel {
-	private final qcevolutionbackend			backend;
+	/**
+	 * 
+	 */
+	private static final long					serialVersionUID	= 7152600839227512484L;
 	private final SearchEngineSelectionPanel	se_select_panel;
 	private final FitnessFunctionSelectionPanel	ff_select_panel;
 
@@ -22,8 +25,6 @@ public class LPanel extends JPanel {
 	 */
 	public LPanel(qcevolutionbackend be) {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		backend = be;
-
 		se_select_panel = new SearchEngineSelectionPanel(be);
 		ff_select_panel = new FitnessFunctionSelectionPanel(be);
 

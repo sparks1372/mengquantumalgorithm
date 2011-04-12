@@ -3,6 +3,7 @@
  */
 package GUI.SubPanels;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -12,7 +13,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
-import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -21,6 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 import Core.qcevolutionbackend;
+import Core.CircuitEvolution.SearchEngineState;
+import Core.Problem.Problem_Manager;
 import GUI.MainPanel;
 
 /**
@@ -29,6 +31,10 @@ import GUI.MainPanel;
  */
 public class ProblemSelectionPanel extends JPanel implements ActionListener,
 		Observer {
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID	= 5703666410120826874L;
 	private final JComboBox				selection;
 	private ComboBoxModel				selection_model;
 	private final JTextPane				description;
@@ -39,7 +45,7 @@ public class ProblemSelectionPanel extends JPanel implements ActionListener,
 	 * 
 	 */
 	public ProblemSelectionPanel(qcevolutionbackend be) {
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		this.setLayout(new BorderLayout());
 		backend = be;
 		Set<String> probs = backend.getProbmanager().getAvailableProblems();
 		String[] options = new String[probs.size() + 1];
@@ -69,15 +75,19 @@ public class ProblemSelectionPanel extends JPanel implements ActionListener,
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		selection = new JComboBox(selection_model);
 		selection.addActionListener(this);
-		selection.setPreferredSize(new Dimension((int) (screenSize.width * MainPanel.right_perc),
-				30));
-		selection.setMaximumSize(new Dimension((int) (screenSize.width * MainPanel.right_perc),
-				30));
+		selection.setPreferredSize(new Dimension(
+				(int) (screenSize.width * MainPanel.right_perc), 30));
+		selection.setMaximumSize(new Dimension(
+				(int) (screenSize.width * MainPanel.right_perc), 30));
 
+		be.addObserver(this);
 		be.getProbmanager().addObserver(this);
+		if (null != backend.getCurrentse()) {
+			backend.getCurrentse().addObserver(this);
+		}
 
-		this.add(selection);
-		this.add(description_scroller);
+		this.add(selection, BorderLayout.NORTH);
+		this.add(description_scroller, BorderLayout.CENTER);
 	}
 
 	/*
@@ -105,23 +115,37 @@ public class ProblemSelectionPanel extends JPanel implements ActionListener,
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-
-		Set<String> probs = backend.getProbmanager().getAvailableProblems();
-		String[] options = new String[probs.size() + 1];
-		options[0] = "Please Select Problem";
-		int index = 1;
-		Iterator<String> iter = probs.iterator();
-		while (iter.hasNext()) {
-			options[index++] = iter.next();
+		if (o instanceof qcevolutionbackend) {
+			if (null != backend.getCurrentse()) {
+				backend.getCurrentse().addObserver(this);
+			}
+		} else if (o instanceof Problem_Manager) {
+			Set<String> probs = backend.getProbmanager().getAvailableProblems();
+			String[] options = new String[probs.size() + 1];
+			options[0] = "Please Select Problem";
+			int index = 1;
+			Iterator<String> iter = probs.iterator();
+			while (iter.hasNext()) {
+				options[index++] = iter.next();
+			}
+			selection_model = new DefaultComboBoxModel(options);
+			if (backend.getQproblem() != null) {
+				String key = backend.getQproblem().getName();
+				selection_model.setSelectedItem(key);
+				description.setText(backend.getProbmanager()
+						.getSearchEngineDesc(key));
+			}
+			selection.setModel(selection_model);
+		} else {
+			if (backend.getCurrentse() != null) {
+				if (backend.getCurrentse().getState() == SearchEngineState.Searching) {
+					selection.setEnabled(false);
+				} else {
+					selection.setEnabled(true);
+				}
+				validate();
+			}
 		}
-		selection_model = new DefaultComboBoxModel(options);
-		if (backend.getQproblem() != null) {
-			String key = backend.getQproblem().getName();
-			selection_model.setSelectedItem(key);
-			description.setText(backend.getProbmanager().getSearchEngineDesc(
-					key));
-		}
-		selection.setModel(selection_model);
 	}
 
 }

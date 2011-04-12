@@ -41,17 +41,10 @@ public class RZ_Gate implements quantumgate {
 	/**
 		 */
 	public RZ_Gate(int target, double th) {
-		// System.out.println(this.getClass().getName());
 		this.targ = Math.abs(target);
 		this.theta = th;
-		// [row][column]
 
-		Complex[][] I = new Complex[2][2];
-		I[0][0] = new Complex(1, 0);
-		I[1][1] = new Complex(1, 0);
-		I[0][1] = new Complex(0, 0);
-		I[1][0] = new Complex(0, 0);
-		Matrix iden = new Matrix(I);
+		Matrix iden = Matrix.identity(2, 2);
 
 		Matrix X = new Pauli_Z(1).getUnitary_operation(null);
 
@@ -64,15 +57,8 @@ public class RZ_Gate implements quantumgate {
 	@Override
 	public Matrix apply(Matrix start_state, testcase tc) {
 		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
-		Complex[][] init = new Complex[1][1];
-		init[0][0] = new Complex(1, 0);
-		Matrix operation = new Matrix(init);
-		Complex[][] I = new Complex[2][2];
-		I[0][0] = new Complex(1, 0);
-		I[1][1] = new Complex(1, 0);
-		I[0][1] = new Complex(0, 0);
-		I[1][0] = new Complex(0, 0);
-		Matrix iden = new Matrix(I);
+		Matrix operation = Matrix.identity(1, 1);
+		Matrix iden = Matrix.identity(2, 2);
 		for (int index = 1; index <= qubits; index++) {
 			if (index == targ) {
 				operation = MatrixUtils.tensor_prod(unitary, operation);

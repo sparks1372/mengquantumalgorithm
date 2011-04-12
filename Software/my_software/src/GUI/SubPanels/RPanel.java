@@ -21,7 +21,11 @@ import GUI.MainPanel;
  * 
  */
 public class RPanel extends JPanel implements Observer {
-	private static String				psLabelStr	= "Problem Selection";
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID	= -4644786137635040384L;
+	private static String				psLabelStr			= "Problem Selection";
 	private final qcevolutionbackend	backend;
 	private JLabel						psLabel;
 	private final ProblemSelectionPanel	prob_select_panel;

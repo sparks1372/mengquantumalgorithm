@@ -53,7 +53,6 @@ public class CircuitPanel extends JPanel {
 	private int							yDelta;
 	private int							x					= 0, y, y0 = 0;
 	private int							y1					= 0;
-	private int							y2					= 0;
 	private final int					adjust				= 2;			// constant
 	private int							position			= 0;
 	private final int					circuitSize;						// constant
@@ -130,7 +129,6 @@ public class CircuitPanel extends JPanel {
 		x = initial_x;
 		y0 = 0;
 		y1 = 0;
-		y2 = 0;
 		if (numOfQubits > 0) {
 			yDelta = (getHeight() - 3) / numOfQubits;
 			yDelta = yDelta > 20 ? yDelta : 20;
@@ -142,8 +140,6 @@ public class CircuitPanel extends JPanel {
 
 			g.setFont(new java.awt.Font("Helvetica", java.awt.Font.PLAIN,
 					fontSize));
-			int fontHeight = g.getFontMetrics().getHeight();
-
 			// int currentGate = circuit.getNextGateNumber();
 			int xRegisterSize = numOfQubits;
 
@@ -155,9 +151,6 @@ public class CircuitPanel extends JPanel {
 				g.drawLine(tx, 1, tx, getHeight() - 1);
 				g.setColor(Color.black);
 			}
-
-			// The gap between the two registers:
-			int gap = 5;
 
 			// The radius of dots and cycles:
 			int radius;
@@ -187,16 +180,6 @@ public class CircuitPanel extends JPanel {
 					g.drawLine(x, y, x + xDelta, y);
 				}
 				x += xDelta;
-
-				int max = 0, min = 0;
-				if (gate instanceof multiqubitquantumgate) {
-					max = gate.getTarget() < ((multiqubitquantumgate) gate)
-							.getSecondQubit() ? ((multiqubitquantumgate) gate)
-							.getSecondQubit() : gate.getTarget();
-					min = gate.getTarget() > ((multiqubitquantumgate) gate)
-							.getSecondQubit() ? ((multiqubitquantumgate) gate)
-							.getSecondQubit() : gate.getTarget();
-				}
 
 				if (gate instanceof ControlledU_Gate) {
 					radius = numOfQubits <= 5 ? 3 : 2;

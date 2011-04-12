@@ -19,6 +19,11 @@ import GUI.StateVisualiser.columnchartvisualiser;
 public class currectStateVisualiserTab extends stateVisualiserTab {
 
 	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 4768335710034349656L;
+
+	/**
 	 * @param ts
 	 * @param title
 	 */

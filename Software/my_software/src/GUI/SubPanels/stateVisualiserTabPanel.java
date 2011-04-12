@@ -24,9 +24,13 @@ import GUI.MainPanel;
  * 
  */
 public class stateVisualiserTabPanel extends JPanel implements Observer {
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID	= -6672031608491044781L;
 	private final qcevolutionbackend	backend;
-	private static String				qubits_string	= " Qubit(s)";
-	private static String				psLabelStr		= "Test Suite State Visualisation";
+	private static String				qubits_string		= " Qubit(s)";
+	private static String				psLabelStr			= "Test Suite State Visualisation";
 	private JLabel						psLabel;
 	private JPanel						labelPanel;
 	private final JTabbedPane			tabPane;

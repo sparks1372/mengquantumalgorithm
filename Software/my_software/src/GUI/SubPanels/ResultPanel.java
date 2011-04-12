@@ -28,6 +28,10 @@ import GUI.SubPanels.ResultPanels.QCircuitPanel;
  * 
  */
 public class ResultPanel extends JPanel implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID		= -4677073408891376351L;
 	private final qcevolutionbackend	backend;
 	private final JTabbedPane			tabPanel;
 	private final AlgorithmPanel		algoPanel;

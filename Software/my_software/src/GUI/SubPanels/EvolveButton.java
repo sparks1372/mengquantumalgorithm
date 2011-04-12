@@ -18,8 +18,12 @@ import Core.CircuitEvolution.SearchEngineState;
  * 
  */
 public class EvolveButton extends JButton implements Observer {
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID	= 4111378675542756867L;
 	private final qcevolutionbackend	backend;
-	private static final String			text	= "Evolve";
+	private static final String			text				= "Evolve";
 
 	/**
 	 * 

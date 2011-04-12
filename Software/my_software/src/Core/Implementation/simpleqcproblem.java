@@ -24,7 +24,7 @@ public class simpleqcproblem implements quantumproblem {
 	 * @see Core.Problem.quantumproblem#getNumOfQubits()
 	 */
 	@Override
-	public int getNumOfQubits() {
+	public int getNumOfCustomGates() {
 		return ts.getNumOfCustomGates();
 	}
 

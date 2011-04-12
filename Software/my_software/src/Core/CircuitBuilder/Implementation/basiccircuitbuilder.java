@@ -46,6 +46,9 @@ public class basiccircuitbuilder implements circuitBuilder {
 			int[] loopvars) {
 		QuantumAlgorithm[] qcarray;
 		Circuit to_return = new basiccircuit(Builder_ID);
+		if (quantumAlgorithm == null) {
+			return to_return;
+		}
 		Circuit temp = null;
 		basiccircuitbuilder internal_builder = new basiccircuitbuilder();
 		int Int1 = 0;
@@ -157,6 +160,44 @@ public class basiccircuitbuilder implements circuitBuilder {
 									(new Pauli_X(1)), Int1, Int2));
 						}
 						break;
+					case Create_CCX:
+						if ((Int1 != Int2)
+								&& (Int1 != (int) Math.round(Double1))
+								&& (Int2 != (int) Math.round(Double1))
+								&& (Int2 <= num_qubits) && (Int2 >= 1)
+								&& (Double1 <= num_qubits) && (Double1 >= 1)) {
+							if (Math.abs(Int2 - Int1) < Math.abs((int) Math
+									.round(Double1) - Int1)) {
+
+								int secondTarg = Math.abs(Int2
+										- (int) Math.round(Double1)) < Math
+										.abs(Int1 - (int) Math.round(Double1)) ? Int2
+										: Int1;
+								ControlledU_Gate innerGate = new ControlledU_Gate(
+										(new Pauli_X(1)), Int1, Int2);
+
+								to_return.addGate(
+										Builder_ID,
+										new ControlledU_Gate(innerGate,
+												secondTarg, (int) Math
+														.round(Double1)));
+							} else {
+
+								int secondTarg = Math.abs((int) Math
+										.round(Double1) - Int2) < Math.abs(Int1
+										- Int2) ? (int) Math.round(Double1)
+										: Int1;
+
+								ControlledU_Gate innerGate = new ControlledU_Gate(
+										(new Pauli_X(1)), Int1,
+										(int) Math.round(Double1));
+
+								to_return.addGate(Builder_ID,
+										new ControlledU_Gate(innerGate,
+												secondTarg, Int2));
+							}
+						}
+						break;
 					case Create_CY:
 						if ((Int1 != Int2) && (Int2 <= num_qubits)
 								&& (Int2 >= 1)) {
@@ -265,8 +306,8 @@ public class basiccircuitbuilder implements circuitBuilder {
 						qcarray = next_instruction.getSubalg();
 						new_itervals = new int[loopvars.length + 1];
 						int k;
-						for (k = 1; k <= loopvars.length;) {
-							new_itervals[k] = loopvars[k];
+						for (k = 0; k < loopvars.length;) {
+							new_itervals[k + 1] = loopvars[k];
 							k++;
 						}
 

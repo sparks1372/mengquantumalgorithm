@@ -17,8 +17,12 @@ import Core.qcevolutionbackend;
  * 
  */
 public class SaveProblemSetButton extends JButton implements Observer {
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID	= 5196443454098530681L;
 	private final qcevolutionbackend	backend;
-	private static final String			text	= "Save";
+	private static final String			text				= "Save";
 
 	/**
 	 * 

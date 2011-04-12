@@ -1,6 +1,8 @@
 package Utils;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.util.StringTokenizer;
 
 /**
  * Complex implements a complex number and defines complex arithmetic and
@@ -16,42 +18,41 @@ public class Complex extends Object implements Serializable {
 	 */
 	private static final long	serialVersionUID	= -4268415886956636625L;
 
-	public static Complex euclid(Complex a, Complex b) {
-		Complex to_return = new Complex(0, 0);
-		to_return.x = Math.sqrt((a.real() * a.real()) + (b.real() * b.real()));
-		to_return.y = Math.sqrt((a.imag() * a.imag()) + (b.imag() * b.imag()));
-		return to_return;
-	}
-
 	public static void main(String[] args) {
 		System.out.println(parseComplex("1").toString());
 		System.out.println(parseComplex("1i").toString());
 		System.out.println(parseComplex("-1").toString());
 		System.out.println(parseComplex("-1i").toString());
-		System.out.println(parseComplex("1+1i").toString());
-		System.out.println(parseComplex("1-1i").toString());
+		System.out.println(parseComplex("1+ 1i").toString());
+		System.out.println(parseComplex("1- 1i").toString());
 		System.out.println(parseComplex("0.07072546156-1i").toString());
 	}
 
 	public static Complex parseComplex(String p) {
 		Double real = 0.0, imag = 0.0;
 		p = p.toLowerCase();
+		p = removeSpaces(p);
+		int offset;
 		String rem;
 		if ((p.charAt(0) == '-') || (p.charAt(0) == '+')) {
 			rem = p.substring(1);
+			offset = 1;
 		} else {
 			rem = p;
+			offset = 0;
 		}
 
 		String realStr = null;
 		String imagStr = null;
 		if (rem.contains("-")) {
-			realStr = p.substring(0, rem.indexOf("-"));
-			imagStr = p.substring(rem.indexOf("-"), rem.indexOf("i"));
+			realStr = p.substring(0, rem.indexOf("-") + offset);
+			imagStr = p.substring(rem.indexOf("-") + offset, rem.indexOf("i")
+					+ offset);
 
 		} else if (rem.contains("+")) {
-			realStr = p.substring(0, rem.indexOf("+"));
-			imagStr = p.substring(rem.indexOf("+") + 1, rem.indexOf("i"));
+			realStr = p.substring(0, rem.indexOf("+") + offset);
+			imagStr = p.substring(rem.indexOf("+") + offset, rem.indexOf("i")
+					+ offset);
 
 		} else if (rem.contains("i")) {
 			realStr = "0.0";
@@ -60,9 +61,23 @@ public class Complex extends Object implements Serializable {
 			realStr = p;
 			imagStr = "0.0";
 		}
-		real = Double.parseDouble(realStr);
-		imag = Double.parseDouble(imagStr);
+
+		try {
+			real = Double.parseDouble(realStr);
+			imag = Double.parseDouble(imagStr.trim());
+		} catch (NumberFormatException nfe) {
+			nfe.printStackTrace();
+		}
 		return new Complex(real, imag);
+	}
+
+	private static String removeSpaces(String s) {
+		StringTokenizer st = new StringTokenizer(s, " ", false);
+		String t = "";
+		while (st.hasMoreElements()) {
+			t += st.nextElement();
+		}
+		return t;
 	}
 
 	protected double	x;
@@ -269,19 +284,6 @@ public class Complex extends Object implements Serializable {
 	}
 
 	/**
-	 * Complex square root (doesn't change this complex number). Computes the
-	 * principal branch of the square root, which is the value with
-	 * 0&nbsp;&lt;=&nbsp;arg&nbsp;&lt;&nbsp;pi.
-	 * 
-	 * @return sqrt(z) where z is this Complex number.
-	 */
-	public Complex sqrt() {
-		double r = Math.sqrt(this.mod());
-		double theta = this.arg() / 2;
-		return new Complex(r * Math.cos(theta), r * Math.sin(theta));
-	}
-
-	/**
 	 * Tangent of this Complex number (doesn't change this Complex number).
 	 * &lt;br&gt;tan(z) = sin(z)/cos(z).
 	 * 
@@ -310,20 +312,21 @@ public class Complex extends Object implements Serializable {
 	 */
 	@Override
 	public String toString() {
+		DecimalFormat df = new DecimalFormat("#.####");
 		if ((x != 0) && (y > 0)) {
-			return x + " + " + y + "i";
+			return df.format(x) + " + " + df.format(y) + "i";
 		}
 		if ((x != 0) && (y < 0)) {
-			return x + " - " + (-y) + "i";
+			return df.format(x) + " - " + df.format(-y) + "i";
 		}
 		if (y == 0) {
-			return String.valueOf(x);
+			return df.format(x);
 		}
 		if (x == 0) {
-			return y + "i";
+			return df.format(y) + "i";
 		}
 		// shouldn't get here (unless Inf or NaN)
-		return x + " + i*" + y;
+		return df.format(x) + " + i*" + df.format(y);
 
 	}
 }

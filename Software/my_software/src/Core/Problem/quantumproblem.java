@@ -15,7 +15,7 @@ public interface quantumproblem extends Serializable {
 	 * @uml.property name="numOfQubits"
 	 */
 
-	public int getNumOfQubits();
+	public int getNumOfCustomGates();
 
 	/**
 	 * @return Returns the testsuite.

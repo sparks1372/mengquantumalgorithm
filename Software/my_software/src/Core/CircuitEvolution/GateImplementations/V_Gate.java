@@ -14,29 +14,17 @@ public class V_Gate implements quantumgate {
 	/**
 		 */
 	public V_Gate(int target) {
-		// System.out.println(this.getClass().getName());
 		this.targ = Math.abs(target);
-		Complex[][] v = new Complex[2][2];
-		v[0][0] = new Complex(1, 0);
-		v[0][1] = new Complex(0, 0);
-		v[1][0] = new Complex(0, 0);
-		v[1][1] = new Complex(0, 1);
 
-		unitary = new Matrix(v);
+		unitary = Matrix.identity(2, 2);
+		unitary.set(1, 1, new Complex(0, 1));
 	}
 
 	@Override
 	public Matrix apply(Matrix start_state, testcase tc) {
 		double qubits = Math.log(start_state.getRowDimension()) / Math.log(2);
-		Complex[][] init = new Complex[1][1];
-		init[0][0] = new Complex(1, 0);
-		Matrix operation = new Matrix(init);
-		Complex[][] I = new Complex[2][2];
-		I[0][0] = new Complex(1, 0);
-		I[1][1] = new Complex(1, 0);
-		I[0][1] = new Complex(0, 0);
-		I[1][0] = new Complex(0, 0);
-		Matrix iden = new Matrix(I);
+		Matrix operation = Matrix.identity(1, 1);
+		Matrix iden = Matrix.identity(2, 2);
 		for (int index = 1; index <= qubits; index++) {
 			if (index == targ) {
 				operation = MatrixUtils.tensor_prod(unitary, operation);

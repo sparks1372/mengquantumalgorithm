@@ -39,15 +39,16 @@ public class columnchartvisualiser extends JPanel implements stateVisualiser {
 	/**
 	 * 
 	 */
-	public columnchartvisualiser(Matrix initialState, int labelLength, String name) {
+	public columnchartvisualiser(Matrix initialState, int labelLength,
+			String name) {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		chartWidth = (int) (screenSize.width * 0.45);
-		chartHeight = (screenSize.height / 4);
+		chartHeight = (int) ((screenSize.height * 0.25));
 		stateDataSet = new DefaultCategoryDataset();
 		stateChart = createChart(name);
 		chartPanel = new ChartPanel(stateChart);
 		chartPanel.setPreferredSize(new Dimension(chartWidth - 10,
-				chartHeight - 10));
+				chartHeight - 15));
 		this.setPreferredSize(new Dimension(chartWidth, chartHeight));
 		add(chartPanel);
 
@@ -127,7 +128,7 @@ public class columnchartvisualiser extends JPanel implements stateVisualiser {
 					b_str);
 
 		}
-		
+
 		stateChart = createChart(stateChart.getTitle().getText());
 		chartPanel.setChart(stateChart);
 

@@ -27,6 +27,10 @@ import GUI.StateVisualiser.columnchartvisualiser;
  * 
  */
 public class stateVisualiserTab extends JPanel implements ListSelectionListener {
+	/**
+	 * 
+	 */
+	private static final long		serialVersionUID	= 3109529835087981044L;
 	protected final JList			startStateSelector;
 	private columnchartvisualiser	startStateVisualiser;
 	protected columnchartvisualiser	finalStateVisualiser;
@@ -40,7 +44,7 @@ public class stateVisualiserTab extends JPanel implements ListSelectionListener 
 	 * @param ts
 	 */
 	public stateVisualiserTab(testset ts, String title) {
-		selectorWidth = (80);
+		selectorWidth = (130);
 
 		model = new DefaultListModel();
 		tset = ts;

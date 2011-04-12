@@ -13,6 +13,7 @@ import java.util.Iterator;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -32,16 +33,28 @@ import Jama.Matrix;
 public class InnerEditorPanel extends JPanel implements ListSelectionListener,
 		ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long		serialVersionUID	= -2379137691435088526L;
 	private final JList				test_case_list;
 	private final JButton			addTestCase;
 	private final testset			tset;
 	private final DefaultListModel	model;
-	private final JLabel			tc_label	= new JLabel("TestCase ID");
-	private final JLabel			start_label	= new JLabel("Starting State");
-	private final JLabel			final_label	= new JLabel("Final State");
+	private final JLabel			tc_label			= new JLabel(
+																"TestCase ID");
+	private final JLabel			start_label			= new JLabel(
+																"Starting State");
+	private final JLabel			final_label			= new JLabel(
+																"Final State");
 	private final TestCaseEditor	startingStateEditor;
 	private final TestCaseEditor	finalStateEditor;
-	private static final String		addtcStr	= "Add Test Case";
+	private static final String		addtcStr			= "Add Test Case";
+	private final JFileChooser[]	filechooser_array;
+	private final JLabel[]			filename_array;
+	private final JButton[]			browseButton_array;
+	private static final String		browButtonStr		= "Browse";
+	private static final String		CustGateStr			= "Custom Gate ";
 
 	public InnerEditorPanel(testset tset) {
 		super();
@@ -63,12 +76,34 @@ public class InnerEditorPanel extends JPanel implements ListSelectionListener,
 		test_case_list.setVisibleRowCount(-1);
 		test_case_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		test_case_list.setSelectedIndex(0);
+
+		JPanel lowerCentrePanel = new JPanel();
+		lowerCentrePanel.setLayout(new BoxLayout(lowerCentrePanel,
+				BoxLayout.PAGE_AXIS));
+
+		filename_array = new JLabel[tset.getNumOfCustomGates()];
+		filechooser_array = new JFileChooser[tset.getNumOfCustomGates()];
+		browseButton_array = new JButton[tset.getNumOfCustomGates()];
+		JPanel toAdd;
+		for (int i = 0; i < filechooser_array.length; i++) {
+			toAdd = new JPanel();
+			toAdd.add(new JLabel(CustGateStr.concat(Integer.toString(i))));
+			filename_array[i] = new JLabel();
+			toAdd.add(filename_array[i]);
+			filechooser_array[i] = new JFileChooser();
+			filechooser_array[i].addChoosableFileFilter(new XMLFilter());
+			filechooser_array[i].setAcceptAllFileFilterUsed(false);
+			browseButton_array[i] = new JButton(browButtonStr);
+			browseButton_array[i].addActionListener(this);
+			toAdd.add(browseButton_array[i]);
+			lowerCentrePanel.add(toAdd);
+		}
+
 		valueChanged(null);
 		test_case_list.addListSelectionListener(this);
 
 		addTestCase = new JButton(addtcStr);
 		addTestCase.addActionListener(this);
-
 		JScrollPane listScroller = new JScrollPane(test_case_list);
 		listScroller.setPreferredSize(new Dimension(250, 80));
 
@@ -88,14 +123,19 @@ public class InnerEditorPanel extends JPanel implements ListSelectionListener,
 		finalPanel.add(final_label);
 		finalPanel.add(finalStateEditor);
 
-		JPanel centre_panel = new JPanel();
-		centre_panel.setLayout(new FlowLayout());
-		centre_panel.add(startPanel);
-		centre_panel.add(finalPanel);
+		JPanel upperCentrePanel = new JPanel();
+		upperCentrePanel.setLayout(new FlowLayout());
+		upperCentrePanel.add(startPanel);
+		upperCentrePanel.add(finalPanel);
+
+		JPanel centrePanel = new JPanel();
+		centrePanel.setLayout(new BoxLayout(centrePanel, BoxLayout.PAGE_AXIS));
+		centrePanel.add(upperCentrePanel);
+		centrePanel.add(lowerCentrePanel);
 
 		this.add(left_panel, BorderLayout.LINE_START);
 
-		this.add(centre_panel, BorderLayout.CENTER);
+		this.add(centrePanel, BorderLayout.CENTER);
 
 	}
 
@@ -107,60 +147,88 @@ public class InnerEditorPanel extends JPanel implements ListSelectionListener,
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		int num_of_qubits = tset.getNum_of_qubits();
-		int num_of_currect_test_case = tset.getNumberOfTestcases();
-		int vectorSize;
-		switch (num_of_qubits) {
-			case 1:
-				vectorSize = 2;
-				break;
-			case 2:
-				vectorSize = 4;
-				break;
-			case 3:
-				vectorSize = 8;
-				break;
-			case 4:
-				vectorSize = 16;
-				break;
-			case 5:
-				vectorSize = 32;
-				break;
-			case 6:
-				vectorSize = 64;
-				break;
-			case 7:
-				vectorSize = 128;
-				break;
-			case 8:
-				vectorSize = 256;
-				break;
-			case 9:
-				vectorSize = 512;
-				break;
-			case 10:
-				vectorSize = 1024;
-				break;
-			default:
-				vectorSize = 2;
-				break;
+		if (arg0.getSource() == addTestCase) {
+			int num_of_qubits = tset.getNum_of_qubits();
+			int num_of_currect_test_case = tset.getNumberOfTestcases();
+			int vectorSize;
+			switch (num_of_qubits) {
+				case 1:
+					vectorSize = 2;
+					break;
+				case 2:
+					vectorSize = 4;
+					break;
+				case 3:
+					vectorSize = 8;
+					break;
+				case 4:
+					vectorSize = 16;
+					break;
+				case 5:
+					vectorSize = 32;
+					break;
+				case 6:
+					vectorSize = 64;
+					break;
+				case 7:
+					vectorSize = 128;
+					break;
+				case 8:
+					vectorSize = 256;
+					break;
+				case 9:
+					vectorSize = 512;
+					break;
+				case 10:
+					vectorSize = 1024;
+					break;
+				default:
+					vectorSize = 2;
+					break;
+			}
+
+			Matrix m;
+			testcase tc;
+			m = new Matrix(vectorSize, 1);
+			String b_str = "Test Case ".concat(Integer
+					.toString(num_of_currect_test_case + 1));
+
+			tc = new testcase(num_of_currect_test_case, b_str,
+					tset.getNumOfCustomGates());
+			tc.setStartingstate(m);
+
+			tc.setFinalstate(m.copy());
+
+			tset.addTestcases(tc);
+
+			model.add(tc.getId(), tc.getLabel());
+		} else {
+			for (int i = 0; i < browseButton_array.length; i++) {
+				if (browseButton_array[i] == arg0.getSource()) {
+					testcase tc = null;
+					int returnVal = filechooser_array[i].showOpenDialog(this);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						filename_array[i].setText(filechooser_array[i]
+								.getSelectedFile().getAbsolutePath());
+						Iterator<testcase> iter = tset.getTestcases();
+						while ((tc == null) && iter.hasNext()) {
+							testcase temp = iter.next();
+							if (temp.getId() == test_case_list
+									.getSelectedIndex()) {
+								tc = temp;
+								tc.setCustomGates(i,
+										filename_array[i].getText());
+							}
+
+						}
+						// upperPanel.remove(filename);
+						// filename.setText(selected_file.getAbsolutePath());
+						// upperPanel.add(filename);
+						// loadFile(selected_file);
+					}
+				}
+			}
 		}
-
-		Matrix m;
-		testcase tc;
-		m = new Matrix(vectorSize, 1);
-		String b_str = "Test Case ".concat(Integer
-				.toString(num_of_currect_test_case + 1));
-
-		tc = new testcase(num_of_currect_test_case, b_str,
-				tset.getNumOfCustomGates());
-		tc.setStartingstate(m);
-
-		tc.setFinalstate(m.copy());
-
-		tset.addTestcases(tc);
-
-		model.add(tc.getId(), tc.getLabel());
 	}
 
 	public int getQubit() {
@@ -186,5 +254,9 @@ public class InnerEditorPanel extends JPanel implements ListSelectionListener,
 		}
 		startingStateEditor.setMatrix(tc.getStartingState());
 		finalStateEditor.setMatrix(tc.getFinalstate());
+
+		for (int i = 0; i < filechooser_array.length; i++) {
+			filename_array[i].setText(tc.getCustomGates()[i]);
+		}
 	}
 }

@@ -8,20 +8,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Circuit.Circuit;
 import Core.CircuitBuilder.circuitBuilder;
 import Core.CircuitEvaluator.circuitevaluator;
-import Core.Problem.testcase;
 import Core.Problem.testset;
 import GUI.SubPanels.currectStateVisualiserTab;
 import GUI.SubPanels.ResultPanels.CircuitParentPanel;
@@ -34,11 +34,13 @@ import Utils.WindowUtils;
 public class StepByStepEvaluationDialog extends JDialog implements
 		ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long			serialVersionUID		= 6431859424563396257L;
 	private final JPanel				stateHolderPanel;
 	private currectStateVisualiserTab	statePanel;
 	private final CircuitParentPanel	circuitPanel;
-	private JPanel						buttonPanel;
-
 	private JButton						nextButton;
 	private final String				nextStr					= "Next";
 	private JButton						prevButton;
@@ -49,14 +51,14 @@ public class StepByStepEvaluationDialog extends JDialog implements
 	private final String				buildCircuitButtonStr	= "Rebuild Circuit";
 	private JLabel						numQubitsLabel;
 	private JButton						buildCircuitButton;
-	private JTextArea					numQubits;
+	private JComboBox					numQubits;
 	private int							numOfQubits				= 1;
 	private JPanel						qubitPanel;
 
 	private final QuantumAlgorithm		quantAlg;
 	private final circuitBuilder		cirBuilder;
 	private final circuitevaluator		cirEval;
-	private LinkedList<testset>			testSuiteList			= new LinkedList<testset>();
+	private List<testset>				testSuiteList			= new LinkedList<testset>();
 	private int							position				= 0;
 
 	public StepByStepEvaluationDialog(QuantumAlgorithm quantAlg,
@@ -87,7 +89,8 @@ public class StepByStepEvaluationDialog extends JDialog implements
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == buildCircuitButton) {
 			try {
-				numOfQubits = Integer.parseInt(this.numQubits.getText());
+				numOfQubits = Integer.parseInt((String) this.numQubits
+						.getSelectedItem());
 				updateNumOfQubits();
 				nextButton.setVisible(true);
 				prevButton.setVisible(true);
@@ -142,9 +145,12 @@ public class StepByStepEvaluationDialog extends JDialog implements
 		prevButton.setVisible(false);
 
 		numQubitsLabel = new JLabel(numQubitsLabelStr);
-		numQubits = new JTextArea();
-		numQubits.setSize(20, 10);
-		numQubits.setText(Integer.toString(numOfQubits));
+		numQubits = new JComboBox();
+		Iterator<Integer> keyiter = cirEval.getQproblem().getTestSuite()
+				.getKeys().iterator();
+		while (keyiter.hasNext()) {
+			numQubits.addItem(Integer.toString(keyiter.next()));
+		}
 
 		buildCircuitButton = new JButton();
 		buildCircuitButton.setText(buildCircuitButtonStr);
@@ -169,7 +175,7 @@ public class StepByStepEvaluationDialog extends JDialog implements
 		Circuit cir = cirBuilder.Build(quantAlg, numOfQubits);
 		circuitPanel.update(cir, numOfQubits);
 		testSuiteList = cirEval.getTrace(quantAlg, numOfQubits);
-		Iterator<testcase> tciter = testSuiteList.get(0).getTestcases();
+		testSuiteList.get(0).getTestcases();
 		statePanel = new currectStateVisualiserTab(testSuiteList.get(0),
 				"Starting State");
 		stateHolderPanel.removeAll();
