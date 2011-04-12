@@ -40,7 +40,8 @@ The Matrix unit tests include testing of the MatrixUtil class that provides the 
 For the arithmetic methods, Octave\cite{octweb} was used to create test oracles.
 
 \subsection{Gate Implementation Unit Tests}
-Unit testing the gate implementations is a reletively simple process.
+\label{sec:gatetests}
+Unit testing the gate implementations is a relatively simple process.
 The correct operation of the all gates, excluding the custom gates, are statically defined as in Figure \ref{fig:providedgates}.
 Therefore creating the unit tests are a series of tests to ensure that with predefined input states, the output states are correct with respect to the gate's definition.
 To reduce the probability of errors being introduced into the test oracles used by the unit tests, the test oracles were calculated by Octave\cite{octweb} using Quantum Computing Functions(QCF) for Matlab\cite{qcfweb}.
@@ -61,7 +62,8 @@ Only positive values should be accepted by the constructor as there are no qubit
 The returned value of each of the other operations are known either implicitly or explicitly by Figure \ref{fig:providedgates} and the QCircuit\cite{QCsite} documentation.
 
 \subsection{Circuit Implementation Unit Tests}
-The unit tests for the circuit implmentation followed the following scenarios:
+\label{sec:circtests}
+The unit tests for the circuit implementation followed the following scenarios:
 \begin{itemize}
  \item Add a gate
  \item Add a subcircuit
@@ -102,6 +104,7 @@ $-2$ & $2*SystemSize$ &   $LoopVars[-1]$ & $2*LoopVars[2+SystemSize]$ \\
 \end{figure}
 
 \subsection{Algorithm Implementation Unit Tests}
+\label{sec:algtests}
 The unit tests for the algorithm implementation followed the following scenarios:
 \begin{itemize}
  \item Add an instruction
@@ -115,6 +118,7 @@ The unit tests for the algorithm implementation followed the following scenarios
 \end{itemize}
 
 \subsection{Suitability Measure Unit Tests}
+\label{sec:suitmeastests}
 There are three suitability measures provided with the framework, see Section \ref{sec:provsuitmeas}.
 Each of these needed to be tested to ensure that the implementation was consistent with their definitions.
 
@@ -125,6 +129,7 @@ This is because even though the operation of gates are by definition unitary, th
 As a result the suitability measure tests were not restricted to ``correct'' quantum states.
 
 \subsection{Test Suite Unit Tests}
+\label{sec:testsuitetests}
 The test suite data structure is a combination of three classes not covered by other unit tests.
 Although the test will cover three classes this is still being classed as a unit test as it is effectively a test of the data structure unit rather than the classes.
 
@@ -140,6 +145,7 @@ The tests covered the following scenarios:
 The scenario consisting of two test suites checks both test suites to ensure that the merge of test sets, and therefore the modification of labels and IDs, does not effect the test suite that is not being modified.
 
 \subsection{Manager Classes Unit Tests}
+\label{sec:manclasstests}
 For each of the manager classes, a series of XML configuration files were created for testing purposes only.
 For the Search Engine and Suitability Measure Manager classes the tests contained several checks:
 \begin{itemize}
@@ -173,10 +179,51 @@ The circuit builder integration test combined:
 \end{itemize}
 
 Due to the simplicity of the circuit builder interface, the tests that were carried out were also simple.
-The circuit builder interface provides 
+The circuit builder interface provides two methods.
+Both methods are intended to perform the same action, to take a quantum algorithm and to return the circuit for the specified system size.
+The difference between the two methods is that one allows an integer array to be passed as an argument.
+This integer array is the \emph{LoopVars} array used in the Expnode grammar, see Section \ref{sec:quantalgs}.
+When the method without this argument initialises the \emph{LoopVars} array to the empty array.
 
+To test the two methods, a collection of simple quantum algorithms were produced to include each gate instruction at least one and each of the iterate control instructions at least five times.
+These algorithms are passed to the circuit builder, the returned circuits are checked against the test oracles.
+The test oracles are circuits that represent the circuit that would be created by the algorithm.
+
+The tests are run over system sizes of 1, 2 and 3.
+Using a code review, the method with the additional integer array parameter will be tested by the other method when the algorithm includes iterate control instructions.
+This is the reason which each gate was included at a minimum of once but the iterate control instruction were included at least five times.
 
 \subsection{Circuit Evaluator Integration Tests}
+\label{sec:cirevaltests}
+The circuit evaluator integration test combined:
+\begin{itemize}
+ \item Circuit builder implementation
+ \item Suitability measure implementation
+ \item Test suite implementation
+\end{itemize}
+
+The suitability measure that was used for the tests was the Simple Suitability Measure, see Section \ref{sec:simplsuitmeas}.
+
+The tests for the circuit evaluator were very similar to those used to test the individual suitability measures, see Section \ref{sec:suitmeastests}.
+A series of algorithms were produced alongside a collection of small test suites, containing less that three test cases.
+The theoretical suitability value of each algorithm was produced and then compared with the value produced by the circuit evaluator.
+
+Two additional tests were produced to test the \emph{getResults} and \emph{getTrace} methods.
+The test oracles were test suites and arrays of test suites respectively.
+To ensure that the tests were simple enough that confidence was improved in the test oracle structures that had to be produced manually.
+The quantum states in the test oracles that represented the result of correct complete or partial circuit evaluation were produced using Octave also to improve test confidence.
 
 \section{System Testing}
+\label{sec:systests}
 
+\section{Client GUI Testing}
+\label{sec:clientguitests}
+The client GUI that is provided alongside the framework was tested using scenario based testing.
+For each of the requirements for the client GUI, see Section \ref{sec:clientguireqs}, had a scenario created specifically for the requirement.
+
+Analysing all the test cases produced, many could be combined producing a much smaller number of test cases without reducing the requirement coverage.
+The test cases were analysed for a second time to identify those that could be automated.
+The tool chosen for the automated was WindowTester Pro\cite{wintestproweb}.
+However, it was decided that the amount of automation that was possible and the limitations of what could be checked during the automated tests did not make it a sensible to proceed with automation of the GUI testing.
+
+\input{Tracability}

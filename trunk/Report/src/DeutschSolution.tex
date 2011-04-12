@@ -1,0 +1,20 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8x]{inputenc}
+
+\input{Qcircuit}
+%opening
+
+\begin{document}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+&\gate{H}&\qw&\qw&\qw&\gate{Z} &\gate{X}&\gate{Z} &\gate{C0}&\gate{H}&\gate{H}&\qw&\\%2
+&\qw&\gate{H}&\gate{C0}&\gate{H}&\qw&\ctrl{-1} \qwx&\qw&\qw&\qw&\qw&\gate{C0}&\\%1
+}
+\]
+\end{figure}
+
+
+
+\end{document}

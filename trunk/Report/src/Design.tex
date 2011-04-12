@@ -262,6 +262,7 @@ The getAvailableXYs() method returns a set of strings, the registered names, rat
 To provide an XY object when requested using thegetXY(key) method, the Manager classes use reflection to instantiate an object of the respective class, the value of the ClassName variable of the Tag registered with $Name=key$.
 
 \subsection{Multiple Search Engines}
+\label{sec:mulsearchen}
 The framework is aimed to be used universally by Quantum Algorithm researchers.
 The search techniques used by these researchers are also a matter of research effort.
 If the tool were to provide a search engine, with no option for change, the use of the tool is likely to be significantly impacted.
@@ -283,6 +284,7 @@ This was not accepted as it moved the tool away from the framework intended.
 The provision of search engines without a simple manner to add additional engines would restrict research and not allow researchers to easily use techniques developed in the research community within the system.
 
 \subsection{Multiple Fitness Functions}
+\label{sec:mulsuitmeas}
 As was noted by Massey\cite{masseythesis}, different Fitness Functions can have a dramatic impact on the success of a Quantum Algorithm search.
 The inclusion of a choice of Fitness Functions is to account for this.
 As with Search Engines, the choice of Fitness Functions is provided by the Manager class through a simple interface with methods synonomous to those provided for the Search Engine selection.
@@ -380,6 +382,9 @@ $exp \rightarrow LoopVars[e]$ &   \\
 An algorithm is a list of instructions.
 The instructions that are used in the standardised quantum algorithms take the form shown in Figure \ref{tab:quantinststruct}.
 The list of values that the Instruction element can take can be found in Appendix \ref{sec:alginstructionlist}.
+When the algorithm is reported to the user, it is reported as a list of instructions in the same form as is shown in Figure \ref{tab:quantinststruct}.
+To improve readabiliy, if a gate does not have a second gate, or use a phase or sub algorithms they are not reported to the user.
+The textual form is also improved with the use of \{ and \} characters to denote the body of iterate instructions.
 
 $Gate1$, $Gate2$ and $Phase$ are all listed as being of type \emph{expnode}.
 The final type for $Gate1$ and $Gate2$ is integer and for $Phase$ is double.
@@ -425,7 +430,6 @@ Gate2 is only used by \emph{Create\_C*} and \emph{Create\_SWAP} instructions to 
 For the \emph{Iteration} instruction, Gate1 is used for the number of iterations, $n$.
 For the \emph{Create\_R*}, \emph{Create\_CR*}, \emph{Create\_P} and  \emph{Create\_CP} instructions, the Phase element is used to parameterise those gate to specify the amount of rotation applied by the resulting gate.
 
-
 \subsection{Qubit Numbering}
 \label{sec:qubitnum}
 One of the major decisions made relating to the way in which the quantum algorithms are produced was that of which way the qubits should be numbered.
@@ -444,6 +448,7 @@ The value of the qubit $a$ is $2^{x-1}$.
 This makes the optimisation of gate application, see Section \ref{sec:quantumgates}, much simpler.
 
 \subsection{Quantum Circuits}
+\label{sec:quantumcircuits}
 To perform the evaluation of an algorithm the circuits for the test sets need to be produced.
 Both the representation of the circuit and the mechanism to construct the circuit from the algorithm needed to be standardised to ensure the ``Plug and Play'' nature of the framework.
 
@@ -472,6 +477,9 @@ The Latex representation uses the QCircuit package that can be freely obtained a
 
 The circuit implementation, \emph{basiccircuit}, provided in the framework is implemented as a simple ordered list.
 It uses the Java provided \emph{LinkedList} implementation.
+With this implementation there is no difference in the representation between a circuit for a system size of 1 or a system size of 1000.
+The only components that are effected by the system size are the gate implementations, see Section \ref{sec:quantumgates}.
+In conjunction with this, the use of a list of gates ensures that the only restriction on the number of gates is the number able to be handled by the Java provided \emph{LinkedList} implementation.
 
 \subsection{Quantum Gates}
 \label{sec:quantumgates}
@@ -565,6 +573,7 @@ Unfortunately a Java interface cannot specify the signiture of the contructor of
 As a result this cannot be ensured but is expected as part of implementing the interface.
 The second phase is the combination of the matrix constructed in the initial phase and identity matrices for all qubits not effected by the gate.
 This second phase is performed as part of the \emph{apply} method.
+The second phase carried out in the \emph{apply} method does not impose any restriction on the system size.
 
 There are several gate implemetations that deserve a more detailed summary.
 To produce the unitary matricies shown in Figure \ref{fig:providedgates} for the RX, RY and RZ gates the matrices of other gates are used.
@@ -667,6 +676,7 @@ Framework and third party client modification for each search engine is not acce
 With such a design it is likely that the research community would see no advantage to using the framwork than working as they are now, in complete isolation.
 
 \subsection{Design as a Black Box}
+\label{sec:thirdpartyblackbox}
 The framework is design to be used as a black box.
 All external code is only allowed access through the use of interfaces and final or abstract class types.
 The implementation of the internal framework functionality is hidden and not required by third party software.
@@ -704,6 +714,7 @@ The \emph{getResults} method returns a test suite data structure that is almost 
 The only difference is that the final state of each test case in the returned structure is not the desired theoretical state but the actual final quantum state produced by the circuit simulation.
 
 \subsection{Step-By-Step Evaluation}
+\label{sec:sbsecireval}
 The framework is required to provide a step-by-step evaluation facility.
 There are two abstract ways this can be provided.
 The framework can provide an interactive process that only applies a gate when it receives the command to do so and reporting the ``current state''.
@@ -848,6 +859,7 @@ For operations of this size it is likely the matrix would have been calculated b
 This limit on the editor is to try and increase the integration with third party applications and therefore reduce errors.
 
 \section{Search Engine Implementations}
+\label{sec:provsearcheng}
 \subsection{Q-Pace IV Based Search Engine}
 Alongside the framework, a search engine based in the Q-Pace IV search engine featured in \cite{masseythesis} has been developed.
 This is a Genetic Programming based search engine using the ECJ\cite{ecjtool} system.
@@ -868,10 +880,31 @@ The other open source frameworks, including Apache Hadoop\cite{apahadoop}, were 
 \section{Suitability Measure Implementations}
 \label{sec:provsuitmeas}
 \subsection{Simple Suitability Measure}
+\label{sec:simplsuitmeas}
 
 \subsection{Phase Aware Suitability Measure}
 
 \subsection{Simple Parsimonious Suitability Measure}
+
+\section{Provided Search Problems}
+\label{sec:provsearchprobs}
+With the framework intended to be used for research into algorithm search techniques aswell as research to discover new algorithms several search problems are included with the framework.
+This is so researchers focusing on the search techniques have a standard set of search problems to use without needing to invest time into creating their own search problem.
+The search problems that are included are:
+\begin{itemize}
+ \item Pauli X gate on qubit $1$
+ \item Pauli Z gate on qubit $1$
+ \item Hadamard gate on qubit $1$
+ \item Pauli X gate on final, highest significant qubit
+ \item Pauli Z gate on final, highest significant qubit
+ \item Hadamard gate on final, highest significant qubit
+ \item Controlled Pauli X gate with qubit $1$ as the target and qubit $2$ as the control
+ \item Quantum Fourier Transform on system size of $2$ qubits
+ \item Quantum Fourier Transform on system size of $3$ qubits
+ \item Quantum Fourier Transform on system sizes of $2$ and $3$ qubits
+\end{itemize}
+
+The expected final states were calculated using Octave\cite{octweb} and Quantum Computing Functions(QCF) for Matlab\cite{qcfweb}.
 
 \section{Provided GUI}
 \label{sec:provgui}
@@ -922,7 +955,9 @@ This is to ensure that the display does not become overly cluttered, it maintain
 This is a result of both the \emph{simplicity} and the \emph{visibility} principles.
 
 \subsection{Search Engine, Suitability Measure and Search Problem Selection}
-
+\label{sec:seselecdes}
+\label{sec:smselecdes}
+\label{sec:spselecdes}
 Before a search can be started, selections have to be made for the Search Engine, Suitability Measure and Search Problem.
 The selection of these are provided by three drop down lists.
 The available options for a user to select are limited to the Search Engines and Suitability Measures that are registered in the respective managers in the framework.
@@ -940,8 +975,12 @@ When a selection is made, the selection is shown and a description, provided in 
 The combination of the description and the consistency were included for the \emph{reuse} and \emph{feedback} principles.
 
 \subsection{Search Problem Creator and Editor}
+\label{sec:guisearchcreateed}
 As mentioned above, the creation of Search Problems is provided by an on-screen dialog.
 The creation and editing of Search Problems is also provided by a standalone application, see Section \ref{sec:indtestsuiteeditor}.
+The interface is designed to include an import from file function.
+This will allow the user to register a new Search Problem using an XML file to define the test suite.
+This allows researchers to easily register Search Problems created and distributed by other researchers.
 
 The integrated editor and the standalone application use the same components and overall design.
 The same components are also used when creating a new Search Problem and when editing an existing Search Problem.
@@ -951,9 +990,10 @@ This promotes the \emph{reuse} and \emph{structure} principles.
 
 The dialogs ensure that the user has entered values for the required fields and ensures that each entry is valid.
 This implicitly ensures that each selection available to the user in the Search Problem drop down list is a valid option.
-This follows the \emph{Tolerance} principle.
+This follows the \emph{tolerance} principle.
 
 \subsection{Reporting Results}
+\label{sec:repres}
 
 \begin{figure}
  \includegraphics[width=\textwidth]{GUIDesignProgress.png}
@@ -993,7 +1033,7 @@ An alternative would have been to output the circuit diagram that is drawn by th
 I feel the use of QCircuit is a better choice as the user then has control and is able to carry out, if necessary, manual circuit optimisation.
 
 \subsection{Step-By-Step Evaluator}
-
+\label{sec:sbse}
 
 \begin{figure}
  \includegraphics[width=\textwidth]{StepByStepEval.jpg}
