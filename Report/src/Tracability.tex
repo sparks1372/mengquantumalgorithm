@@ -1,0 +1,188 @@
+\clearpage
+\begin{landscape}
+\section{Tracability}
+
+\centering
+\noindent\begin{longtable*}{|c|m{10cm}|c|c|m{4cm}|}
+\hline
+\textbf{Requirement ID} &
+\multicolumn{1}{c|}{\textbf{Requirement Title}} &
+\textbf{Full Requirement} &
+\textbf{Addressed by Design} &
+\multicolumn{1}{c|}{\textbf{Addressed by Test}} \\ \hline
+
+Req:ASE &
+The framework shall allow researchers to provide search engines for the system to use. &
+Page \pageref{sec:reqase} &
+Section \ref{sec:mulsearchen} &
+\multicolumn{1}{c|}{Section \ref{sec:manclasstests}}\\ \hline
+
+Req:ASM &
+The framework shall allow researchers to provide suitability measures for the system to use. &
+Page \pageref{sec:reqasm} &
+Section \ref{sec:mulsuitmeas} &
+\multicolumn{1}{c|}{Section \ref{sec:manclasstests}}\\ \hline
+
+Req:QAO &
+The solution of a search, a quantum algorithm, shall be presented to the user as a list of instructions. &
+Page \pageref{sec:reqqao} &
+Section \ref{sec:quantalgs} &
+\multicolumn{1}{c|}{Section \ref{sec:algtests}} \\ \hline
+
+Req:CV &
+The system shall provide visualisation of the circuit produced by the solution of the search for a system of a user specified number of qubits. &
+Page \pageref{sec:reqcv} &
+Section \ref{sec:quantumcircuits} &
+\multicolumn{1}{c|}{Section \ref{sec:circtests}} \\ \hline
+
+Req:TPS &
+The framework shall be able to be embedded in third party software. &
+Page \pageref{sec:reqtps} &
+Section \ref{sec:thirdpartyblackbox} &
+Code Review of Client to ensure only interface knowledge is required\\ \hline
+
+Req:DST &
+The framework shall provide a standardised definition format for users to specify the target of the search. &
+Page \pageref{sec:reqdst} &
+Section \ref{sec:testsuitestruc} &
+\multicolumn{1}{c|}{Section \ref{sec:testsuitetests}} \\ \hline
+
+Req:UCF &
+The customisation of the framework shall be provided through a series of configuration files. &
+Page \pageref{sec:requcf} &
+Section \ref{sec:manclasses} &
+\multicolumn{1}{c|}{Section \ref{sec:manclasstests}} \\ \hline
+
+Req:PGAI &
+The framework shall provide implementations of all gates specified in Figure \ref{fig:providedgates}. The framework shall provide algorithm instructions for each of these gates and for the instantiation of the Controlled-U gate with all single qubit gates. &
+Page \pageref{sec:reqpgai} &
+Sections \ref{sec:quantalgs}, \ref{sec:quantumgates} &
+\multicolumn{1}{c|}{Sections \ref{sec:gatetests}, \ref{sec:algtests}} \\ \hline
+
+Req:ACS &
+The system shall provide the iterate control structure and support nested iterate instructions. &
+Page \pageref{sec:reqacs} &
+Section \ref{sec:quantalgs} &
+\multicolumn{1}{c|}{Sections \ref{sec:gatetests}, \ref{sec:algtests}} \\ \hline
+
+Req:PCA &
+The framework shall be able to produce a circuit, for any given number of qubits, from a quantum algorithm. &
+Page \pageref{sec:reqpca} &
+Sections \ref{sec:quantumcircuits}, \ref{sec:quantumgates} &
+Code review of both the circuit implementation and all of the gate implementations to ensure the logic does not rely on upper bound to the system size.
+The only restriction that is present is where $2^{System Size}>Integer.MAX\_VALUE$. \\ \hline
+
+Req:CS &
+The framework shall provide the simulation of a circuit given an initial state. &
+Page \pageref{sec:reqcs} &
+Section \ref{sec:quantumgates} &
+\multicolumn{1}{c|}{Sections \ref{sec:gatetests}, \ref{sec:cirevaltests}} \\ \hline
+
+Req:SBSSE &
+The framework shall provide a way to perform step-by-step evaluation of a circuit given an initial state. &
+Page \pageref{sec:reqsbsse} &
+Section \ref{sec:sbsecireval} &
+\multicolumn{1}{c|}{Section \ref{sec:cirevaltests}} \\ \hline
+
+&&&&
+\\ \hline
+
+Req:SSE &
+The tool shall provide at least one implemented search engine. &
+Page \pageref{sec:reqsse} &
+Section \ref{sec:provsearcheng} &
+\multicolumn{1}{c|}{Section \ref{sec:manclasstests}} \\ \hline
+
+Req:SSM &
+The tool shall provide at least one implemented suitability measure. &
+Page \pageref{sec:reqssm} &
+Section \ref{sec:provsuitmeas} &
+\multicolumn{1}{c|}{Section \ref{sec:manclasstests}} \\ \hline
+
+Req:SST &
+The tool shall provide a number of search targets with known outputs. &
+Page \pageref{sec:reqsst} &
+Section \ref{sec:provsearchprobs} &
+\multicolumn{1}{c|}{Section \ref{sec:manclasstests}} \\ \hline
+
+Req:SES &
+The GUI shall provide a user with a selection of search engines to use in a search. &
+Page \pageref{sec:reqses} &
+Section \ref{sec:seselecdes} &
+\multicolumn{1}{c|}{Section \ref{sec:clientguitests}} \\ \hline
+
+Req:SMS &
+The GUI shall provide a user with a selection of suitability measures to use in a search. &
+Page \pageref{sec:reqsms} &
+Section \ref{sec:smselecdes} &
+\multicolumn{1}{c|}{Section \ref{sec:clientguitests}} \\ \hline
+
+Req:STS &
+The GUI shall provide a user with a selection of search targets to be used as the search goal. &
+Page \pageref{sec:reqsts} &
+Section \ref{sec:spselecdes} &
+\multicolumn{1}{c|}{Section \ref{sec:clientguitests}} \\ \hline
+
+Req:STC &
+The GUI shall provide a way for users to create a new search target without needing to explicitly write a configuration file. &
+Page \pageref{sec:reqstc} &
+Section \ref{sec:guisearchcreateed} &
+\multicolumn{1}{c|}{Section \ref{sec:clientguitests}} \\ \hline
+
+Req:STE &
+The GUI shall provide a way for users to edit the contents of a previously created search target without manual editing of the configuration file. &
+Page \pageref{sec:reqste} &
+Sections \ref{sec:indtestsuiteeditor}, \ref{sec:guisearchcreateed} &
+\multicolumn{1}{c|}{Section \ref{sec:clientguitests}} \\ \hline
+
+Req:LSTPDC &
+The GUI shall provide a way to import a predefined search target from a configuration file. &
+Page \pageref{sec:reqlstpdc} &
+Section \ref{sec:guisearchcreateed} &
+\multicolumn{1}{c|}{Section \ref{sec:clientguitests}} \\ \hline
+
+Req:SV &
+The GUI shall provide a way to visualise any quantum state. &
+Page \pageref{sec:reqsv} &
+Section \ref{sec:repres} &
+\multicolumn{1}{c|}{Section \ref{sec:clientguitests}} \\ \hline
+
+Req:RSR &
+The GUI shall provide a way to report the search result, a quantum algorithm, to the user. &
+Page \pageref{sec:reqrsr} &
+Section \ref{sec:repres} &
+\multicolumn{1}{c|}{Section \ref{sec:clientguitests}} \\ \hline
+
+Req:GCV &
+Given a quantum algorithm and a system size, the GUI shall produce a visualisation of the resulting circuit. &
+Page \pageref{sec:reqgcv} &
+Section \ref{sec:repres} &
+\multicolumn{1}{c|}{Section \ref{sec:clientguitests}} \\ \hline
+
+Req:GSBSSE &
+The GUI shall provide a way to perform, control and visualise the step-by-step state evolution for an intial state and circuit. &
+Page \pageref{sec:reqgsbsse} &
+Section \ref{sec:repres} &
+\multicolumn{1}{c|}{Section \ref{sec:clientguitests}} \\ \hline
+
+Req:TT &
+The GUI shall provide user help through the use of tooltips. &
+Page \pageref{sec:reqtt} &
+TODO &
+\multicolumn{1}{c|}{Section \ref{sec:clientguitests}} \\ \hline
+
+Req:POR &
+The framework, fully implemented tool and the GUI shall be able to be used on a range of Operating Systems. &
+Page \pageref{sec:reqpor} &
+TODO &
+\multicolumn{1}{c|}{Section \ref{sec:systests}} \\ \hline
+
+Req:USE &
+Using either the fully implemented tool or the GUI a user shall be able to start a search within 30 seconds. &
+Page \pageref{sec:requse} &
+TODO &
+\multicolumn{1}{c|}{Section \ref{sec:systests}} \\ \hline
+
+\end{longtable*}
+\end{landscape}
+\clearpage

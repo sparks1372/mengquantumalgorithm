@@ -1,0 +1,307 @@
+\chapter{User Guide}
+
+This appendix is a walk through of how to use the framework and the provided client to search for a quantum algorithm to solve the Max Problem.
+This is a simple permutation problem.
+The goal is to take a permutation of the values $0\rightarrow3$ and return the index of the maximum value, $3$.
+
+This is used as an experiment in Massey's thesis\cite{masseythesis} for the Q-Pace III system.
+The Q-Pace III was able to produce a probabilistic solution to the problem.
+
+There are 24, $4!$, permutation functions possible.
+To encode the four values requires four qubits.
+This is done using superposition.
+
+The permutation $(0,1,2,3)\rightarrow(w,x,y,z)$ is encoded as the superposition of $\frac{1}{2}(\ket{00w_1w_0}+\ket{01x_1x_0}+\ket{10y_1y_0}+\ket{11z_0z_1})$.
+There are several options when selecting the encoding of the expected output of the system.
+This is due to the output being two qubits, as it is an index between $0$ and $3$, but the input requires four qubits.
+Three of the encoding choices are $\ket{**a_1a_0}$, $\ket{a_1a_0**}$ and $\ket{a_1a_0a_1a_0}$, where$*$ denotes that we don't care what the value is.
+The encoding that we shall use in the walk through is $\ket{**a_1a_0}$ so that it is only the lowest significant qubits that we are actually interested in.
+This is to try and help the search by increasing the number of final states that the circuit can produce and be considered successful.
+
+Figure \ref{fig:maxprobtcs} shows the list of all $24$ test cases.
+
+\begin{figure}
+\begin{center}
+ \begin{tabular}{c|ccc|} 
+ Test Case ID & Input State& $\rightarrow$ & Output State \\  \hline
+  1 & $\frac{1}{2}(\ket{0000}+\ket{0101}+\ket{1010}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0011}+\ket{0111}+\ket{1011}+\ket{1111})$ \\ %\hline
+  2 & $\frac{1}{2}(\ket{0000}+\ket{0101}+\ket{1011}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0010}+\ket{0110}+\ket{1010}+\ket{1110})$ \\ %\hline
+  3 & $\frac{1}{2}(\ket{0000}+\ket{0110}+\ket{1001}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0011}+\ket{0111}+\ket{1011}+\ket{1111})$ \\ %\hline
+  4 & $\frac{1}{2}(\ket{0000}+\ket{0110}+\ket{1011}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0010}+\ket{0110}+\ket{1010}+\ket{1110})$ \\ %\hline
+  5 & $\frac{1}{2}(\ket{0000}+\ket{0111}+\ket{1001}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0001}+\ket{0101}+\ket{1001}+\ket{1101})$ \\ %\hline
+  6 & $\frac{1}{2}(\ket{0000}+\ket{0111}+\ket{1010}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0001}+\ket{0101}+\ket{1001}+\ket{1101})$ \\ \hline
+  7 & $\frac{1}{2}(\ket{0001}+\ket{0100}+\ket{1010}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0011}+\ket{0111}+\ket{1011}+\ket{1111})$ \\ %\hline
+  8 & $\frac{1}{2}(\ket{0001}+\ket{0100}+\ket{1011}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0010}+\ket{0110}+\ket{1010}+\ket{1110})$ \\ %\hline
+  9 & $\frac{1}{2}(\ket{0001}+\ket{0110}+\ket{1000}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0011}+\ket{0111}+\ket{1011}+\ket{1111})$ \\ %\hline
+  10 & $\frac{1}{2}(\ket{0001}+\ket{0110}+\ket{1011}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0010}+\ket{0110}+\ket{1010}+\ket{1110})$ \\ %\hline
+  11 & $\frac{1}{2}(\ket{0001}+\ket{0111}+\ket{1000}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0001}+\ket{0101}+\ket{1001}+\ket{1101})$ \\ %\hline
+  12 & $\frac{1}{2}(\ket{0001}+\ket{0111}+\ket{1010}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0001}+\ket{0101}+\ket{1001}+\ket{1101})$ \\ \hline
+  13 & $\frac{1}{2}(\ket{0010}+\ket{0100}+\ket{1001}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0011}+\ket{0111}+\ket{1011}+\ket{1111})$ \\ %\hline
+  14 & $\frac{1}{2}(\ket{0010}+\ket{0100}+\ket{1011}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0010}+\ket{0110}+\ket{1010}+\ket{1110})$ \\ %\hline
+  15 & $\frac{1}{2}(\ket{0010}+\ket{0101}+\ket{1000}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0011}+\ket{0111}+\ket{1011}+\ket{1111})$ \\ %\hline
+  16 & $\frac{1}{2}(\ket{0010}+\ket{0101}+\ket{1011}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0010}+\ket{0110}+\ket{1010}+\ket{1110})$ \\ %\hline
+  17 & $\frac{1}{2}(\ket{0010}+\ket{0111}+\ket{1000}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0001}+\ket{0101}+\ket{1001}+\ket{1101})$ \\ %\hline
+  18 & $\frac{1}{2}(\ket{0010}+\ket{0111}+\ket{1001}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0001}+\ket{0101}+\ket{1001}+\ket{1101})$ \\ \hline
+  19 & $\frac{1}{2}(\ket{0011}+\ket{0100}+\ket{1001}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0100}+\ket{1000}+\ket{1100})$ \\ %\hline
+  20 & $\frac{1}{2}(\ket{0011}+\ket{0100}+\ket{1010}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0100}+\ket{1000}+\ket{1100})$ \\ %\hline
+  21 & $\frac{1}{2}(\ket{0011}+\ket{0101}+\ket{1000}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0100}+\ket{1000}+\ket{1100})$ \\ %\hline
+  22 & $\frac{1}{2}(\ket{0011}+\ket{0101}+\ket{1010}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0100}+\ket{1000}+\ket{1100})$ \\ %\hline
+  23 & $\frac{1}{2}(\ket{0011}+\ket{0110}+\ket{1000}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0100}+\ket{1000}+\ket{1100})$ \\ %\hline
+  24 & $\frac{1}{2}(\ket{0011}+\ket{0110}+\ket{1001}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0100}+\ket{1000}+\ket{1100})$ \\ \hline
+ \end{tabular}
+\end{center}
+\caption{Max Problem Test Cases}
+\label{fig:maxprobtcs}
+\end{figure}
+
+\section{Creating the Search Problem}
+\label{sec:createsearchproblem}
+
+Using the test cases listed in Figure \ref{fig:maxprobtcs} this section will go through how to create a search problem for the Max problem.
+The walk through will use the provided client rather than the standalone editor but as the two use the same components using the guide with the standalone editor should not cause any problems.
+The walk through shall only include the input of two randomly chosen test cases, $1$ and $10$.
+
+\lstset{language=bash,breaklines=true,breakatwhitespace=false,numbers=none}
+\begin{enumerate}
+ \item Launch the client with the command below
+\begin{lstlisting}
+java -jar MengQuantum.jar config/SearchEngine.xml config/FitnessFunction.xml config/Problems.xml
+\end{lstlisting}
+The client shall launch and you shall be provided with the Graphical User Interface as shown in Figure \ref{fig:walkthrough1}.
+
+\item Using the mouse, left click on the button labelled ``Create'', as shown in Figure \ref{fig:walkthrough2}.
+When prompted, select 0 custom gates as none are required for the Max problem.
+The ``Create Problem and Test Suite'' dialog box shall be displayed, as shown in Figure \ref{fig:walkthrough3}.
+
+\item Using the mouse, left click in the text area to the right of the ``Name'' and enter ``Max Problem''.
+
+\item Using the mouse, left click on the button labelled ``Select Destination File''.
+A new dialog box shall open to select the location and file name for the test suite definition file.
+The dialog box is a standard ``file chooser'' as used in many applications so the operation of it should be familiar to all users.
+
+\item Using the file chooser, navigate to the ``Config'' directory provided in the distribution.
+A number of XML files should be listed, including SearchEngine.xml and FitnessFunction.xml.
+Using the mouse, left click in the text area next to ``File Name:'' and enter ``maxproblem''.
+The ``.xml'' is added automatically by the software.
+Using the mouse, left click on the button labelled ``Open'' to close the dialog box.
+
+\item Now we can start entering the test cases.
+Using the mouse, left click on the button labelled ``Add Test Set'' and, when prompted, enter $4$ as the number of qubits.
+This shall change the appearance of the dialog box to match that shown in Figure \ref{fig:walkthrough4}.
+
+\item We shall enter test case $1$.
+
+The input state is shown in the left hand table.
+Put the value $0.5$ in the second column of the rows labelled with the states $\ket{0000}$, $\ket{0101}$, $\ket{1010}$ and $\ket{1111})$.
+
+The output state is shown in the right hand table.
+Put the value $0.5$ in the second column of the rows labelled with the states $\ket{0011}$, $\ket{0111}$, $\ket{1011}$ and $\ket{1111})$.
+
+\item \label{enum:addtcstep} Using the mouse, left click on the button labelled ``Add Test Case''.
+We shall now enter test case $10$.
+
+The input state is shown in the left hand table.
+Put the value $0.5$ in the second column of the rows labelled with the states $\ket{0001}$, $\ket{0100}$, $\ket{1010}$ and $\ket{1111})$.
+
+The output state is shown in the right hand table.
+Put the value $0.5$ in the second column of the rows labelled with the states $\ket{0010}$, $\ket{0110}$, $\ket{1010}$ and $\ket{1110})$.
+
+\item Using the mouse, left click in the text area to the right of the ``Description'' label and enter ``Max Problem as described by Massey''.
+
+\item Using the mouse, left click on the button labelled ``Okay'' to save the test suite to file and close the dialog box.
+
+\item \label{enum:createsaveprobs}Optional: To ensure that the ``Max Problem'' search problem is registered and loaded when the client is launched in the future left click on the button labelled ``Save''.
+This ``Save'' button does not save the test suite, this is done automatically by the ``Create Problem'' dialog box.
+It saves the changes to the ``config/Problems.xml'' file containing the problem definitions, see Section \ref{sec:problemman}.
+\end{enumerate}
+
+The steps outlined produce a very simple test suite for the search to use.
+Providing the search with more of the $24$ test cases that are available than the two created by the steps above is likely to improve the performance of the search.
+To create additional test cases repeat step \ref{enum:addtcstep} for each additional test case desired.
+
+\section{Loading a Predefined Search Problem}
+This section shall provide a guide to creating a search problem by using an existing test suite definition XML file.
+The example that shall be used is if the user followed the walk through in Section \ref{sec:createsearchproblem} by did not perform Step \ref{enum:createsaveprobs}.
+This would result in the ``Max Problem'' created not to be registered, and therefore not listed in the search problem drop down list, once the software is restarted.
+This is the process that would have to be performed if a researcher were to try use a test suite created and distribute by another researcher.
+
+\begin{enumerate}
+ \item Launch the client with the command below
+\begin{lstlisting}
+java -jar MengQuantum.jar config/SearchEngine.xml config/FitnessFunction.xml config/Problems.xml
+\end{lstlisting}
+The client shall launch and you shall be provided with the Graphical User Interface as shown in Figure \ref{fig:walkthrough1}.
+
+\item Using the mouse, left click on the button labelled Load'', as shown in Figure \ref{fig:walkthrough2}.
+The ``Load Test Suite to Create Problem'' dialog box shall be displayed, as shown in Figure \ref{fig:walkthrough5}.
+
+\item Using the mouse, left click in the text area to the right of the ``Name'' and enter ``Max Problem''.
+
+\item Using the mouse, left click on the button labelled ``Select Definition File''.
+A new dialog box shall open to select the location and file name for the test suite definition file.
+The dialog box is a standard ``file chooser'' as used in many applications so the operation of it should be familiar to all users.
+
+\item Using the file chooser, navigate to the ``Config'' directory provided in the distribution.
+A number of XML files should be listed, including SearchEngine.xml and FitnessFunction.xml.
+Using the mouse, select the ``maxproblem.xml'' file and left click on the button labelled ``Open'' to close the dialog box.
+
+\item Using the mouse, left click in the text area to the right of the ``Description'' label and enter ``Max Problem as described by Massey''.
+
+\item Using the mouse, left click on the button labelled ``Okay'' to save the test suite to file and close the dialog box.
+
+\item \label{enum:loadsaveprobs}Optional: To ensure that the ``Max Problem'' search problem is registered and loaded when the client is launched in the future left click on the button labelled ``Save''.
+It saves the changes to the ``config/Problems.xml'' file containing the problem definitions, see Section \ref{sec:problemman}.
+
+\end{enumerate}
+
+\section{Editing an Existing Search Problem}
+
+Using the test cases listed in Figure \ref{fig:maxprobtcs} this section will go through how to edit the search problem for the Max problem created in Section \ref{sec:createsearchproblem}.
+The walk through will use the provided client rather than the standalone editor but as the two use the same components using the guide with the standalone editor should not cause any problems.
+With the standalone editor the test suite definition XML file needs to be manually loaded using the ``Open File'' button.
+The walk through shall add an additional test case, test case $2$.
+
+\begin{enumerate}
+ \item Launch the client with the command below
+\begin{lstlisting}
+java -jar MengQuantum.jar config/SearchEngine.xml config/FitnessFunction.xml config/Problems.xml
+\end{lstlisting}
+The client shall launch and you shall be provided with the Graphical User Interface as shown in Figure \ref{fig:walkthrough1}.
+
+\item Using the problem selection drop down list, select ``Max Problem''.
+
+\item Using the mouse, left click on the button labelled ``Edit Selected Problem'', as shown in Figure \ref{fig:walkthrough2}.
+This shall launch the ``Edit Current Problem and Test Suite'' dialog box, as shown in Figure \ref{fig:walkthrough6}.
+This dialog box is almost identical to the ``Create Problem and Test Suite'' used in Section \ref{sec:createsearchproblem}.
+
+\item Using the mouse, left click on the button labelled ``Add Test Case''.
+We shall now enter test case $2$.
+
+The input state is shown in the left hand table.
+Put the value $0.5$ in the second column of the rows labelled with the states $\ket{0000}$, $\ket{0101}$, $\ket{1011}$ and $\ket{1110})$.
+
+The output state is shown in the right hand table.
+Put the value $0.5$ in the second column of the rows labelled with the states $\ket{0010}$, $\ket{0110}$, $\ket{1010}$ and $\ket{1110})$.
+
+\item Using the mouse, left click on the button labelled ``Okay''.
+A warning dialog box is produced, see Figure \ref{fig:walkthrough7} .
+This shows the difference between the ``Edit Current Problem and Test Suite'' dialog box and the ``Create Problem and Test Suite'' used in Section \ref{sec:createsearchproblem}.
+When the ``Okay'' button is pressed on the ``Create Problem and Test Suite'' used in Section \ref{sec:createsearchproblem} the test suite definition file is automatically updated.
+This is because the ``Create Problem and Test Suite'' creates and entirely new search problem and test suite.
+The``Edit Current Problem and Test Suite'' dialog box is used to edit an existing search problem with a pre-existing test suite XML definition file.
+A researcher may want to make changes to a search problem for experimentation but not necessarily effect the contents of the test suite XML definition file.
+
+If the researcher does want the test suite XML definition file to be updated to reflect the changes made to the test suite, the button labelled ``Save and Close'' should be used instead of the button labelled ``Okay''.
+
+\end{enumerate}
+
+\section{Carrying Out The Search}
+\label{sec:carryingoutthesearch}
+
+This section shall use the search problem created in Section \ref{sec:createsearchproblem} to perform a search.
+The search engine that shall be used is the local version of the ``Q-Pace IV Based Search Engine'', see Section \ref{sec:provsearcheng} with the ``Simple'' suitability measure, see Section \ref{sec:simplsuitmeas}.
+
+\begin{enumerate}
+ \item Launch the client with the command below
+\begin{lstlisting}
+java -jar MengQuantum.jar config/SearchEngine.xml config/FitnessFunction.xml config/Problems.xml
+\end{lstlisting}
+The client shall launch and you shall be provided with the Graphical User Interface as shown in Figure \ref{fig:walkthrough1}.
+
+\item Using the search engine selection drop down list, select ``Genetic Programming - QPace Local''.
+
+\item Using the suitability selection drop down list, select ``Simple Suitability''.
+
+\item Using the problem selection drop down list, select ``Max Problem''.
+
+\item Using the mouse, left click on the button labelled ``Evolve'', as shown in Figure \ref{fig:walkthrough2}.
+This shall open up a new dialog box specific for the search engine selected.
+
+\item \label{enum:searchsettings} Most default settings shall be maintained.
+The three items that shall be changed are the number of generations, the mutation rate and the number of search iterations.
+Using the mouse, left click in the text area to the right of the ``Generations'' label and enter $2000$.
+Using the mouse, left click in the text area to the right of the ``Mutation Rate'' label and enter $0.3$.
+Using the mouse, left click in the text area to the right of the ``Number of Iterations'' label and enter $3$.
+
+\item To start the search, click on the button labelled ``Evolve Now''.
+This shall initiate the search and the dialog box shall close.
+All the selection drop down lists will be disabled so that changes cannot be made during a search.
+During the search, a statistics panel is provided as can be see in Figure \ref{fig:walkthrough8}.
+If the JPPF version of the search engine were selected,  the statistics panel would provide much less information due to the amount of information available due to the distribution.
+
+\item When the search is complete, the results shall be displayed in the central panel as can be seen in Figure \ref{fig:walkthrough9}.
+
+\end{enumerate}
+
+\section{Analysing the Search Results}
+
+Once the search is completed, the results are shown in the central panel as can be seen in Figure \ref{fig:walkthrough9}.
+This section assumes that the results are produced by following the steps in Section \ref{sec:carryingoutthesearch}.
+
+\subsection{Which Search Result?}
+
+In Step \ref{sec:carryingoutthesearch} of Section \ref{sec:carryingoutthesearch} the number of search iterations is set to 3.
+This means that three completely separate searches are carried out.
+Obviously this means that there are three separate search results produced.
+All search results are available for the user to analyse.
+
+The user interface provides a drop down list of all the available search results.
+Below the drop down list are the details of the selected results.
+
+\clearpage
+\section{Referenced Figures}
+\begin{figure}[h!]
+  \includegraphics[width=\textwidth]{walkthrough1.png}
+ \caption{Initial State of the Client GUI}
+ \label{fig:walkthrough1}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+  \includegraphics[width=10cm]{walkthrough2.png}
+\end{center}
+ \caption{Right hand menu}
+ \label{fig:walkthrough2}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{walkthrough3.png}
+ \caption{Create Problem and Test Suite dialog box}
+ \label{fig:walkthrough3}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{walkthrough4.png}
+ \caption{Full Create Problem and Test Suite dialog box}
+ \label{fig:walkthrough4}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{walkthrough5.png}
+ \caption{Load Test Suite to Create Problem dialog box}
+ \label{fig:walkthrough5}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{walkthrough6.png}
+ \caption{Edit Current Problem and Test Suite dialog box}
+ \label{fig:walkthrough6}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{walkthrough7.png}
+ \caption{Warning Produced by Pressing Okay}
+ \label{fig:walkthrough7}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{walkthrough8.png}
+ \caption{Search Progress Statistics}
+ \label{fig:walkthrough8}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{walkthrough9.png}
+ \caption{Client GUI after Search is Complete}
+ \label{fig:walkthrough9}
+\end{figure}
