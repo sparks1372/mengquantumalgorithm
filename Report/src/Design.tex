@@ -465,6 +465,11 @@ It is intended that the framework would be used primarily to perform the followi
 
 It is not seen as a priority of the system to provide the same level of flexibility to the circuit building as the search engines and fitness functions.
 
+The provided circuit builder has several rules.
+For $Gate1$ and $Gate2$, the \emph{expnode} expression, see Section \ref{sec:quantalgs}, can evaluate to $0$, however due to the way the qubits are numbered, see Section \ref{sec:qubitnum}, there is not qubit $0$.
+It has been decided that is $0$ is found it will instead use the value \emph{System\_Size}.
+In contrary with the decision taken by Massey\cite{masseythesis}, if the \emph{expnode} expression evaluates to more than \emph{System\_Size} that value won't be coerced to \emph{System\_Size} but the instruction shall just be skipped.
+
 The circuits that are produced by a circuit builder are hidden behind an interface.
 This is to allow third party circuit builders to use their own internal representation and also to allow any future optimisations made in future work on this framework to be made without impacting the work of researchers.
 
@@ -692,15 +697,17 @@ This circuit then needs to be evaluated against all test cases held in the respe
 As mentioned in Section \ref{sec:testsuitestruc} the framework uses a start and final state pair to define the desired operation of the algorithm.
 Therefore the framework must provide the simulation of an arbitary circuit on and arbitary start state.
 
-Due to the design decisions taken previously all the functionality is provided and just needs a simple management process.
-With the circuit interface providing an ordered iterator over the gates in the circuit, and each gate providing an \emph{apply} method the management just needs to work through all the gates in the iterator and calling the \emph{apply} method with the returned state of the previous call.
+Due to the design decisions taken previously all the functionality is provided and just needs a simple management process, this is provided by a class implementing the \emph{circuitevaluator} interface.
+A basic implementation is provided and third party implementations can also be used.
+
+With the circuit interface providing an ordered iterator over the gates in the circuit, and each gate providing an \emph{apply} method the circuit evaluator just needs to work through all the gates in the iterator and calling the \emph{apply} method with the returned state of the previous call.
 To evaluate the circuit against a test case, the process simply needs to use the start state provided by the test case as the argument of the \emph{apply} method of the first gate.
 The state returned by the final call to the \emph{apply} method is a state equivalent to the quantum state that would exist if the circuit were to be produced and provided with the same initial state.
 
 The suitability measures have a very simple interface.
 They only provide a method to retrieve the name of the suitability measure and a method to produce a numerical measure of similarity between two quantum states.
 
-Using the selected suitability measure  the final state produced by the management process is compared to the expected final state defined in the test case.
+Using the selected suitability measure the final state produced by the citcuit is compared to the expected final state defined in the test case.
 Repeating this process for all available test cases in the current test suite, a numerical and therefore comparable suitability value can be assigned to any algorithm produced by the search engine.
 
 This is one example where the design of the framework ensures that the when combining all the elements of the framework (the gate, the circuit, the test cases etc) the logic required is simple.
@@ -860,7 +867,7 @@ This limit on the editor is to try and increase the integration with third party
 
 \section{Search Engine Implementations}
 \label{sec:provsearcheng}
-\subsection{Q-Pace IV Based Search Engine}
+\subsection{Q-Pace Based Search Engine}
 Alongside the framework, a search engine based in the Q-Pace IV search engine featured in \cite{masseythesis} has been developed.
 This is a Genetic Programming based search engine using the ECJ\cite{ecjtool} system.
 
@@ -877,14 +884,66 @@ The bespoke solution was discarded as it is completely opposed to the philosophy
 The other open source frameworks, including Apache Hadoop\cite{apahadoop}, were not chosen as they provided much more functionality than was required and as a result were much more complex and intrusive in the source code.
 
 
-\section{Suitability Measure Implementations}
+\section{Suitability Measure and Circuit Evaluator Implementations}
 \label{sec:provsuitmeas}
+
+There are several suitability measures provided with the framework.
+The three main measures are outlined in this section.
+Formal definitions can be seen in Section \ref{sec:suitmeasdefs}.
+
+It can be seen that neither of the suitability measures introduce parsimony.
+This is due to the design of the framework.
+The suitability measure is called for each test case.
+However, the size of the algorithms is constant for all test cases and the size of the circuit is constant for all test sets.
+To add parsimonious pressure it would have to be added by the circuit evaluator.
+If it were added to the suitability measure it would be applied $N$ times, where $N$ is the number of test cases in the entire test suite, which is obviously not acceptable.
+
+This also means that parsimonious pressure can be added to any fitness function simply by using a parsimonious circuit evaluator.
+Both a parsimonious and non-parsimonious circuit evaluator implementations are provided.
+The parsimonious implementation follows Equation \ref{eqn:parsimoniouscircuitevaluator} where $M$ is the number of test sets and $N_i$ is the number of test cases in test set $i$.
+The non-parsimonious implementation follows Equation \ref{eqn:nonparsimoniouscircuitevaluator} where $M$ is the number of test sets and $N_i$ is the number of test cases in test set $i$.
+
+\begin{equation}
+ totalsuit = \sum_{i=0}^{M-1}\sum_{j=0}^{N_M-1}fit_{ij}+circuitsize_i+algorithmsize
+\label{eqn:parsimoniouscircuitevaluator}
+\end{equation}
+\begin{equation}
+ totalsuit = \sum_{i=0}^{M-1}\sum_{j=0}^{N_M-1}fit_{ij}
+\label{eqn:nonparsimoniouscircuitevaluator}
+\end{equation}
+
+Both circuit evaluators provide scaling with respect to the number of ``hits''.
+The use of the ``hits'' value is left for the individual suitability measures.
+The ``hits'' for each test case is returned by the suitability measure in a \emph{Fitness} object, the return type of the \emph{evaluate} method.
+This scaling works as shown in Equation \ref{eqn:cirevalhitsscaling}.
+
+\begin{equation}
+ algsuit = 
+\left\{
+  \begin{array}{cc} totalsuit, & \mbox{if } hits={0}\\ 
+  \frac{totalsuit}{hit}, & \mbox{otherwise}\end{array}
+\right.
+\label{eqn:cirevalhitsscaling}
+\end{equation}
+
 \subsection{Simple Suitability Measure}
 \label{sec:simplsuitmeas}
+The simple suitability is a exactly that, it is very na\"{\i}ve and looks purely at the probabilities for each state.
+The phase is ignored entirely.
+It is to emulate measurement.
+As the phase, both global and relative, cannot be observed for some problems it could be seen as irrelevant.
+A good example of this is the Deutsch problem.
+The output of both the original Deutsch, see Section \ref{sec:DeutAlg}, and the Deutsch-Jozsa, see Section \ref{sec:DeutJozsaAlg}, algorithms are the result of measuring a number of the qubits.
+These measurements can only produce a state.
+Each posible state has a specific probability of being observed.
+These probabilities are not effected by the phase and therefore it can be proposed that the phase of the state is irrelevant to solve the problem.
 
 \subsection{Phase Aware Suitability Measure}
-
-\subsection{Simple Parsimonious Suitability Measure}
+\label{sec:phaseawaresuitmeas}
+This suitability measure is less na\"{\i}ve that the Simple suitability measure and includes the phase in the calculation.
+For some search problems do are not based on the result od meaurement.
+For example, the Quantum Teleportation protocol, see Section \ref{sec:quantteleproto}, is not based on the probability of observation.
+The expected result of the protocol is the teleportation of a quantum state, both probability amplitudes and the phases.
 
 \section{Provided Search Problems}
 \label{sec:provsearchprobs}

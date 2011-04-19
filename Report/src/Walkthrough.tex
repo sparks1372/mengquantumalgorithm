@@ -15,8 +15,8 @@ The permutation $(0,1,2,3)\rightarrow(w,x,y,z)$ is encoded as the superposition 
 There are several options when selecting the encoding of the expected output of the system.
 This is due to the output being two qubits, as it is an index between $0$ and $3$, but the input requires four qubits.
 Three of the encoding choices are $\ket{**a_1a_0}$, $\ket{a_1a_0**}$ and $\ket{a_1a_0a_1a_0}$, where$*$ denotes that we don't care what the value is.
-The encoding that we shall use in the walk through is $\ket{**a_1a_0}$ so that it is only the lowest significant qubits that we are actually interested in.
-This is to try and help the search by increasing the number of final states that the circuit can produce and be considered successful.
+The encoding that we shall use in the walk through is $\ket{a_1a_0**}$ so that it is only the highest significant qubits that we are actually interested in.
+% This is to try and help the search by increasing the number of final states that the circuit can produce and be considered successful.
 
 Figure \ref{fig:maxprobtcs} shows the list of all $24$ test cases.
 
@@ -24,30 +24,30 @@ Figure \ref{fig:maxprobtcs} shows the list of all $24$ test cases.
 \begin{center}
  \begin{tabular}{c|ccc|} 
  Test Case ID & Input State& $\rightarrow$ & Output State \\  \hline
-  1 & $\frac{1}{2}(\ket{0000}+\ket{0101}+\ket{1010}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0011}+\ket{0111}+\ket{1011}+\ket{1111})$ \\ %\hline
-  2 & $\frac{1}{2}(\ket{0000}+\ket{0101}+\ket{1011}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0010}+\ket{0110}+\ket{1010}+\ket{1110})$ \\ %\hline
-  3 & $\frac{1}{2}(\ket{0000}+\ket{0110}+\ket{1001}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0011}+\ket{0111}+\ket{1011}+\ket{1111})$ \\ %\hline
-  4 & $\frac{1}{2}(\ket{0000}+\ket{0110}+\ket{1011}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0010}+\ket{0110}+\ket{1010}+\ket{1110})$ \\ %\hline
-  5 & $\frac{1}{2}(\ket{0000}+\ket{0111}+\ket{1001}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0001}+\ket{0101}+\ket{1001}+\ket{1101})$ \\ %\hline
-  6 & $\frac{1}{2}(\ket{0000}+\ket{0111}+\ket{1010}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0001}+\ket{0101}+\ket{1001}+\ket{1101})$ \\ \hline
-  7 & $\frac{1}{2}(\ket{0001}+\ket{0100}+\ket{1010}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0011}+\ket{0111}+\ket{1011}+\ket{1111})$ \\ %\hline
-  8 & $\frac{1}{2}(\ket{0001}+\ket{0100}+\ket{1011}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0010}+\ket{0110}+\ket{1010}+\ket{1110})$ \\ %\hline
-  9 & $\frac{1}{2}(\ket{0001}+\ket{0110}+\ket{1000}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0011}+\ket{0111}+\ket{1011}+\ket{1111})$ \\ %\hline
-  10 & $\frac{1}{2}(\ket{0001}+\ket{0110}+\ket{1011}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0010}+\ket{0110}+\ket{1010}+\ket{1110})$ \\ %\hline
-  11 & $\frac{1}{2}(\ket{0001}+\ket{0111}+\ket{1000}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0001}+\ket{0101}+\ket{1001}+\ket{1101})$ \\ %\hline
-  12 & $\frac{1}{2}(\ket{0001}+\ket{0111}+\ket{1010}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0001}+\ket{0101}+\ket{1001}+\ket{1101})$ \\ \hline
-  13 & $\frac{1}{2}(\ket{0010}+\ket{0100}+\ket{1001}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0011}+\ket{0111}+\ket{1011}+\ket{1111})$ \\ %\hline
-  14 & $\frac{1}{2}(\ket{0010}+\ket{0100}+\ket{1011}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0010}+\ket{0110}+\ket{1010}+\ket{1110})$ \\ %\hline
-  15 & $\frac{1}{2}(\ket{0010}+\ket{0101}+\ket{1000}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0011}+\ket{0111}+\ket{1011}+\ket{1111})$ \\ %\hline
-  16 & $\frac{1}{2}(\ket{0010}+\ket{0101}+\ket{1011}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0010}+\ket{0110}+\ket{1010}+\ket{1110})$ \\ %\hline
-  17 & $\frac{1}{2}(\ket{0010}+\ket{0111}+\ket{1000}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0001}+\ket{0101}+\ket{1001}+\ket{1101})$ \\ %\hline
-  18 & $\frac{1}{2}(\ket{0010}+\ket{0111}+\ket{1001}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0001}+\ket{0101}+\ket{1001}+\ket{1101})$ \\ \hline
-  19 & $\frac{1}{2}(\ket{0011}+\ket{0100}+\ket{1001}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0100}+\ket{1000}+\ket{1100})$ \\ %\hline
-  20 & $\frac{1}{2}(\ket{0011}+\ket{0100}+\ket{1010}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0100}+\ket{1000}+\ket{1100})$ \\ %\hline
-  21 & $\frac{1}{2}(\ket{0011}+\ket{0101}+\ket{1000}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0100}+\ket{1000}+\ket{1100})$ \\ %\hline
-  22 & $\frac{1}{2}(\ket{0011}+\ket{0101}+\ket{1010}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0100}+\ket{1000}+\ket{1100})$ \\ %\hline
-  23 & $\frac{1}{2}(\ket{0011}+\ket{0110}+\ket{1000}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0100}+\ket{1000}+\ket{1100})$ \\ %\hline
-  24 & $\frac{1}{2}(\ket{0011}+\ket{0110}+\ket{1001}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0100}+\ket{1000}+\ket{1100})$ \\ \hline
+  1 & $\frac{1}{2}(\ket{0000}+\ket{0101}+\ket{1010}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{1100}+\ket{1101}+\ket{1110}+\ket{1111})$ \\ %\hline
+  2 & $\frac{1}{2}(\ket{0000}+\ket{0101}+\ket{1011}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{1000}+\ket{1001}+\ket{1010}+\ket{1011})$ \\ %\hline
+  3 & $\frac{1}{2}(\ket{0000}+\ket{0110}+\ket{1001}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{1100}+\ket{1101}+\ket{1110}+\ket{1111})$ \\ %\hline
+  4 & $\frac{1}{2}(\ket{0000}+\ket{0110}+\ket{1011}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{1000}+\ket{1001}+\ket{1010}+\ket{1011})$ \\ %\hline
+  5 & $\frac{1}{2}(\ket{0000}+\ket{0111}+\ket{1001}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0100}+\ket{0101}+\ket{0110}+\ket{0111})$ \\ %\hline
+  6 & $\frac{1}{2}(\ket{0000}+\ket{0111}+\ket{1010}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0100}+\ket{0101}+\ket{0110}+\ket{0111})$ \\ \hline
+  7 & $\frac{1}{2}(\ket{0001}+\ket{0100}+\ket{1010}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{1100}+\ket{1101}+\ket{1110}+\ket{1111})$ \\ %\hline
+  8 & $\frac{1}{2}(\ket{0001}+\ket{0100}+\ket{1011}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{1000}+\ket{1001}+\ket{1010}+\ket{1011})$ \\ %\hline
+  9 & $\frac{1}{2}(\ket{0001}+\ket{0110}+\ket{1000}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{1100}+\ket{1101}+\ket{1101}+\ket{1111})$ \\ %\hline
+  10 & $\frac{1}{2}(\ket{0001}+\ket{0110}+\ket{1011}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{1000}+\ket{1001}+\ket{1010}+\ket{1011})$ \\ %\hline
+  11 & $\frac{1}{2}(\ket{0001}+\ket{0111}+\ket{1000}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0100}+\ket{0101}+\ket{0110}+\ket{0111})$ \\ %\hline
+  12 & $\frac{1}{2}(\ket{0001}+\ket{0111}+\ket{1010}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0100}+\ket{0101}+\ket{0110}+\ket{0111})$ \\ \hline
+  13 & $\frac{1}{2}(\ket{0010}+\ket{0100}+\ket{1001}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{1100}+\ket{1101}+\ket{1101}+\ket{1111})$ \\ %\hline
+  14 & $\frac{1}{2}(\ket{0010}+\ket{0100}+\ket{1011}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{1000}+\ket{1001}+\ket{1010}+\ket{1011})$ \\ %\hline
+  15 & $\frac{1}{2}(\ket{0010}+\ket{0101}+\ket{1000}+\ket{1111})$ & $\rightarrow$ & $\frac{1}{2}(\ket{1100}+\ket{1101}+\ket{1110}+\ket{1111})$ \\ %\hline
+  16 & $\frac{1}{2}(\ket{0010}+\ket{0101}+\ket{1011}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{1000}+\ket{1001}+\ket{1010}+\ket{1011})$ \\ %\hline
+  17 & $\frac{1}{2}(\ket{0010}+\ket{0111}+\ket{1000}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0100}+\ket{0101}+\ket{0110}+\ket{0111})$ \\ %\hline
+  18 & $\frac{1}{2}(\ket{0010}+\ket{0111}+\ket{1001}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0100}+\ket{0101}+\ket{0110}+\ket{0111})$ \\ \hline
+  19 & $\frac{1}{2}(\ket{0011}+\ket{0100}+\ket{1001}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0001}+\ket{0010}+\ket{0011})$ \\ %\hline
+  20 & $\frac{1}{2}(\ket{0011}+\ket{0100}+\ket{1010}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0001}+\ket{0010}+\ket{0011})$ \\ %\hline
+  21 & $\frac{1}{2}(\ket{0011}+\ket{0101}+\ket{1000}+\ket{1110})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0001}+\ket{0010}+\ket{0011})$ \\ %\hline
+  22 & $\frac{1}{2}(\ket{0011}+\ket{0101}+\ket{1010}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0001}+\ket{0010}+\ket{0011})$ \\ %\hline
+  23 & $\frac{1}{2}(\ket{0011}+\ket{0110}+\ket{1000}+\ket{1101})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0001}+\ket{0010}+\ket{0011})$ \\ %\hline
+  24 & $\frac{1}{2}(\ket{0011}+\ket{0110}+\ket{1001}+\ket{1100})$ & $\rightarrow$ & $\frac{1}{2}(\ket{0000}+\ket{0001}+\ket{0010}+\ket{0011})$ \\ \hline
  \end{tabular}
 \end{center}
 \caption{Max Problem Test Cases}
@@ -65,7 +65,7 @@ The walk through shall only include the input of two randomly chosen test cases,
 \begin{enumerate}
  \item Launch the client with the command below
 \begin{lstlisting}
-java -jar MengQuantum.jar config/SearchEngine.xml config/FitnessFunction.xml config/Problems.xml
+java -jar MengQuantum.jar config/SearchEngine.xml config/FitnessFunction.xml config/Problems.xml false
 \end{lstlisting}
 The client shall launch and you shall be provided with the Graphical User Interface as shown in Figure \ref{fig:walkthrough1}.
 
@@ -95,7 +95,8 @@ The input state is shown in the left hand table.
 Put the value $0.5$ in the second column of the rows labelled with the states $\ket{0000}$, $\ket{0101}$, $\ket{1010}$ and $\ket{1111})$.
 
 The output state is shown in the right hand table.
-Put the value $0.5$ in the second column of the rows labelled with the states $\ket{0011}$, $\ket{0111}$, $\ket{1011}$ and $\ket{1111})$.
+Put the value $0.5$ in the second column of the rows labelled with the states $\ket{1100}$, $\ket{1101}$, $\ket{1110}$ and $\ket{1111})$.
+The value $0.5$ is used as it means that the probability of any of them is $\frac{1}{4}$ as no specific output is desired as long as the two most significant qubits match.
 
 \item \label{enum:addtcstep} Using the mouse, left click on the button labelled ``Add Test Case''.
 We shall now enter test case $10$.
@@ -104,7 +105,7 @@ The input state is shown in the left hand table.
 Put the value $0.5$ in the second column of the rows labelled with the states $\ket{0001}$, $\ket{0100}$, $\ket{1010}$ and $\ket{1111})$.
 
 The output state is shown in the right hand table.
-Put the value $0.5$ in the second column of the rows labelled with the states $\ket{0010}$, $\ket{0110}$, $\ket{1010}$ and $\ket{1110})$.
+Put the value $0.5$ in the second column of the rows labelled with the states $\ket{1000}$, $\ket{1001}$, $\ket{1010}$ and $\ket{1011})$.
 
 \item Using the mouse, left click in the text area to the right of the ``Description'' label and enter ``Max Problem as described by Massey''.
 
@@ -128,7 +129,7 @@ This is the process that would have to be performed if a researcher were to try 
 \begin{enumerate}
  \item Launch the client with the command below
 \begin{lstlisting}
-java -jar MengQuantum.jar config/SearchEngine.xml config/FitnessFunction.xml config/Problems.xml
+java -jar MengQuantum.jar config/SearchEngine.xml config/FitnessFunction.xml config/Problems.xml false
 \end{lstlisting}
 The client shall launch and you shall be provided with the Graphical User Interface as shown in Figure \ref{fig:walkthrough1}.
 
@@ -164,7 +165,7 @@ The walk through shall add an additional test case, test case $2$.
 \begin{enumerate}
  \item Launch the client with the command below
 \begin{lstlisting}
-java -jar MengQuantum.jar config/SearchEngine.xml config/FitnessFunction.xml config/Problems.xml
+java -jar MengQuantum.jar config/SearchEngine.xml config/FitnessFunction.xml config/Problems.xml false
 \end{lstlisting}
 The client shall launch and you shall be provided with the Graphical User Interface as shown in Figure \ref{fig:walkthrough1}.
 
@@ -204,7 +205,7 @@ The search engine that shall be used is the local version of the ``Q-Pace IV Bas
 \begin{enumerate}
  \item Launch the client with the command below
 \begin{lstlisting}
-java -jar MengQuantum.jar config/SearchEngine.xml config/FitnessFunction.xml config/Problems.xml
+java -jar MengQuantum.jar config/SearchEngine.xml config/FitnessFunction.xml config/Problems.xml false
 \end{lstlisting}
 The client shall launch and you shall be provided with the Graphical User Interface as shown in Figure \ref{fig:walkthrough1}.
 

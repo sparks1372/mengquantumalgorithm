@@ -1,1 +1,199 @@
 \chapter{Further Observation and Evaluation}
+
+The majority of this report concentrates on the details of the framework and does not actually use the framework to try produce a quantum algorithm.
+This section shall focus on using the framework with the provided suitability measures and search engine to try tackle a few well known quantum problems.
+
+\section{Deutsch Algoritm}
+The details of the Deutsch algorithm is presented in Section \ref{sec:DeutAlg}.
+The basic aim is to find a way to determine whether the function $f$ is balanced or constant, we can assume it is one of these.
+
+This search problem is slightly unusual as in the test case it is not the input that changes, it is the custom gates.
+This results in there are only four test cases for the Deutsch algorithm.
+This is due to the Deutsch Algorithm only solving the problem for single qubit functions and therefore there are only four possible binary functions.
+
+
+
+\begin{figure}
+\centering
+\subfigure[$f_1$]{
+$
+\begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 
+\end{pmatrix}
+$
+}
+\subfigure[$f_2$]{
+$
+\begin{pmatrix}
+0 && 0 && 1 && 0 \\
+0 && 0 && 0 && 1 \\
+1 && 0 && 0 && 0 \\
+0 && 1 && 0 && 0 
+\end{pmatrix}
+$
+}
+\subfigure[$f_3$]{
+$
+\begin{pmatrix}
+1 && 0 && 0 && 0 \\
+0 && 0 && 0 && 1 \\
+0 && 0 && 1 && 0 \\
+0 && 1 && 0 && 0 
+\end{pmatrix}
+$
+}
+\subfigure[$f_4$]{
+$
+\begin{pmatrix}
+0 && 0 && 1 && 0 \\
+0 && 1 && 0 && 0 \\
+1 && 0 && 0 && 0 \\
+0 && 0 && 0 && 1 
+\end{pmatrix}
+$
+}
+\caption{Matricies of Custom Gates Implementing the four Possible Functions}
+ \label{fig:deutschfunctions}
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+ & \targ & \qw \\
+ & \gate{\mathcal{F}}\qwx & \qw
+}
+\]
+\caption{Matrix Circuit}
+ \label{fig:matrepresentation}
+\end{figure}
+
+
+This search problem requires custom gates to be used to provide the oracle functions.
+These matricies implementing the oracles can be seen in Figure \ref{fig:deutschfunctions}.
+The matrices are the unitary operations of a controlled not when the control is provided by the value $f(x)$.
+They effectively represent the circuit shown in Figure \ref{fig:matrepresentation}.
+It can be seen that the circuit of the Deutsch Algorithm, Figure \ref{Deutsch-Cir}, includes the circuit represented by the matrices.
+The circuit in Figure \ref{fig:matrepresentation} is inverted due to the number of the qubits in the framework.
+The matrices have been created taking into account the different qubit numbering so the semantics of the circuit in Figure \ref{fig:matrepresentation} and the respective section of the Deutsch Algorithm circuit in Figure \ref{Deutsch-Cir} are the same.
+
+The start state for each test case is $\ket{10}$.
+For functions $1$ and $2$, which are constant, the expected final state is $\frac{1}{\sqrt{2}}(\ket{00}-\ket{10})$, equivalent to $\frac{1}{\sqrt{2}}((\ket{0}-\ket{1})\ket{0})$.
+For functions $3$ and $4$, which are balanced, the expected final state is $\frac{1}{\sqrt{2}}(\ket{01}-\ket{11})$, equivalent to $\frac{1}{\sqrt{2}}((\ket{0}-\ket{1})\ket{1})$
+It is simple to see that, taking into account the different qubit numbering, these are the same output states that are produced by the Deutsch Algorithm in Section \ref{sec:DeutAlg}.
+
+After creating the custom matrices using the provided matrix editor, see Section \ref{sec:indmatrixeditor}, and the test suite using the integrated search problem creator, all elements required for the search were complete.
+The search engine that was used was the Q-Pace based search engine provided with the framework, see Section \ref{sec:provsearcheng}.
+The suitability measure that was used was the Simple suitability measure variant that only reports a ``hit'' for non-zero expected values.
+
+All instructions were included in the search except \emph{Create\_SWAP} and \emph{Create\_Zero}.
+All search parameters were kept as the default except time was not used as the seeds to ensure the experiment could be repeated.
+
+The full algorithm that was found is listed in Section \ref{sec:DeutschExpAppFullAlg}.
+The algorithm below is a hand optimised version of that listed in \ref{sec:DeutschExpAppFullAlg} with only the instructions that apply when \emph{System\_Size} is $2$.
+
+\begin{lstlisting}
+Create_H on gate 0
+Create_H on gate 1
+Create_Custom1 on gate 1
+Create_H on gate 1
+\end{lstlisting}
+
+The first instruction is to put a hadamard gate onto gate $0$.
+Gate zero doesn't exist as the qubit numbering is from $1$ upwards.
+This is an example of when the Genetic Programming has taken advantage of the environment.
+$0$ is used as the value for ``System\_Size'' within the system so as the expression evaluates to $0$ it effectively is instructing that the gate should be put on th ``System\_Size'' qubit.
+
+The circuit that is produced by this algorithm is shown in Figure \ref{fig:evodeutschcir}.
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+&\gate{H}&\qw&\qw&\qw&\\%2
+&\qw&\gate{H}&\gate{C0}&\gate{H}&\\%1
+}
+\]
+\caption{Circuit Produced by Algorithm for Two Qubits}
+\label{fig:evodeutschcir}
+\end{figure}
+
+It is very clear to see that the search process has found the exact same circuit that was published by Cleve et al\cite{Cleve98quantumalgorithms}.
+This is an unpreceidented result.
+To the best of my knowledge, this circuit has not been produced using search by previous research.
+This is also the first time a deterministic algorithm has been found, using search, for either the original Deutsch, single qubit oracles, or Deutsch Josza, multiple qubit oracles, problems.
+
+\section{Deutsch Jozsa Problem}
+
+After success with the original Deutsch, single qubit, problem the most natural progression is to multiple qubit Deutsch Josza problem.
+The basic aim is the same, to decide if a function is balanced or constant.
+
+In this experiment, the test suite used includes the test cases with oracle functions on $1$ and $2$ qubits.
+This results that there are only twelve test cases for the Deutsch algorithm.
+Due to the previous experiment, it is known that Genetic Programming can produce a solution to the $1$ qubit problem and it is expected that including these test cases will assist the search.
+
+As with the previous experiment matrices were made to represent the oracle functions.
+These matrices for the $2$ qubit oracles are shown in Figure \ref{fig:deutschjozsafunctions} in Section \ref{sec:deutschjozsa}.
+
+The test cases for single qubit oracles, the same test cases as used in the previous experiment is used.
+For the two qubit oracles, the test cases that are used all have a staring state of $\ket{100}$.
+For $f_1$ and $f_2$ the expected final state is set to $\frac{1}{\sqrt{2}}(\ket{000}-\ket{100})$.
+For $f_3$, $f_4$ ,$f_5$, $f_6$, $f_7$ and $f_8$ the expected final state is set to $\frac{1}{\sqrt{6}}(\ket{001}+\ket{010}+\ket{011}-\ket{101}-\ket{110}-\ket{111})$.
+
+The search engine that was used was the Q-Pace based search engine provided with the framework, see Section \ref{sec:provsearcheng}.
+The suitability measure that was used was the Simple suitability measure variant that only reports a ``hit'' for non-zero expected values.
+
+Initial experimentation showed that this search problem was significantly harder than the previous experiment.
+The final search parameters used are shown in Figures \ref{fig:deutschjozsaparams} and \ref{fig:deutschjozsagates} in Section \ref{sec:deutschjozsasearchparams}.
+
+
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+&\ctrl{1} 	&\gate{P(3.1416)}	&\gate{H}	&\qw		&\qw		&\\%2
+&\gate{H} \qwx 	&\ctrl{-1} \qwx		&\qw		&\gate{C0}	&\gate{H}	&\\%1
+}
+\]
+\caption{Deutsch Jozsa Solution - Two Qubits - Hand Optimised}
+\end{figure}
+
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+&\gate{H}	&\qw		&\qw		&\qw		&\gate{H}	&\qw		&\qw		&\qw		&\gate{H}	&\qw			&\qw		&\qw		&\gate{H}	&\qw		&\qw		&\qw		&\\%3
+&\qw		&\qw		&\gate{H}	&\qw		&\qw		&\qw		&\gate{H}	&\qw		&\qw		&\qw			&\gate{H}	&\qw		&\qw		&\qw		&\gate{H}	&\qw		&\\%2
+&\qw		&\gate{C0}	&\qw		&\gate{C0}	&\qw		&\gate{C0}	&\qw		&\gate{C0}	&\qw		&\gate{C0}		&\qw		&\gate{C0}	&\qw		&\gate{C0}	&\qw		&\gate{C0}	&\\%1
+&		&		&		&		&		&		&		&		&		&			&		&		&		&		&		&		&\\
+&\gate{H}	&\qw		&\gate{H}	&\qw		&\gate{H}	&\qw		&\gate{H}	&\qw		&\ctrl{2} 	&\gate{H}		&\qw		&\qw		&\qw		&\qw		&&&\\
+&\qw		&\qw		&\gate{H}	&\qw		&\qw		&\qw		&\gate{H}	&\qw		&\qw \qwx	&\gate{P(3.1416)}	&\qw		&\qw		&\qw		&\gate{H}	&&&\\
+&\qw		&\gate{C0}	&\qw		&\gate{C0}	&\qw		&\gate{C0}	&\qw		&\gate{C0}	&\gate{H} \qwx 	&\ctrl{-1} \qwx		&\gate{C0}	&\gate{H}	&\gate{C0}	&\ctrl{-1} \qwx	&&&
+}
+\]
+\caption{Deutsch Jozsa Solution - Three Qubits - Hand Optimised}
+\end{figure}
+
+\section{Quantum Fourier Transform}
+
+The most impressive result presented in Massey's thesis\cite{masseythesis} and subject of the subsequent paper\cite{Massey:2005:EHQ:1068009.1068288Massey:2005:EHQ:1068009.1068288} was the evolution of an algorithm to produce the Quantum Fourier Transform(QFT).
+With the QFT acting as such a central part of Shor's Algorithm, see Section \ref{sec:shorsalg}, it is a very important element for quantum algorithms.
+
+To try reproduce the results found by Massey, the test cases for QFT acting on two and three qubits were initially used.
+These were created using Octave\cite{octweb} using Quantum Computing Functions(QCF) for Matlab\cite{qcfweb}.
+The input states that were used were all twelve possible non-superpositional states.
+All test states are provided in Section \ref{sec:quantfourtransexp}.
+
+
+The search engine that was used was the Q-Pace based search engine provided with the framework, see Section \ref{sec:provsearcheng}.
+The suitability measure that was used was the Phase sensitive suitability measure, see Section \ref{sec:phaseawaresuitmeas}.
+The final search parameters used are shown in Figures \ref{fig:qftparams} and \ref{fig:qftgates} in Section \ref{sec:qftsearchparams}.
+
+
+
+
+
+
+
+
+
