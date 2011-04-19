@@ -383,7 +383,7 @@ The Dirac notation of the CNOT gate is $\vert00\rangle\langle00\vert + \vert01\r
 
 \begin{figure}
 \centering
-\subfloat[Basic Circuit]{\label{fig:singatetwocirsubfig1}
+\subfigure[Basic Circuit]{\label{fig:singatetwocirsubfig1}
 $
  \Qcircuit @C=1.0em @R=.7em {
 &&&&& \gate{X}& \qw &&&&\\
@@ -391,7 +391,7 @@ $
 }
 $
 }
-\subfloat[Full Circuit]{\label{fig:singatetwocirsubfig2}
+\subfigure[Full Circuit]{\label{fig:singatetwocirsubfig2}
 $
 \Qcircuit @C=1.0em @R=.7em {
 &&&&& \gate{X} & \qw&&&&\\
@@ -399,7 +399,7 @@ $
 }
 $
 }
-\subfloat[Corresponding Circuit]{\label{fig:singatetwocirsubfig3}
+\subfigure[Corresponding Circuit]{\label{fig:singatetwocirsubfig3}
 $
 \Qcircuit @C=1.0em @R=.7em {
 &&&&& \multigate{1}{\mathcal{F}} & \qw&&&&\\
@@ -526,7 +526,12 @@ The following few sections outline a selection of the currently known quantum al
 
 \subsection{Deutsch Algorithms}
 \label{sec:DeutAlg}
-The original Deutsch algorithm\cite{Deutsch1985} was proposed to solve the following problem:
+In 1985, Deutsch\cite{Deutsch85quantumtheory} proposed a probabilistic solution to a simple promise problem.
+The solution was improved to deterministic solution by Cleve et al.\cite{Cleve98quantumalgorithms}.
+Dispite the improvement being produced by Cleve et al. the algorithm is popularly known as the Deutsch algorithm.
+The algorithm presented in \cite{Deutsch85quantumtheory} was the first application where quantum computation is proovably faster than classical computation.
+
+The Deutsch algorithm is intended to solve the following problem:
 \begin{quote}
 Given a function $f:\{0,1\}\to\{0,1\}$, decide whether it is either a balanced, or constant function.
 The function $f(x)$ is guaranteed to be either constant or balanced.
@@ -592,13 +597,15 @@ This means that using just a single query to the function $f(x)$, the algorithm 
 
 
 \subsection{Deutsch-Jozsa Algorithm}
+\label{sec:DeutJozsaAlg}
+
 %Deutsch-Jozsa Algorithm
-The Deutsch-Jozsa algorithm\cite{1992-deutsch} is a generalisation and improvement over an earlier Deutsch algorithm\cite{Deutsch1985}.
-The algorithm described here will be the algorithm including the improvements published in \cite{Macchiavello97quantumalgorithms}, the resulting algorithm is still referred to as the Deutsch-Jozsa algorithm.
+The Deutsch-Jozsa algorithm\cite{1992-deutsch} is a generalisation and improvement over an earlier Deutsch algorithm\cite{Deutsch85quantumtheory}.
+The algorithm described here will be the algorithm including the improvements published in \cite{Cleve98quantumalgorithms}, the resulting algorithm is still referred to as the Deutsch-Jozsa algorithm.
 
 In 1992, David Deutsch and Richard Jozsa\cite{1992-deutsch} presented an extension to the Deutsch algorithm, Section \ref{sec:DeutAlg}, that allowed for functions $f:\{0,1\}^{2n}\to\{0,1\}$ to be categorised as constant or balanced.
 The algorithm was probabilistic but also required 2 invocations to the function $f(x)$.
-This means that in the worst case, with $f_1:\{0,1\}\to\{0,1\}$, the algorithm will perform worst than both the original Deutsch algorithm\cite{Deutsch1985} and the classical algorithm due to the probabilistic nature of its result.
+This means that in the worst case, with $f_1:\{0,1\}\to\{0,1\}$, the algorithm will perform worst than both the original Deutsch algorithm\cite{Deutsch85quantumtheory} and the classical algorithm due to the probabilistic nature of its result.
 This is a very limited case and performance improves as the value of n increases.
 As with the original algorithm, the number of invocations of $f(x)$ is constant, truly independent of both $n$ and $f(x)$.
 This is again an improvement over the classical algorithm which requires in the worst case $2^{n-1}+1$ to be certain of the function's classification.
@@ -627,6 +634,7 @@ This produces a state  $(\ket{0}+\ket{1})^n(\ket{0}-\ket{1})$.
 % The n input qubits, in the superposition $(\ket{0}+\ket{1})^n$, are then passed to the function we wish to classify, $f(x)$.
 The result of $f(x)$ is used as the control for a CNOT gate acting on the control qubit.
 Remember at this point that the input x is in effect all possible inputs to $f(x)$, and as such the output is all the respective outputs.
+The circuit that is produced by this algorithm is shown in Figure \ref{fig:evodeutschcir}.
 This means that each of the factors of the input are transformed, based on the action of $f(x)$.
 This can be formalised as $U_f(\ket{x},\ket{y})=(\ket{x},\ket{f(x)\oplus{y}})$.
 Using the final Hadamard gates we can use the transformation to categorise $f(x)$.
@@ -774,6 +782,7 @@ Taking into account the vast Hilbert space when assessing this circuit produces 
 However, even though the power can now be appreciated, the way in which it solves the problem is still not clear. 
 
 \subsection{Shor's Factorisation Algorithm}
+\label{sec:shorsalg}
 %Shors Algorithm
 In 1994, Peter Shor astonished the computer science community with a quantum factorisation algorithm\cite{Shor:1994jg}.
 This allowed the factorisation of integers into their constituent primes in polynomial time.
@@ -921,6 +930,7 @@ This can simply be found using the Chinese remainder theorm.
 The advantage of Shor's algorithm is that the value of $r$ can be found much faster with all values of $x$ up to the limit of $M-1$ tested simultaneously.
 
 \subsection{Quantum Teleportation Protocol}
+\label{sec:quantteleproto}
 
 The quantum teleportation protocol provides a solution to the problems
 \begin{center}
@@ -1129,21 +1139,24 @@ The evolved circuit was not as efficient by that presented in \cite{Vedral:1995g
 \end{figure}
 
 
-\subsection{Spector \emph{et al}, Deutsch's Problem}
-Lee Spector \emph{et al}\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} published a paper which used a different evolutionary approach.
-They used Genetic Programming to produce a better than classical solution to the original Deutsch\cite{Deutsch1985} problem.
-This was not an unsolved problem as explained in Section \ref{sec:DeutAlg}, however it was an example of where quantum computation was known to be more efficient than any possible classical approaches.
+\subsection{Spector \emph{et al}, Deutsch's Early Promise Problem}
+\label{sec:spectordeutschmajon}
+Lee Spector \emph{et al.}\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} published a paper which used a different evolutionary approach.
+They used Genetic Programming to produce a better than classical solution to ``Deutsch's Early Promise''\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} problem.
+This was not an unsolved problem as explained in Sections \ref{sec:DeutAlg} and \ref{sec:DeutJozsaAlg}, however it was an example of where quantum computation was known to be more efficient than any possible classical approaches.
+The specific problem that was presented was where the number of input qubits for $f$ was two.
+This makes it more comparable to the Deutsch-Jozsa algorithm that the original Deutsch algorithm.
 
 The genetic programming approach taken was the traditional tree based representation.
 The level at which the solution was represented was higher than that of both Q-PACE I and Q-PACE II.
 Both Q-PACE and Q-PACE II evolved quantum circuits whereas Spector represent solutions as ``classical programs which, when executed, construct quantum gate arrays''.
 This is the quantum program representation as defined earlier.
 
-The best solution produced a quantum gate array which did compute the answer to the Deutsch problem but was different to the Deutsch circuit\ref{Deutsch-Cir}.
-However, it was still provably more efficient than any classical algorithm.
+The best solution produced was a circuit that was different to the Deutsch-Jozsa circuit, Figure \ref{Deutsch-Jozsa-Cir}.
+It was a solution however it was a probabilistic answer to the problem rather than detemistic like the Deutsch-Jozsa solution, Section \ref{sec:DeutJozsaAlg}.
 
 As well as fixed size solutions, the function set, non-terminal set for the Genetic Programming tree, included the control structures required to produce parameterisable quantum algorithms.
-These were not used to attempt a solution to the Deutsch Jozsa problem, which would have seemed the more obvious progression, but the \emph{majority-on} problem.
+These were not used to attempt a parameterisable solution to the Deutsch Jozsa problem, which would have seemed the more obvious progression, but the \emph{majority-on} problem.
 The majority-on problem it to decide whether the output of a function has a majority of outputs being $1$.
 
 The best solution was a parameterisable algorithm which, for functions with a large variation from $2^{n-1}$ of $1$'s the solution performed well.
@@ -1177,6 +1190,12 @@ When tested against the 24 possible permutations, the correct result was the pro
 
 It was found that if the acceptance requirement was reduced to 0.4, from 0.5, a quantum program was evolved which returns the correct value for all 24 possible permutation exactly $50\%$ of the time.
 This result was quite remarkable, this probability is twice that of the best classical approach, guessing.
+
+% There is however one major issue with this experiment.
+% When explaining the problem and presenting the results there is no mention of how the problem is represented.
+% It is stated that the $[0..3]\rightarrow[0..3]$ permutation function can be encoded using a four qubit system but not indication how that is actually done in the experiment.\cite{masseythesis}
+% Not only is the permutation function representation missing, but so is any indication as to how the resulting state is interpretted to produce the results presented.
+
 
 \begin{equation}
  y_k = \frac{1}{\sqrt{N}} \sum_{j=0}^{N-1}{x_j}e^{\frac{2\pi{ijk}}{N}}

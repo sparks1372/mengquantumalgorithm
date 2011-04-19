@@ -1,0 +1,501 @@
+\chapter{Experiment Data}
+
+\section{Deutsch Experiment}
+\label{sec:DeutschExpApp}
+\subsection{Full Algorithm}
+\label{sec:DeutschExpAppFullAlg}
+\lstset{numbers=left,language=Java, breaklines=true}
+\begin{lstlisting}
+Create_CRY on gate (7.0)^(Loop_Var(System_Size)) and gate 8.0 with phase pi/(0.0)
+Create_CRZ on gate System_Size and gate 6.0 with phase pi/(2.0)
+Create_CZ on gate System_Size and gate 6.0
+Create_CZ on gate System_Size and gate 6.0
+Create_CRZ on gate System_Size and gate 6.0 with phase pi/(2.0)
+Create_CW on gate 0.0 and gate (Loop_Var(8.0))+(6.0)
+Create_CRY on gate (System_Size)-(0.0) and gate 8.0 with phase pi/(0.0)
+Create_CZ on gate System_Size and gate 6.0
+Create_CRY on gate 9.0 and gate 8.0 with phase pi/(0.0)
+Create_H on gate Loop_Var(4.0)
+Create_H on gate ((Loop_Var(8.0))+(Loop_Var(System_Size)))^((Loop_Var(0.0))x(Loop_Var(4.0)))
+Create_Custom1 on gate (System_Size)^((0.0)x(((Loop_Var(8.0))+(Loop_Var(System_Size)))^((Loop_Var(0.0))x(Loop_Var(4.0)))))
+Create_H on gate (30.0)^((Loop_Var(System_Size))x((System_Size)^((0.0)x(((Loop_Var(8.0))+(Loop_Var(System_Size)))^((Loop_Var(0.0))x(Loop_Var(4.0)))))))
+\end{lstlisting}
+
+\clearpage
+\section{Deutsch Jozsa Experiment}
+\label{sec:deutschjozsa}
+
+\begin{figure}[h!]
+\centering
+\subfigure[$f_1$]{
+$
+\begin{pmatrix}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1
+\end{pmatrix}
+$
+}
+\subfigure[$f_2$]{
+$
+\begin{pmatrix}
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0
+\end{pmatrix}
+$
+}
+\subfigure[$f_3$]{
+$
+\begin{pmatrix}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0
+\end{pmatrix}
+$
+}
+\\
+\subfigure[$f_4$]{
+$
+\begin{pmatrix}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0
+\end{pmatrix}
+$
+}
+\subfigure[$f_5$]{
+$
+\begin{pmatrix}
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0
+\end{pmatrix}
+$
+}
+\subfigure[$f_6$]{
+$
+\begin{pmatrix}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1
+\end{pmatrix}
+$
+}
+\\
+\subfigure[$f_7$]{
+$
+\begin{pmatrix}
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1
+\end{pmatrix}
+$
+}
+\subfigure[$f_8$]{
+$
+\begin{pmatrix}
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1
+\end{pmatrix}
+$
+}
+\caption{Matricies of Custom Gates Implementing the Eight Possible Functions}
+ \label{fig:deutschjozsafunctions}
+\end{figure}
+
+\subsection{Search Parameters}
+\label{sec:deutschjozsasearchparams}
+
+\begin{figure}[h!]
+\begin{center}
+ \begin{tabular}{|cc|cc|}
+\hline
+  Population Size & 1280 & Generations & 1280 \\
+  \# of Breeder Threads & 8 & \# of Evaluation Threads & 8 \\
+  \# of Elites & 1 & Number of Iterations & 1 \\
+  Minimum Initial Tree Depth & 1 & Maximum Initial Tree Depth & 30 \\
+  CrossOver Rate & 0.9 & Mutation Rate & 0.2 \\
+\hline
+ \end{tabular}
+
+\end{center}
+\caption{Search Parameters used for Deutsch Jozsa Search}
+\label{fig:deutschjozsaparams}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+ \begin{tabular}{|ccccc|}
+\hline
+  Create\_H & Create\_X & Create\_P & Create\_Custom1 & Body \\
+  Create\_CH & Create\_CX & Create\_CP & Create\_CCustom1 & Iterate \\
+\hline
+ \end{tabular}
+\end{center}
+\caption{Algorithm Instructions used for Deutsch Jozsa Search}
+\label{fig:deutschjozsagates}
+\end{figure}
+
+\clearpage
+\section{Quantum Fourier Transform Experiment}
+\label{sec:quantfourtransexp}
+
+
+\begin{figure}[h!]
+\centering
+\subfigure[Test Case $1$]{
+$
+\begin{pmatrix}
+1 \\
+0 \\
+0 \\
+0  
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+   0.50000 \\
+   0.50000 \\
+   0.50000 \\
+   0.50000
+\end{pmatrix}
+$
+
+}
+\subfigure[Test Case $2$]{
+$
+\begin{pmatrix}
+0 \\
+1 \\
+0 \\
+0  
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+   0.50000 + 0.00000i \\
+   0.00000 + 0.50000i \\
+  -0.50000 + 0.00000i \\
+  -0.00000 - 0.50000i  
+\end{pmatrix}
+$
+}
+\subfigure[Test Case $3$]{
+$
+\begin{pmatrix}
+0 \\
+0 \\
+1 \\
+0  
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+   0.50000 + 0.00000i \\
+  -0.50000 + 0.00000i \\
+   0.50000 - 0.00000i \\
+  -0.50000 + 0.00000i 
+\end{pmatrix}
+$
+}
+\subfigure[Test Case $4$]{
+$
+\begin{pmatrix}
+0 \\
+0 \\
+0 \\
+1 
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+   0.50000 + 0.00000i \\
+  -0.00000 - 0.50000i \\
+  -0.50000 + 0.00000i \\
+   0.00000 + 0.50000i 
+\end{pmatrix}
+$
+}
+\caption{Test Cases for Two Qubits}
+ \label{fig:qfttwoqubits}
+\end{figure}
+
+
+\begin{figure}[h!]
+\centering
+\subfigure[Test Case $1$]{
+$
+\begin{pmatrix}
+1 \\
+0 \\
+0 \\
+0 \\
+0 \\
+0 \\
+0 \\
+0  
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+0.35355 + 0.00000i \\
+0.35355 + 0.00000i \\
+0.35355 + 0.00000i \\
+0.35355 + 0.00000i \\
+0.35355 + 0.00000i \\
+0.35355 + 0.00000i \\
+0.35355 + 0.00000i \\
+0.35355 + 0.00000i
+\end{pmatrix}
+$
+
+}
+\subfigure[Test Case $2$]{
+$
+\begin{pmatrix}
+0 \\
+1 \\
+0 \\
+0 \\
+0 \\
+0 \\
+0 \\
+0  
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+0.35355 + 0.00000i \\
+0.25000 + 0.25000i \\
+0.00000 + 0.35355i \\
+-0.25000 + 0.25000i \\
+-0.35355 + 0.00000i \\
+-0.25000 - 0.25000i \\
+-0.00000 - 0.35355i \\
+0.25000 - 0.25000i
+\end{pmatrix}
+$
+}
+\subfigure[Test Case $3$]{
+$
+\begin{pmatrix}
+0 \\
+0 \\
+1 \\
+0 \\
+0 \\
+0 \\
+0 \\
+0  
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+   0.35355 + 0.00000i \\
+   0.00000 + 0.35355i \\
+  -0.35355 + 0.00000i \\
+  -0.00000 - 0.35355i \\
+   0.35355 - 0.00000i \\
+   0.00000 + 0.35355i \\
+  -0.35355 + 0.00000i \\
+  -0.00000 - 0.35355i
+\end{pmatrix}
+$
+}
+\subfigure[Test Case $4$]{
+$
+\begin{pmatrix}
+0 \\
+0 \\
+0 \\
+1 \\
+0 \\
+0 \\
+0 \\
+0
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+   0.35355 + 0.00000i \\
+  -0.25000 + 0.25000i \\
+  -0.00000 - 0.35355i \\
+   0.25000 + 0.25000i \\
+  -0.35355 + 0.00000i \\
+   0.25000 - 0.25000i \\
+   0.00000 + 0.35355i \\
+  -0.25000 - 0.25000i
+\end{pmatrix}
+$
+}
+\subfigure[Test Case $5$]{
+$
+\begin{pmatrix}
+0 \\
+0 \\
+0 \\
+0 \\
+1 \\
+0 \\
+0 \\
+0
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+   0.35355 + 0.00000i \\
+  -0.35355 + 0.00000i \\
+   0.35355 - 0.00000i \\
+  -0.35355 + 0.00000i \\
+   0.35355 - 0.00000i \\
+  -0.35355 + 0.00000i \\
+   0.35355 - 0.00000i \\
+  -0.35355 + 0.00000i
+\end{pmatrix}
+$
+}
+\subfigure[Test Case $6$]{
+$
+\begin{pmatrix}
+0 \\
+0 \\
+0 \\
+0 \\
+0 \\
+1 \\
+0 \\
+0
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+   0.35355 + 0.00000i \\
+  -0.25000 - 0.25000i \\
+   0.00000 + 0.35355i \\
+   0.25000 - 0.25000i \\
+  -0.35355 + 0.00000i \\
+   0.25000 + 0.25000i \\
+  -0.00000 - 0.35355i \\
+  -0.25000 + 0.25000i
+\end{pmatrix}
+$
+}
+\subfigure[Test Case $7$]{
+$
+\begin{pmatrix}
+0 \\
+0 \\
+0 \\
+0 \\
+0 \\
+0 \\
+1 \\
+0
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+   0.35355 + 0.00000i \\
+  -0.00000 - 0.35355i \\
+  -0.35355 + 0.00000i \\
+   0.00000 + 0.35355i \\
+   0.35355 - 0.00000i \\
+  -0.00000 - 0.35355i \\
+  -0.35355 + 0.00000i \\
+   0.00000 + 0.35355i
+\end{pmatrix}
+$
+}
+\subfigure[Test Case $8$]{
+$
+\begin{pmatrix}
+0 \\
+0 \\
+0 \\
+0 \\
+0 \\
+0 \\
+0 \\
+1
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+   0.35355 + 0.00000i \\
+   0.25000 - 0.25000i \\
+  -0.00000 - 0.35355i \\
+  -0.25000 - 0.25000i \\
+  -0.35355 + 0.00000i \\
+  -0.25000 + 0.25000i \\
+   0.00000 + 0.35355i \\
+   0.25000 + 0.25000i
+\end{pmatrix}
+$
+}
+\caption{Test Cases for Two Qubits}
+ \label{fig:qfttwoqubits}
+\end{figure}
+
+
+\subsection{Search Parameters}
+\label{sec:qftsearchparams}
+
+\begin{figure}[h!]
+\begin{center}
+ \begin{tabular}{|cc|cc|}
+\hline
+  Population Size & 128 & Generations & 4000 \\
+  \# of Breeder Threads & 8 & \# of Evaluation Threads & 8 \\
+  \# of Elites & 1 & Number of Iterations & 1 \\
+  Minimum Initial Tree Depth & 1 & Maximum Initial Tree Depth & 30 \\
+  CrossOver Rate & 0.9 & Mutation Rate & 0.1 \\
+\hline
+ \end{tabular}
+
+\end{center}
+\caption{Search Parameters used for Quantum Fourier Transform Search}
+\label{fig:qftparams}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+ \begin{tabular}{|ccccc|}
+\hline
+  Create\_H & Create\_X & Create\_P & Create\_SWAP & Body \\
+  Create\_CH & Create\_CX & Create\_CP & Create\_CCX & Iterate \\
+\hline
+ \end{tabular}
+\end{center}
+\caption{Algorithm Instructions used for Quantum Fourier Transform Search}
+\label{fig:qftgates}
+\end{figure}

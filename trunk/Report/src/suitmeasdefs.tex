@@ -1,0 +1,43 @@
+\chapter{Suitability Measure Definitions}
+\label{sec:suitmeasdefs}
+All suitability measures are defined using the polar representation $re^{i\theta}$.
+Subscript F indicates the Final state produced by the circuit generated from the algorithm under evaluation.
+Subscript E indicated the Expected final state as defined in the current test case.
+$N$ is the system size.
+
+\begin{equation}
+ \delta(a,b)=
+\left\{
+  \begin{array}{cc} 1, & \mbox{if } |a-b|<ACCURACY\\ 
+  0, & \mbox{otherwise}\end{array}
+\right.
+\end{equation}
+\begin{equation}
+ \delta(a,b,c,d)=
+\left\{
+  \begin{array}{cc} 1, & \mbox{if } |a-b|<ACCURACY\wedge|c-d|<ACCURACY\\ 
+  0, & \mbox{otherwise}\end{array}
+\right.
+\end{equation}
+
+
+\section{Simple Suitability Measure}
+$ACCURACY=10^{-8}$
+\begin{equation}
+ fitness=\sum_{i=0}^{2^N-1}|{r_F}_i-{r_E}_i|
+\end{equation}
+
+\begin{equation}
+ hits=\sum_{i=0}^{2^N-1}\delta({r_F}_i,{r_E}_i)
+\end{equation}
+
+
+\section{Phase Aware Suitability Measure}
+$ACCURACY=10^{-8}$
+\begin{equation}
+ fitness=\sum_{i=0}^{2^N-1}|{r_F}_i-{r_E}_i|+|{\theta_F}_i-{\theta_E}_i|
+\end{equation}
+
+\begin{equation}
+ hits=\sum_{i=0}^{2^N-1}\delta({r_F}_i,{r_E}_i,{\theta_F}_i,{\theta_E}_i)
+\end{equation}
