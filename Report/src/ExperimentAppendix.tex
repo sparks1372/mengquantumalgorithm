@@ -152,12 +152,17 @@ $
 \begin{center}
  \begin{tabular}{|cc|cc|}
 \hline
-  Population Size & 1280 & Generations & 1280 \\
+  Population Size & 128 & Generations & 250 \\
   \# of Breeder Threads & 8 & \# of Evaluation Threads & 8 \\
   \# of Elites & 1 & Number of Iterations & 1 \\
-  Minimum Initial Tree Depth & 1 & Maximum Initial Tree Depth & 30 \\
-  CrossOver Rate & 0.9 & Mutation Rate & 0.2 \\
+  Minimum Initial Tree Depth & 10 & Maximum Initial Tree Depth & 20 \\
+  CrossOver Rate & 0.9 & Mutation Rate & 0.003846154 \\
 \hline
+ \end{tabular}
+ \begin{tabular}{cc}
+  \textbf{Search Engine} & Genetic Programming - QPace Local \\
+  \textbf{Suitability Measure} & Simple Suitability - Non-Zero Count \\
+  \textbf{Gates} & All except \emph{Create\_SWAP}, \emph{Create\_Zero} and \emph{RevIterate}
  \end{tabular}
 
 \end{center}
@@ -178,6 +183,62 @@ $
 \label{fig:deutschjozsagates}
 \end{figure}
 
+\subsection{Full Algorithm}
+\label{sec:DeutschJozsaExpAppFullAlg}
+\lstset{numbers=left,language=Java, breaklines=true}
+\begin{lstlisting}
+Create_H on gate 1.0
+Create_CZ on gate (System_Size)x(5.0) and gate 1.0
+Create_H on gate 1.0
+Create_CRY on gate 10.0 and gate 10.0 with phase pi/(2.0)
+Create_CCustom1 on gate 1.0 and gate 10.0
+Create_CZ on gate (System_Size)x(5.0) and gate 1.0
+Create_CRY on gate 10.0 and gate 10.0 with phase pi/(2.0)
+Create_CCustom1 on gate 1.0 and gate 10.0
+Create_CRY on gate 10.0 and gate 10.0 with phase pi/(2.0)
+Create_CCustom1 on gate 1.0 and gate 10.0
+Create_CZ on gate (System_Size)x(5.0) and gate 11.0
+Create_H on gate System_Size
+Create_H on gate (6.0)-(System_Size)
+Create_CZ on gate (6.0)-((6.0)-(System_Size)) and gate 0.0
+Create_CRY on gate 10.0 and gate 10.0 with phase pi/(2.0)
+Create_H on gate System_Size
+Create_CCustom1 on gate 1.0 and gate 1.0
+Create_H on gate System_Size
+Create_CCustom1 on gate 1.0 and gate 2.0
+Create_H on gate 1.0
+Create_H on gate System_Size
+Create_H on gate (6.0)-(System_Size)
+Create_CZ on gate (6.0)-((6.0)-(System_Size)) and gate 0.0
+Create_CRY on gate 10.0 and gate 10.0 with phase pi/(2.0)
+Create_CCustom1 on gate 1.0 and gate 10.0
+Create_H on gate System_Size
+Create_CCustom1 on gate 1.0 and gate 2.0
+Create_H on gate 1.0
+\end{lstlisting}
+
+\subsection{Full Circuits}
+\label{sec:DeutschJozsaExpAppFullCirs}
+\begin{figure}[h!]
+\[
+\Qcircuit @C=1.0em @R=.7em {
+&\qw&\qw&\gate{H}&\gate{H}&\gate{H}&\ctrl{1} &\qw&\gate{H}&\gate{H}&\ctrl{1} &\qw&\\%2
+&\gate{H}&\gate{H}&\qw&\qw&\qw&\gate{C0} \qwx &\gate{H}&\qw&\qw&\gate{C0} \qwx &\gate{H}&\\%1
+}
+\]
+\caption{Deutsch Jozsa Solution - Two Qubits }
+\end{figure}
+\clearpage
+\begin{figure}[h!]
+\[
+\Qcircuit @C=1.0em @R=.7em {
+&\qw&\qw&\gate{H}&\qw&\gate{H}&\gate{H}&\qw&\qw&\gate{H}&\qw&\gate{H}&\qw&\qw&\\%3
+&\qw&\qw&\qw&\gate{H}&\qw&\qw&\ctrl{1} &\qw&\qw&\gate{H}&\qw&\ctrl{1} &\qw&\\%2
+&\gate{H}&\gate{H}&\qw&\qw&\qw&\qw&\gate{C0} \qwx &\gate{H}&\qw&\qw&\qw&\gate{C0} \qwx &\gate{H}&\\%1
+}
+\]
+\caption{Deutsch Jozsa Solution - Three Qubits }
+\end{figure}
 \clearpage
 \section{Quantum Fourier Transform Experiment}
 \label{sec:quantfourtransexp}
@@ -499,3 +560,21 @@ $
 \caption{Algorithm Instructions used for Quantum Fourier Transform Search}
 \label{fig:qftgates}
 \end{figure}
+
+\clearpage
+\section{0..3 Max Permutation Problem}
+
+\label{sec:quantfourtransexp}
+\begin{figure}
+\[
+\Qcircuit @C=1.0em @R=.7em {
+&\gate{RX(3.141592653589793)}&\gate{W}&\gate{W}&\qw&\gate{W}&\gate{W}&\gate{W}&\\%4
+&\qw&\qw&\qw&\qw&\qw&\qw&\qw&\\%3
+&\qw&\qw&\qw&\gate{X}&\qw&\qw&\qw&\\%2
+&\qw&\qw&\qw&\ctrl{-1} \qwx&\qw&\qw&\qw&\\%1
+}
+\]
+\caption{0..3 Max Permutation Solution}
+\end{figure}
+
+
