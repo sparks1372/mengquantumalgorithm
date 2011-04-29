@@ -14,10 +14,11 @@
 \usepackage{appendix}
 \usepackage{color}
 \usepackage{longtable} 
-% \usepackage{subfig}
 \usepackage{subfigure}
 \usepackage{emp}
 \usepackage{pdflscape}
+\usepackage{algorithm}
+\usepackage{algorithmic}
 \input{Qcircuit}
 
 \vfuzz2pt % Don't report over-full v-boxes if over-edge is small
@@ -36,6 +37,7 @@
 \abstract{ TO BE DONE
 }
 \setcounter{tocdepth}{2}
+\renewcommand\floatpagefraction{.9}
 \begin{document}
 \begin{empfile}
 \begin{empcmds}
@@ -64,9 +66,9 @@ input metauml;
 
 \input{Testing}
 
-\input{Eval}
-
 \input{Obs}
+
+\input{Eval}
 
 \bibliography{mengreport}
 
