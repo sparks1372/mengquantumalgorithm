@@ -1,3 +1,5 @@
+#!/bin/bash
+
 pdflatex mengreport
 mpost mengreport
 mptopdf mengreport
@@ -5,4 +7,15 @@ pdflatex mengreport
 bibtex mengreport
 pdflatex mengreport
 pdflatex mengreport
+
+int=$(detex Introduction.tex | wc --words)
+lit=$(detex LitReview.tex | wc --words)
+req=$(detex Requirements.tex | wc --words)
+des=$(detex Design.tex | wc --words)
+tes=$(detex Testing.tex | wc --words)
+obs=$(detex Obs.tex | wc --words)
+eva=$(detex Eval.tex | wc --words)
+wordc=$(($int + $lit+ $req+ $des+ $tes+ $obs+ $eva))
+echo "The word count is $wordc"
+
 evince mengreport.pdf

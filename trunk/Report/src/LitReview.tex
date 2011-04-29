@@ -1,42 +1,44 @@
 \chapter{Literature Review}
-\section{Introduction to Quantum Computation}
 \label{sec:introtoquantcomp}
 %Historic Introduction
 In 1980, Richard Feynman noted `it is impossible to represent the results of quantum mechanics with a classical universal device`\cite{Feynman82simulatingphysics}.
-This statement was a seed for interest in the field of Quantum Computation.
+This statement was a seed for interest in the field of Quantum Computation which uses properties of quantum mechanics to perform computation.
 The true power of quantum computation was not initially realised.
--The discovery of a quantum algorithm by David Deutsch\cite{Deutsch1985} in 1985 that performed better than a classical computer was the first glimpse of the potential power provided by harnessing quantum mechanics.
-However, with slow progress of research into both their implementation and algorithms, the energy behind the research started to decrease.
-It would take a discovery by Peter Shor\cite{Shor:1994jg} to reignite the excitement surrounding the subject.  
+The discovery of a quantum artefact by David Deutsch\cite{Deutsch85quantumtheory} in 1985 that performed better than a classical computer was the first glimpse of the potential power provided by harnessing quantum mechanics.
+The algorithm was able to distinguish between balanced and constant binary functions.
+The algorithm only worked for simple functions with inputs limited to $0$ and $1$ but the advantage over its classical equivalent is the number of times the function needs to be evaluated.
+The classical equivalent requires two evaluations, once for both possible inputs, yet the quantum algorithm proposed by Deutsch performs a single evaluation.
+Deutch's algorithm is explained in detail in Section \ref{sec:DeutAlg}.
 
+However, with slow progress of research into both their implementation and algorithms, the energy behind the research started to decrease.
+It would take a discovery by Peter Shor\cite{Shor:1994jg} to reignite the excitement surrounding the subject.
+Shor's discovery was not only important because it was one of very few known quantum algorithms but it also challenged one of the foundations of many encryption techniques currently used.
+Many cryptographic techniques as based on the belief that factorisation of a large number into its constituent primes would take such a long time that the encrypted information would be useless by the time the factorisation was complete.
+Shor's algorithm challenged that belief and provided a polynomial solution to the factorisation problem using quantum computation.
+Shor's algorithm is explained in detail in Section \ref{sec:shorsalg}.
+
+This chapter provides a brief introduction to quantum computation.
+This is followed by explanations of several quantum artefacts and a summary of previous research into the discovery of quantum algorithms by heuristic search.
+The chapter concludes with a statement of intent for this project.
+
+\section{Introduction to Quantum Computation}
 %What is Quantum Computation
-In classical computers the computation is performed using the discrete values of $0$ and $1$.
-These values are indicated by +$5$V and $0$V signals propagating round circuits.
-A signal can only be $0$ or $1$, there is no in between value.
+In classical computers, computation is performed using the discrete values of $0$ and $1$.
+These values are typically indicated by +$5$V and $0$V signals propagating round circuits.
+A signal can only be $0$ or $1$, there is no in-between value.
 Each signal can indicate the value of a single 'bit' of data.
 A combination of n bits can be used to represent a number from $0$ to $2^n-1$, an n-bit number.
-Classical computation works through the manipulation of these n-bit numbers.
+Classical computation works through the manipulation of these n-bits.
 
-
-Quantum Computation uses the properties of quantum mechanics to perform computation.
-The power of quantum computers come from the use of particles in superpositions.
-% This can be seen as the particle being both a $0$ and $1$ simultaneously.
 Qubits are the quantum equivalent of the classical bit.
-It is these qubits which can be placed into superpositions.
-Just as classical computers manipulate bits to perform computation, quantum computers manipulate qubits and their superpositions to perform computation.
-The power of these superpositions is not obviously apparent.
-
-It is not possible to observe the superposition of a particle.
-When observed the superposition 'collapses' to either logical $0$ or $1$, the basis states.
-The probability the the superposition collapses to $0$ is determined by the superposition's properties.
+Like the classical bit, a qubit can be in one of two states, $\ket{0}$ or $\ket{1}$.
+The notation used to specify quantum states is the Dirac\cite{dirac2004principles} 'Bra-Ket' notation.
 
 %Explanation of Bra-Ket notation
-To write the state of a superposition it is usual to use the 'Bra-Ket' notation, introduced by Dirac\cite{dirac2004principles}.
-A 'Ket' is mathematical notation, $\vert$a$\rangle$, which represents a basis function of the respective Hilbert space, $\mathcal{H}$, as a column vector.
+% To write the state of a superposition it is usual to use the 'Bra-Ket' notation, introduced by Dirac\cite{dirac2004principles}.
+A Ket is mathematical notation, $\ket{a}$, that represents a basis function of the respective Hilbert Space, $\mathcal{H}$, as a column vector.
 \begin{equation}
-\vert
-a
-\rangle = 
+\ket{a} = 
 \begin{pmatrix}
 a_1\\
 a_2\\
@@ -44,29 +46,30 @@ a_3\\
 \vdots
 \end{pmatrix}
 \end{equation}
-Hilbert spaces extend the simple Euclidean vector space into a potential infinite dimension function space.
+
+Hilbert Spaces extend the simple Euclidean vector space into a potentially infinite dimension function space.
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{Bloch.png}
 \caption{The 1-Qubit Bloch Sphere \cite{QuantikiBlochSphereImage}}
 \label{BlochSphere}
 \end{figure}
-A quantum state space can also been visualised in terms of the Bloch sphere, shown in Figure \ref{BlochSphere}.
-The shown Bloch sphere is for a single qubit system, it can be extended to an n-qubit system however the visualisation breaks down.
-All 'pure' quantum states can be described using the Bloch sphere and all exist on the surface produced by the unit sphere.
-In this report only pure quantum states will be used and all explanation of quantum states are more precisely explanations of 'pure' quantum states.
-This means that all superpositions of states can be expressed in terms of $|\psi\rangle = \cos \frac{\theta}{2} \, |0 \rangle +  e^{i \phi}  \sin \frac{\theta}{2}  \,|1 \rangle $ with $0 \leq \theta \leq \pi, \quad  0 \leq \phi \leq 2 \pi$, ignoring global phase factors\cite{BlochSphereTalk}.
+A quantum state space can be visualised in terms of the Bloch sphere, shown in Figure \ref{BlochSphere}.
+The shown Bloch sphere is for a single qubit, the principle can be extended to an n-qubit however the visualisation breaks down.
+All quantum states can be described using the Bloch sphere.
+The states that occur on the surface of the unit sphere are called 'pure' states.
+All states that occur within the surface are called 'mixed' states.
+A mixed state is a collection of 'pure' states with a specific probability distribution over all possible 'pure' states.
+This project only uses 'pure' quantum states.
 
-In quantum mechanics, Kets are used to indicate a state, for example $\vert$0$\rangle$ is the state of a logical $0$ whereas $\vert$1$\rangle$ is the state of logical $1$.
-Using this notation and the inclusion of probabilities, the state of the superposition can be expressed.
+In quantum mechanics, Ket are used to indicate a state, for example $\ket{0}$ is the state equivalent to logical $0$ whereas $\ket{1}$ is the state equivalent to logical $1$.
 
-A dual to the Ket notation is the 'Bra' notation, $\langle$a$\vert$.
+A dual to the Ket notation is the 'Bra' notation, $\bra{a}$.
 This notation is used to denote the 'dual vector' of the corresponding Ket.
-For a state vector represented by
-\begin{equation}\label{ket_explanation_example}
-\vert
-a
-\rangle = 
+For a state vector represented by Equation \ref{ket_explanation_example} there is a dual vector representing its Hermitian Conjugate, Equation \ref{bra_explanation_example}.
+\begin{equation}
+\label{ket_explanation_example}
+\ket{a} = 
 \begin{pmatrix}
 a_1\\
 a_2\\
@@ -74,31 +77,27 @@ a_3\\
 \vdots
 \end{pmatrix}
 \end{equation}
-there is a dual vector representing its Hermitian conjugate
-\begin{equation}\label{bra_explanation_example}
-\langle
-a
-\vert = 
+\begin{equation}
+\label{bra_explanation_example}
+\bra{a} = 
 \begin{pmatrix}
-a_1^*$$
-a_2^*$$
-a_3^*$$
+a_1^{*}&
+a_2^{*}&
+a_3^{*}&
 \cdots
 \end{pmatrix}
 \end{equation}
 
-Combining the two vectors $\langle$a$\vert$ and $\vert$b$\rangle$, written $\langle$a$\vert\vert$b$\rangle$, represents the inner product of the two vectors.
-If a and b are unit vectors and $a == b$, $\langle$a$\vert\vert$b$\rangle == 1$.
-If a and b are orthogonal, $\langle$a$\vert\vert$b$\rangle == 0$.
+Combining the two vectors $\bra{a}$ and $\ket{b}$, written $\bra{a}\ket{b}$, represents the inner product of the two vectors, $\ket{a}$ and $\ket{b}$.
+If a and b are unit vectors and $a == b$, $\bra{a}\ket{b} == 1$.
+If a and b are orthogonal, $\bra{a}\ket{b} == 0$.
 
-The outer product of two vectors, a and b, can be represented by $\vert$a$\rangle$$\langle$b$\vert$.
-This represents the transformation from a to b.
+The outer product of two vectors, $\ket{a}$ and $\ket{b}$, can be represented by $\ket{a}\bra{b}$.
+This represents the transformation from $\ket{a}$ to $\ket{b}$.
 It can also be represented in matrix form.
 
 With
-$\vert
-0
-\rangle
+$\ket{0}
 == 
 \begin {pmatrix}
 1\\
@@ -106,18 +105,16 @@ $\vert
 \end{pmatrix}
 $
 and
-$\vert
-1
-\rangle
+$\ket{1}
 ==  
 \begin {pmatrix}
 0\\
 1\\
 \end{pmatrix}
 $
-it is possible to represent $1$-qubit operations in the bra-ket notation.
+it is possible to represent single qubit operations in the 'Bra-Ket' notation.
 For example, the NOT gate performs a simple negation of a qubit's value.
-This can be written as $\vert0\rangle\langle1\vert + \vert1\rangle\langle0\vert$.
+This can be written as $\ket{0}\bar{1} + \ket{1}\bra{0}$.
 Substituting in the vector values we have
 \begin{equation}
 \begin{tabular}{ r c l }
@@ -162,73 +159,92 @@ Substituting in the vector values we have
 \end{equation}
 
 This matrix can be seen as a transformation matrix for the NOT operation.
-In quantum computation, the NOT gate is one of the $4$ gates known as the Pauli gates, more specifically the Pauli-X gate.
+In quantum computation, the NOT gate is one of the $4$ gates known as the Pauli gates, more specifically it is the Pauli-X gate.
 It is called the Pauli-X gate as it can be seen as a rotation of $\pi$ radians about the X axis of the Bloch sphere, Figure \ref{BlochSphere}.
+The Pauli gates are named after Wolfgang Pauli who introduced the matrices that define them.
 
 % Definition of Unitary
 The matrices representing the Pauli-X gate and all other quantum logic gates are unitary.
-A unitary matrix, U, is one which adheres to
+A unitary matrix, U, is one which adheres to Equation \ref{eqn:unitarydef} where $I_N$ is the identity matrix in N dimensions and $U^{\dagger}$ is the Hermitian Conjugate of $U$.
 \begin{equation}
-U*{\dagger}
-U == UU*{\dagger} = I_N
+\label{eqn:unitarydef}
+U^{\dagger}
+U == UU^{\dagger} = I_N
 \end{equation}
-where $I_N$ is the identity matrix in N dimensions and $U*{\dagger}$ is the complex conjugate of $U$.
 % Reversible logic
 The implication of all quantum logic operations being unitary is that they are reversible, this is a difference to classical computation.
-With many classical logic gates irreversible, there is not a set of quantum logic gates which is as computationally powerful as the set of classical logic gates.
+With many classical logic gates being irreversible, there is not a set of quantum logic gates that is equivalent to the set of standard classical logic gates, for example AND, OR and XOR.
 This seems like a major issue, quite the contrary.
-The set of classical logic gates can be replaced by reversible equivalents and therefore it is possible to produce a set of quantum logic gates with the equivalent computational power as the classical logic gates.
+The set of standard classical logic gates can be replaced by reversible equivalents and therefore it is possible to produce a set of quantum logic gates with the equivalent computational power as the classical logic gates.
 
 %Superposition
-As with all probabilities, the overall probability of a superposition collapsing to any of the states it contains must equal $1$.
+All the details of quantum computation introduced so far do not offer anything more than classical computation.
+The power of quantum computation comes from the use of superposition.
+Superposition is the ability of a qubit to be in both the $\ket{0}$ and $\ket{1}$ states simultaneously with certain probabilities.
+It is not possible to observe the superposition of a qubit.
+When observed the superposition 'collapses' to either $\ket{0}$ or $\ket{1}$, the basis states.
+The probability the the superposition collapsing to a specific state is determined by the superposition's probabilities.
+
 \begin{equation}
 \label{superposition_explanaiton}
 \alpha\vert0\rangle+\beta\vert1\rangle
 \end{equation}
+
+The notation for the superposition of states that a qubit is currently in is shown in Equation \ref{superposition_explanaiton}.
+It is the same as for the basis states except the values of $\alpha$ and $\beta$ are omitted when writing the basis states.
+$\alpha$ and $\beta$ are the probability amplitudes for the respective states and are expressed as complex numbers.
+The probability of this state in Equation \ref{superposition_explanaiton} collapsing to the basis state $\ket{0}$ can be calculated by $\vert\alpha\vert^2$.
+Similarly, the probability of this state collapsing to the basis state $\ket{1}$ can be calculated by $\vert\beta\vert^2$.
+As with all probabilities, the overall probability of a superposition collapsing to any of the states it contains must equal $1$.
+For the basis state $\ket{0}$, $\alpha==1$ and $\beta==0$ whereas for the basis state $\ket{1}$, $\alpha==0$ and $\beta==1$.
+Any state where $\alpha$ and $\beta$ do not equal $1$ and $0$ is in superposition.
+
+The state $\frac{1}{\sqrt{2}}\ket{0}+\frac{1}{\sqrt{2}}\ket{1}$ is an equal superposition where the collapse under observation to $\ket{0}$ is just as likely as collapsing to $\ket{1}$.
+With $n$ qubits in equal superposition, there are $n$ binary values that have an equal probability of taking the value $0$ as the value $1$.
+With an ordering decided of these qubits, collapsing the superposition of each qubit will result in a binary value of length n.
+With all probabilities being $\frac{1}{2}$ this binary value takes a truly random value between $0$ and $2^n-1$.
+It is not possible to produce a truly random number using a classical computer.
+Equation \ref{superposition_explanaiton_sum} is a generalisation for the equal superposition state over $n$ qubits.
+
 \begin{equation}
 \label{superposition_explanaiton_sum}
 \frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i}
 \end{equation}
-Equation \eqref{superposition_explanaiton} is how the combination of the logical $0$ and $1$ states in a superposition can be represented for a single particle.
-It can also be represented in the for of Equation \eqref{superposition_explanaiton}.
-This is equivalent to the representation provided by the Bloch sphere, Figure \ref{BlochSphere}.
-The probability of this state collapsing to the basis state $0$ can be calculated by $\vert\alpha\vert^2$ where $\alpha$ is a complex number.
-$\alpha$ is known as the probability amplitude of $\vert0\rangle$.
-Similarly, the probability of this state collapsing to the basis state $1$ can be calculated by $\vert\beta\vert^2$, $\beta$ being the probability amplitude of $\vert1\rangle$.
-It follows that $\frac{1}{\sqrt{2}}\vert0\rangle+\frac{1}{\sqrt{2}}\vert1\rangle$ is an equal superposition where the collapse to 0 is just as likely as collapsing to $1$.
-This provides the first glimpse of where a single qubit has the ability to perform a function not currently possible on a classical computer.
-With n-qubits in the equal superposition, we have n binary values which have an equal probability of taking the value $0$ as the value $1$.
-With an ordering decided of these qubits, collapsing the superposition of each qubit will result in a binary value of length n.
-With all probabilities being $\frac{1}{2}$ this binary value takes a truly random value between $0$ and $2^n-1$.
-It is not possible to produce a truly random number using a classical computer.
 
-A second indication of the power held within the idea of superposition becomes clear if we look at the n-qubits in their equal superposition.
 In 1935, Erwin Schr$\ddot{o}$ginger\cite{SchroedingersCat} proposed a thought experiment to explain the idea of superposition.
-Imagine a cat in a fully opaque box with a vile of poison.
-The vile may break at any time, a truly random variable.
+Imagine a cat in a fully opaque box with a vial of poison.
+The vial may break at any time, a truly random variable.
 After sealing the box the state of the cat is not known.
-The cat could be alive if the vile has not broken but could just as likely be dead.
+The cat could be alive if the vial has not broken but could just as likely be dead.
 Only by looking inside the box will the state of the cat be known.
 Until this time the cat could be thought of as both alive and dead at the same time.
-If we assign 'dead' to the state $\vert0\rangle$ and 'alive' to the state $\vert1\rangle$ the situation looks very similar to the state we have previously seen.
-Therefore, just as the cat can be thought of as both dead and alive at the same time, a qubit in the superposition $\frac{1}{\sqrt{2}}\vert0\rangle+\frac{1}{\sqrt{2}}\vert1\rangle$ can be thought of as both 0 and 1 at the same time.
+If we assign 'dead' to the state $\ket{0}$ and 'alive' to the state $\ket{1}$ the situation looks very similar to the state in Equation \ref{superposition_explanaiton} where both both $\alpha$ and $\beta$ equal $\frac{1}{\sqrt{2}}$.
+Therefore, just as the cat can be thought of as both dead and alive at the same time, a qubit in the superposition $\frac{1}{\sqrt{2}}\vert0\rangle+\frac{1}{\sqrt{2}}\vert1\rangle$ can be thought of both in the $\ket{0}$ and $\ket{1}$ states at the same time.
 This leads to a very powerful property of quantum computers.
-With n classical bits, a single number in the range 0 to $2^n-1$ can be expressed at any one time.
-With n quantum qubits, every number in the range 0 to $2^n-1$ can be expressed at any one time.
-This effectively allows computation over the whole range of $2^n$ inputs to be carried out in parallel.
+With $n$ classical bits, a single number in the range $0$ to $2^n-1$ can be expressed at any one time.
+However with $n$ quantum qubits, every number in the range $0$ to $2^n-1$ can be expressed at any one time.
+This allows computation over the whole range of $2^n$ inputs to be carried out in parallel.
+Formally this can be explained as Equation \ref{eqn:uequiv}.
+
+\begin{equation}
+\label{eqn:uequiv}
+ \sum_{x=0}^{2^n-1}\ket{x}\equiv{U\sum_{x=0}^{2^n-1}\ket{x}}
+\end{equation}
 
 This parallelism is very powerful and has been shown to enable the computation of problems classified as NP to be performed in polynomial time.
 This does however have a caveat.
-As mentioned previously the superposition cannot itself be observed or measured.
-When observed the superposition collapses to a basis state with respect to the superposition probability amplitudes.
+As mentioned previously the superposition cannot itself be observed.
+When observation is attempted, the superposition collapses to a basis state with respect to the superposition probability amplitudes.
 This means that even though $2^n$ calculations can be performed in parallel, only a single answer can be observed.
 
 % mathematic examples of matrices and the application
+As mentioned previously, all operations that can be performed on quantum states must be unitary and that the Pauli-X operation is just one such operation.
 Along with the Pauli-X gate, there are an additional 3 Pauli gates.
 The Pauli-I gate is the simplest of all quantum gates.
 It is the identity gate, the output is identical to the input.
-In Dirac notation this is $\vert0\rangle\langle0\vert + \vert1\rangle\langle1\vert$, and in matrix form below
+In Dirac notation this is $\ket{0}\bra{0} + \ket{1}\bra{1}$, and Equation \ref{eqn:pauliicalc} shows the matrix form. 
 \begin{equation}
+\label{eqn:pauliicalc}
 \begin{tabular}{ r c l }
 \(\begin {pmatrix}
 1\\
@@ -269,13 +285,12 @@ In Dirac notation this is $\vert0\rangle\langle0\vert + \vert1\rangle\langle1\ve
 \end{tabular}
 \end{equation}
 
-The Pauli-Z gate is similar to the Pauli-X gate, but differs in the axis about which it performs the rotation.
 The Pauli-Z gate rotates the quantum state by $\pi$ radians about the Z axis.
 This represents a phase flip of the quantum state.
 The phase of a state is important when interference is used in computation.
-In Dirac notation this is $\vert0\rangle
-\langle0\vert + \vert1\rangle(-\langle1\vert$), and in matrix form below
+In Dirac notation this is $\ket{0}\bra{0} + \ket{1}(-\bra{1}$), and Equation \ref{eqn:paulizcalc} shows the matrix form.
 \begin{equation}
+\label{eqn:paulizcalc}
 \begin{tabular}{ r c l }
 \(\begin {pmatrix}
 1\\
@@ -319,9 +334,9 @@ In Dirac notation this is $\vert0\rangle
 The Pauli-Y gate is similar to both the Pauli-X and Pauli-Z gates, but differs in the axis about which it performs the rotation.
 The Pauli-Y gate rotates the quantum state by $\pi$ radians about the Y axis.
 This represents a phase flip followed by a bit flip.
-In Dirac notation this is $\vert0\rangle
-(i\langle1\vert) + \vert1\rangle(-i\langle0\vert$), and in matrix form below
+In Dirac notation this is $\ket{0}(i\bra{1}) + \ket{1}(-i\bra{0}$), and Equation \ref{eqn:pauliycalc} shows the matrix form.
 \begin{equation}
+\label{eqn:pauliycalc}
 \begin{tabular}{ r c l }
 \(\begin {pmatrix}
 1 \\
@@ -362,32 +377,34 @@ i && 0
 \end{tabular}
 \end{equation}
 
-Along with the single qubit operations, like those above, there are operations which can act over n-qubits.
+Along with the single qubit operations, like those above, there are operations which can act over $n$ qubits.
 A simple example of a 2 qubit operation is the controlled-NOT, CNOT, operator.
 This is a simple extension of the Pauli-X gate.
 \begin{table}
 \centering
-\begin{tabular}{ l | c || r | }
-0 & 0 & 0 \\
-0 & 1 & 1 \\
-1 & 0 & 1 \\
-1 & 1 & 0 \\
+\begin{tabular}{ c | c || c | }
+Control & Target at $t_1$ & Target at $t_2$ \\
+$\ket{0}$ & $\ket{0}$ & $\ket{0}$ \\
+$\ket{0}$ & $\ket{1}$ & $\ket{1}$ \\
+$\ket{1}$ & $\ket{0}$ & $\ket{1}$ \\
+$\ket{1}$ & $\ket{1}$ & $\ket{0}$ \\
 \end{tabular}
 \caption{Classical CNOT Truth Table}
 \label{CNOTTruthTable}
 \end{table}
-The CNOT gate has a control input which it requires to be in the logical $1$ state for the NOT operation on the second input to be carried out.
+The CNOT gate has a control input which it requires to be in the logical $\ket{1}$ state for the NOT operation on the second input to be carried out.
 In classical logic this would extend the truth table to be as shown in Table \ref{CNOTTruthTable}.
 The truth table of the CNOT gate is the same as that of the XOR gate.
-The Dirac notation of the CNOT gate is $\vert00\rangle\langle00\vert + \vert01\rangle\langle01\vert + \vert10\rangle\langle11\vert + \vert11\rangle\langle10\vert$.
+The Dirac notation of the CNOT gate is $\ket{00}\bra{00}+\ket{01}\bra{01}+\ket{10}\bra{11}+\ket{11}\bra{10}$.
 
 \begin{figure}
 \centering
 \subfigure[Basic Circuit]{\label{fig:singatetwocirsubfig1}
 $
  \Qcircuit @C=1.0em @R=.7em {
-&&&&& \gate{X}& \qw &&&&\\
-&&&&& \qw& \qw&&&&
+&&&&& \gate{X}& \qw &&&& \\
+&&&&& \qw& \qw&&&& \\
+&&&&& & &&&&
 }
 $
 }
@@ -395,7 +412,8 @@ $
 $
 \Qcircuit @C=1.0em @R=.7em {
 &&&&& \gate{X} & \qw&&&&\\
-&&&&& \gate{I}& \qw&&&&
+&&&&& \gate{I}& \qw&&&&\\
+&&&&& & &&&&
 }
 $
 }
@@ -403,23 +421,25 @@ $
 $
 \Qcircuit @C=1.0em @R=.7em {
 &&&&& \multigate{1}{\mathcal{F}} & \qw&&&&\\
-&&&&& \ghost{\mathcal{F}}& \qw&&&&
+&&&&& \ghost{\mathcal{F}}& \qw&&&&\\
+&&&&& & &&&&
 }
 $
 }
 \caption{Single Qubit Gate, 2 Qubit Circuit}
  \label{fig:singatetwocir}
 \end{figure}
+
 For a $2$ qubit circuit, the state has $4$ elements in the state vector.
-This means that to apply a single qubit gate to this state, multiply the state by the respective $2-by-2$ unitary matrix, there will be a problem due to the matrix dimensions not matching.
-The matrix of the single qubit gate has to be expanded to a $4-by-4$ matrix so that it can be applied to the state vector.
+This means that to apply a single qubit gate to this state, multiply the state by the respective $2\times{2}$ unitary matrix, there will be a problem due to the matrix dimensions not matching.
+The matrix of the single qubit gate has to be expanded to a $4\times{4}$ matrix so that it can be applied to the state vector.
 Taking the circuit shown in Figure \ref{fig:singatetwocirsubfig1} as an example we can see that the it is a simple Pauli-X gate, bit-flip operator, acting on the higher order qubit while nothing occurs to the lower order qubit.
 Nothing happening to the lower order qubit is the same as applying the Pauli-I gate, identity operator, to this qubit.
 The circuit in Figure \ref{fig:singatetwocirsubfig2} shows the resulting circuit with identical effect on all possible input states.
-This ciruit still doesn't solve the issue as there are now $2-by-2$ matrices for each of the two gates.
+This circuit still doesn't solve the issue as there are now $2\times{2}$ matrices for each of the two gates.
 These can't be applied to the state individually for that same reason as before.
 
-To produce a $4-by-4$ matrix for the circuit, the two $2-by-2$ matrices have to be combined.
+To produce a $4\times{4}$ matrix for the circuit, the two $2\times{2}$ matrices have to be combined.
 The matrix operation that is used for this is the Tensor Product.
 The tensor produce is a simple matric operation that is denoted using the $\otimes$ symbol.
 The result of the tensor product operation is shown in Equation \ref{eq:tensorop}.
@@ -483,68 +503,79 @@ X \otimes I =
 \label{eq:tensoropXI}
 \end{eqnarray}
 
-This use of the tensor product is scalable to any number of qubits and therefore can produce $2^n-by-2^n$ matrices for systems involving $x$ qubits.
-The tensor product cannot however be used to produce unitary matrices for controlled gates.
+This use of the tensor product is scalable to any number of qubits and therefore can produce $2^n\times{2^n}$ matrices for systems involving $n$ qubits.
+The tensor product cannot however be used in this same way to produce unitary matrices for controlled gates.
 It can only be used when the action on each qubit is independent.
 
 \section{An Introduction to Quantum Algorithms}
 %Known Quantum Algorithms
 
-Just as with classical computers, the computation to produce the required output given inputs is given in the form of an algorithm.
-Quantum algorithms can be constructed in several ways. These definitions are based on those provided by Massey\cite{masseythesis}.
+Just as with classical computation, the circuit used to perform computation can be designed in several ways.
+Classical circuits can be designed directly as a sequence of logic gates.
+The processing can also be designed at a slightly higher level using an algorithm.
+Algorithms are ordered lists of instructions to create a circuit however it also provides control flow constructs such as loops.
+Algorithms also provide parametrisation to allow, for example, circuits acting on different number of bits to be created using the same design.
+In instantiated algorithm, with the parameters set to certain values, is referred to as a program.
+Design can also directly produce these programs if the parameters are fixed before the design process.
 
+This gives three artefacts, each at a different level of abstraction that can be designed to specify a solution to a problem.
 \begin{itemize}
-\item A quantum circuit can be used to represent an algorithm at the level of quantum logic gates.
-This is similar to a specific purpose circuit diagram for classical systems.
-\item A quantum program is a representation of the algorithm in some higher level quantum 'programming' language which would generate the required circuit.
-The circuit generated is not defined in this method, just it's behaviour.
-This could be seen as slightly more flexible that the quantum circuit model as the 'compiler' can be updated to reflect the findings of future research.
-\item A parameterisable quantum algorithm is a representation in pure Pseudo-code.
-It proves the flexibility of changing some value n, which is used to indicate the number of input qubits, to produce quantum circuits or programs with the desired behaviour on n qubits.
-This is the most flexible construction of quantum algorithms.
-It can cope with the changing in input size and can use findings of research just like in the 'compilation' of a quantum program.
+ \item A circuit
+ \item A program
+ \item An algorithm
 \end{itemize}
 
-Currently there are very few quantum algorithms known.
-Peter Shor has carried out, and published, a discussion on the progress made `in discovering algorithms for computation on a quantum computer`\cite{Shor:2004:PQA:1032132.1032149}.
+The same is true for quantum processing design.
+The design can either be done at the gate level, program level or parametrisable algorithm level.
+
+Currently there are very few problems for which a quantum solution is known.
+Peter Shor published a discussion on the progress made ``in discovering algorithms for computation on a quantum computer''\cite{Shor:2004:PQA:1032132.1032149}.
 Shor suggests two possible reasons for the lack of quantum algorithms.
-The first is `that there might really be only a few problems for which quantum computers can offer a substantial speed-up over classical computers`\cite{Shor:2004:PQA:1032132.1032149}.
+The first is ``that there might really be only a few problems for which quantum computers can offer a substantial speed-up over classical computers''\cite{Shor:2004:PQA:1032132.1032149}.
 This would indeed make the discovery of useful quantum algorithms difficult.
-However, I feel this is somewhat pessimistic.
+However, I feel this is rather pessimistic.
 The main focus of the paper published by Feynman\cite{Feynman82simulatingphysics} was the problem of simulating the physics of quantum mechanics on a classical computer.
 This to suggests there would be the potential of many applications of quantum computers, even if they aren't analogous to the classical computational applications.
 
-The second is `that quantum computers operate in a manner so non-intuitive, and so different from classical computers`\cite{Shor:2004:PQA:1032132.1032149} that our current algorithm knowledge is close to useless.
-This, in my opinion, is a much more believable obstacle.
+The second is ``that quantum computers operate in a manner so non-intuitive, and so different from classical computers''\cite{Shor:2004:PQA:1032132.1032149} that our current algorithm knowledge is close to useless.
+This, in my opinion, is a much more significant obstacle.
 Quantum mechanics is seen by many as a confusing and mystical subject.
-Even prize winning mathematician and physicist Roger Penrose is attributed to the remark `Quantum mechanics makes absolutely no sense`.
-Statements like this and the atmosphere surrounding quantum mechanics makes the potential of its study more than some what daunting.
-As computer scientists, the exposure to and therefore our understanding of quantum mechanics is limited, in general.
-With this in mind it is, currently, unreasonable to expect the discovery of algorithms that exploit the finer details of this complex and subtle theory to become an everyday occurrence.
+Prize winning mathematician and physicist Roger Penrose is attributed to the remark ``Quantum mechanics makes absolutely no sense''.
+Statements such as this do nothing to promote the universal study of quantum mechanics.
+If quantum mechanics and other subjects, such as general relativity, were, even in part, to filter into curriculum's I feel general understanding would improve leading to greater intuition.
+Without this it may simply be unreasonable to expect discoveries that exploit the finer details of these complex and subtle theories to become frequent occurrences.
+I think this applies to many areas of research including quantum computation.
 
-The following few sections outline a selection of the currently known quantum algorithms.
+Research into the use of heuristic search techniques to assist in the design of quantum algorithms has shown promise.
+Several different techniques have been used to varying success.
+Not only do the techniques differ, but so do the target artefacts.
+Research has been presented to design at all three levels of abstraction outlined above.
+
+In the following sections several quantum algorithms shall be explained in detail.
+This is followed by an overview of the research that has been carried out using heuristic search to perform quantum algorithm synthesis.
 
 \subsection{Deutsch Algorithms}
 \label{sec:DeutAlg}
 In 1985, Deutsch\cite{Deutsch85quantumtheory} proposed a probabilistic solution to a simple promise problem.
-The solution was improved to deterministic solution by Cleve et al.\cite{Cleve98quantumalgorithms}.
-Dispite the improvement being produced by Cleve et al. the algorithm is popularly known as the Deutsch algorithm.
-The algorithm presented in \cite{Deutsch85quantumtheory} was the first application where quantum computation is proovably faster than classical computation.
+The solution was improved to a deterministic solution by Cleve et al.\cite{Cleve98quantumalgorithms}.
+Despite the improvement being produced by Cleve et al. the algorithm is popularly known as the Deutsch algorithm.
+The algorithm presented in \cite{Deutsch85quantumtheory} was the first application where quantum computation is provably faster than classical computation.
 
 The Deutsch algorithm is intended to solve the following problem:
 \begin{quote}
-Given a function $f:\{0,1\}\to\{0,1\}$, decide whether it is either a balanced, or constant function.
+Given a function $f:\{0,1\}\to\{0,1\}$, state whether it is either a balanced, or constant function.
 The function $f(x)$ is guaranteed to be either constant or balanced.
 \end{quote}
-The algorithm's major breakthrough was that it only required a single invocation of the function $f(x)$ to decide on which category it belonged.
-This is compared to the best classical approach requiring $2$ invocations to the function.
-This was the first algorithm that it was possible to compute the solution to a problem, provably, more efficiently than a classical computer by exploiting quantum mechanics.
+The algorithm's major breakthrough was that it only required a single invocation of the function $f(x)$ to decide on which category that function belonged.
+This is compared to the best classical approach requiring two invocations.
+This was the first algorithm to exploit quantum mechanics to compute the solution to a problem provably more efficiently, with efficiency defined as the number of invocation of $f(x)$, than a classical computer.
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-& \lstick{\ket{0}} & \gate{H} & \gate{\mathcal{F}} & \gate{H} & \measure{meas} \\
-& \lstick{\ket{1}} & \gate{H} & \targ\qwx & \rstick{\ket{0}-\ket{1}}\qw  
+&			&  1 &		&  2 &				&  3 &		&  4 &		\\
+& \lstick{\ket{0}} 	& \qw& \gate{H} & \qw& \gate{\mathcal{F}} 	& \qw& \gate{H} &\qw& \measure{meas} \\
+& \lstick{\ket{1}} 	& \qw& \gate{H} & \qw& \targ\qwx 		& \qw& \qw	&\qw& \rstick{\ket{0}-\ket{1}}\qw  
 }
 \]
 \caption{Deutsch Circuit}
@@ -552,63 +583,119 @@ This was the first algorithm that it was possible to compute the solution to a p
 \end{figure}
 
 The circuit for this algorithm is presented in Figure \ref{Deutsch-Cir}.
-The maths for the way in which the state evolves is below
+Despite this being known as the Deutsch Algorithm, the solution is a circuit rather than a parametrisable list of instruction.
+The maths does not scale to functions with greater than a single input qubit.
+Between the points $2$ and $3$ in Figure \ref{Deutsch-Cir} is the insertion of the function $f$.
+This gate is a modified Controlled-Not gate.
+The standard Controlled-Not gate used the value of the control qubit to decide whether to perform the Not operation.
+This modified gate does not use the control qubit value, $x$, but the result of the $f(x)$ to decide whether to perform the Not operation.
+However, just as with the standard Controlled-Not gate, this modified version does not affect the value of the qubits used by the control function.
+
+Before the maths of the algorithm can be introduced, a few equivalences and definitions need to be introduced.
+These are formally stated in Equations \ref{target_qubit_identity} to \ref{eqn:deutschevalgen}.
+
 \begin{equation}
-\ket{01} \xrightarrow{H\otimes{H}} \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\ket{a}(\ket{c}-\ket{b})\equiv\ket{a}(-1(\ket{b}-\ket{c}))\equiv-1\ket{a}(\ket{b}-\ket{c})
+\label{target_qubit_identity}
+\end{equation}
+\begin{equation}
+\label{eqn:deutschevalzero}
+ \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\end{equation}
+\begin{equation}
+\label{eqn:deutschevalone}
+ \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} -\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\end{equation}
+\begin{equation}
+\label{eqn:deutschevalgen}
+ \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} (-1)^{f(x)}\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
 \end{equation}
 
- Using the identity $(\ket{b}-\ket{a})\equiv-1(\ket{a}-\ket{b})$, if $f(x)$ evalues to $0$ the state transformation is
-\begin{equation*}
- \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-\end{equation*}
-Wheras if $f(x)$ evaluates to $1$ the state transformation is
-\begin{equation*}
- \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} -\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-\end{equation*}
-These two equations can be generalised to give
-\begin{equation*}
- \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} (-1)^{f(x)}\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-\end{equation*}
-This is due to $(-1)^0=1$ and $(-1)^1=-1$ which is the way the state evolves with the outputs of $f(x)$.
-Using this we can continue to analyse how the state evolves for the superposition $\frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
-\begin{equation*}
+\begin{list}{}{\topsep=0cm,\itemsep=0cm}
+  \item Equation \ref{target_qubit_identity} is used to simplify Equations \ref{eqn:deutschevalzero} and \ref{eqn:deutschevalone} so the state of the second qubit remains as $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+  \item Equation \ref{eqn:deutschevalzero} is the effect $f$ has on state $\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ when $f(x)=0$.
+  \item Equation \ref{eqn:deutschevalone} is the effect $f$ has on state $\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ when $f(x)=1$.
+  \item Equation \ref{eqn:deutschevalgen} is the combination of Equations \ref{eqn:deutschevalzero} and \ref{eqn:deutschevalone} to produce the generalised equation for the effect $f$ has on state $\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+\end{list}
+
+Equations \ref{eqn:deutschstart} to \ref{Deutsch_final_state} provide full details of the maths behind the way the circuit in Figure \ref{Deutsch-Cir} produces its result.
+
+\begin{equation}
+\label{eqn:deutschstart}
+\ket{01} \xrightarrow{H\otimes{H}} \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\end{equation}
+\begin{equation}
+\label{eqn:deutschevalsuper1}
  \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} \frac{1}{\sqrt{2}}((-1)^{f(0)}\ket{0}+(-1)^{f(1)}\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-\end{equation*}
-\begin{equation*}
+\end{equation}
+\begin{equation}
+\label{eqn:deutschevalsuper2}
  \frac{1}{\sqrt{2}}((-1)^{f(0)}\ket{0}+(-1)^{f(1)}\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \equiv (-1)^{f(0)}\frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-\end{equation*}
-This penultimate state, before the last hadamard, can be simplified.
-Global phase factors cannot be observed so the $(-1)^{f(0)}$ can be ignored.
-The second qubit can also be ignored as it is not entangled with the first, nor is it ever measured.
+\end{equation}
 \begin{equation}
  \frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1})
 \label{Deutsch_final_state}
 \end{equation}
-This results in the penultimate state being able to be represented as \ref{Deutsch_final_state}.
-With this as the state we can reason about the output if the function $f(x)$ is balanced and if it is constant.
-If f were balanced, $f(0) \oplus f(1) = 1$ due to either $f(0)$ or $f(1)$ evaluating to $1$ but not both.
-If f were constant, $f(0) \oplus f(1) = 0$ due to either $f(0)$ and $f(1)$ both evaluating to $0$ or both evaluating to $1$.
-Using these two observations we can see the penultimate state, \ref{Deutsch_final_state}, when f is constant and when f is balanced.
-When f is balanced $\frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1}) \equiv \frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
-When this is passed through the final hadamard $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{H} \ket{1}$.
-When f is constant $\frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1}) \equiv \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})$.
-However, when this is passed through the final hadamard $\frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) \xrightarrow{H} \ket{0}$.
+
+\begin{list}{}{\topsep=0cm,\itemsep=0cm}
+  \item Equation \ref{eqn:deutschstart} is the transition between the points labelled $1$ and $2$ in Figure \ref{Deutsch-Cir}.
+  \item Equation \ref{eqn:deutschevalsuper1} is the transition between the points labelled $2$ and $3$ in Figure \ref{Deutsch-Cir}. This is simplified using the generalisation made in Equation \ref{eqn:deutschevalgen}.
+  \item Equation \ref{eqn:deutschevalsuper2} is the some algebraic manipulation of Equation \ref{eqn:deutschevalsuper1}.
+  \item Equation \ref{Deutsch_final_state} is the simplification of Equation \ref{eqn:deutschevalsuper2}.
+As only the higher significant qubit is ever observed and the global phase factor $(-1)^{f(0)}$ cannot be observed, neither affect the observation so can be omitted from the equation.
+This simplification is made easier by all the previous steps being simplified with Equation \ref{target_qubit_identity} where possible as the state of the lower significant qubit is the same as at the point labelled $1$ in Figure \ref{Deutsch-Cir}.
+\end{list}
+
+\begin{equation}
+ \frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1}) \equiv \frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\label{eqn:deutschpoint3bal}
+\end{equation}
+\begin{equation}
+ \frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{H} \ket{1}
+\label{eqn:deutschpoint4bal}
+\end{equation}
+\begin{equation}
+ \frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1}) \equiv \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})
+\label{eqn:deutschpoint3const}
+\end{equation}
+\begin{equation}
+ \frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) \xrightarrow{H} \ket{0}
+\label{eqn:deutschpoint4const}
+\end{equation}
+
+When f is balanced the state at the point labelled $3$ in Figure \ref{Deutsch-Cir} is Equation \ref{eqn:deutschpoint3bal} as $f(0) \oplus f(1) = 1$ due to either $f(0)$ or $f(1)$ evaluating to $1$ but not both.
+When this is passed through the final Hadamard it produces Equation \ref{eqn:deutschpoint4bal}.
+
+When f is constant the state at the point labelled $3$ in Figure \ref{Deutsch-Cir} is Equation \ref{eqn:deutschpoint3const} as $f(0) \oplus f(1) = 0$ due to $f(0)$ and $f(1)$ both evaluating to $0$ or both evaluating to $1$.
+However, when this is passed through the final Hadamard it produces Equation \ref{eqn:deutschpoint4const}.
 This means that using just a single query to the function $f(x)$, the algorithm can provide an answer to the problem.
 
+This algorithm is very neat in both the circuit required and the mathematics it produces.
+It performs the task required in a deterministic manner and outperforms the classical equivalent.
+It does however reinforce the statement made by Shor\cite{Shor:2004:PQA:1032132.1032149} concerning the lack of background knowledge that can be drawn upon to create these algorithms.
+The construction of such an algorithm cannot be produced simply by understanding the concepts of classical algorithm design.
+
+The main observation that should be taken from this algorithm is how the output is observed on the quibit that is not directly acted on but provides the input to the function $f$.
+As mentioned above, if the circuit between points $3$ and $4$ in Figure \ref{Deutsch-Cir} were analysed by hand as a classical circuit, the input qubit would not be affected.
+However, when it becomes a quantum circuit and the qubits are placed in superposition, the control qubit is affected.
+This is a prime example the solution requires the understanding of the subtle implications of superposition and the vision to exploit it.
 
 \subsection{Deutsch-Jozsa Algorithm}
 \label{sec:DeutJozsaAlg}
 
 %Deutsch-Jozsa Algorithm
-The Deutsch-Jozsa algorithm\cite{1992-deutsch} is a generalisation and improvement over an earlier Deutsch algorithm\cite{Deutsch85quantumtheory}.
-The algorithm described here will be the algorithm including the improvements published in \cite{Cleve98quantumalgorithms}, the resulting algorithm is still referred to as the Deutsch-Jozsa algorithm.
+The Deutsch-Jozsa algorithm\cite{1992-deutsch} is a generalisation and improvement over the earlier Deutsch algorithm\cite{Deutsch85quantumtheory}.
+The algorithm explained in this section is the improved algorithm published by Cleve et al.\cite{Cleve98quantumalgorithms}
+The resulting algorithm is still referred to as the Deutsch-Jozsa algorithm.
 
-In 1992, David Deutsch and Richard Jozsa\cite{1992-deutsch} presented an extension to the Deutsch algorithm, Section \ref{sec:DeutAlg}, that allowed for functions $f:\{0,1\}^{2n}\to\{0,1\}$ to be categorised as constant or balanced.
+In 1992 David Deutsch and Richard Jozsa\cite{1992-deutsch} presented an extension to the Deutsch algorithm, Section \ref{sec:DeutAlg}, that allowed for functions $f:\{0,1\}^{2n}\to\{0,1\}$ to be categorised as constant or balanced.
 The algorithm was probabilistic but also required 2 invocations to the function $f(x)$.
-This means that in the worst case, with $f_1:\{0,1\}\to\{0,1\}$, the algorithm will perform worst than both the original Deutsch algorithm\cite{Deutsch85quantumtheory} and the classical algorithm due to the probabilistic nature of its result.
+This means that in the worst case, with $n=1$, the algorithm will perform worse than both the original Deutsch algorithm\cite{Deutsch85quantumtheory} and the classical algorithm due to the probabilistic nature of its result.
 This is a very limited case and performance improves as the value of n increases.
-As with the original algorithm, the number of invocations of $f(x)$ is constant, truly independent of both $n$ and $f(x)$.
+The improvement by Cleve et al. reduces this to a single invocation to the function $f(x)$.
+As with the original Deutsch algorithm, the number of invocations of $f(x)$ is constant, truly independent of both $n$ and $f(x)$.
 This is again an improvement over the classical algorithm which requires in the worst case $2^{n-1}+1$ to be certain of the function's classification.
+
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
@@ -623,71 +710,93 @@ This is again an improvement over the classical algorithm which requires in the 
  \label{Deutsch-Jozsa-Cir}
 \end{figure}
 
-The algorithm requires n input qubits and a single control qubit.
-The n input qubits are initialised to $\ket{0}$.
-The control qubit is initialised to $\ket{1}$.
-The n-fold Hadamard gates are then used to produce the superposition of all $0..2^n-1$ possible inputs, $x=(\ket{0}+\ket{1})^n$.
+The circuit that is produced by this algorithm is shown in Figure \ref{fig:evodeutschcir}.
+The algorithm requires $n$ input qubits and a single ancillary qubit.
+The $n$ input qubits are initialised to $\ket{0}$.
+The ancillary qubit is initialised to $\ket{1}$.
+The $n$ Hadamard gates are used to produce the superposition of all $0..2^n-1$ possible inputs, $x=(\ket{0}+\ket{1})^n$.
 The Hadamard gate on the control qubit is used to produce the superposition $\ket{0}-\ket{1}$.
-The difference in superpositions between the input and control qubits is important to the way in which the algorithm classifies a function.
-This produces a state  $(\ket{0}+\ket{1})^n(\ket{0}-\ket{1})$.
+The difference in superposition between the input and control qubits is important to the way in which the algorithm classifies a function.
+This produces a state $\frac{1}{\sqrt{2^n}}(\ket{0}+\ket{1})^n\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+
 
 % The n input qubits, in the superposition $(\ket{0}+\ket{1})^n$, are then passed to the function we wish to classify, $f(x)$.
-The result of $f(x)$ is used as the control for a CNOT gate acting on the control qubit.
-Remember at this point that the input x is in effect all possible inputs to $f(x)$, and as such the output is all the respective outputs.
-The circuit that is produced by this algorithm is shown in Figure \ref{fig:evodeutschcir}.
-This means that each of the factors of the input are transformed, based on the action of $f(x)$.
-This can be formalised as $U_f(\ket{x},\ket{y})=(\ket{x},\ket{f(x)\oplus{y}})$.
+The result of $f(x)$ is used as the control for a CNOT gate acting on the ancillary qubit.
+Note at this point that the input $x$ is in effect all possible inputs to $f(x)$, and as such the output is all the respective outputs.
+This means that each of the elements of the input state are transformed, based on the action of $f(x)$.
+This can be formalised as $CNOT_{\mathcal{F}}(\ket{x},\ket{y})=(\ket{x},\ket{f(x)\oplus{y}})$.
 Using the final Hadamard gates we can use the transformation to categorise $f(x)$.
 
-If we assume n to be equal to 2, then after the initial Hadamard gates we have the superposition:
-\begin{equation*}
-\frac{1}{2}\ket{\Psi_{init}}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})=\frac{1}{2}(\ket{00}+\ket{01}+\ket{10}+\ket{11})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-\end{equation*}
+With $n=2$, after the initial Hadamard gates we have the superposition in Equation \ref{eqn:deutschJozsaStart}.
 \begin{equation}
-\ket{a}(\ket{c}-\ket{b})\equiv\ket{a}(-1(\ket{b}-\ket{c}))\equiv-1\ket{a}(\ket{b}-\ket{c})
-\label{target_qubit_identity}
+\frac{1}{2}\ket{\Psi_{init}}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})=\frac{1}{2}(\ket{00}+\ket{01}+\ket{10}+\ket{11})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\label{eqn:deutschJozsaStart}
 \end{equation}
-The CNOT on the target qubit is only activated if $f(x)=1$ which, using the equivalent above, produces the superposition $-1(\ket{0}-\ket{1})$.
-This can also be generalised as $(-1)^{f(x)}(\ket{0}-\ket{1})$ where $-1^1=-1$ and $-1^0=1$ by definition.
-By linearity the superposition after the CNOT controlled by f(x) on the target qubit becomes
-\begin{equation*}
+The NOT operation on the ancillary qubit is only activated if $f(x)=1$ which, using the equivalence in Equation \ref{target_qubit_identity} also used in the the original Deutsch algorithm, produces the superposition $-1\ket{x}(\ket{0}-\ket{1})$.
+This can also be generalised as $(-1)^{f(x)}\ket{x}(\ket{0}-\ket{1})$ where $-1^1=-1$ and $-1^0=1$ by definition.
+\begin{equation}
 \frac{1}{2}((-1)^{f(00)}\ket{00}+(-1)^{f(01)}\ket{01}+(-1)^{f(10)}\ket{10}+(-1)^{f(11)}\ket{11})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-\end{equation*}
+\label{eqn:deutschJozsaFin}
+\end{equation}
 
-After the application of $f(x)$, the target bit has served it purpose and is neither measured nor entangled with any of the qubits from the n qubit input.
-To simplify the equations I will now ignore the $(\frac{1}{\sqrt{2}}\ket{0}-\ket{1})$ contributed by the target qubit, the remaining state will be refereed to as $\Psi$.
-If the function $f(x)$ is constant:
-\begin{equation*}
+By linearity the superposition after the NOT controlled by $f(x)$ on the ancillary qubit is Equation \ref{eqn:deutschJozsaFin}.
+After the application of $f(x)$, the ancillary bit has served it purpose and is neither measured nor entangled with any of the qubits of the $n$ input qubits.
+To simplify the equations the $(\frac{1}{\sqrt{2}}\ket{0}-\ket{1})$ contributed by the target qubit is ignored, the remaining state will be refereed to as $\Psi$.
+\begin{equation}
+\label{eqn:psiconst}
 \ket{\Psi_{const}}=\pm\frac{1}{2}(\ket{00}+\ket{01}+\ket{10}+\ket{11})
-\end{equation*}
-Whereas if $f(x)$ is balanced then:
-\begin{equation*}
+\end{equation}
+\begin{equation}
+\label{eqn:psibal}
 \ket{\Psi_{bal}}=(-1)^{f(00)}\ket{00}+(-1)^{f(01)}\ket{01}+(-1)^{f(10)}\ket{10}+(-1)^{f(11)}\ket{11}
-\end{equation*}
-However,as $\ket{\Psi_{const}}$ and $\ket{\Psi_{bal}}$ are orthogonal we can use this to detect if the function is balanced or constant.
-\begin{equation*}
-\bra{\Psi_{bal}}\ket{\Psi_{const}} = 0
-\end{equation*}
+\end{equation}
+If the function $f(x)$ is constant the state is Equation \ref{eqn:psiconst}.
+Whereas if $f(x)$ is balanced the state is Equation \ref{eqn:psibal}.
+However,as $\ket{\Psi_{const}}$ and $\ket{\Psi_{bal}}$ are orthogonal, Equation \ref{eqn:balconstorth}, it is possible to detect if the function is balanced or constant.
+\begin{equation}
+\label{eqn:balconstorth}
+\bra{\Psi_{bal}}\ket{\Psi_{const}}=0
+\end{equation}
 
-Applying the n Hadamard gates to the state $\Psi_{const}$ produces the state $\pm\ket{0}^n$.
-When measured this will return the result $0$ as the global phase factor $\pm$ cannot be observed.
-As we have noted, $\Psi_{const}$ is orthogonal to $\Psi_{bal}$ so when the n Hadamard gates are applied, as they preserve orthogonality, the measured result will be anything orthogonal to $0$.
-This gives us a clear way of distinguishing between whether f is constant of balanced with certainty and only a single invocation of f.
-If the measurement returns $0$ then $f(x)$ is constant, if the measurement returns anything else $f(x)$ is balanced.
+Applying the $n$ Hadamard gates to the state $\Psi_{const}$ produces the state $\pm\ket{0}^{\otimes{n}}$.
+When measured this will return the result $\ket{0}^{\otimes{n}}$ as the global phase factor $\pm$ cannot be observed.
+With $\Psi_{const}$ and $\Psi_{bal}$ being orthogonal, the application of the $n$ Hadamard gates, which preserve orthogonality, to $\Psi_{bal}$ would result in an observation orthogonal to $\ket{0}^{\otimes{n}}$, i.e. any state other than $\ket{0}^{\otimes{n}}$.
+This gives a clear deterministic distinction between when $f$ is constant or balanced requiring just a single invocation of $f$.
+If the observation is $\ket{0}^{\otimes{n}}$ then $f(x)$ is constant, if the observation is any other state $f(x)$ is balanced.
+
+The similarities between the original Deutsch algorithm and the more general Deutsch-Jozsa algorthim are quite apparent.
+The Deutsch-Jozsa again uses superposition to create an effect on the input qubits when the action is taken on the ancillary qubit.
 
 \subsection{Grover's Search Algorithm}	
+\label{sec:grovers}
 %Grovers Database search algorithm
-The Grover Search algorithm\cite{Grover:1996rk} is an unstructured search problem.
-The algorithm assumes no underlying structure in the search space.
-By this I mean the algorithm does not exploit, and therefore assume, any structure, such as sorting, in the data set being searched.
+The Grover Search algorithm\cite{Grover:1996rk} is an search problem to find a solution $x$ such that $f(x)=True$.
+The algorithm does not exploit or assume any structure, such as sorting, in the data set that it is searching.
 
 It has previously been proven\cite{Bennett:1996iu} that the lower complexity limit for any algorithm identifying an element without knowledge of underlying structure in the data is $\Omega(\sqrt{N})$.
-For simplicities sake we assume $N=2^n$.
+$N$ represents the number of elements in the search space, assume $N=2^n$.
 The complexity is measured by the number of elements which need to be queried in order to find the desired element.
 The Grover Search algorithm has the complexity $O(\sqrt{N})$ and so `is within a constant factor of the fastest possible quantum mechanical algorithm`\cite{Grover:1996rk}.
-
+% 
 \begin{figure}
-\[
+\begin{center}
+
+\subfigure[Initialisation Circuit]{
+\label{fig:groversinit}
+$
+\Qcircuit @C=1.0em @R=1.13em {
+\ket{0}&&\qw&\qw &  \gate{H}  		&\qw 	&\qw&\qw\\
+      &&\qw&\qw &  \vdots 		& 	&\qw&\qw\\
+      &&\qw&\qw &  \vdots 		& 	&\qw&\qw\\
+\ket{0}&&\qw&\qw &  \gate{H} 		&\qw 	&\qw&\qw\\
+\ket{1}&&\qw&\qw &  \gate{H} 		&\qw	&\qw&\qw 
+}
+$
+}
+\hspace{20pt}
+\subfigure[Repeated Circuit]{
+ \label{Grovers-Search-Cir}
+$
 \Qcircuit @C=1.0em @R=.7em {
 & \qw 		& \qw 	& \multigate{3}{f} 	&\qw 	&  \gate{H} 	&\qw 	& \multigate{3}{f_0} 	&\qw &  \gate{H}  	&\qw 	&\qw\\
 & \vdots 	& 	&  \ghost{f} 		& \qw 	& \vdots 	& 	& \ghost{f_0} 		&\qw &  \vdots 		& 	&\qw\\
@@ -695,91 +804,109 @@ The Grover Search algorithm has the complexity $O(\sqrt{N})$ and so `is within a
 & \qw 		&\qw 	&  \ghost{f} 		& \qw 	& \gate{H} 	&\qw 	& \ghost{f_0} 		&\qw &  \gate{H} 	&\qw 	&\qw\\
 & \qw 		&\qw 	&  \targ \qwx 		&\qw 	&  \qw 		&\qw 	& \targ \qwx 		&\qw &  \gate{X} 	&\qw	&\qw 
 }
-\]
-\caption{Grover's Search Circuit}
- \label{Grovers-Search-Cir}
+$}
+ 
+\end{center}
+\caption{Grover's Search Algorithm}
 \end{figure}
 
 
-The mechanisms used within the algorithm to produce a solution to the problem is more subtle than those used but the Deutsch-Jozsa algorithm.
+The algorithm also works if there is more than one solution.
+The number of solutions shall be represented by $M$.
+The desired state is one that observation will, with certainty, provide one of the $M$ solutions.
+
+The mechanisms used within the algorithm to produce a solution to the problem are more subtle than those used but the Deutsch-Jozsa algorithm.
 The algorithm does not perform the computation in a single step.
-The algorithm requires $O(\sqrt{N})$ steps.
-The section of circuit which is repeated is that shown in Figure \ref{Grovers-Search-Cir}.
+The algorithm requires $O(\sqrt{N})$ steps after Figure \ref{fig:groversinit} has been applied.
+The circuit that is repeated is that shown in Figure \ref{Grovers-Search-Cir}.
 
-The algorithm is to initialise the state, $\Psi_1$, using n Hadamard gates.
-\begin{equation*}
-\Psi_1=\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i}(\ket{0}-\ket{1})
-\end{equation*}
-The application of $f(x)$ is used in an analogous way to in the Deutsch-Jozsa algorithm.
-It can again be written as $U_f(\ket{x},\ket{y})=(\ket{x},\ket{f(x)\oplus{y}})$ and remember
-\begin{equation*}
- \exists{x_i}\epsilon\{x_0,x_1,\ldots,x_{n-1}\}|f(x_i)=1
-\end{equation*}
-\begin{equation*}
-\forall{x_j} : i\neq{j} : f(x_j)=0
-\end{equation*}
-Just as in the Deutsch-Jozsa algorithm, the result of a $1$ produces a bit flip on the target qubit.
-Using the identity in Equation \ref{target_qubit_identity} this flips the sign on the amplitude associated with $x_i$, where $f(x_i)=1$.
-The state $\Psi_1$ is transformed by $U_f$ to $\Psi_2$.
-\begin{equation*}
-\Psi_2=\frac{1}{2^{\frac{1}{n}}}\sum\limits_{j=0\wedge{j}\neq{i}}^N \ket{x_j}(\ket{0}-\ket{1}) - \frac{1}{2^{\frac{1}{n}}} \ket{x_i}(\ket{0}-\ket{1})
-\end{equation*}
-The second function in the circuit, $f_0(x)$, is a fixed function.
-It is not dependant on $f(x)$ but is a function which evaluates to $1$ only when the input is $\ket{0}$.
-This means that given a simple state $(\alpha\ket{0}+\beta\ket{1}+\ldots)$ the result is the state $(-\alpha\ket{0}+\beta\ket{1}+\ldots)$.
-The action of both these function can be written in the shorter and much simpler Dirac notation.
-\begin{equation*}
-U_f=I-2\ket{x_i}\bra{x_i}
-\end{equation*}
-\begin{equation}
-U_0=I-2\ket{0}\bra{0}
-\label{Grover:U_0_dirac}
-\end{equation}
+The algorithm works on amplification.
+Each time the circuit is applied the probability amplitude of the desired solution is increased by $\sqrt{\frac{M}{N}}$ Radians.
+After $\frac{\pi\sqrt{N}}{4\sqrt{M}}$ repetitions the probability amplitude of observing the correct state is the same as the combined probability amplitudes of all other states after the circuit in Figure \ref{fig:groversinit} was initially applied.
+The value of $M$ is required to calculate the number of repetitions to perform.
 
-Functions $f(x)$ and $f_0(x)$ seem relatively unimpressive and don't appear to solve the problem.
-The importance of the two sets of n Hadamard gates, one each side of $f_0(x)$, is paramount.
-The effect they have on the action of $f_0(x)$ is shown below, the action of $f_0(x)$ and the Hadamard gates will be represented as V.
-\begin{equation*}
-V=H^{\otimes{n}}U_0{H}^{\otimes{n}}
-\end{equation*}
-\begin{equation*}
-V=H^{\otimes{n}}(I_n-2\ket{0}\bra{0}){H}^{\otimes{n}}
-\end{equation*}
-\begin{equation*}
-V=H^{\otimes{n}}I_n{H}^{\otimes{n}}-H^{\otimes{n}}(2\ket{0}\bra{0}){H}^{\otimes{n}}
-\end{equation*}
-\begin{equation*}
-V=I_n-2(H^{\otimes{n}}\ket{0})(\bra{0}{H}^{\otimes{n}})
-\end{equation*}
-\begin{equation*}
-V=I_n-2(H^{\otimes{n}}\ket{0})({H}^{\otimes{n}}\ket{0})^\dagger
-\end{equation*}
-The application of Hadamard gates to the $\ket{0}$ state is the method of creating the superposition of all $2^n-1$ possible states.
-\begin{equation*}
-V=I_n-2(\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i})(\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i})^\dagger
-\end{equation*}
-\begin{equation*}
-V=I_n-2(\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i})(\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \bra{x_i})
-\end{equation*}
-\begin{equation*}
-V=I_n-2\ket{\Psi}\bra{\Psi}
-\end{equation*}
-Just as with $U_f$, V can be seen as a simple phase flip.
-However, the subtlety of this operator is that the flip is not in the computational basis, but in the basis described by $\ket{\Psi}$.
+The application of Figure \ref{Grovers-Search-Cir} can be seen as rotating around the $x$ or $y$ axis of the Bloch Sphere in Figure \ref{BlochSphere}.
+The state $\ket{1}$ would represent the state in which only solutions have non-zero probability amplitudes.
+The state $\ket{1}$ would represent the state in which only solutions have zero probability amplitudes.
+With the it being a sphere, the repeated rotations around a fixed axis shall always be cyclical.
+Therefore the probability amplitude of the desired state is cyclical.
+If Figure \ref{Grovers-Search-Cir} is repeated more than $\frac{\pi\sqrt{N}}{4\sqrt{M}}$ times the probability amplitude of observing the correct state starts decreasing by $\sqrt{\frac{M}{N}}$ Radians.
 
-The last gate in Figure \ref{Grovers-Search-Cir} is the Pauli-X operator.
-This is not functional but for convenience of mathematics as produces a global phase flip of $\ket{\Psi}$ which makes the mathematics simpler.
-
-That is Grovers algorithm.
-Looking at the circuit and the mathematics of the operators it doesn't provide an obvious answer as to how it solves the search problem.
-This is partly due to the fact the circuit in Figure \ref{Grovers-Search-Cir} has to be repeated roughly $\frac{\pi\sqrt{N}}{4}$ times and partly due to the effect of the circuit being hidden in implementation.
-The circuit is actually little more than a complex rotation gate.
-It is however more sophisticated than a standard rotation gate as it computes the direction to rotate the state so as to solve the problem.
-The power of this does not initially appear as immense as it possibly should.
-The Hilbert space in which this circuit is operating is of the order $N$, we as humans can only accurately imagine a maximum of a $3$ dimensional space as it the most dimensions we can observe directly.
-Taking into account the vast Hilbert space when assessing this circuit produces a much better appreciation its power.
-
-However, even though the power can now be appreciated, the way in which it solves the problem is still not clear. 
+% 
+% The algorithm is to initialise the state, $\Psi_1$, using n Hadamard gates.
+% \begin{equation*}
+% \Psi_1=\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i}(\ket{0}-\ket{1})
+% \end{equation*}
+% The application of $f(x)$ is used in an analogous way to in the Deutsch-Jozsa algorithm.
+% It can again be written as $U_f(\ket{x},\ket{y})=(\ket{x},\ket{f(x)\oplus{y}})$ and remember
+% \begin{equation*}
+%  \exists{x_i}\epsilon\{x_0,x_1,\ldots,x_{n-1}\}|f(x_i)=1
+% \end{equation*}
+% \begin{equation*}
+% \forall{x_j} : i\neq{j} : f(x_j)=0
+% \end{equation*}
+% Just as in the Deutsch-Jozsa algorithm, the result of a $1$ produces a bit flip on the target qubit.
+% Using the identity in Equation \ref{target_qubit_identity} this flips the sign on the amplitude associated with $x_i$, where $f(x_i)=1$.
+% The state $\Psi_1$ is transformed by $U_f$ to $\Psi_2$.
+% \begin{equation*}
+% \Psi_2=\frac{1}{2^{\frac{1}{n}}}\sum\limits_{j=0\wedge{j}\neq{i}}^N \ket{x_j}(\ket{0}-\ket{1}) - \frac{1}{2^{\frac{1}{n}}} \ket{x_i}(\ket{0}-\ket{1})
+% \end{equation*}
+% The second function in the circuit, $f_0(x)$, is a fixed function.
+% It is not dependant on $f(x)$ but is a function which evaluates to $1$ only when the input is $\ket{0}$.
+% This means that given a simple state $(\alpha\ket{0}+\beta\ket{1}+\ldots)$ the result is the state $(-\alpha\ket{0}+\beta\ket{1}+\ldots)$.
+% The action of both these function can be written in the shorter and much simpler Dirac notation.
+% \begin{equation*}
+% U_f=I-2\ket{x_i}\bra{x_i}
+% \end{equation*}
+% \begin{equation}
+% U_0=I-2\ket{0}\bra{0}
+% \label{Grover:U_0_dirac}
+% \end{equation}
+% 
+% Functions $f(x)$ and $f_0(x)$ seem relatively unimpressive and don't appear to solve the problem.
+% The importance of the two sets of n Hadamard gates, one each side of $f_0(x)$, is paramount.
+% The effect they have on the action of $f_0(x)$ is shown below, the action of $f_0(x)$ and the Hadamard gates will be represented as V.
+% \begin{equation*}
+% V=H^{\otimes{n}}U_0{H}^{\otimes{n}}
+% \end{equation*}
+% \begin{equation*}
+% V=H^{\otimes{n}}(I_n-2\ket{0}\bra{0}){H}^{\otimes{n}}
+% \end{equation*}
+% \begin{equation*}
+% V=H^{\otimes{n}}I_n{H}^{\otimes{n}}-H^{\otimes{n}}(2\ket{0}\bra{0}){H}^{\otimes{n}}
+% \end{equation*}
+% \begin{equation*}
+% V=I_n-2(H^{\otimes{n}}\ket{0})(\bra{0}{H}^{\otimes{n}})
+% \end{equation*}
+% \begin{equation*}
+% V=I_n-2(H^{\otimes{n}}\ket{0})({H}^{\otimes{n}}\ket{0})^\dagger
+% \end{equation*}
+% The application of Hadamard gates to the $\ket{0}$ state is the method of creating the superposition of all $2^n-1$ possible states.
+% \begin{equation*}
+% V=I_n-2(\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i})(\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i})^\dagger
+% \end{equation*}
+% \begin{equation*}
+% V=I_n-2(\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \ket{x_i})(\frac{1}{2^{\frac{1}{n}}}\sum\limits_{i=0}^N \bra{x_i})
+% \end{equation*}
+% \begin{equation*}
+% V=I_n-2\ket{\Psi}\bra{\Psi}
+% \end{equation*}
+% Just as with $U_f$, V can be seen as a simple phase flip.
+% However, the subtlety of this operator is that the flip is not in the computational basis, but in the basis described by $\ket{\Psi}$.
+% 
+% The last gate in Figure \ref{Grovers-Search-Cir} is the Pauli-X operator.
+% This is not functional but for convenience of mathematics as produces a global phase flip of $\ket{\Psi}$ which makes the mathematics simpler.
+% 
+% That is Grovers algorithm.
+% Looking at the circuit and the mathematics of the operators it doesn't provide an obvious answer as to how it solves the search problem.
+% This is partly due to the fact the circuit in Figure \ref{Grovers-Search-Cir} has to be repeated roughly $\frac{\pi\sqrt{N}}{4}$ times and partly due to the effect of the circuit being hidden in implementation.
+% The circuit is actually little more than a complex rotation gate.
+% It is however more sophisticated than a standard rotation gate as it computes the direction to rotate the state so as to solve the problem.
+% The power of this does not initially appear as immense as it possibly should.
+% The Hilbert space in which this circuit is operating is of the order $N$, we as humans can only accurately imagine a maximum of a $3$ dimensional space as it the most dimensions we can observe directly.
+% Taking into account the vast Hilbert space when assessing this circuit produces a much better appreciation its power.
+% 
+% However, even though the power can now be appreciated, the way in which it solves the problem is still not clear. 
 
 \subsection{Shor's Factorisation Algorithm}
 \label{sec:shorsalg}
@@ -789,57 +916,24 @@ This allowed the factorisation of integers into their constituent primes in poly
 This algorithm is not a pure quantum algorithm, but a hybrid algorithm.
 It has both a quantum and classical portion.
 
-The algorithm utilises the complex nature of the probability amplitudes.
-This means that the relative phase of the states is important.
-To explain Shors algorithm it is necessary to introduce the sum of complex roots of unity.
-
-\begin{equation}
- \sum_{j=0}^{N-1}z^j=\frac{1-z^N}{1-z}
-\label{sumofpowers}
-\end{equation}
-
-Equation \ref{sumofpowers} provides a simplification of the sum of the geometric series $\sum_{j=0}^{N-1}z^j$.
-This simplification can be applied to both real and complex values of z, including the roots of unity.
-Taking $w=e^{\frac{2\pi{i}}{N}}$ to be the N-th root of unity, the geometric series $\sum_{i=0}^{N-1}w^{xy}$ can be simplified using Equation \ref{sumofpowers}.
-
-When $x=0$
-\begin{equation}
- \sum_{y=0}^{N-1}w^{xy}=\sum_{y=0}^{N-1}w^{0}=\sum_{y=0}^{N-1}1 = N
-\end{equation}
-However, when $x\neq{0}$
-\begin{equation}
- \sum_{y=0}^{N-1}w^{xy}=\sum_{y=0}^{N-1}(w^x)^y=(\frac{1-w^N}{1-w})^y=0^y=0
-\end{equation}
-The result of this is generally described using a Kronecker delta
-\begin{equation}
- \sum_{y=0}^{N-1}w^{xy}=N\times\delta_{x,y}=N\times
-\left\{
-  \begin{array}{cc} 1, & \mbox{if } x={0}\\ 
-  0, & \mbox{if } x\neq{0}\end{array}
-\right.
-\label{krondelt}
-\end{equation}
-
-This produces a very neat and convenient explanation of such a series.
-As the sum is of a root of unity raised to a power, it is a periodic function $w^0=w^N=1$.
-This holds true in Equation \ref{krondelt} when $x=0,\pm{N},\pm{2N},\dots$.
-With this the Kronecker delta can be expressed in terms of modular arithmetic.
-\begin{equation}
- \sum_{y=0}^{N-1}e^{\frac{2\pi{i}xy}{N}}=N\times\delta_{x,y (mod N)}=N\times
-\left\{
-  \begin{array}{cc} 1, & \mbox{if } x={0}\\ 
-  0, & \mbox{if } x\neq{0}\end{array}
-\right.
-\label{krondelt}
-\end{equation}
-
-The quantum section of Shor's algorithm is a period finding function.
-The classical part then uses this period and number theory to deduce the factors.
-In the explaination below, the value that is trying to be factorised is $N$ and the value $M$ is a value which is larger than $N$.
-The use of the Kronecker delta, and understanding on the effect it has is vital to the explanation of the quantum section of Shor's algorithm.
-
 \begin{figure}
-\[
+\subfigure[Quantum Fourier Transform]{
+\label{qftcirc}
+$
+\Qcircuit @C=1.0em @R=.7em {
+&\qw&\qw		&\gate{H}	&\gate{P(\frac{\pi}{2^2})}	&\qw		&\qw&\qw	\\
+&\qw&\qw			&\qw		&\ctrl{-1}\qwx			&\gate{H}	&\qw&\qw\\	
+&&&&&&&\\
+&&&&&&&\\
+&\gate{H}	&\gate{P(\frac{\pi}{2^2})}&\gate{P(\frac{\pi}{2^3})}	&\qw		&\qw				&\qw&\qw	\\
+&\qw		&\ctrl{-1}\qwx&\qw\qwx					&\gate{H}	&\gate{P(\frac{\pi}{2^2})}	&\qw&\qw\\
+&\qw		&\qw&\ctrl{-2}\qwx					&\qw		&\ctrl{-1}\qwx			&\gate{H}&\qw
+}
+$
+}
+\subfigure[Circuit of Shor's Algorithm]{
+\label{shorcirc}
+$
 \Qcircuit @C=1.0em @R=.7em {
 &\ket{0}&	& \qw	&\multigate{3}{\mathcal{F}^{-1}_M}	& \qw 	&\multigate{3}{f}	&\qw &\multigate{3}{\mathcal{F}_M}	&\qw	& \qw 	& \qw 	&\qw\\
 &\vdots	&	&	&\ghost{\mathcal{F}^{-1}_M} 		&\qw 	&\ghost{f}		&\qw &\ghost{\mathcal{F}_M}		&	&\vdots & 	&\qw\\
@@ -850,14 +944,29 @@ The use of the Kronecker delta, and understanding on the effect it has is vital 
 &\vdots	&	&	&\vdots 				&	&\ghost{+}		&\qw &\vdots 				&	&\vdots	&	&\\
 &\ket{0}&	&\qw	&\qw 					&\qw	&\ghost{+}		&\qw &\qw 				&\qw	&\qw	&\qw 	&\qw    
 }
-\]
-\label{shorcirc}
-\caption{The circuit of Shor's algorithm}
+$
+}
+\caption{The Components of Shor's algorithm}
 \end{figure}
 
-The circuit in Figure \ref{shorcirc} is the period finding section of Shor's Algorithm.
-The function $f$ is a periodic function, whose period we want to find.
-$\mathcal{F}$ and $\mathcal{F}^{-1}$ are the Quantum Fourier Transform and the inverse, respectively.
+The algorithm exploits the phase components of the complex probability amplitudes.
+The quantum portion of the algorithm itself, shown in Figure \ref{shorcirc}, is more general than is often explained.
+
+The quantum portion is simply a periodicity finding algorithm.
+The period of certain functions, such as $a^x(mod N)$, can be used with elements of number theory can be used to find the factors of a number.
+However, the function $f$ in the circuit shown in Figure \ref{shorcirc} could be replaced by any periodic function and the period would be found.
+
+For example, the Grovers search algorithm in Section \ref{sec:grovers} requires the number of solutions, $M$, to be known.
+If $M$ is initially unknown, Shor's algorithm can be used to find it.
+As was outlined in Section \ref{sec:grovers} Grovers algorithm is effectively rotation around a Bloch Sphere and is therefore periodic.
+With the period known for a certain instance of Grovers algorithm the value of $M$ can be calculated as each rotation is $\sqrt{\frac{M}{N}}$ Radians.
+This is known as Quantum Counting\cite{Brassard:1998vj}.
+
+Shor's algorithm includes the Quantum Fourier Transform and it's inverse, $\mathcal{F}$ and $\mathcal{F}^{-1}$.
+Circuits that implement the Quantum Fourier Transform for 2 and 3 qubits can be seen in Figure \ref{qftcirc}.
+A pattern can be seen in the two circuits that scales up to $n$ qubits.
+The action of applying the Quantum Fourier Transform and the inverse can be seen in Equations \ref{QFTeq} and \ref{QFTInveq} respectively.
+
 \begin{equation}
  \mathcal{F}_N\ket{x}=\frac{1}{\sqrt{N}}\sum_{y=0}^{N-1}e^{\frac{2\pi{i}xy}{N}}\ket{y}
 \label{QFTeq}
@@ -867,67 +976,129 @@ $\mathcal{F}$ and $\mathcal{F}^{-1}$ are the Quantum Fourier Transform and the i
 \label{QFTInveq}
 \end{equation}
 
-The action of applying the Quantum Fourier Transform and the inverse can be seen in Equations \ref{QFTeq} and \ref{QFTInveq} respectively.
-
-The way in which this circuit computes the period is not initially apparent.
-The central section of the circuit, involving the periodic function, performs the operation $U_f\ket{x}\ket{y}=\ket{x}\ket{f(x)+y}$ in the computaional basis.
-However, it is preceded by the inverse Quantum Fourier Transform.
-The application of the inverse Quantum Fourier Transform on the initial state is as follows:
-
-\begin{equation*}
- \ket{0}\ket{0} \rightarrow \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1}e^{\frac{-2\pi{i}x.0}{M}\ket{x}\ket{0}}
-\end{equation*}
-\begin{equation*}
- \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1}\ket{x}\ket{0}
-\end{equation*}
-
-This produces a uniform superposition, just as a series of Hadamard gates would have produced.
-The application of $f(x)$ to this superposition produces the state:
-\begin{equation*}
- \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1}\ket{x}\ket{f(x)}
-\end{equation*}
-Applying the final Quantum Fourier Transform manipulates this state quite substantially.
-\begin{equation}
- \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1}\ket{x}\ket{f(x)} \rightarrow \frac{1}{M}\sum_{y=0}^{M-1}\sum_{x=0}^{M-1}e^{\frac{2\pi{i}xy}{M}}\ket{y}\ket{f(x)}
-\label{QFTfinstate}
-\end{equation}
-The final state is Equation \ref{QFTfinstate}.
-This does not initially appear particularly useful or interesting.
-However, remembering that $f(x)$ is periodic, we can separate and analyse a single branch of the superposition.
-With $f(x)=f(x+r)=f(x+2r)\dots$ where $r$ is the period of $f(x)$ the amplitude of the branch $\ket{y}\ket{f(x)}$ , with $x=x_0+mr for x=0,1,\dots,\frac{M}{r}-1$, can be written as:
-\begin{equation*}
- \frac{1}{M}\sum_{m=0}^{\frac{M}{r}-1}e^{\frac{2\pi{i}(x_0+mr)y}{M}}\ket{y}\ket{f(x_0)}
-\end{equation*}
-
-This initially still does not look particularly interesting or useful when we are trying to find the period of $f(x)$.
-However, with some rearragement this state can be expressed as:
-\begin{equation}
- \frac{1}{M}e^{\frac{2\pi{i}x_0y}{M}}\sum_{m=0}^{\frac{M}{r}-1}e^{\frac{2\pi{i}my}{\frac{M}{r}}}\ket{y}\ket{f(x_0)}
-\end{equation}
-This contains a structure which was introduced with the sumation of roots of unity, \ref{sumofpowers}.
-Using this observation, the $\sum_{m=0}^{\frac{M}{r}-1}e^{\frac{2\pi{i}my}{\frac{M}{r}}}$ section of the amplitude for the state $\ket{y}\ket{f(x_0)}$ is simplified to:
-\begin{equation}
- \sum_{m=0}^{\frac{M}{r}-1}e^{\frac{2\pi{i}my}{\frac{M}{r}}}=\frac{M}{r}\delta_{y,0 (Mon\frac{M}{r})}=\frac{M}{r}
-\left\{
-  \begin{array}{cc} 1, & \mbox{if } y={0} (mod\frac{M}{r})\\ 
-  0, & \mbox{otherwise}\end{array}
-\right.
-\end{equation}
-With this simplifcation in place it can be seen that the probability amplitude of any branch where $y\neq{x}(mod\frac{M}{r})$ will be zero simply due to the Kronecker delta.
-This results in the only branches with non-zero amplitudes being where $y=0,\frac{M}{r},\frac{2M}{r},\dots$ and so when the first input register is measured the state observed will be $\ket{\frac{kM}{r}}$.
-After several repeats of the algorithm the value of $r$ can be deduced from the observed states.
-
-To see how knowing the period can help factorise the number $N$ we analyse the function $f(x)=a^x(mod N)$.
-This function is obviously periodic as it is modulo N.
-With the period r, $a^r=1(mod N)$.
-The value of $r$ will depend on the value of $a$.
-Only the even values of $r$ are useful, if an odd value is found the value of $a$ should be changed and the new $r$ found.
-
-When $r$ is even, $a^r=1(mod N) \rightarrow a^r-1=0(mod N) \rightarrow (a^r+1)(a^r-1)=0(mod N)$.
-Once we have the equation in this form, we can use the values of $a^r+1)$ and $(a^r-1)$ separately as one of them, possibly both, with have a factor in common with $N$.
-This can simply be found using the Chinese remainder theorm.
-
-The advantage of Shor's algorithm is that the value of $r$ can be found much faster with all values of $x$ up to the limit of $M-1$ tested simultaneously.
+% The algorithm utilises the complex nature of the probability amplitudes.
+% This means that the relative phase of the states is important.
+% To explain Shors algorithm it is necessary to introduce the sum of complex roots of unity.
+% 
+% \begin{equation}
+%  \sum_{j=0}^{N-1}z^j=\frac{1-z^N}{1-z}
+% \label{sumofpowers}
+% \end{equation}
+% 
+% Equation \ref{sumofpowers} provides a simplification of the sum of the geometric series $\sum_{j=0}^{N-1}z^j$.
+% This simplification can be applied to both real and complex values of z, including the roots of unity.
+% Taking $w=e^{\frac{2\pi{i}}{N}}$ to be the N-th root of unity, the geometric series $\sum_{i=0}^{N-1}w^{xy}$ can be simplified using Equation \ref{sumofpowers}.
+% 
+% When $x=0$
+% \begin{equation}
+%  \sum_{y=0}^{N-1}w^{xy}=\sum_{y=0}^{N-1}w^{0}=\sum_{y=0}^{N-1}1 = N
+% \end{equation}
+% However, when $x\neq{0}$
+% \begin{equation}
+%  \sum_{y=0}^{N-1}w^{xy}=\sum_{y=0}^{N-1}(w^x)^y=(\frac{1-w^N}{1-w})^y=0^y=0
+% \end{equation}
+% The result of this is generally described using a Kronecker delta
+% \begin{equation}
+%  \sum_{y=0}^{N-1}w^{xy}=N\times\delta_{x,y}=N\times
+% \left\{
+%   \begin{array}{cc} 1, & \mbox{if } x={0}\\ 
+%   0, & \mbox{if } x\neq{0}\end{array}
+% \right.
+% \label{krondelt}
+% \end{equation}
+% 
+% This produces a very neat and convenient explanation of such a series.
+% As the sum is of a root of unity raised to a power, it is a periodic function $w^0=w^N=1$.
+% This holds true in Equation \ref{krondelt} when $x=0,\pm{N},\pm{2N},\dots$.
+% With this the Kronecker delta can be expressed in terms of modular arithmetic.
+% \begin{equation}
+%  \sum_{y=0}^{N-1}e^{\frac{2\pi{i}xy}{N}}=N\times\delta_{x,y (mod N)}=N\times
+% \left\{
+%   \begin{array}{cc} 1, & \mbox{if } x={0}\\ 
+%   0, & \mbox{if } x\neq{0}\end{array}
+% \right.
+% \label{krondelt}
+% \end{equation}
+% 
+% The quantum section of Shor's algorithm is a period finding function.
+% The classical part then uses this period and number theory to deduce the factors.
+% In the explaination below, the value that is trying to be factorised is $N$ and the value $M$ is a value which is larger than $N$.
+% The use of the Kronecker delta, and understanding on the effect it has is vital to the explanation of the quantum section of Shor's algorithm.
+% 
+% 
+% The circuit in Figure \ref{shorcirc} is the period finding section of Shor's Algorithm.
+% The function $f$ is a periodic function, whose period we want to find.
+% $\mathcal{F}$ and $\mathcal{F}^{-1}$ are the Quantum Fourier Transform and the inverse, respectively.
+% \begin{equation}
+%  \mathcal{F}_N\ket{x}=\frac{1}{\sqrt{N}}\sum_{y=0}^{N-1}e^{\frac{2\pi{i}xy}{N}}\ket{y}
+% \label{QFTeq}
+% \end{equation}
+% \begin{equation}
+%  \mathcal{F}^{-1}_N\ket{y}=\frac{1}{\sqrt{N}}\sum_{z=0}^{N-1}e^{\frac{-2\pi{i}xy}{N}}\ket{z}
+% \label{QFTInveq}
+% \end{equation}
+% 
+% The action of applying the Quantum Fourier Transform and the inverse can be seen in Equations \ref{QFTeq} and \ref{QFTInveq} respectively.
+% 
+% The way in which this circuit computes the period is not initially apparent.
+% The central section of the circuit, involving the periodic function, performs the operation $U_f\ket{x}\ket{y}=\ket{x}\ket{f(x)+y}$ in the computational basis.
+% However, it is preceded by the inverse Quantum Fourier Transform.
+% The application of the inverse Quantum Fourier Transform on the initial state is as follows:
+% 
+% \begin{equation*}
+%  \ket{0}\ket{0} \rightarrow \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1}e^{\frac{-2\pi{i}x.0}{M}\ket{x}\ket{0}}
+% \end{equation*}
+% \begin{equation*}
+%  \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1}\ket{x}\ket{0}
+% \end{equation*}
+% 
+% This produces a uniform superposition, just as a series of Hadamard gates would have produced.
+% The application of $f(x)$ to this superposition produces the state:
+% \begin{equation*}
+%  \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1}\ket{x}\ket{f(x)}
+% \end{equation*}
+% Applying the final Quantum Fourier Transform manipulates this state quite substantially.
+% \begin{equation}
+%  \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1}\ket{x}\ket{f(x)} \rightarrow \frac{1}{M}\sum_{y=0}^{M-1}\sum_{x=0}^{M-1}e^{\frac{2\pi{i}xy}{M}}\ket{y}\ket{f(x)}
+% \label{QFTfinstate}
+% \end{equation}
+% The final state is Equation \ref{QFTfinstate}.
+% This does not initially appear particularly useful or interesting.
+% However, remembering that $f(x)$ is periodic, we can separate and analyse a single branch of the superposition.
+% With $f(x)=f(x+r)=f(x+2r)\dots$ where $r$ is the period of $f(x)$ the amplitude of the branch $\ket{y}\ket{f(x)}$ , with $x=x_0+mr for x=0,1,\dots,\frac{M}{r}-1$, can be written as:
+% \begin{equation*}
+%  \frac{1}{M}\sum_{m=0}^{\frac{M}{r}-1}e^{\frac{2\pi{i}(x_0+mr)y}{M}}\ket{y}\ket{f(x_0)}
+% \end{equation*}
+% 
+% This initially still does not look particularly interesting or useful when we are trying to find the period of $f(x)$.
+% However, with some rearrangement this state can be expressed as:
+% \begin{equation}
+%  \frac{1}{M}e^{\frac{2\pi{i}x_0y}{M}}\sum_{m=0}^{\frac{M}{r}-1}e^{\frac{2\pi{i}my}{\frac{M}{r}}}\ket{y}\ket{f(x_0)}
+% \end{equation}
+% This contains a structure which was introduced with the summation of roots of unity, \ref{sumofpowers}.
+% Using this observation, the $\sum_{m=0}^{\frac{M}{r}-1}e^{\frac{2\pi{i}my}{\frac{M}{r}}}$ section of the amplitude for the state $\ket{y}\ket{f(x_0)}$ is simplified to:
+% \begin{equation}
+%  \sum_{m=0}^{\frac{M}{r}-1}e^{\frac{2\pi{i}my}{\frac{M}{r}}}=\frac{M}{r}\delta_{y,0 (Mon\frac{M}{r})}=\frac{M}{r}
+% \left\{
+%   \begin{array}{cc} 1, & \mbox{if } y={0} (mod\frac{M}{r})\\ 
+%   0, & \mbox{otherwise}\end{array}
+% \right.
+% \end{equation}
+% With this simplification in place it can be seen that the probability amplitude of any branch where $y\neq{x}(mod\frac{M}{r})$ will be zero simply due to the Kronecker delta.
+% This results in the only branches with non-zero amplitudes being where $y=0,\frac{M}{r},\frac{2M}{r},\dots$ and so when the first input register is measured the state observed will be $\ket{\frac{kM}{r}}$.
+% After several repeats of the algorithm the value of $r$ can be deduced from the observed states.
+% 
+% To see how knowing the period can help factorise the number $N$ we analyse the function $f(x)=a^x(mod N)$.
+% This function is obviously periodic as it is modulo N.
+% With the period r, $a^r=1(mod N)$.
+% The value of $r$ will depend on the value of $a$.
+% Only the even values of $r$ are useful, if an odd value is found the value of $a$ should be changed and the new $r$ found.
+% 
+% When $r$ is even, $a^r=1(mod N) \rightarrow a^r-1=0(mod N) \rightarrow (a^r+1)(a^r-1)=0(mod N)$.
+% Once we have the equation in this form, we can use the values of $a^r+1)$ and $(a^r-1)$ separately as one of them, possibly both, with have a factor in common with $N$.
+% This can simply be found using the Chinese remainder theorem.
+% 
+% The advantage of Shor's algorithm is that the value of $r$ can be found much faster with all values of $x$ up to the limit of $M-1$ tested simultaneously.
 
 \subsection{Quantum Teleportation Protocol}
 \label{sec:quantteleproto}
@@ -1055,93 +1226,79 @@ Due to the exponential increase in resources required for simulation with an inc
 
 \subsection{Q-PACE I}
 Massey\cite{masseythesis,masseymeng} explores both Genetic Algorithms and Genetic Programming as search techniques.
-The software suites presented, Q-PACE I - IV, have varying success and increase in search power.
-Q-PACE I\cite{masseymeng} is described as solving `a number of basic proof of concept problems`\cite{masseythesis} and `proves the concept that evolutionary search techniques can be used to evolve quantum software`\cite{masseythesis}.
-Q-PACE I uses a fixed length array of quantum gates and is based on a simple Genetic Algorithm found in \cite{1989goldberg}.
+The software suites presented, Q-PACE I - IV, have varying success rate and each version provides additional expressive power over its predecessors.
+Q-PACE I\cite{masseymeng} is described as solving ``a number of basic proof of concept problems''\cite{masseythesis} and ``proves the concept that evolutionary search techniques can be used to evolve quantum software''\cite{masseythesis}.
+Q-PACE I uses a fixed length array of quantum gates and is based on the simple Genetic Algorithm found in \cite{1989goldberg}.
 
-Q-PACE II\cite{masseythesis} is a suite based on Q-PACE I but uses Genetic Programming instead.
-In contrast to Q-PACE I, Q-PACE II is able to handle variable length solutions as individuals are represented as a list of quantum gates parameterized with the label, target and control bits and phase factor.
-It also includes the inclusion of vector manipulation rather than matrix manipulation to improve efficiency.
-Matrix manipulation is a simple concept, however it is very computationally expensive.
-Operators are just one to one functions acting on state vectors.
-\begin{equation}
- \begin{pmatrix}
-\alpha_0\\
-\alpha_1\\
-\alpha_2\\
-\alpha_3
-\end{pmatrix}
-\rightarrow
- \begin{pmatrix}
-\alpha_2\\
-\alpha_3\\
-\alpha_0\\
-\alpha_1
-\end{pmatrix}
-\label{vectormanipulation}
-\end{equation}
-
-The operation of the Pauli-X gate on the first qubit in a two qubit system can be represented as Equation \ref{vectormanipulation}.
-For more complex gates, such as the Hadamard gate, the matrix manipulation is much more expensive than the equivalent vector manipulation.
+This representation is fairly limiting.
+If a solution would require $x$ gates but the fixed length array is $<x$ the solution cannot be found.
+Therefore the array either has to be very large or the number of gates required needs to known.
+This is clearly not desirable as increasing the array length increases the search space and knowing the number of gates required would require knowing the solution.
 
 \subsection{Q-PACE II}
-The representation used in Q-PACE II is not able to express a Toffoli, Controlled-Controlled-Not, gate as a single gate.
+Q-PACE II\cite{masseythesis} is a suite based on Q-PACE I but uses Genetic Programming instead.
+However in contrast to Q-PACE I, Q-PACE II is able to handle variable length solutions. 
+Individuals are represented as lists of quantum gates parametrized with the label representing the type of gate, target and control qubits and phase factor.
+
+Unitary operators, gate implementations, are just bijective functions acting on state vectors.
+Matrix multiplication is a simple representation of unitary application, however it is very computationally expensive.
+Some operations can be implemented more efficiently as simple sets of instructions, referred to as vector manipulation, that when followed produce exactly the same final state as the matrix multiplication, Algorithm \ref{fig:paulixvectorrepresentation} shows the vector manipulation of the Pauli-X gate of quantum state $S$.
+Q-PACE II includes the use of vector manipulation rather than matrix manipulation to improve efficiency.
+\begin{algorithm}
+\begin{algorithmic}
+\FOR{$k$ : $k\rightarrow2^n$ : $k+2^m$} 
+\FOR{$l$ : $l\rightarrow2^{m-1}$ : $l++$} 
+\STATE $temp \gets S[k+l]$
+\STATE $S[k+l] \gets S[k+l+2^{m-1}]$
+\STATE $S[k+l+2^{m-1}] \gets temp$
+\ENDFOR
+\ENDFOR
+\end{algorithmic}
+\caption{Pauli-X Gate Vector Manipulation}
+\label{fig:paulixvectorrepresentation}
+\end{algorithm}
+
+The representation used in Q-PACE II can not express a Toffoli, Controlled-Controlled-Not, gate as a single gate.
 This makes evolving a half-adder circuit more than a trivial test.
 When Q-PACE II is tested against producing a circuit with the specification $\ket{x, y, z}\rightarrow\ket{x,x \oplus y, x \wedge y}$ it is able to produce several exact solutions.
-One of which was claimed, at the time, to be the `best known solution to the problem`\cite{masseythesis} with the restricted gate set.
-Q-PACE II was also challenged to produce a circuit to implement $\ket{c, a, b, z}\rightarrow\ket{c, a, (a+b)_0, (a+b)_1}$ and again produced `the most efficient solution to this particular problem`\cite{masseythesis}.
+One of which was claimed, at the time, to be the ``best known solution to the problem''\cite{masseythesis} with the restricted gate set.
+Q-PACE II was also challenged to produce a circuit to implement $\ket{c, a, b, z}\rightarrow\ket{c, a, (a+b)_0, (a+b)_1}$ and again produced ``the most efficient solution to this particular problem''\cite{masseythesis}.
 
-\begin{equation}
-\begin{pmatrix}
-a\\
-b\\
-0\\
-0\\
-0\\
-0\\
-0\\
-0
-\end{pmatrix}
-\label{masseyprobref}
-\end{equation}
+% \begin{equation}
+% \begin{pmatrix}
+% a\\
+% b\\
+% 0\\
+% 0\\
+% 0\\
+% 0\\
+% 0\\
+% 0
+% \end{pmatrix}
+% \label{masseyprobref}
+% \end{equation}
 
-Both tests of Q-PACE outlined were carried out to produce a deterministic solution, would always present the correct answer after measurement.
-Further tests were performed on more complicated problems, however deterministic solutions were not found.
+All tests of Q-PACE outlined above were focussed on producing deterministic solutions.
+During experiments focussed on more complicated problems deterministic solutions were unable to be found.
 Following on from the work carried out by Spector et al\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112}, Massey changed to a probabilistic approach.
-The definition, referring to \ref{masseyprobref}, of a probabilistic solution used by Massey is:
+The definition, referring to the target state $a\ket{000}+b\ket{001}$, of a probabilistic solution used by Massey is:
 
 \begin{quote}
 The probability of measuring $\ket{000}$ is at least $0.5 \times a\bar{a}$, and the probability of measuring $\ket{001}$ is at least $0.5 \times b\bar{b}$.\cite{masseythesis}
 \end{quote}
 
-With this new, relaxed, requirement of probabilistic correctness, the Q-PACE II software was used to `evolve a quantum circuit to implement the specification 
-\begin{equation*}
- \ket{a_1, a_0, b_1, b_0, z_1, z_0} \rightarrow \ket{a_1, a_0, (a+b)_2, (a+b)_1, (a+b)_0, z_0}'
-\end{equation*}
-The result was, despite the requirement of only probabilistic correctness, a deterministic solution to the problem\cite{masseythesis}.
-The evolved circuit was not as efficient by that presented in \cite{Vedral:1995ga} but was still deterministic.
-
-\begin{figure}
-\Tree [.Create\_CN [.Create\_N 1 ] [.Create\_H 2 ]]
-\caption{Q-PACE III Example Solution Tree}
-\label{QPACEIIIEXTREE}
-\end{figure}
-
-\begin{figure}
-\[
-\Qcircuit @C=1.0em @R=.7em {
-& \qw & \gate{N} & \qw &  \ctrl{1} & \qw \\
-& \qw & \qw & \gate{H} & \targ & \qw
-}
-\]
-\caption{Q-PACE III Example Program Output}
-\label{QPACEIIIEX}
-\end{figure}
+With this focus on probabilistic correctness, the Q-PACE II software was used to evolve a quantum circuit to implement the specification in Equation \ref{eqn:halfadderspec}.
+\begin{equation}
+ \ket{a_1, a_0, b_1, b_0, z_1, z_0} \rightarrow \ket{a_1, a_0, (a+b)_2, (a+b)_1, (a+b)_0, z_0}
+ \label{eqn:halfadderspec}
+\end{equation}
+The result was, despite focussing on probabilistic correctness, a deterministic solution\cite{masseythesis}.
+% The evolved circuit was not as efficient by that presented in \cite{Vedral:1995ga} but was still deterministic.
 
 
 \subsection{Spector \emph{et al}, Deutsch's Early Promise Problem}
 \label{sec:spectordeutschmajon}
-Lee Spector \emph{et al.}\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} published a paper which used a different evolutionary approach.
+Lee Spector \emph{et al.}\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} published a paper that used a different evolutionary approach.
 They used Genetic Programming to produce a better than classical solution to ``Deutsch's Early Promise''\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} problem.
 This was not an unsolved problem as explained in Sections \ref{sec:DeutAlg} and \ref{sec:DeutJozsaAlg}, however it was an example of where quantum computation was known to be more efficient than any possible classical approaches.
 The specific problem that was presented was where the number of input qubits for $f$ was two.
@@ -1165,6 +1322,22 @@ However, when tested on functions with $2^{n-1}$ inputs evaluating to $1$ the so
 Both the solution for the Deutsch problem and the \emph{majority-on} problem were searched for with a probabilistic approach, looking for solutions with an output error of lower than 0.48 rather than for deterministic solutions.
 
 \subsection{Q-PACE III}
+
+\begin{figure}
+\begin{center}
+
+ \subfigure[Example Solution Tree]{\label{QPACEIIIEXTREE}\Tree [.Create\_CN [.Create\_N 1 ] [.Create\_H 2 ]]}    
+\hspace{20pt}            
+  \subfigure[Example Program Output]{\label{QPACEIIIEX}$
+\Qcircuit @C=1.0em @R=.7em {
+& \qw & \gate{N} & \qw &  \ctrl{1} & \qw \\
+& \qw & \qw & \gate{H} & \targ & \qw
+}
+$}
+\end{center}
+\caption{Q-Pace III}
+\end{figure}
+
 Massey's third generation, Q-PACE III, evolved quantum programs, inspired by the Spector\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} results and taking on one of the suggested ``Future Work'' topics.
 Just as with Q-PACE II, Q-PACE III was a Genetic Programming suite.
 The solutions evolved by Q-PACE III were executable programs, 'second order' solutions, which produce as an output a quantum circuit.
@@ -1317,44 +1490,38 @@ It has been proven that it is able to produce circuits of a smaller size so is m
 The use of the system without a previously found solution would appear to be much more difficult than the results suggest.
 
 \section{The Focus of this Project}
-When looking at all the papers that include the use an evolutionary approach there is one thing that they all have in common.
-Each time research is carried out in this area nearly everything is bespoke.
-Some research use a library to perform the evolutionary search but that seems the extent of reuse.
-QPace I - IV share properties and each iteration is developed with respect to the strengths and weaknesses of the previous version and indeed the strengths and weaknesses of the Spector research.
+The sections above summarise the extent of current research into the use of evolutionary computation to design quantum computational artefacts such as circuits, programs, protocols and algorithms.
+Each of these repeatedly include the software development of bespoke research software of peripheral tasks such as the circuit simulation and state representation.
+Circuit simulation and state representation are not the focus of the research and have no impact on the search process as two different implementations would still produce the same results if they were correctly implemented.
+Furthermore, such software, including the source code, is generally not available to researchers.
+This clearly impedes progress in this area.
 
-The other common feature is the lack of source code available.
-None of the QPace suites are easily available and neither is the Spector code.
-This is not to say that there are not tools available to help with Quantum Algorithm design.
-There are many available in many different languages, Java, C++, Matlab etc, but these are purely simulators.
-A user creates a circuit, provides an input state and the tool will provide a final state.
-What seems to be the largest gap in the tools available for such research is a tool or even a framework that allows researchers to concentrate on the research of quantum algorithms rather than all the peripheral, but necessary, tasks.
+% When looking at all the papers that include the use an evolutionary approach there is one thing that they all have in common.
+% Each time research is carried out in this area nearly everything is bespoke.
+% Some research use a library to perform the evolutionary search but that seems the extent of reuse.
+% QPace I - IV share properties and each iteration is developed with respect to the strengths and weaknesses of the previous version and indeed the strengths and weaknesses of the Spector research.
 
-In this project I aim to produce a framework that will enable researchers to be abstracted away from the problem of simulation and representation and concentrate on searching for the desired Quantum Algorithm.
-The framework shall allow a researcher to come up with their own search mechanism, QPAce V for example, without having to reimplement the circuit simulation or representation.
-The framework shall not only allow researcher to provide new search techniques but also to research the most effective cost functions.
-As was seen in the work presented by Massey\cite{masseythesis} the representation of complex numbers that is used within the cost funtion had a significant impact on the solutions found by the search.
+% The other common feature is the lack of source code available.
+% None of the QPace suites are easily available and neither is the Spector code.
+Tools are available to visualise circuits and simulators that given a circuit evaluate it on a state.
+However, they do not provide assistance during the design.
 
-The use of the framework shall also allow for the work of different researchers to easily be compared, contrasted and combined within the same framework.
+The aim of this project is to provide tool support for the automated synthesis of quantum computational artefact via heuristic search.
+Typically there artefacts will be circuits. programs, algorithms and protocols.
+The support provided will allow its users to rapidly configure and run searches for these artefacts, and also allow its users to visualise simulations of any artefacts produced.
 
-Secondly in this project I will produce a fully working system using this framework.
-The search engine and cost functions will be based on those presented as QPace IV\cite{masseythesis}.
-This fully working example will be an indication as to how the framework could be used by researchers.
+The aim is to free the user from having to develop a great deal of bespoke software.
+Elements such as standard heuristic search algorithms and suitability measures will be provided.
+If these do not suffice for the user's need then other components should easily be assembled into the framework in a plug-and-play style.
 
-Thirdly, in this project I will produce effectively a 3rd Party application that will use the fully implemented system to perform all Quantum Algorithm searching and evaluation.
-This 3rd Party application will simply be a client GUI.
-This could be seen not as a 3rd party application but as part of the fully working system.
-This observation I accept.
-The use of 3rd Party in this instance is simply an indication of the separation of knowledge.
-The client GUI produced will use only the API available to the ``traditional'' 3rd party applications rather than any internal knowledge or interfaces not available through the API.
-
-The creation of such a toolkit is, to the best of my knowledge, something that has not previously been produced.
+The creation of such a toolkit is, to the best of my knowledge, unprecedented.
 All previous work in the area has focussed purely on the discovery of Quantum Algorithms with each researcher working in isolation.
-Without there being a known ``right way'' to search for Quantum Algorithms it is essential for the framework produced not to limit or encourage any particular search method.
-Although in the literature review the focus has been on evolutionary approaches, the framework must not appear to push any potential researcher into using evolutionary approaches.
-This I feel is essential for the framework, and even the fully implemented system and client GUI, to be adopted by researchers in this area.
+% Without there being a known ``right way'' to search for Quantum Algorithms it is essential for the framework produced does not limit or promote any search techniques.
+% Despite the literature review focus on evolutionary approaches the framework is not intended solely for such techniques.
+The adoption by researchers of the toolkit could only aid research and potentially dramatically improve the productivity of research in this area.
+This toolkit could also provide foundations for a ``state of the art'' quantum algorithm search suite containing implementations of recent search and suitability techniques presented in publications.
 
-As a final stage of the project I will be using the fully implemented system to carry out a number of experiments searching for Quantum Algorithm.
-This will use the QPace IV based search engine implemented in stage two listed above.
+As a demonstration of the software a number of experiments searching for Quantum Algorithm shall be performed as a final part of the project.
 
 % In the first stage of this project I aim to produce a graphical toolkit which will allow users to search for quantum algorithms.
 % The toolkit will allow for various different search methods and be fully extendable so additional search techniques can be added.

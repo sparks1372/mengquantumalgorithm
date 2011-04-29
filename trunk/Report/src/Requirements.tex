@@ -1,24 +1,40 @@
 \chapter{Requirements}
-The requirements listed in this section are for the framework, fully implemented system and the client GUI.
-The requirements were maintained using an online tool called ReqMan\cite{reqman} by RequirementOne.
-This section and the requirements have been formed using the guidelines provided in the IEEE standard 830\cite{ieee830}.
 
-\section{Purpose}
-\subsection{Framework}
-The framework is aimed to allow research into Quantum Algorithms to concentrate on producing Quantum Algorithms.
-The framework is aimed to make it much simpler for research by different researchers to be combined and contrasted.
+This project aims to provide software to facilitate research into quantum computation through heuristic search.
+As an initial architectural decision the software is broken down into three sections.
 
-\subsection{Fully Implemented Tool}
-The full implementation of a Quantum Algorithm search tool using the framework is to provide a working toolkit for researchers interested in finding Quantum Algorithms rather than the search techniques to find Quantum Algorithms.
-As the toolkit will use the framework it will also provide a potential foundation for future research into the search techniques.
+The first section is a plug-and-play research framework that will enable the search for quantum algorithms by providing the peripheral software development such as circuit construction and simulation.
+The framework will allow researchers to perform research into search techniques and suitability measures without reimplementing the peripheral, non-research, tasks.
+The framework is not intended as a standalone application but an administrative library that can be incorporated into any other software.
 
-\subsection{Client GUI}
-The client GUI will provide an interface that should make the toolkit more accessible for researchers.
-Without the GUI provided, researchers would have to either embed the toolkit in their own application or within their own specific GUI.
-This is likely to reduce the potential use of the toolkit in the academic community.
-One of the main focusses of the toolkit is to try and provide a standardised framework for research of Quantum Algorithms.
-Not providing a GUI, resulting in many bespoke GUIs, goes against this focus.
-This is not to say that inclusion of the framework in 3rd party systems or improvement to the GUI is not encouraged.
+The second section is a prototype implementation of at least one search technique and suitability measure
+The inclusion of these modules shall be used to indicate how the framework is intended to be used by researchers and demonstrate the plug-and-play ability of the framework.
+
+The third section is a client with a graphical user interface for the framework.
+A client is necessary to allow the toolkit to be used as a standalone application.
+This may seem as though as it should be included as part of the framework however the distinction is made to highlight the different aims.
+The framework is intended to provide the structure and utilities, such as circuit simulation, that can be included as a single module in any application, for example a general search application or a quantum IDE.
+Whereas the client is intended to provide researchers instant access to the advantages as obviously there are currently no third party applications using the framework.
+
+The requirements were maintained using an online tool called ReqMan by RequirementOne\cite{reqman}.
+
+% \section{Purpose}
+% \subsection{Framework}
+% The framework is aimed to facilitate research into quantum computation through heuristic search.
+% 
+% \subsection{Implemented Search Prototype}
+% The implemented prototype is to provide 
+% 
+%  of a Quantum Algorithm search tool using the framework is to provide a working toolkit for researchers interested in finding Quantum Algorithms rather than the search techniques to find Quantum Algorithms.
+% As the toolkit will use the framework it will also provide a potential foundation for future research into the search techniques.
+% 
+% \subsection{Client GUI}
+% The client GUI will provide an interface that should make the toolkit more accessible for researchers.
+% Without the GUI provided, researchers would have to either embed the toolkit in their own application or within their own specific GUI.
+% This is likely to reduce the potential use of the toolkit in the academic community.
+% One of the main focusses of the toolkit is to try and provide a standardised framework for research of Quantum Algorithms.
+% Not providing a GUI, resulting in many bespoke GUIs, goes against this focus.
+% This is not to say that inclusion of the framework in 3rd party systems or improvement to the GUI is not encouraged.
 
 % \section{Scope}
 % The requirements listed in the following section cover the framework and the client GUI.
@@ -28,6 +44,7 @@ This is not to say that inclusion of the framework in 3rd party systems or impro
 % The requirements of the full implementation are listed in a separate section following the framework and client GUI requirements.
 
 \section{Definition, Acronyms, and Abbreviations}
+\label{sec:reqdefs}
 The definitions given here are consistent with those used in the rest of the document but are included as a matter of clarity.
 
 \textbf{System Size} - The number of qubits in the system. For example the quantum teleportation protocol has a fixed system size of 3 whereas the Quantum Fourier Transform can scale to any system size.
@@ -40,8 +57,11 @@ The definitions given here are consistent with those used in the rest of the doc
 
 \textbf{Quantum Algorithm} - An ordered list of instructions used to construct a quantum circuit.
 
-\textbf{Suitability Measure} - A function to provide a performance of a solution with $0$ as the ``Best'' performance and performance decreasing as the function result increases.
+\textbf{Suitability Measure} - A function that assigns a quantitative measure of how well a proffered solution performs.
+A value of 0 indicates ideal functionality with increasingly higher values of the function indicating ever poorer performance.
 
+\textbf{Search Target} - Every search has a target which is a representation of the area of the search space that contains solutions to the search problem.
+For example, in a search for $x$ in a list the search target could be the indices of all occurrences of $x$ in the list and in a search for $x=\sqrt{4}$ the search target would be $x=\pm2$.
 
 \section{Requirements Summaries}
 This section contains a summary of the requirements of each of the separate phases of the project.
@@ -53,26 +73,25 @@ A full listing of specific requirements can be found in Appendix \ref{sec:reqs}.
 \textbf{The framework shall allow researchers to provide search engines for the system to use.}
 This is important as one of the intended uses of the framework is for research into the techniques used for searching for quantum algorithms.
 The way in which the framework provides this shall not imply the use of any search technique in favour to any other.
-It is important that the framework shall effectively be research direction independent.
+% It is important that the framework shall effectively be research direction independent.
 
 \subsubsection{Additional Suitability Measures - Req:ASM}
 \label{sec:reqasm}
 \textbf{The framework shall allow researchers to provide suitability measures for the system to use.}
-A suitability measure is effectively a fitness function.
-However, the term fitness function is associated with the use of evolutionary techniques.
-With the tool intended to be technique independent the term suitability measure shall be used.
+In heuristic search, the terms fitness function and cost functions are typically used to indicate suitability measures.
+In general we would seek to maximise ``fitness'' and minimise ``cost'' of any proffered solution.
+% A suitability measure is effectively a fitness function.
+% However, the term fitness function is associated with the use of evolutionary techniques.
+% With the tool intended to be technique independent the term suitability measure shall be used.
 
-It is well known that the suitability measure, performance metric, has a significant impact on the success of a search.
+It is well known that the suitability measure has a significant impact on the success of a search.
 However, it was also shown by Massey\cite{masseythesis} that in the search for quantum algorithms the search can be sensitive even to the level of complex number representation.
-The ability for researchers to provide suitability measures is therefore paramount for the framework to be useful and improve research progress rather than hinder it.
-
-Not only is this ability required by the researchers searching for quantum algorithms but also for those researchers concerned with finding successful suitability measures for use by the first group of researchers.
 
 \subsubsection{Quantum Algorithm Output - Req:QAO}
 \label{sec:reqqao}
 \textbf{The solution of a search, a quantum algorithm, shall be presented to the user as a list of instructions.}
-An algorithm is a list of instruction to follow in order to produce a circuit.
-The solution of a search using the framework is an algorithm.
+An algorithm is a list of instructions to follow in order to produce a circuit.
+The solution of a search using the framework is an algorithm as defined in Section \ref{sec:reqdefs}.
 This solution shall be provided to the user as a list of instructions in a consistent format.
 
 \subsubsection{Circuit Visualisation  - Req:CV}
@@ -92,16 +111,21 @@ To achieve this knowledge of the internal implementation detail shall not be req
 \subsubsection{Definition of Search Target - Req:DST}
 \label{sec:reqdst}
 \textbf{The framework shall provide a standardised definition format for users to specify the target of the search.}
-All searches have a target, the shortest path or the minimum value for example.
-The searches that the framework are intended for are those to find a quantum algorithm to produce a circuit to solve a specific problem, to produce an equal superposition or the Quantum Fourier Transform circuit.
+% All searches have a target, the shortest path or the minimum value for example.
+% The searches that the framework are intended for are those to find a quantum algorithm to produce a circuit to solve a specific problem, to produce an equal superposition or the Quantum Fourier Transform circuit.
 The framework needs to provide a standard way of defining what the search target is.
-The standard shall be formalised so it is able to be used and produced by third party software.
+The standard shall be formalised so it is able to be consumed and generated by third party software.
 
 \subsubsection{Use of Configuration Files - Req:UCF}
 \label{sec:requcf}
 \textbf{The customisation of the framework shall be provided through a series of configuration files.}
-All third party additions to the framework, search engines and suitability measures, shall be specified using a series of configuration file.
+All third party additions to the framework, search engines and suitability measures, shall be specified using a series of configuration files.
 These configuration files shall be well defined and able to be used and produced by third party software.
+Files are used for persistence.
+
+Another option is for configuration to be manually performed each time the framework is used.
+This was not chosen as the configuration of available search engines and suitability measures are unlikely to change very often.
+Maintaining a persistent configuration will also reduce the opportunity for human error during configuration as it will be performed much less frequently.
 
 \subsubsection{Provided Gates and Algorithm Instructions - Req:PGAI}
 \label{sec:reqpgai}
@@ -242,7 +266,11 @@ $  \\ & & & & & \\
 
 \subsubsection{Algorithm Control Structures - Req:ACS}
 \label{sec:reqacs}
-\textbf{The system shall provide the iterate control structure and support nested iterate instructions.}
+\textbf{The system shall provide an iterate control structure and support nested iterate structures.}
+Many algorithms require nested loop structures.
+However, na\"{\i}ve nesting is not sufficient.
+Each loop construct shall provide a loop variable that must be accessible within the loop including inside any nested loops.
+The algorithm produced by Massey\cite{masseythesis} producing the Quantum Fourier Transform circuit is an algorithm that requires such a loop structure.
 
 \subsubsection{Producing Circuits from Algorithms - Req:PCA}
 \label{sec:reqpca}
@@ -262,7 +290,7 @@ Given an initial state and a circuit, the state after the application of each un
 
 This shall also provide a debugging mechanism to ensure that all unitary operations are performing the expected opertation on state.
 
-\subsection{Fully Implemented Tool}
+\subsection{Prototype Implementation}
 \subsubsection{Sample Search Engine - Req:SSE}
 \label{sec:reqsse}
 \textbf{The tool shall provide at least one implemented search engine.}
@@ -281,8 +309,9 @@ The specific suitability is not specified but shall be proven to allow basic cir
 To allow search engine and suitability measure researchers to perform simple tests the tool shall provide a selection of basic search targets.
 The search targets included are not specified.
 
-\subsection{Client GUI}
+\subsection{Client}
 \label{sec:clientguireqs}
+
 \subsubsection{Search Engine Selection - Req:SES}
 \label{sec:reqses}
 \textbf{The GUI shall provide a user with a selection of search engines to use in a search.}
@@ -298,31 +327,31 @@ The most recently selected suitability measure shall be used by subsequent searc
 \subsubsection{Search Target Selection - Req:STS}
 \label{sec:reqsts}
 \textbf{The GUI shall provide a user with a selection of search targets to be used as the search goal.}
-The GUI shall provide a seleciton between all search targets registered in the framework.
+The GUI shall provide a selection between all search targets registered in the framework.
 The most recently selected search target shall be set for subsequent searches.
 
 \subsubsection{Search Target Creation - Req:STC}
 \label{sec:reqstc}
-\textbf{The GUI shall provide a way for users to create a new search target without needing to explicitly write a configuration file.}
+\textbf{The GUI shall provide a way for users to create a new search target without to explicitly writing the configuration file.}
 Writing configuration files is quite monotonous and highly error prone.
 The GUI shall provide a way to create these configuration files that reduces the error rate.
-The way in which the GUI provides this is not expected to dramatically decrease the monotony due to the nature of the amount of information that need be specified for problems when high number of Qubits are involved.
+The way that the GUI provides this is not expected to dramatically decrease the monotony due to the nature of the amount of information required for problems with high numbers of qubits.
 The inclusion of such a feature is very important to improve the usability of the system and improve the potential level of use in the research community.
 
 \subsubsection{Search Target Editing - Req:STE}
 \label{sec:reqste}
-\textbf{The GUI shall provide a way for users to edit the contents of a previously created search target without manual editing of the configuration file.}
-The size of the configuration file required to specify a search target will increase linearly with respect to the amount of test data.
-The size of the data is likely to follow the same rate of expansion as the quantum search space as the number of qubits, $n$, increases, $2^n$.
-With the size of configuration file increasing in such a dramatic way the risk of error when directly and manually editing the values in such files increases in a similar fashion.
-To improve the risk of errors the GUI shall provide a way to graphically edit the test data in a way that abstracts away from the configuration file structure.
+\textbf{The GUI shall provide a way for users to edit the contents of a previously created search target without manual editing the configuration file.}
+The size of the data per test case increases exponentially as the number of qubits increases.
+The size of the configuration file required to specify a search target will increase linearly on top of this with respect to the number of test case.
+With the size of configuration file increasing in such a dramatic way the risk of error when directly and manually editing the values increases in a similar fashion.
+To decrease the risk of errors the GUI shall provide a way to graphically edit the test data in a way that abstracts away from the configuration file structure.
 
 \subsubsection{Loading a Search Target From a Previously Defined Configuration File - Req:LSTPDC}
 \label{sec:reqlstpdc}
 \textbf{The GUI shall provide a way to import a predefined search target from a configuration file.}
 One of the intended uses of the GUI is for research into producing quantum algorithms.
-As part of this research it is likely that researchers will want to distribute the search target definitions they create.
-This distribution may be to collegues or simply to other computers for them to continue work.
+It is likely that researchers will want to distribute the search target definitions they create.
+This distribution may be to colleagues or simply to other computers for them to continue work.
 Either way once a search target is defined and distributed, the use of received search target configuration files should be supported by the GUI.
 The GUI shall provide a way for users to import search targets using the respective search target configuration file as long as the configuration file is of the correct format.
 
@@ -337,9 +366,8 @@ To provide such comparison the GUI shall provide a way to visualise a quantum st
 \subsubsection{Reporting the Search Result - Req:RSR}
 \label{sec:reqrsr}
 \textbf{The GUI shall provide a way to report the search result, a quantum algorithm, to the user.}
-The GUI would be of no use to any quantum algorithm researcher if it did not provide the results of any searches.
-The GUI shall provide the quantum algorithm in the same way the framework reports the quantum algorithm result.
-This is to ensure that the format of the quantum algorithm reported does not change depending on whether the GUI is used or not.
+The GUI would be of no use to any quantum algorithm researcher if it did not provide the results of a search.
+The GUI shall provide the quantum algorithm also meeting requirement Req:QAO.
 
 \subsubsection{Graphical Circuit Visualisation - Req:GCV}
 \label{sec:reqgcv}
@@ -358,6 +386,11 @@ The GUI shall provide a way of controlling and reporting this step by step evalu
 \label{sec:reqtt}
 \textbf{The GUI shall provide user help through the use of tooltips.}
 All elements of the GUI shall be explained through the use of tooltips.
+A separate help system would be another option.
+Tooltips were chosen over a separate help system as they provide less intrusive help and improved context.
+A second consideration is the provision of GUI components by third party.
+With a separate help system these GUI components would either have to provide another separate help system or integrate into the main help system.
+With tooltips, all help is locally defined and therefore does not require integration making it much simpler when considering potential third party components.
 
 \subsection{General Requirements}
 \subsubsection{Portability - Req:POR}

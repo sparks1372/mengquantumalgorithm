@@ -1,18 +1,20 @@
 \chapter{Design and Implementation}
 \lstset{language=Java}
-This section shall include both design decisions and implementation decisions.
-Java was selected as the programming language for the implementation.
-The main reason for this choice is that Java is widely adopted by many researchers.
-The level of tool support is significantly higher than many other programming languages providing better development environments and support tools, debuggers and profilers for example. 
-As a result of the requirement for portability, Java provides much simpler support for portability without numerous versions required for each operating system.
+This section includes both design decisions and implementation details.
 
-Also considered was the availability of libraries likely to be used by researchers.
-The research inspiring this framework are all evolutionary search techniques, as a result the availability of the ECJ\cite{ecjtool} strengthened the decision to implement the framework in Java.
-As part of the development, a search engine based loosely on the Q-PACE IV search engine introduced by Massey\cite{masseythesis}.
-This search engine implementation is done using ECJ.
+One of the basic implementation choices was the programming language used to implement the software.
+Several properties had to be considered.
+The framework is intended for use by researchers, if it is implemented in a language that is not widely used the adoption of the framework will be affected.
+Tool support was also a significant consideration.
+The availablity of tools such as development environments, debuggers and profilers can vastly improve the quality of software.
+With a motivation of the project being to reduce bespoke research software, the libraries that are available must be considered
+
+After consideration of all three factors outlined Java was selected as the programming language for the implementation.
+Java has good tool support, a high number of available libraries and is used sufficiently in the research community.
+An additional benefit of Java is that requirement Req:POR is made considerably simpler by the Java virtual machine.
 
 \section{Framework}
-In this section I will outline the design decisions that only directly effect the framework produced and how it was implemented.
+In this section I will outline the design decisions that directly effect the framework produced and how it was implemented.
 
 \subsection{Complex Numbers}
 Complex numbers are central to Quantum Computing.
@@ -48,9 +50,9 @@ This allows a string such as ``$2+3i$'' to be input by a user and for a Complex 
 
 \subsection{Matrices}
 As seen in Equation \ref{eq:notexplanded} the application of a quantum gate is simply the application of a unitary operation, represented as a matrix, to a quantum state.
-This adds the requirement on the framework to provide a manner in which matrices will be represented.
+The framework has to implement matrices in some way.
 
-In a similar way to the complex numbers discussed above, there are two distinct ways the framework could have been designed.
+There are several possible representations.
 The framework could either use an explicit representation, two-dimensional arrays, or could provide a Matrix data structure.
 
 The framework has been designed to use the data structure encapsulation as the matrix representation.
@@ -59,32 +61,51 @@ Matrix operations are easy to get wrong in implementation and there are matrix l
 The incomplete documentation argument also holds with matrices.
 If the framework were to just simply represent matrices as two dimensional arrays, two researchers could order the dimensions differently leading to similar problems to that of conflicting complex representations for the third researcher.
 
+\lstset{language = XML,
+basicstyle=\footnotesize,
+breakatwhitespace=false,
+numbers=none,
+breaklines=true}
+\begin{figure}
+\begin{center}
+\subfigure[XML Definition]{
+\lstinputlisting{pauliixml.tex}
+\label{pauliixmllisting}
+}
+\hspace{20pt}
+\subfigure[Matrix]{$
+\begin{pmatrix}
+1 && 0 \\
+0 && 1
+\end{pmatrix}$}
+\end{center}
+\caption{Pauli-I Gate}
+\label{code:pauliixmldef}
+\end{figure}
+
 The implementation of the Matrix used in the application is based on the JAMA Matrix package\cite{javamatrix}.
 The JAMA Matrix package provides matrices of double values.
-For use in the framework this needed to be updated so that it provides matrices of Complex objects and performs all the required operations as though they are matricies of complex numbers.
+For use in the framework this needed to be updated so that it provides matrices of Complex objects and performs all the required operations as though they are matrices of complex numbers.
 
 The JAMA Matrix package provides extra functionality for matrices of doubles that are not required for the framework.
 In the conversion from double matrices to Complex matrices this additional functionality was removed.
-This was due to the functionality not being required and therefore can be seen as dead code so should be removed.
 
-One matrix operation that was not included in the JAMA Matrix package was the tensor product operation.
-This operation is used heavily when applying a single qubit gates to multi-qubit systems and therefore necessary for the framework.
+The JAMA Matrix package does not include the tensor product operation.
+This operation is used heavily when applying single qubit gates to multi-qubit systems and so was specifically developed.
 
 As is explained in Section \ref{sec:testsuitestruc} custom unitary matrices are needed and used as part of the test cases.
 This requires these unitary matrices to be stored in a form that can be distributed between researchers.
 As with all elements of this framework that needs to be distributable, XML is used to store these matrices.
-The XML structure can be seen in Figure \ref{}.
+The XML structure and defined matrix can be seen in Figure \ref{code:pauliixmldef}.
 The use of XML was used rather than the Java Serializable interface to ensure that 3rd party applications can be used to modify the stored matrices if required.
 
 \subsection{State}
-With a representation of matrices defined, the definition of a quantum state naturally followed.
-Using the matrix representation, quantum states are defined simply as $2^n\times1$ matrices, vectors.
-This representation makes unitary application much simpler as it automatically supported as matrix multiplication.
+Quantum states are naturally represented as $2^n\times1$ matrices, vectors.
+All unitary operators are implemented simply as the application of $2^n\times2^n$ matrices to these quantum state vectors.
 
 \subsection{Test Suite Structures}
 \label{sec:testsuitestruc}
-With most problems there are a series of expected results that are used to measure the suitability of any suggested solution.
-The expected results are also usually coupled with the respective inputs.
+With most heuristic search problems there are a series of test points that are used to measure the suitability of any proffered solution.
 
 For Quantum Algorithms the expected results are the state vectors produced by circuits constructed by the algorithm.
 As such it was chosen that a test case would be represented as a pair of state vectors, the stating state and the expected state.
@@ -98,10 +119,11 @@ However, the $f$ in the Deutsch and Deutsch-Jozsa algorithms are not fixed gates
 Therefore it is not sufficient for the test cases to be just the starting and final state but must provide a way for custom unitary matrices to be specified.
 With these custom matrices specified, the starting and final states in the test cases for the Deutsch and Deutsch-Jozsa problems are given context and therefore are transformed into meaningful information.
 
-Each circuit produced by the Quantum Algorithms has $n$ qubits.
+Each circuit produced by quantum algorithm has $n$ qubits.
 This means that it can only be evaluated using test cases for $n$ qubits.
 Test cases for any other number of qubits would not produce useful results, and are potentially incomputatable due to incorrect matrix dimensions for multiplication.
 The notion of a test set was introduced to hold all test cases for a specific $n$.
+A search might well find a circuit suited to a specific $n$ with no clear generalisation possible.
 All test cases are held within a test set.
 
 However, the power of a quantum algorithm over a quantum circuit is the generality of the algorithm for any $n$.
@@ -119,63 +141,92 @@ The test suite is fully defined in a single XML file.
 The XML in Figure \ref{code:paulixtestset} is a sample of such a file.
 It is easy to see file structure reflects the internal structure of test suites just described.
 
-\lstset{language = XML}
-\begin{figure}
- \begin{lstlisting}
- <testsuite>
-    <testset NumQubits="1">
-      <testcase><!--0-->
-	<starting_state>
-	  <matrix_element><!-- 0-->
-	    <Real>1.0</Real>
-	    <Imag>0.0</Imag>
-	  </matrix_element>
-	  <matrix_element><!-- 1-->
-	    <Real>0.0</Real>
-	    <Imag>0.0</Imag>
-	  </matrix_element>
-	</starting_state>
-	<final_state>
-	  <matrix_element><!-- 0-->
-	    <Real>0.0</Real>
-	    <Imag>0.0</Imag>
-	  </matrix_element>
-	  <matrix_element><!-- 1-->
-	    <Real>1.0</Real>
-	    <Imag>0.0</Imag>
-	  </matrix_element>
-	</final_state>
-      </testcase>
-    </testset>
-</testsuite>
- \end{lstlisting}
-\caption{Partial Test Set for Pauli X Gate}
-\label{code:paulixtestset}
-\end{figure}
-
-The use of a separate files to specify the test suite for each Search Problem rather than including it in the Search Problem Manager configuration file, discussed in Section \ref{sec:manclasses}, ensures that the files remain readable.
-It also ensure that researchers can distribute Test Suites easier than if all Search Problems were fully specified in a single file.
+\lstset{language = XML,
+basicstyle=\footnotesize,
+breakatwhitespace=false,
+numbers=none,
+breaklines=true}
 \begin{figure}
 \centering
-\begin{emp}[classdiag](20, 20)
-Class.A("TestCase")("-StartState:Matrix","-FinalState:Matrix","-Label:String","-Id:int","-customGates:Matrix[]","-customGateFiles:String[]")();
-Class.B("TestSet")("-NumberOfQubits:int","-NumberOfCustomGates:int")();
-Class.C("TestSuite")("-NumberOfCustomGates:int")();
-% Class.D("SuperPositionalTestSet")()();
-leftToRight(75)(C, B, A);
-% D.n = B.s - (0, 50);
-drawObjects(C, B, A);
-clink(association)(C, B);
-item(iAssoc)("1")(obj.nw = C.e);
-item(iAssoc)("1..*")(obj.ne = B.w);
-clink(association)(B, A);
-item(iAssoc)("1")(obj.nw = B.e);
-item(iAssoc)("1..*")(obj.ne = A.w);
-% link(inheritance)(D.n -- B.s)
-\end{emp}
-\caption{Test Suite Class Diagram}
+\subfigure[Partial Test Set for Pauli X Gate]{
+\label{code:paulixtestset}
+\begin{minipage}[c]{%
+	   0.4\textwidth}
+	   \centering%
+% 	   \includegraphics[width=0.8\textwidth]{box}
+	   \lstinputlisting{paulixtestcasexml.tex}
+\end{minipage}
+}
+\hspace{5em}
+\subfigure[Test Suite Class Diagram]{
 \label{fig:testsuiteclassdiag}
+\begin{minipage}[c]{%
+	   0.4\textwidth}
+	  \includegraphics[height=0.4\textheight]{testsuitefig.pdf}
+\end{minipage}
+% \begin{emp}[classdiag](20, 20)
+%   Class.A("TestCase")("-StartState:Matrix","-FinalState:Matrix","-Label:String","-Id:int","-customGates:Matrix[]","-customGateFiles:String[]")();
+%   Class.B("TestSet")("-NumberOfQubits:int","-NumberOfCustomGates:int")();
+%   Class.C("TestSuite")("-NumberOfCustomGates:int")();
+%   % Class.D("SuperPositionalTestSet")()();
+%   topToBottom(75)(C, B, A);
+%   % D.n = B.s - (0, 50);
+%   drawObjects(C, B, A);
+%   clink(association)(C, B);
+%   item(iAssoc)("1")(obj.nw = C.e);
+%   item(iAssoc)("1..*")(obj.ne = B.w);
+%   clink(association)(B, A);
+%   item(iAssoc)("1")(obj.nw = B.e);
+%   item(iAssoc)("1..*")(obj.ne = A.w);
+%   % link(inheritance)(D.n -- B.s)
+% \end{emp}
+}
+\caption{Test Suite Structures}
 \end{figure}
+
+Separate files are used to encapsulate the test suite specifications rather than including these in the Search Problem Manager configuration file, discussed in Section \ref{sec:manclasses}.
+This separation follows the software engineering principle of modularity to ensure that the files remain readable and maintainable.
+The framework is intended to improve the ability of researchers to reuse development or other researchers, the creation of test suite specifications can be seen as development.
+With this modularity the distribution and reuse of test suite specifications will be much simpler than if the test suite specifications were embedded in the Search Problem Manager configuration file, discussed in Section \ref{sec:manclasses}.
+
+% \begin{figure}
+% \centering
+% % \begin{emp}[classdiag](20, 20)
+% % Class.A("TestCase")("-StartState:Matrix","-FinalState:Matrix","-Label:String","-Id:int","-customGates:Matrix[]","-customGateFiles:String[]")();
+% % Class.B("TestSet")("-NumberOfQubits:int","-NumberOfCustomGates:int")();
+% % Class.C("TestSuite")("-NumberOfCustomGates:int")();
+% % % Class.D("SuperPositionalTestSet")()();
+% % leftToRight(75)(C, B, A);
+% % % D.n = B.s - (0, 50);
+% % drawObjects(C, B, A);
+% % clink(association)(C, B);
+% % item(iAssoc)("1")(obj.nw = C.e);
+% % item(iAssoc)("1..*")(obj.ne = B.w);
+% % clink(association)(B, A);
+% % item(iAssoc)("1")(obj.nw = B.e);
+% % item(iAssoc)("1..*")(obj.ne = A.w);
+% % % link(inheritance)(D.n -- B.s)
+% % \end{emp}
+% 
+% \begin{emp}[classdiag](20, 20)
+%   Class.A("TestCase")("-StartState:Matrix","-FinalState:Matrix","-Label:String","-Id:int","-customGates:Matrix[]","-customGateFiles:String[]")();
+%   Class.B("TestSet")("-NumberOfQubits:int","-NumberOfCustomGates:int")();
+%   Class.C("TestSuite")("-NumberOfCustomGates:int")();
+%   % Class.D("SuperPositionalTestSet")()();
+%   topToBottom(75)(C, B, A);
+%   % D.n = B.s - (0, 50);
+%   drawObjects(C, B, A);
+%   clink(association)(C, B);
+%   item(iAssoc)("1")(obj.nw = C.s);
+%   item(iAssoc)("1..*")(obj.sw = B.n);
+%   clink(association)(B, A);
+%   item(iAssoc)("1")(obj.nw = B.s);
+%   item(iAssoc)("1..*")(obj.sw = A.n);
+%   % link(inheritance)(D.n -- B.s)
+% \end{emp}
+% \caption{Test Suite Class Diagram}
+% \label{fig:testsuiteclassdiag}
+% \end{figure}
 
 The implementation of the test suite structure can be seen in Figure \ref{fig:testsuiteclassdiag}.
 The custom matrices are held both as an array of Strings and of Matrix objects.
@@ -213,10 +264,10 @@ Each Manager is configured using an XML file specifying all options for the spec
 The Fitness Function Manager will be configured for all the available Suitability Measures, the Search Engine Manager for all the available Search Engines, and the Problem manager for all the available Search Problems.
 The Search Problem Manager class is outlined in detail in Section \ref{sec:problemman}.
 
-This configuration is performed at runtime rather than at compile time.
-It was designed to allow researchers to add, for example, extra Fitness Functions without altering the code of the framework.
-This independence of the framework implementation and the results of research, specific suitability measures etc, has been identified as one of the key foundations of the framework concept.
-The inclusion of this knowledge separation encourages the use of the standardised interfaces specified for each expansion site.
+The three managers are configured at runtime not at compile time.
+This allows researchers to add suitability measures, search engines and search problems without recompiling the framework.
+This runtime configuration provides a better plug-and-play design, a key foundation of the framework, compared to compile time configuration.
+% Such knowledge separation encourages the use of the standardised interfaces specified for each expansion site.
 
 \lstset{language=XML}
 \begin{figure}
@@ -233,7 +284,7 @@ The inclusion of this knowledge separation encourages the use of the standardise
 \label{code:fitfuntmanconfig}
 \end{figure}
 
-The XML outline shown in Figure \ref{code:fitfuntmanconfig} is an outline of the XML file used to specify the available Suitability Measures.
+Figure \ref{code:fitfuntmanconfig} shows an outline of the XML file used to specify the available Suitability Measures.
 The XML files specifying the available Search Engines and the available Problems can be found in Appendix \ref{sec:semanspecxml} and \ref{sec:probmanspecxml}.
 
 These XML files are used to register the available implementations with the respective Managers.
@@ -265,9 +316,9 @@ To provide an XY object when requested using \lstinline{thegetXY(key)} method, t
 
 \subsection{Multiple Search Engines}
 \label{sec:mulsearchen}
-The framework is aimed to be used universally by Quantum Algorithm researchers.
-The search techniques used by these researchers are also a matter of research effort.
-If the tool were to provide a search engine, with no option for change, the use of the tool is likely to be significantly impacted.
+It is hoped the framework will be widely adopted by quantum algorithm researchers.
+The framework is also aimed at researchers focussed on search techniques.
+To perform comparisons between search techniques the framework needs to be able to use different search engine implementations.
 
 Providing a simple interface that allows each researcher to potentially use a different search technique is likely to increase the tools applicability.
 The simple interface allows a user to:
@@ -282,8 +333,7 @@ The Search Engines are not restricted to evolutionary approaches.
 The internal workings of the different search engines are unrestricted.
 
 The alternative approach would have been to implement a series of search engines based on several different techniques and provide researchers this choice.
-This was not accepted as it moved the tool away from the framework intended.
-The provision of search engines without a simple manner to add additional engines would restrict research and not allow researchers to easily use techniques developed in the research community within the system.
+This was not accepted as it moved the tool away from the plug-and-play framework intended.
 
 \subsection{Multiple Fitness Functions}
 \label{sec:mulsuitmeas}
@@ -299,10 +349,10 @@ It was deemed detrimental and in contradiction of the frameworks purpose to limi
 
 \subsection{Multiple Problems and Problem Specification}
 \label{sec:problemman}
-As has been mentioned on several occasions, one of the foundation principles of the framework is the ability to ``Plug and Play'' the work of other researchers without the problem of integration.
-With Search Engines and Fitness Functions developed to adhere to the respective interfaces, a user should be able to work with the tool kit and treat it as a ``Black Box''.
+% As has been mentioned on several occasions, one of the foundation principles of the framework is the ability to ``Plug and Play'' the work of other researchers without the problem of integration.
+% With Search Engines and Fitness Functions developed to adhere to the respective interfaces, a user should be able to work with the tool kit and treat it as a ``Black Box''.
 
-In Section \ref{sec:testsuitestruc} how test suites and all their contained test cases are specified in XML was described.
+Section \ref{sec:testsuitestruc} describes how test suites and all their contained test cases are specified in XML.
 The use of XML files does however increase the effort required from the user.
 The user needs to specify, each time they use the framework, the location of the XML file containing the correct test suite.
 To reduce this effort the problem container is introduced alongside its manager.
@@ -342,7 +392,7 @@ The update of Test Cases is detailed in Section \ref{sec:testsuitestruc}.
 
 \subsection{Quantum Algorithms}
 \label{sec:quantalgs}
-The result of the search engines are quantum algorithms.
+The result of the searches are quantum algorithms.
 To maintain the ``Plug and Play'' nature of the framework, the representation of these algorithms needed to be specified and standardised.
 However, the representation also had to ensure that it was not limiting the search engines.
 
@@ -389,28 +439,41 @@ To improve readability, if a gate does not have a second gate, or use a phase or
 The textual form is also improved with the use of \{ and \} characters to denote the body of iterate instructions.
 
 $Gate1$, $Gate2$ and $Phase$ are all listed as being of type \emph{expnode}.
-The final type for $Gate1$ and $Gate2$ is integer and for $Phase$ is double.
-They are not explicitly these types to increase the expressive power of the algorithms.
+The type after evaluation for $Gate1$ and $Gate2$ is integer and for $Phase$ is double.
+The \emph{expnode} type is required for these values to depend on value variables such as the system size and also loop variables.
 The grammar that defines the \emph{expnode} type can be seen in Figure \ref{tab:expnodecontext}.
 The \emph{expnode} type is needed so that the algorithms can react to the parametrisation that provides the increased power when compared to quantum circuits.
 As the circuit size is a variable a constant cannot be used for $Gate1$, $Gate2$ or $Phase$ as the value may depend on the circuit size and have to be calculated when a circuit is being built using the algorithm.
 
-\lstset{numbers=left,language=Java}
-\begin{center}
-\begin{tabular}{c}
-\begin{lstlisting}
-for(int i = 0; i < n ; i++){
-  // You can use i here
-  for(int j = 0; j < n ; j++){
-    // You can use i and j here
-  }
-}
-\end{lstlisting}
-\end{tabular}
-\end{center}
+\begin{algorithm}
+\begin{algorithmic}
+\FOR{$i$ : $0\rightarrow{n}$ : $i++$} 
+\STATE \COMMENT{You can use i here}
+\FOR{$j$ : $0\rightarrow{m}$ : $j++$} 
+\STATE \COMMENT{You can use i and j here}
+\ENDFOR
+\ENDFOR
+\end{algorithmic}
+\caption{Nested Loop Variable Access}
+\label{alg:nestloopvars}
+\end{algorithm}
+
+% \lstset{numbers=left,language=Java}
+% \begin{center}
+% \begin{tabular}{c}
+% \begin{lstlisting}
+% for(int i = 0; i < n ; i++){
+%   // You can use i here
+%   for(int j = 0; j < n ; j++){
+%     // You can use i and j here
+%   }
+% }
+% \end{lstlisting}
+% \end{tabular}
+% \end{center}
 
 With the inclusion of an loop control construct in the form of the \emph{iterate} and \emph{reviterate} instructions additional parameters are introduced.
-In Java and many programming languages, as can be seen in the example of Java code above, when using nested loops access to all loop variables is provided.
+In Java and many programming languages, as can be seen in the example of Java code above, when using nested loops access to all loop variables is provided, as shown in Algorithm \ref{alg:nestloopvars}.
 This means that at line 2 the loop variable $i$ is able to be used but at line 4 both loop variable $i$ and $j$ can be used.
 This nesting is quite a powerful language feature.
 With the inclusion of the iterate instructions and therefore the possibility of nested iterations this loop variable access could be implemented in one of two ways.
