@@ -1,9 +1,11 @@
 \chapter{Further Observation and Evaluation}
+\label{sec:experimentation}
 
 The majority of this report concentrates on the details of the framework and does not actually use the framework to try produce a quantum algorithm.
 This section shall focus on using the framework with the provided suitability measures and search engine to try tackle a few well known quantum problems.
 
 \section{Deutsch Algorithm}
+\label{sec:deutschexperiment}
 The details of the Deutsch algorithm is presented in Section \ref{sec:DeutAlg}.
 The basic aim is to find a way to determine whether the function $f$ is balanced or constant, we can assume it is one of these.
 
@@ -126,6 +128,7 @@ To the best of my knowledge, this circuit has not been produced using search by 
 This is also the first time a deterministic algorithm has been found, using search, for either the original Deutsch, single qubit oracles, or Deutsch Josza, multiple qubit oracles, problems.
 
 \section{Deutsch-Jozsa Problem}
+\label{sec:deutschjozsaexperiment}
 
 After success with the original Deutsch, single qubit, problem the most natural progression is to multiple qubit Deutsch-Josza problem.
 The basic aim is the same, to decide if a function is balanced or constant.
@@ -235,6 +238,7 @@ The suitability measure that was used was the Phase sensitive suitability measur
 The final search parameters used are shown in Figures \ref{fig:qftparams} and \ref{fig:qftgates} in Section \ref{sec:qftsearchparams}.
 
 \section{0..3 Permutation Max Problem}
+\label{sec:maxproblemexp}
 
 The $0..3$ permutation problem is used by Massey\cite{masseythesis} to evaluate Q-PACE III.
 The problem is quite simple, given a permutation of the numbers $0..3$ give the index of the maximum value, $3$.
