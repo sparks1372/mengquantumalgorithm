@@ -2,14 +2,6 @@
 
 \section{Have the Requirements Been Met?}
 
-% Section \ref{sec:focusofproject} set out the high level aim the project.
-% This project was aimed to provide an easily extendible research framework that implements the peripheral tasks, such as circuit simulation and visualisation.
-% These peripheral tasks are necessary to perform research using heuristic search to find quantum artefacts and subsequently reporting the results.
-% The specific implementation of these tasks do not affect the search process as long as they are correct.
-% As a result the implementation of the same tasks by multiple researchers was seen as a .
-
-
-
 The aim of this project was to provide an easily extendible research toolkit to assist research into the discovery of quantum artefacts through heuristic search.
 Previous research was deemed inefficient with bespoke development of implementations to perform peripheral tasks, such as artefact and state representation, and circuit simulation, carried out by each individual researcher.
 The toolkit was intended to provide a more efficient environment for such research by providing implementations of these peripheral tasks.
@@ -21,26 +13,79 @@ The framework provides the orchestration between implementations of the peripher
 The framework provides two standalone graphical applications to create and edit test suites, and create and edit matrices used to define custom unitary operations.
 
 The second component is a prototype that provides implementations of a genetic programming based search engine, multiple suitability measures and multiple search problems.
-The search engine is based on the Q-Pace IV\cite{masseythesis} written using the Java-based Evolutionary Computation Research System ECJ REFERENCE.
+The search engine is based on the Q-Pace IV\cite{masseythesis} written using the Java-based Evolutionary Computation Research System ECJ\cite{ecjtool}.
 A total of $???$ suitability measures are provided.
 These can be placed in one of two main categories suitability measures that use both the argument and modulus of the complex numbers in the final state vectors and suitability measures that only use the modulus of the complex numbers in the final state vectors.
-These are referred to as the Phase Aware suitability measures, see Section \ref{}, and the Simple suitability measures, see Section \ref{}, respectively.
+These are referred to as the Phase Aware suitability measures, see Section \ref{sec:phaseawaresuitmeas}, and the Simple suitability measures, see Section \ref{sec:simplsuitmeas}, respectively.
 
 The third component is a client application that provides the framework with a standalone graphical user interface.
 The framework is not a standalone application and needs to be embedded within another application.
 Without providing this client a third party application that embeds the framework would have to be produced before improved efficiency would be realised.
 This client provides a number of research aids including rendered circuit visualisation, quantum state visualisation and graphical step-by-step evaluation of quantum circuits.
 
+In Section \ref{sec:reqs} $28$ requirements for the toolkit were specified.
+The table in Section \ref{sec:tracability} provides a way to trace the requirements into the design and implementation with reference to the tests verifying the requirements.
+The traceability matrix shows that each of the $28$ requirements has been met by the design and implementation and have been verified by the testing process.
 
+\section{Strengths of the Toolkit}
 
-% In Section \ref{sec:reqs} $28$ requirements for the toolkit were specified.
-% The table in Section \ref{sec:tracability} provides a way to trace the requirements into the design and implementation with reference to the tests verifying the requirements.
-% 
-% The traceability matrix shows that each of the $28$ requirements has been met by the design and implementation and have been verified by the testing process.
+There are several strength of the toolkit produced.
+One of the main goals of the toolkit is extendibility.
+The design of the framework is heavily focused on this extendibility.
 
+During the experimentation summarised in Section \ref{sec:experimentation} this flexibility was tested.
+The Zero-Focused Simple suitability measure, explained in Section \ref{sec:simplsuitmeas}, was not originally developed.
+During the experimentation of the Max Permutation problem, see Section \ref{sec:maxproblemexp}, the basic variants of both the Simple and Phase Sensitive suitability measures did not produce any useful results.
+As a result the Zero-Focused Simple suitability measure was developed and added to the prototype.
 
-\section{Strengths of the Framework}
+The addition of this suitability measure was very simple.
+The class implementing the suitability measure was developed and the process required to add the new suitability measure to the configuration file took roughly 2 minutes.
+It is a very simple process.
+
+The experimentation also showed how easy the framework makes creating and editing search problems both within in the client and using the standalone editor.
+During the experimentation each method provided by the toolkit to create a new search problem and the respective test suite were used as part of this evaluation.
+Some test sets were only partially specified so the test suite editing facility could also be used.
+Each of these methods were very simple to use showing the extendibility of the framework with respect to search problems.
 
 \section{Areas of Improvement and Future Work}
 
+There are areas of the framework that could be subject of future work.
+As can be seen in Section \ref{sec:experimentation} many of the circuits included in this report have been hand optimised.
+There are a few rules that could be included in an optimised circuit builder to improve the efficiency of circuits built by the framework.
+For example, the application of two Hadamard operations on the same qubit cancel each other out.
+If the circuit builder was made aware of such rules it optimise the circuits at the construction stage.
+This not only helps when trying to understand the circuit but also decreases the processing required to simulate the circuits as the number of gates, and therefore unitary applications, are reduced.
+
+A second addition that would assist with understand would be a report of the ``Active Algorithm'' for a specific circuit size.
+Some of the instructions are ignored various reasons, such as a specified qubit is greater than the system size.
+This means that when a circuit is constructed, not all the instructions listed in the reported algorithm are ``active''.
+With the current framework, finding out which of the instructions contribute to the circuit for a specific system size requires manual analysis.
+The framework could easily be extended to provide this as part of the result.
+As only the ``Active Algorithm'' contribute to the evaluated circuits they are the only instructions that solve the search problem.
+Therefore, for a researcher understanding the ``Active Algorithm'' is more important than the entire algorithm produced including inactive instructions.
+
+A third area of future development would be an extension of the circuit optimisation rules mentioned as the first area of improvement.
+Various problems have certain properties that currently cannot currently be expressed to the framework.
+One such search problem is the quantum teleportation protocol, see Section \ref{sec:quantteleproto}.
+Due to the spacial separation of the qubits held by Bob and Alice certain operations cannot be performed by the solution.
+For example a controlled gate acting on Bob's qubit controlled by one of Alice's qubits has to be modelled to represent the required measurement and classical communication to communicate to Bob whether the operation should be applied.
+As a result any superposition that contained the controlling qubit is effectively collapsed due to the measurement.
+To model this without explicit measurement would require rules to ensure no further operations can be applied to or controlled by Alice's qubit used to control the operation on Bob's qubit.
+
+It is important to note that all restrictions either to improve efficiency or enforce properties of individual problems should only be applied at the circuit construction phase.
+If the restrictions are added to the search engine instead it can have a significantly detrimental effect on the success of the search.
+This is because although certain algorithms do not meet the restrictions they can form a vital part of the search path to a desired solution that does meet the restriction.
+If the restriction are enforced by the circuit builder all algorithms are valid but when constructing the circuits the restrictions must be taken into account, resulting in ignored instructions.
+If search engines were to enforce arbitrary user specified restrictions all search engines would have to include the restrictions.
+Whereas if it were enforced by the circuit builder the restrictions can be applied to any search engine and any update in the specification language only requires an update to framework rather than resulting in search engines that comply with different versions of the restriction specification language.
+
 \section{Experimentation Summary}
+
+An advantage of producing a usable toolkit before the end of the project was that time could be dedicated to using the toolkit to solve a selection quantum problems.
+The results were very encouraging.
+
+The Deutsch, see Section \ref{sec:deutschexperiment}, and Deutsch-Jozsa, see Section \ref{sec:deutschjozsaexperiment}, experiments were especially impressive.
+The algorithms that were produced had not previously been produced by heuristic search.
+Both resulted in deterministic results, the best previous heuristic search result for the Deutsch-Jozsa problem was a probabilistic circuit.
+These results are human competitive and improve on previously seen results from heuristic search.
+
