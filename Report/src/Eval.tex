@@ -1,1 +1,46 @@
 \chapter{Evaluation and Future Work}
+
+\section{Have the Requirements Been Met?}
+
+% Section \ref{sec:focusofproject} set out the high level aim the project.
+% This project was aimed to provide an easily extendible research framework that implements the peripheral tasks, such as circuit simulation and visualisation.
+% These peripheral tasks are necessary to perform research using heuristic search to find quantum artefacts and subsequently reporting the results.
+% The specific implementation of these tasks do not affect the search process as long as they are correct.
+% As a result the implementation of the same tasks by multiple researchers was seen as a .
+
+
+
+The aim of this project was to provide an easily extendible research toolkit to assist research into the discovery of quantum artefacts through heuristic search.
+Previous research was deemed inefficient with bespoke development of implementations to perform peripheral tasks, such as artefact and state representation, and circuit simulation, carried out by each individual researcher.
+The toolkit was intended to provide a more efficient environment for such research by providing implementations of these peripheral tasks.
+
+As described in Section \ref{sec:reqs}, the toolkit produced by this project is split into three distinct components.
+The first component is a framework that aims to provide the more efficient research environment.
+It is in the form of a library that can be embedded into any third party application.
+The framework provides the orchestration between implementations of the peripheral tasks and the user provided search engine, suitability measure and search problem.
+The framework provides two standalone graphical applications to create and edit test suites, and create and edit matrices used to define custom unitary operations.
+
+The second component is a prototype that provides implementations of a genetic programming based search engine, multiple suitability measures and multiple search problems.
+The search engine is based on the Q-Pace IV\cite{masseythesis} written using the Java-based Evolutionary Computation Research System ECJ REFERENCE.
+A total of $???$ suitability measures are provided.
+These can be placed in one of two main categories suitability measures that use both the argument and modulus of the complex numbers in the final state vectors and suitability measures that only use the modulus of the complex numbers in the final state vectors.
+These are referred to as the Phase Aware suitability measures, see Section \ref{}, and the Simple suitability measures, see Section \ref{}, respectively.
+
+The third component is a client application that provides the framework with a standalone graphical user interface.
+The framework is not a standalone application and needs to be embedded within another application.
+Without providing this client a third party application that embeds the framework would have to be produced before improved efficiency would be realised.
+This client provides a number of research aids including rendered circuit visualisation, quantum state visualisation and graphical step-by-step evaluation of quantum circuits.
+
+
+
+% In Section \ref{sec:reqs} $28$ requirements for the toolkit were specified.
+% The table in Section \ref{sec:tracability} provides a way to trace the requirements into the design and implementation with reference to the tests verifying the requirements.
+% 
+% The traceability matrix shows that each of the $28$ requirements has been met by the design and implementation and have been verified by the testing process.
+
+
+\section{Strengths of the Framework}
+
+\section{Areas of Improvement and Future Work}
+
+\section{Experimentation Summary}
