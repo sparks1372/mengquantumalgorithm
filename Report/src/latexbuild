@@ -1,5 +1,4 @@
 #!/bin/bash
-
 pdflatex mengreport
 mpost mengreport
 mptopdf mengreport
@@ -8,14 +7,25 @@ bibtex mengreport
 pdflatex mengreport
 pdflatex mengreport
 
-int=$(detex Introduction.tex | wc --words)
-lit=$(detex LitReview.tex | wc --words)
-req=$(detex Requirements.tex | wc --words)
-des=$(detex Design.tex | wc --words)
-tes=$(detex Testing.tex | wc --words)
-obs=$(detex Obs.tex | wc --words)
-eva=$(detex Eval.tex | wc --words)
-wordc=$(($int + $lit+ $req+ $des+ $tes+ $obs+ $eva))
-echo "The word count is $wordc"
+texcount -v -html mengreport.tex > mengreport.html
+texcount -v -html Introduction.tex > Introduction.html
+texcount -v -html LitReview.tex > LitReview.html
+texcount -v -html Requirements.tex > Requirements.html
+texcount -v -html Design.tex > Design.html
+texcount -v -html Testing.tex > Testing.html
+texcount -v -html Obs.tex > Obs.html
+texcount -v -html Eval.tex > Eval.html
+
+texcount -total mengreport.tex Introduction.tex LitReview.tex Requirements.tex Design.tex Testing.tex Obs.tex Eval.tex
+
+#int=$(detex Introduction.tex | wc --words)
+#lit=$(detex LitReview.tex | wc --words)
+#req=$(detex Requirements.tex | wc --words)
+#des=$(detex Design.tex | wc --words)
+#tes=$(detex Testing.tex | wc --words)
+#obs=$(detex Obs.tex | wc --words)
+#eva=$(detex Eval.tex | wc --words)
+#wordc=$(($int + $lit+ $req+ $des+ $tes+ $obs+ $eva))
+#echo "The word count is $wordc"
 
 evince mengreport.pdf

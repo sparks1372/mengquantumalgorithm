@@ -1,3 +1,34 @@
 \chapter{Introduction}
  \setcounter{page}{0} 
 \pagenumbering{arabic}
+
+In 1980, Richard Feynman noted `it is impossible to represent the results of quantum mechanics with a classical universal device`\cite{Feynman82simulatingphysics}.
+This statement was a seed for interest in the field of Quantum Computation which uses properties of quantum mechanics to perform computation.
+The true power of quantum computation was not initially realised.
+The discovery of a quantum artefact by David Deutsch\cite{Deutsch85quantumtheory} in 1985 that performed better than a classical computer was the first glimpse of the potential power provided by harnessing quantum mechanics.
+The algorithm was able to distinguish between balanced and constant binary functions.
+The algorithm only worked for simple functions with inputs limited to $0$ and $1$ but the advantage over its classical equivalent is the number of times the function needs to be evaluated.
+The classical equivalent requires two evaluations, once for both possible inputs, yet the quantum algorithm proposed by Deutsch performs a single evaluation.
+Deutch's algorithm is explained in detail in Section \ref{sec:DeutAlg}.
+
+However, with slow progress of research into both their implementation and algorithms, the energy behind the research started to decrease.
+It would take a discovery by Peter Shor\cite{Shor:1994jg} to reignite the excitement surrounding the subject.
+Shor's discovery was not only important because it was one of very few known quantum algorithms but it also challenged one of the foundations of many encryption techniques currently used.
+Many cryptographic techniques as based on the belief that factorisation of a large number into its constituent primes would take such a long time that the encrypted information would be useless by the time the factorisation was complete.
+Shor's algorithm challenged that belief and provided a polynomial solution to the factorisation problem using quantum computation.
+Shor's algorithm is explained in detail in Section \ref{sec:shorsalg}.
+
+\section{Report Structure}
+This report has the following structure:
+\begin{itemize}
+ \item Literature Review - Section \ref{sec:introtoquantcomp}
+ \item Requirements - Section \ref{sec:reqs}
+ \item Design and Implementation - Section \ref{sec:desandimp}
+ \item Testing - Section \ref{sec:testing}
+ \item Experimentation - Section \ref{sec:experimentation}
+ \item Evaluation and Future Work - Section \ref{sec:evalandfutwork}
+\end{itemize}
+
+
+
+

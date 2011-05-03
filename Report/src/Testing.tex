@@ -1,4 +1,5 @@
 \chapter{Testing}
+\label{sec:testing}
 \section{Unit Tests}
 \label{sec:unittests}
 Many of the components created for the framework were tested by unit testing.
@@ -42,12 +43,12 @@ For the arithmetic methods, Octave\cite{octweb} was used to create test oracles.
 \subsection{Gate Implementation Unit Tests}
 \label{sec:gatetests}
 Unit testing the gate implementations is a relatively simple process.
-The correct operation of the all gates, excluding the custom gates, are statically defined as in Figure \ref{fig:providedgates}.
+The correct operation of the all gates, excluding the custom gates, are statically defined as in Table \ref{tab:providedgates}.
 Therefore creating the unit tests are a series of tests to ensure that with predefined input states, the output states are correct with respect to the gate's definition.
 To reduce the probability of errors being introduced into the test oracles used by the unit tests, the test oracles were calculated by Octave\cite{octweb} using Quantum Computing Functions(QCF) for Matlab\cite{qcfweb}.
 
-QCF does not provide all of the gates defined in Figure \ref{fig:providedgates}.
-For the missing gates, Matlab functions were created using the definitions in Figure \ref{fig:providedgates}.
+QCF does not provide all of the gates defined in Table \ref{tab:providedgates}.
+For the missing gates, Matlab functions were created using the definitions in Table \ref{tab:providedgates}.
 
 To test the custom gate implementation XML files were created with the definitions of all single qubit gates.
 Custom gates were created using these XML files and all the unit tests for the respective gate were applied.
@@ -59,7 +60,7 @@ The test oracles are much simpler to define.
 The \emph{getTarget} method is required to return the integer value set as the target qubit ID in the constructor.
 A number of test cases including positive, negative and zero values.
 Only positive values should be accepted by the constructor as there are no qubits with a negative or zero ID.
-The returned value of each of the other operations are known either implicitly or explicitly by Figure \ref{fig:providedgates} and the QCircuit\cite{QCsite} documentation.
+The returned value of each of the other operations are known either implicitly or explicitly by Table \ref{tab:providedgates} and the QCircuit\cite{QCsite} documentation.
 
 \subsection{Circuit Implementation Unit Tests}
 \label{sec:circtests}
@@ -76,7 +77,7 @@ The unit tests for the circuit implementation followed the following scenarios:
 \end{itemize}
 
 \subsection{Expnode Implementation Unit Tests}
-These unit tests concern the implementation of the Expnode context free grammar shown in Figure \ref{tab:expnodecontext}.
+These unit tests concern the implementation of the Expnode context free grammar shown in Table \ref{tab:expnodecontext}.
 The unit tests were based on the expressions that can be seen in Figure \ref{tab:expnodetestexps}.
 A collection of values are used as SystemSize including positive, negative, integer and decimal values.
 LoopVars shal also be set as one of a collection of arrays with lengths $0$, $1$, $2$ and $3$.
