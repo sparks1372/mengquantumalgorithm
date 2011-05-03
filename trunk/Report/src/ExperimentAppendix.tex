@@ -564,6 +564,21 @@ $
 \clearpage
 \section{0..3 Max Permutation Problem}
 
+\begin{algorithm}
+ \begin{algorithmic}
+\STATE Create\_CRY on gate 6.0 and gate 2.0 with phase pi/(3.0)
+\STATE Create\_CCX on gate Loop\_Var(Loop\_Var(1.0)) and gate (Loop\_Var(9.0))\^(Loop\_Var(0.0)) with phase pi/(1.0)
+\STATE Create\_CV on gate 90.0 and gate 1.0
+\STATE Create\_CCX on gate Loop\_Var(Loop\_Var(1.0)) and gate 0.0 with phase pi/(1.0)
+\STATE Create\_CV on gate 90.0 and gate Loop\_Var(1.0)
+\STATE Create\_RY on gate 6.0 with phase pi/(4.0)
+\STATE Create\_RY on gate 6.0 with phase pi/(4.0)
+\STATE Create\_X on gate 0.0
+ \end{algorithmic}
+\caption{Full Algorithm to Produce the Solution for the Max Permutation Problem}
+\label{alg:03permfullalg}
+\end{algorithm}
+
 \label{sec:quantfourtransexp}
 \begin{figure}
 \[

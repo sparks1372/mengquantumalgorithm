@@ -1,19 +1,22 @@
-\chapter{Further Observation and Evaluation}
+\chapter{Experimentation}
 \label{sec:experimentation}
 
-The majority of this report concentrates on the details of the framework and does not actually use the framework to try produce a quantum algorithm.
-This section shall focus on using the framework with the provided suitability measures and search engine to try tackle a few well known quantum problems.
+The majority of this report concentrates on the details of the design of the toolkit and however so far no experimentation has been performed using the implemented toolkit.
+This section is soley focused on using the toolkit in a series of experiments aimed at solving a selection of previously solved quantum problems.
 
 \section{Deutsch Algorithm}
 \label{sec:deutschexperiment}
 The details of the Deutsch algorithm is presented in Section \ref{sec:DeutAlg}.
-The basic aim is to find a way to determine whether the function $f$ is balanced or constant, we can assume it is one of these.
+The problem is to determine whether the binary function $f$ is balanced or constant.
+The Deutsch algorithm only applies to functions $f$ with a single input qubit.
+Each of the four possible binary functions are either balanced or constant.
 
-This search problem is slightly unusual as in the test case it is not the input that changes, it is the custom gates.
-This results in there are only four test cases for the Deutsch algorithm.
-This is due to the Deutsch Algorithm only solving the problem for single qubit functions and therefore there are only four possible binary functions.
+This search problem uses the toolkit's custom gate mechanism to define the four test cases, one for each of the possible binary functions.
+The problem is provided with a single ancillary qubit resulting in a system size of $2$ qubits.
+The input state for each test case is $\ket{10}$.
 
-
+Using this input state could be seen as cheating slightly as the solution is hinted at by the input state.
+However, analysing the solutions to similar quantum problems, such as the Deutsch-Jozsa or even the one out of four algorithm, it is the input state $\ket{10}$ is a sensible suggestion.
 
 \begin{figure}
 \centering
@@ -73,12 +76,13 @@ $
 \end{figure}
 
 
-This search problem requires custom gates to be used to provide the oracle functions.
-These matrices implementing the oracles can be seen in Figure \ref{fig:deutschfunctions}.
-The matrices are the unitary operations of a controlled not when the control is provided by the value $f(x)$.
+Custom gates are used to provide the oracle functions.
+The matrices implementing the oracles can be seen in Figure \ref{fig:deutschfunctions}.
+The matrices are the two qubit unitary operations of a controlled not acting on the more significant qubit.
+However, the control is not provided by the value of the lower significant qubit, $x$, but the value $f(x)$.
 They effectively represent the circuit shown in Figure \ref{fig:matrepresentation}.
 It can be seen that the circuit of the Deutsch Algorithm, Figure \ref{Deutsch-Cir}, includes the circuit represented by the matrices.
-The circuit in Figure \ref{fig:matrepresentation} is inverted due to the number of the qubits in the framework.
+The circuit in Figure \ref{fig:matrepresentation} is inverted due to the numbering of the qubit identifiers and significance in the framework.
 The matrices have been created taking into account the different qubit numbering so the semantics of the circuit in Figure \ref{fig:matrepresentation} and the respective section of the Deutsch Algorithm circuit in Figure \ref{Deutsch-Cir} are the same.
 
 The start state for each test case is $\ket{10}$.
@@ -87,13 +91,13 @@ For functions $3$ and $4$, which are balanced, the expected final state is $\fra
 It is simple to see that, taking into account the different qubit numbering, these are the same output states that are produced by the Deutsch Algorithm in Section \ref{sec:DeutAlg}.
 
 After creating the custom matrices using the provided matrix editor, see Section \ref{sec:indmatrixeditor}, and the test suite using the integrated search problem creator, all elements required for the search were complete.
-The search engine that was used was the Q-Pace based search engine, using local threads rather than the JPPF distribution, provided with the framework, see Section \ref{sec:provsearcheng}.
-The suitability measure that was used was the Simple suitability measure variant that only reports a ``hit'' for non-zero expected values.
+The search engine that was used was the genetic programming search engine, using local threads rather than the JPPF distribution, provided by the prototype implementation, see Section \ref{sec:provsearcheng}.
+The suitability measure that was used was the Simple suitability measure variant that only reports a ``hit'' for non-zero expected values, see Section \ref{sec:simplsuitmeas}.
 
 All instructions were included in the search except \emph{Create\_SWAP} and \emph{Create\_Zero}.
-All search parameters were kept as the default except time was not used as the seeds to ensure the experiment could be repeated.
+The default search parameters except time was not used to produce the seeds to ensure repeatability.
 
-The full algorithm that was found is listed in Section \ref{sec:DeutschExpAppFullAlg}.
+The full algorithm that was proffered as the final solution is listed in Section \ref{sec:DeutschExpAppFullAlg}.
 The algorithm below is a hand optimised version of that listed in \ref{sec:DeutschExpAppFullAlg} with only the instructions that apply when \emph{System\_Size} is $2$.
 
 \begin{lstlisting}
@@ -105,11 +109,12 @@ Create_H on gate 1
 
 The first instruction is to put a Hadamard gate onto gate $0$.
 Gate zero doesn't exist as the qubit numbering is from $1$ upwards.
-This is an example of when the Genetic Programming has taken advantage of the environment.
-$0$ is used as the value for ``System\_Size'' within the system so as the expression evaluates to $0$ it effectively is instructing that the gate should be put on the ``System\_Size'' qubit.
+This is an example of when the genetic programming has taken advantage of the environment.
+$0$ is used as the value for the ``System\_Size'' flag within the system.
+When an expression tree evaluates to $0$ it is effectively instructing that it should be replaced by the system's size.
 
-The circuit that is produced by this algorithm is shown in Figure \ref{fig:evodeutschcir}.
-The gate \emph{C0} is the custom unitary operations defined in Figure \ref{fig:deutschfunctions}.
+The circuit produced by this algorithm is shown in Figure \ref{fig:evodeutschcir}.
+The gate \emph{C0} is ``custom gate 1'' provided by the test cases, i.e. the custom unitary operations defined in Figure \ref{fig:deutschfunctions}.
 
 \begin{figure}
 \[
@@ -122,104 +127,127 @@ The gate \emph{C0} is the custom unitary operations defined in Figure \ref{fig:d
 \label{fig:evodeutschcir}
 \end{figure}
 
-It is very clear to see that the search process has found the exact same circuit that was published by Cleve et al\cite{Cleve98quantumalgorithms} and therefore is a deterministic solution.
+It is obvious that the search process has found the exact same circuit that was published by Cleve et al\cite{Cleve98quantumalgorithms} and is a deterministic solution.
 This is an unprecedented result.
-To the best of my knowledge, this circuit has not been produced using search by previous research.
-This is also the first time a deterministic algorithm has been found, using search, for either the original Deutsch, single qubit oracles, or Deutsch Josza, multiple qubit oracles, problems.
+To the best of my knowledge, this circuit has not been produced using heuristic search by previous research.
+This is also, to the best of my knowledge, the first time a deterministic algorithm has been found, using heuristic search, for the original Deutsch, single input qubit oracles, problem.
 
 \section{Deutsch-Jozsa Problem}
 \label{sec:deutschjozsaexperiment}
 
-After success with the original Deutsch, single qubit, problem the most natural progression is to multiple qubit Deutsch-Josza problem.
+After success with the original Deutsch problem the most natural progression is to multiple qubit Deutsch-Josza problem.
 The basic aim is the same, to decide if a function is balanced or constant.
+However, unlike when the input cardinality is $1$ there exist functions with input cardinality $n$ that are neither balanced or constant.
+The Deutsch-Jozsa algorithm only applies when $f$ is guaranteed to be either balanced or constant.
 
 In this experiment, the test suite used includes the test cases with oracle functions on $1$ and $2$ qubits.
-This results that there are only twelve test cases for the Deutsch algorithm.
-Due to the previous experiment, it is known that Genetic Programming can produce a solution to the $1$ qubit problem and it is expected that including these test cases will assist the search.
+There are twelve test cases for the Deutsch-Jozsa algorithm.
+$6$ balanced two qubit function, $2$ constant two qubit functions, $2$ balanced single qubit functions and $2$ constant single qubit functions.
+After conducting the previous experiment, genetic programming is known to produce a solution to the single qubit problem and it is expected that including these test cases will assist the search for a more general solution.
 
-As with the previous experiment matrices were made to represent the oracle functions.
-These matrices for the $2$ qubit oracles are shown in Figure \ref{fig:deutschjozsafunctions} in Section \ref{sec:deutschjozsa}.
+Custom matrices were made to represent the oracle functions.
+The matrices for the $2$ qubit oracles are shown in Figure \ref{fig:deutschjozsafunctions} of Section \ref{sec:deutschjozsa}.
 
-The test cases for single qubit oracles, the same test cases as used in the previous experiment is used.
+The same test cases as used in the previous experiment is used as the single qubit test set.
 For the two qubit oracles, the test cases that are used all have a staring state of $\ket{100}$.
 For $f_1$ and $f_2$ the expected final state is set to $\frac{1}{\sqrt{2}}(\ket{000}-\ket{100})$.
 For $f_3$, $f_4$ ,$f_5$, $f_6$, $f_7$ and $f_8$ the expected final state is set to $\frac{1}{\sqrt{6}}(\ket{001}+\ket{010}+\ket{011}-\ket{101}-\ket{110}-\ket{111})$.
 
-The search engine that was used was the Q-Pace based search engine provided with the framework, see Section \ref{sec:provsearcheng}.
+The search engine that was used was the genetic programming search engine provided by the prototype implementation, see Section \ref{sec:provsearcheng}.
 The suitability measure that was used was the Simple suitability measure variant that only reports a ``hit'' for non-zero expected values.
 
 Initial experimentation showed that this search problem was significantly harder than the previous experiment.
 All instructions were included in the search except \emph{Create\_SWAP}, \emph{Create\_Zero} and \emph{RevIterate}.
-The final search parameters used are shown in Figures \ref{fig:deutschjozsaparams} in Section \ref{sec:deutschjozsasearchparams}.
+The final search parameters used are shown in Figure \ref{fig:deutschjozsaparams} in Section \ref{sec:deutschjozsasearchparams}.
 The time was not used as the seeds so this experiment is reproducible.
 
 The full algorithm that was found is listed in Section \ref{sec:DeutschJozsaExpAppFullAlg}.
-The algorithm below is a hand optimised version of that listed in \ref{sec:DeutschExpAppFullAlg} with only the instructions that apply when \emph{System\_Size} is $2$.
-Instructions marked by an asterisk refer to gates that have been removed from the hand optimised two qubit circuit, Figure \ref{fig:deutjoz2qubits}.
+Algorithm \ref{alg:deutjozsatwoqubits} is a hand optimised version of that listed in \ref{sec:DeutschExpAppFullAlg} with only the instructions that apply when \emph{System\_Size} is $2$.
+Instructions marked by an asterisk refer to gates that have been removed from the hand optimised two qubit circuit shown in Figure \ref{fig:deutjoz2qubits}.
+As the experssions have been evaluated with \emph{System\_Size}$==2$ it is a program rather than an algorithm.
 
-\lstset{numbers=left,language=Java, breaklines=true}
-\begin{lstlisting}
-Create_H on gate 1.0 *
-Create_H on gate 1.0 *
-Create_H on gate System_Size
-Create_H on gate System_Size *
-Create_H on gate System_Size *
-Create_CCustom1 on gate 1.0 and gate 2.0
-Create_H on gate 1.0
-Create_H on gate System_Size *
-Create_H on gate System_Size *
-Create_CCustom1 on gate 1.0 and gate 2.0
-Create_H on gate 1.0
-\end{lstlisting}
+% \lstset{numbers=left,language=Java, breaklines=true}
+\begin{algorithm}
+ \begin{algorithmic}
+\STATE Create\_H on gate 1.0 *
+\STATE Create\_H on gate 1.0 *
+\STATE Create\_H on gate System\_Size
+\STATE Create\_H on gate System\_Size *
+\STATE Create\_H on gate System\_Size *
+\STATE Create\_CCustom1 on gate 1.0 and gate 2.0
+\STATE Create\_H on gate 1.0
+\STATE Create\_H on gate System\_Size *
+\STATE Create\_H on gate System\_Size *
+\STATE Create\_CCustom1 on gate 1.0 and gate 2.0
+\STATE Create\_H on gate 1.0
+ \end{algorithmic}
+\caption{Program to Produce the Solution for the Two Qubit Deutsch-Jozsa Problem}
+\label{alg:deutjozsatwoqubits}
+\end{algorithm}
+
+% \begin{lstlisting}
+% Create_H on gate 1.0 *
+% Create_H on gate 1.0 *
+% Create_H on gate System_Size
+% Create_H on gate System_Size *
+% Create_H on gate System_Size *
+% Create_CCustom1 on gate 1.0 and gate 2.0
+% Create_H on gate 1.0
+% Create_H on gate System_Size *
+% Create_H on gate System_Size *
+% Create_CCustom1 on gate 1.0 and gate 2.0
+% Create_H on gate 1.0
+% \end{lstlisting}
 
 Figures \ref{fig:deutjoz2qubits} and \ref{fig:deutjoz3qubits} show hand optimised versions of the circuit the produced by the algorithm for two and three qubits respectively.
 The full circuits that have not been optimised are shown in Section \ref{sec:DeutschJozsaExpAppFullCirs}.
-The gate \emph{C0} is the custom unitary operations defined in Figure \ref{fig:deutschjozsafunctions}.
+The gate \emph{C0} is ``custom gate 1'' provided by the test cases, i.e. the custom unitary operations defined in Figures \ref{fig:deutschfunctions} and \ref{fig:deutschjozsafunctions}.
 The \emph{C0} gate rendering has also been modified to take into account the knowledge of gate size that the framework cannot assume when producing the QCircuit representation.
-The full circuits in Section \ref{sec:DeutschJozsaExpAppFullCirs} are exactly as the framework produced them and therefore do not show the true gate size.
-The controls shown in the circuits of Section \ref{sec:DeutschJozsaExpAppFullCirs} are also removed, see Section \ref{sec:quantumgates}.
+The full circuits in Section \ref{sec:DeutschJozsaExpAppFullCirs} are exactly as the framework produced them and do not show the actual gate size.
+The controls shown in the circuits of Section \ref{sec:DeutschJozsaExpAppFullCirs} are also removed as they cannot be on a qubit affected by \emph{C0}, see Section \ref{sec:quantumgates}.
 
 \begin{figure}
-\[
+\centering
+\subfigure[Two Qubits]{
+$
 \Qcircuit @C=1.0em @R=.7em {
 %&3			&6					&7			&10					&11	&\\
-&\gate{H}	&\multigate{1}{C0}	&\qw		&\multigate{1}{C0}	&\qw&\\%2
-&\qw		&\ghost{C0}			&\gate{H}	&\ghost{C0}			&\gate{H}&\\%1
+&\gate{H}	&\multigate{1}{C0}	&\qw		&\multigate{1}{C0}	&\qw&\qw&\\%2
+&\qw		&\ghost{C0}			&\gate{H}	&\ghost{C0}			&\gate{H}&\qw&\\%1
 }
-\]
-\caption{Deutsch-Jozsa Solution - Two Qubits - Hand Optimised}
-\label{fig:deutjoz2qubits}
-\end{figure}
-\begin{figure}
-\[
+$
+\label{fig:deutjoz2qubits}}
+\subfigure[Three Qubits]{
+$
 \Qcircuit @C=1.0em @R=.7em {
-&1			&2			&3					&4			&5			&6					&7&\\
-&\gate{H}	&\qw		&\multigate{2}{C0}	&\qw		&\qw		&\multigate{2}{C0}	&\qw&\\%3
-&\qw		&\gate{H}	&\ghost{C0} 			&\qw		&\gate{H}	&\ghost{C0} 			&\qw&\\%2
-&\qw		&\qw		&\ghost{C0}			&\gate{H}	&\qw		&\ghost{C0}			&\gate{H}&\\%1
+% &1			&2			&3					&4			&5			&6					&7&\\
+&\gate{H}	&\qw		&\multigate{2}{C0}	&\qw		&\qw		&\multigate{2}{C0}	&\qw&\qw&\\%3
+&\qw		&\gate{H}	&\ghost{C0} 			&\qw		&\gate{H}	&\ghost{C0} 			&\qw&\qw&\\%2
+&\qw		&\qw		&\ghost{C0}			&\gate{H}	&\qw		&\ghost{C0}			&\gate{H}&\qw&\\%1
 }
-\]
-\caption{Deutsch-Jozsa Solution - Three Qubits - Hand Optimised}
-\label{fig:deutjoz3qubits}
+$
+% \caption{Deutsch-Jozsa Solution - Three Qubits - Hand Optimised}
+\label{fig:deutjoz3qubits}}
+\caption{Deutsch-Jozsa Solutions}
 \end{figure}
 
 Even the hand optimised circuits are not optimal, they contain more calls to the oracle, the \emph{C0} gates, compared to the standard Deutsch-Jozsa circuits, Figure \ref{Deutsch-Jozsa-Cir}.
 The Deutsch-Jozsa circuit only use a single call to oracle whereas the circuits in Figures \ref{fig:deutjoz2qubits} and \ref{fig:deutjoz3qubits} make two calls.
-The previous attempt made by Spector \emph{et al.}\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} also only used a single call to the oracle.
+The previous attempt made by Spector \emph{et al.}\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} only used a single call to the oracle.
 However, Spector \emph{et al.} placed that restriction on the search and were only searching for the circuit for the 3 qubit problem.
 Due to the use of the standard circuit builder provided by the framework, the restriction was not placed on the search process.
 The solution found by Spector \emph{et al.} was also only probabilistic whereas the solutions provided here are deterministic.
 
-Even though the circuits use two calls to the oracle, it is possible to see how to transform the circuits produced to use a single oracle call.
-% Even though the circuits show that the \emph{C0} gate is controlled, it is not.
-% This is because the \emph{C0} gate covers three gates.
-% However, due to the flexible nature of the custom gates, when the QCircuit encoding is produced the gate size is unknown so is shown as though it were a single qubit gate.
-% When a controlled gate is constructed by the circuit builder, the control is only applied if it is not a qubit that would be acted on by the gate under control.
-% If the qubit would be acted on, the effect of the control is removed, see Section \ref{sec:quantumgates}.
+Even though the circuits use two calls to the oracle, it is it could be possible to manually transform the circuits produced to use a single oracle call.
+% % % Even though the circuits show that the \emph{C0} gate is controlled, it is not.
+% % % This is because the \emph{C0} gate covers three gates.
+% % % However, due to the flexible nature of the custom gates, when the QCircuit encoding is produced the gate size is unknown so is shown as though it were a single qubit gate.
+% % % When a controlled gate is constructed by the circuit builder, the control is only applied if it is not a qubit that would be acted on by the gate under control.
+% % % If the qubit would be acted on, the effect of the control is removed, see Section \ref{sec:quantumgates}.
 
-In Figures \ref{fig:deutjoz3qubits} the gates are numbered.
-It can be reasoned that gate $4$ and $5$ can be swapped due to the matrix equivalent to applying gate $4$ followed by gate $5$ is the same as the matrix equivalent to applying gate $5$ followed by gate $4$.
-This would produce two similar portions of the circuit, gates $2$, $3$ and $5$, and gates $4$, $6$ and $7$.
+% In Figures \ref{fig:deutjoz3qubits} the gates are numbered.
+% It can be reasoned that gate $4$ and $5$ can be swapped due to the matrix equivalent to applying gate $4$ followed by gate $5$ is the same as the matrix equivalent to applying gate $5$ followed by gate $4$.
+% This would produce two similar portions of the circuit, gates $2$, $3$ and $5$, and gates $4$, $6$ and $7$.
 
 
 \section{Quantum Fourier Transform}
@@ -244,37 +272,104 @@ The $0..3$ permutation problem is used by Massey\cite{masseythesis} to evaluate 
 The problem is quite simple, given a permutation of the numbers $0..3$ give the index of the maximum value, $3$.
 Due to the simplicity of the problem it was chosen for the user guide produced for the client provided with the framework, see Section \ref{sec:userguide}.
 
-The interesting feature of the Max problem is that a deterministic solution was not found by Massey for all $24$ possible permutations.
-Only a probabilistic solution was found.
-The three search problems that have been outlined so far all 
+Interestingly a deterministic solution was not found by Massey for all $24$ possible permutations.
+Only a probabilistic solution was discovered.
+This is the first experiment where a probabilistic solution is expected.
+Massey specifically searched for a probalistic solution with a fitness function designed as such.
 
+The search engine that was used was the genetic programming search engine provided by the prototype implementation, see Section \ref{sec:provsearcheng}.
+Initially, the suitability measure that was used was the basic Simple suitability measure variant.
 
-Initial experimentation showed that this search problem was significantly harder than the previous experiment.
 All instructions were included in the search except \emph{Create\_SWAP}, \emph{Create\_Zero} and \emph{RevIterate}.
-The search parameters used are all the defaults except the mutation rate was set to $0.003846154$, $\frac{0.1}{26}$.
-The time was not used as the seeds so this experiment is reproducible.
+% These were removed when the search was not making progress.
+The search parameters were the defaults except the mutation rate was set to $0.003846154$, $\frac{0.1}{26}$, and time was not used as the seeds so this experiment is reproducible.
 
-\lstset{numbers=left,language=Java, breaklines=true}
-\begin{lstlisting}
-Create_CCX on gate (Loop_Var(30.0))-(10.0) and gate (13.0)^(Loop_Var((13.0)^(Loop_Var(Loop_Var(1.0))))) with phase pi/(1.0)
-Create_CRY on gate 6.0 and gate 2.0 with phase pi/(3.0)
-Create_X on gate 7.0
-Create_X on gate 0.0
-Create_V on gate (((Loop_Var(1.0))+(0.0))x((10.0)^((0.0)x(Loop_Var(9.0)))))-(3.0)
-Create_CV on gate 63.0 and gate Loop_Var((((Loop_Var(1.0))+(0.0))x((10.0)^((0.0)x(Loop_Var(9.0)))))-(3.0))
-\end{lstlisting}
+Initial results were disappointing and provided little useful information.
+The solution that is presented by Massey includes the use of the Controlled-Controlled-Not(CCN) gate that is not included in the requirements and therefore could not be produced by the framework.
+The decision was made to extend the framework past the original requirements and include the CCN gate.
+To reduce the impact on the existing framework, the gate was implemented as a Controlled-U gate where U was a controlled-PauliX gate.
+The CCN gate obviously requires 3 qubits identifiers, the third qubit identifier was provided by casting the phase value to an integer.
+The addition of the CCN gate required additional logic to ensure the control qubits were set with the control qubit closest to the target qubit set as the control qubit of the inner Controlled-PauliX gate.
+This is necessary for the matrix calculation.
+If this logic were not performed the matrix calculated could be incorrect as the control of the outer Controlled-U gate would have to be inserted into the matrix of the inner Controlled-PauliX gate rather than the other way round.
+
+Even with the addition of the CCN gate the results were not that impressive.
+A different approach was taken to try and improve the results.
+Reflecting on the difficulties encountered when specifying the desired output state the Zero Focussed variant of the Simple suitability measure was developed.
+The difficulties encountered and the Zero Focussed variant are described fully in Section \ref{sec:simplsuitmeas}.
+With the new suitability measure implemented the results were astounding.
+
+Algorithm \ref{alg:03permalg} was proffered as the solution.
+The circuit produced when \emph{System\_Size} is $4$ is shown in Figure \ref{fig:03circuitsolalg}.
+This circuit contains the gate 
+$
+\Qcircuit @C=1.0em @R=.7em {&\gate{X T 4}&\qw&\\&\ctrl{-1}&\qw}
+$
+which represents the CCN gate.
+The symbols inside this gate indicate certain properties of the CCN gate.
+The $X$ symbol indicates that the operation under control is the Pauli-X gate.
+The $T 4$ shows that the target of the CCN is qubit $4$ that means that qubit $2$, the qubit on which the gate is shown, is a control qubit.
+If this were $C 4$ instead it would indicate that the second control qubit would be qubit $4$ and qubit $2$ would be the target of the CCN gate.
+
+\begin{algorithm}
+ \begin{algorithmic}
+\STATE Create\_CCX on gate 0 and gate 1 with phase 2
+\STATE Create\_X on gate 0.0
+ \end{algorithmic}
+\caption{Program to Produce the Solution for the Max Permutation Problem}
+\label{alg:03permalg}
+\end{algorithm}
+
+% \lstset{numbers=left,language=Java, breaklines=true}
+% \begin{lstlisting}
+% Create_CCX on gate (Loop_Var(30.0))-(10.0) and gate (13.0)^(Loop_Var((13.0)^(Loop_Var(Loop_Var(1.0))))) with phase pi/(1.0)
+% Create_CRY on gate 6.0 and gate 2.0 with phase pi/(3.0)
+% Create_X on gate 7.0
+% Create_X on gate 0.0
+% Create_V on gate (((Loop_Var(1.0))+(0.0))x((10.0)^((0.0)x(Loop_Var(9.0)))))-(3.0)
+% Create_CV on gate 63.0 and gate Loop_Var((((Loop_Var(1.0))+(0.0))x((10.0)^((0.0)x(Loop_Var(9.0)))))-(3.0))
+% \end{lstlisting}
 
 
 \begin{figure}
-\[
+\centering
+\subfigure[As Produced by the Framework]{
+$
 \Qcircuit @C=1.0em @R=.7em {
-&\qw&\gate{X}&\gate{V}&\\%4
-&\qw&\qw&\qw&\\%3
-&\gate{X T 4}&\qw&\qw&\\%2
-&\ctrl{-1} \qwx&\qw&\qw&\\%1
+&\qw&\qw		&\gate{X}&\qw&\\%4
+&\qw&\qw		&\qw&\qw&\\%3
+&\qw&\gate{X T 4}	&\qw&\qw&\\%2
+&\qw&\ctrl{-1} \qwx	&\qw&\qw&\\%1
 }
-\]
+$
+\label{fig:03circuitsolalg}
+}
+\subfigure[Manually Formatted Version]{
+$
+\Qcircuit @C=1.0em @R=.7em {
+&\qw&\gate{X}		&\qw&\gate{X}	&\qw&\\%4
+&\qw&\qw \qwx		&\qw&\qw	&\qw&\\%3
+&\qw&\ctrl{-2} \qwx	&\qw&\qw	&\ghost{X}\\%2
+&\qw&\ctrl{-1} \qwx	&\qw&\qw	&\qw&\\%1
+}
+$
+\label{fig:03circuitsoloptim}
+}
+\subfigure[Massey's Hand Optimised Solution]{
+$
+\Qcircuit @C=1.0em @R=.7em {
+&\qw&\gate{X}&\qw&\gate{X}			&\qw&\\%4
+&\qw&\qw&\qw&\qw \qwx			&\qw&\\%3
+&\qw&\qw&\qw&\ctrl{-2} \qwx		&\ghost{X}&\\%2
+&\qw&\qw&\qw&\ctrl{-1} \qwx		&\qw&\\%1
+}
+$
+\label{fig:03circuitsolmassey}
+}
 \caption{0..3 Max Permutation Solution}
+\label{fig:03circuitsol}
 \end{figure}
 
+The solution in Figure \ref{fig:03circuitsoloptim} is almost identical to that found by Massey, shown in Figure \ref{fig:03circuitsolmassey}.
+However, the solution found by Massey has been hand optimised whereas the solution in Figure \ref{fig:03circuitsoloptim} is how the framework found it without any manual optimisation required.
 

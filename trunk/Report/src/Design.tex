@@ -1,4 +1,5 @@
 \chapter{Design and Implementation}
+\label{sec:desandimp}
 \lstset{language=Java}
 This section includes both design decisions and implementation details.
 
@@ -414,7 +415,7 @@ QuantumInstruction(Enumeration)&expnode&expnode&expnode&QuantumAlgorithm[]\\
 \label{tab:quantinststruct}
 \end{figure}
 
-\begin{figure}
+\begin{table}
 \centering
  \begin{tabular}{|c|c|}
 \hline
@@ -429,7 +430,7 @@ $exp \rightarrow LoopVars[e]$ &   \\
  \end{tabular}
 \caption{Expnode Context Free Grammar}
 \label{tab:expnodecontext}
-\end{figure}
+\end{table}
 
 An algorithm is a list of instructions.
 The instructions that are used in the standardised quantum algorithms take the form shown in Figure \ref{tab:quantinststruct}.
@@ -441,7 +442,7 @@ The textual form is also improved with the use of \{ and \} characters to denote
 $Gate1$, $Gate2$ and $Phase$ are all listed as being of type \emph{expnode}.
 The type after evaluation for $Gate1$ and $Gate2$ is integer and for $Phase$ is double.
 The \emph{expnode} type is required for these values to depend on value variables such as the system size and also loop variables.
-The grammar that defines the \emph{expnode} type can be seen in Figure \ref{tab:expnodecontext}.
+The grammar that defines the \emph{expnode} type can be seen in Table \ref{tab:expnodecontext}.
 The \emph{expnode} type is needed so that the algorithms can react to the parametrisation that provides the increased power when compared to quantum circuits.
 As the circuit size is a variable a constant cannot be used for $Gate1$, $Gate2$ or $Phase$ as the value may depend on the circuit size and have to be calculated when a circuit is being built using the algorithm.
 
@@ -482,7 +483,7 @@ This would mean that the code at line 2 wouldn't be effected but the code at lin
 The more sophisticated option, that is implemented, is to provide access to all loop variables.
 This is a second parameter that requires the use of the \emph{expnode} type.
 All current iteration variables are provided in a \emph{LoopVars} array.
-As can be seen in Figure \ref{tab:expnodecontext} the array is indexed by the value of a sub-expression.
+As can be seen in Table \ref{tab:expnodecontext} the array is indexed by the value of a sub-expression.
 To ensure that all indices requested are valid the value of the sub-expression is calculated using modulus \emph{LoopVars.length()}.
 If the \emph{LoopVars} array has a of length $0$ the result is $0$ irrespective of the index requested.
 
@@ -738,8 +739,8 @@ Each gate must also provide a QCircuit \cite{QCsite} representation to produce t
 
 The implementations for gates that affect two qubits are hidden by an extended interface to provide access to the identifier of the second qubit but ensures that all standard gate operations are also available.
 
-\begin{figure}
-\[
+\begin{table}
+% \[
 \begin{tabular}{ | c | c || c | }
 \hline
 \multicolumn{2}{|c||}{\textbf{Matrix Manipulation}} & \textbf{Direct Vector Manipulation} \\ \hline
@@ -749,17 +750,17 @@ RY Gate &Controlled U Gate & Pauli Y \\ \hline
 RZ Gate &Swap & Pauli Z \\ \hline
 V Gate && \\ \hline
 \end{tabular}
-\]
+% \]
 \caption{Gate Implementation}
-\label{fig:gateimps}
-\end{figure}
+\label{tab:gateimps}
+\end{table}
 
-As has been mentioned, a number of the gates shown in Figure \ref{fig:providedgates} can be implemented either as a matrix multiplication or a direct vector manipulation.
+As has been mentioned, a number of the gates shown in Table \ref{tab:providedgates} can be implemented either as a matrix multiplication or a direct vector manipulation.
 Several of the gate implementations in the framework use the direct vector manipulation and others use the matrix multiplication.
-The table in Figure \ref{fig:gateimps} shows which of the provided gates are implemented using the matrix manipulation and which use the direct vector manipulation.
-For all gates that use matrix multiplication their equivalent unitary is based on those listed in Figure \ref{fig:providedgates} but has to adapt to the qubit they are applied to and the system size.
+The table in Table \ref{tab:gateimps} shows which of the provided gates are implemented using the matrix manipulation and which use the direct vector manipulation.
+For all gates that use matrix multiplication their equivalent unitary is based on those listed in Table \ref{tab:providedgates} but has to adapt to the qubit they are applied to and the system size.
 The equivalent matrix is calculated in two sections.
-The initial section is the construction of the matrix listed in Figure \ref{fig:providedgates}.
+The initial section is the construction of the matrix listed in Table \ref{tab:providedgates}.
 This initial section is calculated in the constructor of each gate.
 The gate on which the gate is applied is provided as an argument to the constructor of the gate.
 Unfortunately a Java interface cannot specify the signature of the constructor of implementing classes and abstract classes require the constructor to be fully defined which is not possible when the constructor needs to perform this first section.
@@ -769,7 +770,7 @@ This second section is performed as part of the \emph{apply} method.
 The second section carried out in the \emph{apply} method does not impose any restriction on the system size.
 
 % There are several gate implementations that deserve a more detailed summary.
-To produce the unitary matrices shown in Figure \ref{fig:providedgates} for the RX, RY and RZ gates the matrices of other gates are used.
+To produce the unitary matrices shown in Table \ref{tab:providedgates} for the RX, RY and RZ gates the matrices of other gates are used.
 Equations \ref{eq:rxcalc} - \ref{eq:rzcalc} shows the details of these matrix calculations.
 These equations are taken directly from Lecture 9 of \cite{QIPLect}.
 \begin{eqnarray}
@@ -828,7 +829,7 @@ Each custom gate has an identifier between $0$ and $n-1$ where $n$ is the number
 
 To use these custom unitary matrices, the framework provides a gate implementation called \emph{Custom\_Gate}.
 This is significantly different from all other gates in one particular feature.
-All gates listed in Figure \ref{fig:providedgates} have a fixed unitary matrix and only have to adapt for the number of higher significant qubits that are not effected by the gate.
+All gates listed in Table \ref{tab:providedgates} have a fixed unitary matrix and only have to adapt for the number of higher significant qubits that are not effected by the gate.
 This is not so for custom gates, their operation change on a test case by test case basis and therefore both the ``phases'' mentioned in Section \ref{sec:quantumgates} are performed during the \emph{apply} method.
 
 The \emph{apply} method in the Gate interface has two parameters, one is the quantum state on which the custom operation is applied and one that is the test case.
@@ -1340,7 +1341,7 @@ The result of a search is the quantum algorithm found by the search, rather than
 The GUI provides the user 3 different ways to see the search result.
 A simple textual listing of the algorithm is provided in the same format as the framework produces on its own.
 To help with the users understanding of what the algorithm means a circuit diagram is produced for a user controlled number of Qubits.
-The diagram is produced using the symbols that are shown in Figure \ref{fig:providedgates}.
+The diagram is produced using the symbols that are shown in Table \ref{tab:providedgates}.
 The circuits produced are not just provided as a circuit diagram but also in QCircuit representation so that the circuits can be placed into any publication produced in Latex simply with the use of the QCircuit package.
 
 Providing the three representations meet the \emph{simplicity}, \emph{feedback} and \emph{reuse} principles.

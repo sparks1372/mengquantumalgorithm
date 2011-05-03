@@ -130,11 +130,11 @@ Maintaining a persistent configuration will also reduce the opportunity for huma
 
 \subsubsection{Provided Gates and Algorithm Instructions - Req:PGAI}
 \label{sec:reqpgai}
-\textbf{The framework shall provide implementations of all gates specified in Figure \ref{fig:providedgates}.
+\textbf{The framework shall provide implementations of all gates specified in Table \ref{tab:providedgates}.
 The framework shall provide algorithm instructions for each of these gates and for the instantiation of the Controlled-U gate with all single qubit gates.}
-Figure \ref{fig:providedgates} defines all the most well known quantum gates and indicates the visual representation convention used in the project.
+Table \ref{tab:providedgates} defines all the most well known quantum gates and indicates the visual representation convention used in the project.
 
-\begin{figure}
+\begin{table}
  \begin{longtable}{|c c|c c|c c|}
 \hline & & & & & \\
 $
@@ -262,8 +262,8 @@ $  \\ & & & & & \\
   
  \end{longtable}
 \caption{Supported Gates and Definitions}
-\label{fig:providedgates}
-\end{figure}
+\label{tab:providedgates}
+\end{table}
 
 \subsubsection{Algorithm Control Structures - Req:ACS}
 \label{sec:reqacs}
@@ -280,7 +280,7 @@ The algorithm produced by Massey\cite{masseythesis} producing the Quantum Fourie
 \subsubsection{Circuit Simulation - Req:CS}
 \label{sec:reqcs}
 \textbf{The framework shall provide the simulation of a circuit given an initial state.}
-Using the gate definitions given in Figure \ref{fig:providedgates}, a circuit constructed of the supported gates shall be able to be accurately simulated.
+Using the gate definitions given in Table \ref{tab:providedgates}, a circuit constructed of the supported gates shall be able to be accurately simulated.
 Given an initial state the framework shall be able to give the final state up to the accuracy of floating point arithmetic.
 
 \subsubsection{Step-by-Step State Evolution - Req:SBSSE}
