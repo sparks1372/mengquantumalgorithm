@@ -4,10 +4,9 @@
 \label{sec:unittests}
 Many of the components created for the framework were tested by unit testing.
 With the framework created in Java, JUnit 4\cite{junitweb} was used to produce and run the unit tests.
-Not all components were suitable for unit testing due to them being less functional and more control classes.
-Therefore unit tests were not created for these components but they were tested as part of the integration testing.
+Not all components were suitable for unit testing, e.g. those clases providing higher level control rather than simple encapsulated functionality.
 
-The components that were tested are listed below:
+The components that were unit tested are listed below:
 \begin{itemize}
  \item Complex class
  \item Matrix class
@@ -19,15 +18,15 @@ The components that were tested are listed below:
  \item Manager classes
 \end{itemize}
 
-In the unit tests the test values were chosen in accordance with partition testing to ensure that the test were more complete and tested for the incorrect and the correct partitions with equal weight.
+% In the unit tests the test values were chosen in accordance with partition testing to ensure that the test were more complete and tested for the incorrect and the correct partitions with equal weight.
 
 \subsection{Complex Number Implementation Unit Tests}
-Due to the Complex class underpinning the functionality of the framework a thorough test was required; reliance on the testing performed on the third party library was to much of a risk.
+% Due to the Complex class underpinning the functionality of the framework a thorough test was required; reliance on the testing performed on the third party library was to much of a risk.
 The unit tests were simple with a range of positive, negative, integer and decimal values used in the construction of the complex classes.
 
-The test oracles used for the \emph{toString} and \emph{parseComplex} methods were created in combination with the other of these two methods.
-Additional test oracles were also used but this mutal dependance ensures that the strings produce by the \emph{toString} method are well formed and can be parsed by \emph{parseComplex}.
-It also ensures that the \emph{parseComplex} method is correct and creates a Complex object that represents the string passed as its argument.
+The tests of the \emph{toString} and \emph{parseComplex} methods were combined to ensure that the \emph{toString} method produces strings that can be used by the \emph{parseComplex} method.
+% Additional test oracles were also used but this mutal dependance ensures that the strings produce by the \emph{toString} method are well formed and can be parsed by \emph{parseComplex}.
+% It also ensures that the \emph{parseComplex} method is correct and creates a Complex object that represents the string passed as its argument.
 
 For the numeric methods, Octave\cite{octweb} was used to create test oracles.
 
@@ -44,7 +43,7 @@ For the arithmetic methods, Octave\cite{octweb} was used to create test oracles.
 \label{sec:gatetests}
 Unit testing the gate implementations is a relatively simple process.
 The correct operation of the all gates, excluding the custom gates, are statically defined as in Table \ref{tab:providedgates}.
-Therefore creating the unit tests are a series of tests to ensure that with predefined input states, the output states are correct with respect to the gate's definition.
+The test oracles are simply expected quantum states that the gates should be produced.
 To reduce the probability of errors being introduced into the test oracles used by the unit tests, the test oracles were calculated by Octave\cite{octweb} using Quantum Computing Functions(QCF) for Matlab\cite{qcfweb}.
 
 QCF does not provide all of the gates defined in Table \ref{tab:providedgates}.
@@ -53,12 +52,11 @@ For the missing gates, Matlab functions were created using the definitions in Ta
 To test the custom gate implementation XML files were created with the definitions of all single qubit gates.
 Custom gates were created using these XML files and all the unit tests for the respective gate were applied.
 This ensured that the operation of the custom gate is functionally equivalent to the non-custom gates.
-The custom gate is not going to ne non-functionally equivalent as some of the non-custom gates exploit bit manipulation rather than matrix multiplication, see Section \ref{sec:custgates}, where as the custom gate can only perform matrix multiplication.
 
 Alongside the \emph{apply} operation performed on quantum states, all other methods are also tested by the unit tests.
 The test oracles are much simpler to define.
 The \emph{getTarget} method is required to return the integer value set as the target qubit ID in the constructor.
-A number of test cases including positive, negative and zero values.
+% A number of test cases including positive, negative and zero values.
 Only positive values should be accepted by the constructor as there are no qubits with a negative or zero ID.
 The returned value of each of the other operations are known either implicitly or explicitly by Table \ref{tab:providedgates} and the QCircuit\cite{QCsite} documentation.
 
@@ -80,10 +78,11 @@ The unit tests for the circuit implementation followed the following scenarios:
 These unit tests concern the implementation of the Expnode context free grammar shown in Table \ref{tab:expnodecontext}.
 The unit tests were based on the expressions that can be seen in Figure \ref{tab:expnodetestexps}.
 A collection of values are used as SystemSize including positive, negative, integer and decimal values.
-LoopVars shal also be set as one of a collection of arrays with lengths $0$, $1$, $2$ and $3$.
-The $0$ length array is important as there is no restriction placed on the search engines stating that the loop variables can only be requested in a loop.
-This is to that the search is not restricted.
-If the array is of length $0$ the result is $0$ irrespective of the index requested.
+LoopVars shall be set as one of a collection of arrays with lengths $0$, $1$, $2$ and $3$.
+
+The $0$ length array is important to test as search engines are not required to ensure that a loop variable is not used in an algorithm instruction that is not inside the respective loop.
+I.e. a loop variable can be referenced in the algorithms produced by search by instructions outside of the loop, however it is not legally accessible so this must be handled.
+If the array is of length $0$, or the requested loop variable identifier is greater than the length of LoopVars, the returned value is $0$.
 If the index requested is greater than the length of the array, modulus is used with the array length to produce a valid index.
 This is defined in Section \ref{sec:quantalgs}.
 
@@ -97,7 +96,8 @@ $0$ & $2+SystemSize$ &  $LoopVars[0]$ &$2+LoopVars[2+SystemSize]$\\
 $2$ & $2-SystemSize$ &   $LoopVars[1]$ & $2-LoopVars[2+SystemSize]$\\
 $-2$ & $2*SystemSize$ &   $LoopVars[-1]$ & $2*LoopVars[2+SystemSize]$ \\
 &$2/SystemSize$ &  $LoopVars[SystemSize]$ & $2/LoopVars[2+SystemSize]$ \\
-&&  $LoopVars[2+SystemSize]$ & \\
+&$2^{SystemSize}$&  $LoopVars[2+SystemSize]$ & \\
+&$\frac{\pi}{2^{SystemSize}}$&   & \\
 \hline
  \end{tabular}
 \caption{Expnode Test Expressions}
@@ -115,7 +115,7 @@ The unit tests for the algorithm implementation followed the following scenarios
  \item Add a instruction and ensure the instruction in the iterator is correct
  \item Add four different instructions and ensure the instructions in the iterator are correct and in the correct order
  \item Add a instruction and ensure the printed algorithm is correct
- \item Add four different instructions and ensure the printed algorithm contains the correct instructions, including correct expressions to calculate the numeric vales, are correct and they are printed in the correct order
+ \item Add four different instructions and ensure the printed algorithm contains the correct instructions and expressions, and they are printed in the correct order
 \end{itemize}
 
 \subsection{Suitability Measure Unit Tests}
@@ -124,21 +124,24 @@ There are three suitability measures provided with the framework, see Section \r
 Each of these needed to be tested to ensure that the implementation was consistent with their definitions.
 
 A series of $2^n\times1$ matrices were created and provided to the suitability measure.
-The theoretical value, the test oracle, was calculated using Oracle.
-The matrices used in the testing were not necessarily correct quantum states, they may not have a modulus square equal to $1$.
-This is because even though the operation of gates are by definition unitary, the starting state nor the expected final states defined in test cases are restricted to quantum states that have a modulus square equal to $1$.
-As a result the suitability measure tests were not restricted to ``correct'' quantum states.
+The theoretical value, the test oracle, was calculated using Octave\cite{octweb}.
+% The matrices used in the testing were not necessarily correct quantum states, they may not have a modulus square equal to $1$.
+% This is because even though the operation of gates are by definition unitary, the starting state nor the expected final states defined in test cases are restricted to quantum states that have a modulus square equal to $1$.
+The suitability measure tests were not restricted to ``correct'' quantum states.
+This is important as suitability measures are general $\mathbb{C}\rightarrow\mathbb{C}$ functions not just limited to quantum state vectors.
 
 \subsection{Test Suite Unit Tests}
 \label{sec:testsuitetests}
 The test suite data structure is a combination of three classes not covered by other unit tests.
-Although the test will cover three classes this is still being classed as a unit test as it is effectively a test of the data structure unit rather than the classes.
+Although the test will cover the three classes used in the test suite data structure, see Section \ref{sec:testsuitestruc}, this is still being classed as a unit test as it is a test of the data structure unit rather than the individual classes.
 
 The tests covered the following scenarios:
 \begin{itemize}
- \item (Three tests) Create a new test suite and insert a single test case for 1/2/3 qubits, check test suite data structure against the oracle.
- \item Create a new test suite and insert a single test case for 1 qubit and another test case for 2 qubits, check test suite data structure against the oracle.
- \item Create two new test suite (A and B), insert a single test case for 1 qubit in test suite A and 1 qubit in test suite B, add the test set from test suite B to test suite A. Check test suite A and B data structures against the oracles.
+ \item (Three tests) Create a new test suite and insert a single test case for 1/2/3 qubits.
+Check test suite data structure against the oracle.
+ \item Create a new test suite and insert a single test case for 1 qubit and another test case for 2 qubits.
+Check test suite data structure against the oracle.
+ \item Create two new test suite (A and B), insert a single test case for 1 qubit in test suite A and another for 1 qubit in test suite B, add the test set from test suite B to test suite A. Check test suite A and B data structures against the oracles.
  \item Create a new test suite and insert a single test case for 1 qubit and another test case for 2 qubits, encode the test suite as an XML file, check the test suite XML file against the oracle.
  \item Decode a predefined test suite XML file, check the test suite data structure against the oracle.
 \end{itemize}
@@ -181,13 +184,13 @@ The circuit builder integration test combined:
 
 Due to the simplicity of the circuit builder interface, the tests that were carried out were also simple.
 The circuit builder interface provides two methods.
-Both methods are intended to perform the same action, to take a quantum algorithm and to return the circuit for the specified system size.
+Both methods are intended to perform the same action; to take a quantum algorithm and to return the circuit for the specified system size.
 The difference between the two methods is that one allows an integer array to be passed as an argument.
 This integer array is the \emph{LoopVars} array used in the Expnode grammar, see Section \ref{sec:quantalgs}.
-When the method without this argument initialises the \emph{LoopVars} array to the empty array.
+The second method acts as if an empty array were provided to the first.
 
-To test the two methods, a collection of simple quantum algorithms were produced to include each gate instruction at least one and each of the iterate control instructions at least five times.
-These algorithms are passed to the circuit builder, the returned circuits are checked against the test oracles.
+To test the two methods, a collection of simple quantum algorithms were produced to include each gate instruction at least once and each of the iterate control instructions at least five times.
+These algorithms are passed to the circuit builder and the returned circuits are checked against the test oracles.
 The test oracles are circuits that represent the circuit that would be created by the algorithm.
 
 The tests are run over system sizes of 1, 2 and 3.
@@ -206,13 +209,11 @@ The circuit evaluator integration test combined:
 The suitability measure that was used for the tests was the Simple Suitability Measure, see Section \ref{sec:simplsuitmeas}.
 
 The tests for the circuit evaluator were very similar to those used to test the individual suitability measures, see Section \ref{sec:suitmeastests}.
-A series of algorithms were produced alongside a collection of small test suites, containing less that three test cases.
-The theoretical suitability value of each algorithm was produced and then compared with the value produced by the circuit evaluator.
+A series of algorithms were produced alongside a collection of small test suites, containing less than three test cases.
+The theoretical suitability value of each algorithm was determined and then compared with the value produced by the circuit evaluator.
 
 Two additional tests were produced to test the \emph{getResults} and \emph{getTrace} methods.
 The test oracles were test suites and arrays of test suites respectively.
-To ensure that the tests were simple enough that confidence was improved in the test oracle structures that had to be produced manually.
-The quantum states in the test oracles that represented the result of correct complete or partial circuit evaluation were produced using Octave also to improve test confidence.
 
 \section{System Testing}
 \label{sec:systests}
@@ -220,11 +221,23 @@ The quantum states in the test oracles that represented the result of correct co
 \section{Client GUI Testing}
 \label{sec:clientguitests}
 The client GUI that is provided alongside the framework was tested using scenario based testing.
-For each of the requirements for the client GUI, see Section \ref{sec:clientguireqs}, had a scenario created specifically for the requirement.
+A scenario was created to verify each of the client requirements.
 
-Analysing all the test cases produced, many could be combined producing a much smaller number of test cases without reducing the requirement coverage.
-The test cases were analysed for a second time to identify those that could be automated.
-The tool chosen for the automated was WindowTester Pro\cite{wintestproweb}.
-However, it was decided that the amount of automation that was possible and the limitations of what could be checked during the automated tests did not make it a sensible to proceed with automation of the GUI testing.
+\section{Summary}
+
+The above summarises the levels of testing carried out.
+Although most did indeed work as intended testing did reveal errors.
+For example, originally the Controlled-U gate was implemented using only Equation \ref{eq:clu} and not Equation \ref{eq:chu}, see Section \ref{sec:quantumgates}.
+This was found to be a bug as the Controlled-U gate only worked when the control bit was of a lower significant qubit than the target qubit.
+Other tests found a bug where with the QCircuit representation when a Controlled-U gate has at least one qubit in-between the control and target qubits.
+The additional vertical lines to bridge the addition qubits were not originally included.
+
+With almost $13000$ lines of code it is reasonable to expect that some bugs remain undiscovered.
+Additional testing cound be carried out, especially focussing on non-functional aspects that were not tested in the process explained above.
+
+It is intended that the toolkit shall be released to the research community.
+The effort invested in testing would appear to have been worthwhile.
+The level of testing is consistent with a severe attempt to use a software engineering processes to develop the software artefact.
+As part of this a traceability matrix was produced and is presented in Section \ref{sec:tracability}.
 
 \input{Tracability}
