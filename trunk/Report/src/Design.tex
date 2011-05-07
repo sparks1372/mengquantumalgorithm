@@ -424,7 +424,7 @@ $exp \rightarrow e - e$ &  $e \rightarrow SystemSize$ \\
 $exp \rightarrow e * e$ &  $e \rightarrow Value$ \\
 $exp \rightarrow \frac{e}{e}$ &   \\
 $exp \rightarrow e^e$ &   \\
-$exp \rightarrow \frac{\pi}{2^e}$ &   \\
+$exp \rightarrow \frac{\pi}{2^{e\%10}}$ &   \\
 $exp \rightarrow LoopVars[e]$ &   \\
 \hline
  \end{tabular}
@@ -438,6 +438,9 @@ The list of values that the Instruction element can take can be found in Appendi
 When the algorithm is reported to the user, it is reported as a list of instructions in the same form as is shown in Figure \ref{tab:quantinststruct}.
 To improve readability, if a gate does not have a second gate, or use a phase or sub algorithms they are not reported to the user.
 The textual form is also improved with the use of \{ and \} characters to denote the body of iterate instructions.
+The $\frac{\pi}{2^{e\%10}}$ rule has the exponent modulo $10$ to improve the performance and also is to produce algorithms that are feasible.
+Higher accuracy would require high presision hardware.
+This value could be altered in the future to reflect the available hardware precision at any given time in the future.
 
 $Gate1$, $Gate2$ and $Phase$ are all listed as being of type \emph{expnode}.
 The type after evaluation for $Gate1$ and $Gate2$ is integer and for $Phase$ is double.
@@ -540,9 +543,23 @@ It is intended that the framework would be used primarily to perform the followi
 It is not seen as a priority of the system to provide the same level of flexibility to the circuit building as the search engines and fitness functions.
 
 The provided circuit builder has several rules.
-For $Gate1$ and $Gate2$, the \emph{expnode} expression, see Section \ref{sec:quantalgs}, can evaluate to $0$, however due to the way the qubits are numbered, see Section \ref{sec:qubitnum}, there is not qubit $0$.
-It has been decided that is $0$ is found it will instead use the value \emph{System\_Size}.
-In contrary with the decision taken by Massey\cite{masseythesis}, if the \emph{expnode} expression evaluates to more than \emph{System\_Size} that value won't be coerced to \emph{System\_Size} but the instruction shall just be skipped.
+Firstly, for $Gate1$ and $Gate2$ the absolute value of the \emph{expnode} expression is used as there are no qubits with negative indices.
+Secondly,For $Gate1$ and $Gate2$ the \emph{expnode} expressions, see Section \ref{sec:quantalgs}, can evaluate to $0$, however due to the way the qubits are numbered, see Section \ref{sec:qubitnum}, there is not a qubit with identifier $0$.
+As is mentioned in Section \ref{sec:qubitnum} the number $0$ is used as the \emph{System\_Size} flag so if $Gate1$ or $Gate2$ were to evaluate to $0$ it would be replaced by the value of \emph{System\_Size}.
+Thirdly, in contrary with the decision taken by Massey\cite{masseythesis}, if the \emph{expnode} expression evaluates to more than \emph{System\_Size} that value won't be coerced to \emph{System\_Size} but the instruction shall just be skipped.
+The result of these three tackles the problem outlined by Clark and Stepney\cite{Stepney07searchingfor} of unequal identifier representation.
+With these three simple rules each qubit identifier and the \emph{System\_Size} flag are represented by two elements.
+Each qubit identifier is only represented by the identifier and the negative value of the identifier.
+The \emph{System\_Size} flag is represented by the dedicated \emph{System\_Size} value and if an \emph{expnode} expression evaluates to $0$.
+
+A simple circuit optimiser is built into the provided circuit builder.
+Using static knowledge about which of the gates shown in Table \ref{tab:providedgates} are self reversing the circuit builder builds higher efficiency circuits.
+This is performed by removing elements such as
+$
+\Qcircuit @C=1.0em @R=.7em {&\gate{H}&\gate{H}&\qw}
+$
+that do not have any affect on the state.
+However it cannot perform these improvements if there are any gates, even on different qubits, between the gate pairs that could be remove.
 
 The circuits that are produced by a circuit builder are hidden behind an interface.
 This is to allow third party circuit builders to use their own internal representation and also to allow any future optimisations made in future work on this framework to be made without impacting the work of researchers.
@@ -740,6 +757,7 @@ Each gate must also provide a QCircuit \cite{QCsite} representation to produce t
 The implementations for gates that affect two qubits are hidden by an extended interface to provide access to the identifier of the second qubit but ensures that all standard gate operations are also available.
 
 \begin{table}
+\centering
 % \[
 \begin{tabular}{ | c | c || c | }
 \hline
@@ -758,6 +776,7 @@ V Gate && \\ \hline
 As has been mentioned, a number of the gates shown in Table \ref{tab:providedgates} can be implemented either as a matrix multiplication or a direct vector manipulation.
 Several of the gate implementations in the framework use the direct vector manipulation and others use the matrix multiplication.
 The table in Table \ref{tab:gateimps} shows which of the provided gates are implemented using the matrix manipulation and which use the direct vector manipulation.
+Some of the algorithms used by to perform the direct vector manipulation were based on those used in jQuantum\cite{jquantum}.
 For all gates that use matrix multiplication their equivalent unitary is based on those listed in Table \ref{tab:providedgates} but has to adapt to the qubit they are applied to and the system size.
 The equivalent matrix is calculated in two sections.
 The initial section is the construction of the matrix listed in Table \ref{tab:providedgates}.
@@ -798,7 +817,7 @@ The calculation changes depending on the relative position of control qubit.
 If the control qubit is a higher significant qubit the calculation is different than if the control bit is a lower significant qubit.
 Equation \ref{eq:clu} is the calculation if the control qubit is a lower significant qubit.
 Equation \ref{eq:chu} is the calculation if the control qubit is a higher significant qubit.
-$S1$ is an identity matrix of the size $2^n$ where $n$ is the number of lower significant qubits that aren't affected by the Controlled U gate, a control bit or between the control qubits and effected gates.
+$S1$ is an identity matrix of the size $2^n$ where $n$ is the number of lower significant qubits that aren't the target or control bits or between the control qubits and effected gates.
 $S2$ is an identity matrix of the size $2^n$ where $n$ is the number of higher significant qubits that aren't affected by the Controlled U gate, a control bit or between the control qubits and effected gates.
 U is the matrix that defines the operation of the gate under control.
 This unitary matrix is retrieved using the \emph{getUnitary} operation on an object of the correct class.
@@ -806,12 +825,12 @@ The \emph{getUnitary} operation returns the matrix created by the first section 
 
 \begin{eqnarray}
 \label{eq:clu}
- CU&=& (\begin{pmatrix}1&0\\0&0\end{pmatrix}\otimes S1)+((\begin{pmatrix}0&0\\0&1\end{pmatrix}\otimes U) \otimes S2) \\
+ CU&=& ((\begin{pmatrix}1&0\\0&0\end{pmatrix}\otimes S1)+(\begin{pmatrix}0&0\\0&1\end{pmatrix}\otimes U) \otimes S2) \\
 \label{eq:chu}
- CU&=& ( S1 \otimes \begin{pmatrix}1&0\\0&0\end{pmatrix})+((U \otimes \begin{pmatrix}0&0\\0&1\end{pmatrix}) \otimes S2)
+ CU&=& (( S1 \otimes \begin{pmatrix}1&0\\0&0\end{pmatrix})+(U \otimes \begin{pmatrix}0&0\\0&1\end{pmatrix}) \otimes S2)
 \end{eqnarray}
 
-Equations \ref{eq:clu} and \ref{eq:chu} are generalisations of the Controlled U gate that have not previously been published.
+Equations \ref{eq:clu} and \ref{eq:chu} are generalisations of the Controlled-U gate that have not previously been published.
 
 With the calculation being flexible for any gate U there is an additional  scenario that must be considered.
 When the control qubit would be affected by the application of the gate, due to the gates size being greater that $1$ or the control and target qubit identifiers being equal, the control is removed.
@@ -982,7 +1001,7 @@ The separation of concerns makes the tracing logic much simpler and much less ob
 \subsection{Batch and Distributed Processing}
 The framework produced is not expected to be used solely for Quantum Algorithm research.
 It is also expected to be used for research into the search techniques themselves.
-Therefore, the framework had to provide a managed solution to perform multiple iterations, a batch, and for the results to be collated for statistical analysis.
+Therefore, the framework had to provide a managed solution to perform multiple jobs, a batch, and for the results to be collated for statistical analysis.
 
 The search engine interface provides a \emph{getResults} method that returns an array of search results produced by the last call to a \emph{search} method.
 The \emph{search} methods do not return the array themselves so the method is not a blocking call.
@@ -994,9 +1013,9 @@ The way that batch processing is carried out is not constrained.
 This allows the researcher to select how each iteration should be processed and what statistics need to be collected at which stage.
 If the framework were to fully manage the batch operation researchers would be restricted.
 
-For example, the framework could be implemented to sequentially execute each iteration.
+For example, the framework could be implemented to sequentially execute each job.
 For a researcher who has access to a cluster this could be highly frustrating.
-Due to the complete separation of each iteration, there is no inter-iteration communication, it is perfectly suited to distribution.
+Due to the complete separation of each job, there is no inter-job communication, it is perfectly suited to distribution.
 It is effectively a Monte Carlo experiment.
 However, if the framework were to provide a distributed computing mechanism, the researchers would be forced to use this.
 This would mean that even if the chosen framework would be highly inefficient for a specific search technique or even if it was highly inefficient when running in a local mode there would not be any option available to the researcher other than to modify the framework.
@@ -1004,13 +1023,13 @@ This is obviously not desirable from a ``Plug and Play'' perspective.
 
 This does however have the impact that different researchers could use different distribution frameworks.
 If they are fully managed by the search engine this is not a problem but if they require additional configuration it does detract form the ``Plug and Play'' nature of the framework.
-As a result a recommendation is placed on all search engines produced for the framework.
-It is simply that a local version should also be provided.
-This means that if a researcher wishes to use the search engine on a single machine or on an incorrectly configured cluster the application can still proceed.
-This is likely to have an impact on performance when compared to it the same search being performed on a correctly configured cluster.
+As a result a recommendation is made for all search engines produced for the framework to be implemented as a local version alongside any distributed implementation.
+% This means that if a researcher wishes to use the search engine on a single machine or on an incorrectly configured cluster the application can still proceed.
+% This is likely to have an impact on performance when compared to it the same search being performed on a correctly configured cluster.
 
-The prescription of a batch processing manager may also restrict the statistics that are required by the researcher.
-As a result of the reporting of statistics is also not provided by the framework but expected of the Search Engine.
+The prescription of a batch processing manager may also restrict the ability to collect statistics.
+Different researchers may require different statistics.
+The reporting of statistics is not provided by the framework but search engines for this reason.
 
 Both of these decisions may appear to reduce the power of the framework and the reasons to use it.
 However, it is easy to argue that the management of batch distribution and statistical reporting would increase the power of the framework but seriously undermine the usability of the framework and therefore is unlikely to be adopted by researchers.
@@ -1078,7 +1097,7 @@ This is a Genetic Programming based search engine using the Java-based Evolution
 
 The search engine is provided in both local and distributed versions.
 The local version uses separate threads to serially perform iterations.
-The distributed version uses the JPPF Framework to perform iterations in parallel using all resources available.
+The distributed version uses the JPPF Framework\cite{jppfweb} to perform iterations in parallel using all resources available.
 To ensure that the function of both the local and distributed versions are the same, the two versions are based on the same code parametrised by the container class for the processing, Thread or JPPFJob.
 The processing unit is implemented as a search engine core that implements the JPPFTask interface, which inherits the Runnable interface.
 This allows the processing unit to be used both for the local and distributed version ensuring consistency.
@@ -1088,6 +1107,12 @@ There are many other frameworks available as well as producing a bespoke distrib
 The bespoke solution was rejected as it is completely opposed to the philosophy behind the framework.
 Other open source frameworks, including Apache Hadoop\cite{apahadoop}, were not chosen as they provided much more functionality than is required and as a result were more complex.
 They also required significantly more additional statements within the functional source code to orchestrate the distribution and therefore more intrusive.
+
+The statistics panel provided by the search engine reports the generation that the ``ideal'' solution was found for each job of the batch operation in the form of a graph.
+If an ideal solution is not found the value is set as the last generation for that job.
+An average fitness of the most suitable individual found by each job in the batch is presented alongside the average time it took each job to complete
+The search engine also provides the facility to email the user when the search process is complete.
+This can be very useful when running large batch operations.
 
 \section{Suitability Measure and Circuit Evaluator Implementations}
 \label{sec:provsuitmeas}
@@ -1164,6 +1189,7 @@ Through experimentation, it has been found that reducing the scaling effect by o
 
 The second variant is almost the compliment to the first variant.
 This variant is labelled ``Zero Focused''.
+To the best of my knowledge this suitability measure is novel and previously unseen.
 This variant focuses purely on the elements that are expected to be zero.
 All non-zero elements are ignored by the suitability measure.
 This may appear slightly unusual.
@@ -1387,7 +1413,34 @@ The use of the same visual representation ensure the user does not have to under
 \section{Summary}
 
 The design and implementation details outlined in the sections above cover all the functionality provided by the toolkit.
+It is intended that the toolkit shall be released to the research community.
+As a result the design and implementation was performed with a level of rigour that is possibly unusual for a student project.
+Throughout the project third party libraries were employed to carry out specific tasks within the toolkit.
+A full list of the libraries used can be found in Section \ref{sec:appsoftlibs}.
+Libraries were used to reduce development risk and as part of the software engineering principles that were followed.
 
+Both the design and implementation were produced following software engineering principles.
+The extendibility of the toolkit has been kept central to the design.
+The toolkit also focuses on the scalability provided.
+With the representation of the circuit and algorithm using \emph{List} implementations the toolkit does not restrict the size of the algorithms or circuits that can be produced by the framework.
+Additionally as the circuit evaluator progresses through circuits gate by gate rather than computing a matrix to represent the whole circuit this also is not adversely affected by the circuit size.
+As is constantly referred to in the sections above the GUI of the client application was also designed in a principled manner.
+
+
+The aims for the project remained constant throughout the process.
+However, the ambition of the project increased quite frequently.
+During weekly meetings additional functionality was frequently discussed and subsequently included in the toolkit.
+To accommodate for the changing ambitions and the increasing functionality an agile approach was taken.
+This proved very successful and the design was not compromised by the increases in functionality.
+The implementation includes just under $13000$ lines of code implementing $751$ methods.
+This is a large code base providing a high level of functionality.
+
+Google CodePro\cite{codeproweb} was used to maintain a high level of quality over this large code base.
+Using the core settings the code base was analysed and updated to address any violations found.
+The type of issues found by CodePro were violations to coding conventions and good pactices.
+For example exceptions were not originally logged by the framework when they were caught.
+Subsequently Log4J\cite{log4jweb} has been used to implement this logging.
+This shows another area where a more rigorous process has been used than would normally be expected in a student project.
 
 
 

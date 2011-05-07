@@ -1,0 +1,2 @@
+pdflatex mengreport.tex
+evince mengreport.pdf
