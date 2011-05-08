@@ -26,15 +26,17 @@ import Jama.Matrix;
  * @author Sam Ratcliff
  * 
  */
-public class columnchartvisualiser extends JPanel implements stateVisualiser {
-	private static String			zero_string				= "0";
+public class columnchartvisualiser extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long		serialVersionUID	= -848552828462067165L;
+	private static String			zero_string			= "0";
 	private DefaultCategoryDataset	stateDataSet;
 	private JFreeChart				stateChart;
 	private final ChartPanel		chartPanel;
 	public static int				chartWidth;
 	public static int				chartHeight;
-	private static int				minimumPixelsPerColumn	= 50;
-	private static int				ancillarySpaceNeeded	= 75;
 
 	/**
 	 * 
@@ -106,12 +108,6 @@ public class columnchartvisualiser extends JPanel implements stateVisualiser {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see GUI.StateVisualiser.stateVisualiser#updateState(Jama.Matrix, int)
-	 */
-	@Override
 	public void updateState(Matrix initialState, int labelLength) {
 
 		// create the dataset...
