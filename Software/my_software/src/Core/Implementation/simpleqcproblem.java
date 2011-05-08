@@ -5,8 +5,12 @@ import Core.Problem.testsuite;
 
 public class simpleqcproblem implements quantumproblem {
 
-	private final String	name;
-	private testsuite		ts;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 3785647079669667694L;
+	private final String		name;
+	private testsuite			ts;
 
 	public simpleqcproblem(String n, int numcustgates) {
 		name = n;

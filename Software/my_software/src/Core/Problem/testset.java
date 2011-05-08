@@ -8,6 +8,10 @@ import java.util.List;
 public class testset implements Serializable {
 
 	/**
+	 * 
+	 */
+	private static final long		serialVersionUID	= 7873116058273502900L;
+	/**
 	 * @uml.property name="testcases"
 	 */
 	private final List<testcase>	testcases;

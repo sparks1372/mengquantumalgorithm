@@ -11,10 +11,10 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Set;
 
-import Core.CircuitEvaluator.Implementation.test_UML_parser;
 import Core.Implementation.simpleqcproblem;
 import Core.Problem.Util.Prob_XML_Parser;
 import Core.Problem.Util.ProblemTag;
+import Core.Problem.Util.TestSuiteUtils;
 
 /**
  * @author Sam Ratcliff
@@ -64,8 +64,7 @@ public class Problem_Manager extends Observable {
 
 		if (!instatiatedproblems.containsKey(key)) {
 			ProblemTag selected = availableproblems.get(key);
-			test_UML_parser tp = new test_UML_parser(selected.Def_File);
-			testsuite ts = tp.parse();
+			testsuite ts = TestSuiteUtils.XMLToTestSuite(selected.Def_File);
 			to_ret = new simpleqcproblem(selected.Name,
 					ts.getNumOfCustomGates());
 			to_ret.setTestSuite(ts);
