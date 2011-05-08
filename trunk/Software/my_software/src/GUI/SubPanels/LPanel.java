@@ -7,6 +7,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import Core.qcevolutionbackend;
+import GUI.SubPanels.SelectionPanels.FitnessFunctionSelectionPanel;
+import GUI.SubPanels.SelectionPanels.SearchEngineSelectionPanel;
 
 /**
  * @author Sam Ratcliff

@@ -15,6 +15,12 @@ import javax.swing.JPanel;
 
 import Core.qcevolutionbackend;
 import GUI.MainPanel;
+import GUI.CustomButtons.CreateProblemSetButton;
+import GUI.CustomButtons.EditProblemSetButton;
+import GUI.CustomButtons.LoadProblemSetButton;
+import GUI.CustomButtons.SaveProblemSetButton;
+import GUI.CustomButtons.StartSearchButton;
+import GUI.SubPanels.SelectionPanels.ProblemSelectionPanel;
 
 /**
  * @author Sam Ratcliff
@@ -80,7 +86,7 @@ public class RPanel extends JPanel implements Observer {
 		edbutton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		edbutton.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-		evbutton = new EvolveButton(backend);
+		evbutton = new StartSearchButton(backend);
 		evbutton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		evbutton.setAlignmentY(Component.CENTER_ALIGNMENT);
 

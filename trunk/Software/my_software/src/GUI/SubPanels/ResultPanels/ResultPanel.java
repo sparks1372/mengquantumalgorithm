@@ -1,7 +1,7 @@
 /**
  * @Author = Sam Ratcliff
  */
-package GUI.SubPanels;
+package GUI.SubPanels.ResultPanels;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -18,10 +18,7 @@ import javax.swing.JTextArea;
 import Core.qcevolutionbackend;
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Circuit.Circuit;
-import GUI.CircuitEvaluation.StepByStepEvaluationDialog;
-import GUI.SubPanels.ResultPanels.AlgorithmPanel;
-import GUI.SubPanels.ResultPanels.CircuitParentPanel;
-import GUI.SubPanels.ResultPanels.QCircuitPanel;
+import GUI.Dialogs.StepByStepEvaluationDialog;
 
 /**
  * @author Sam Ratcliff
