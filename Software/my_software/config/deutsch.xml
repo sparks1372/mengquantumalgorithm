@@ -62,7 +62,7 @@
 </starting_state>
 <final_state>
 <matrix_element><!-- 00-->
-<Real>0.7071</Real>
+<Real>-0.7071</Real>
 <Imag>0.0</Imag>
 </matrix_element>
 <matrix_element><!-- 01-->
@@ -70,7 +70,7 @@
 <Imag>0.0</Imag>
 </matrix_element>
 <matrix_element><!-- 10-->
-<Real>-0.7071</Real>
+<Real>0.7071</Real>
 <Imag>0.0</Imag>
 </matrix_element>
 <matrix_element><!-- 11-->
@@ -144,7 +144,7 @@
 <Imag>0.0</Imag>
 </matrix_element>
 <matrix_element><!-- 01-->
-<Real>0.7071</Real>
+<Real>-0.7071</Real>
 <Imag>0.0</Imag>
 </matrix_element>
 <matrix_element><!-- 10-->
@@ -152,7 +152,7 @@
 <Imag>0.0</Imag>
 </matrix_element>
 <matrix_element><!-- 11-->
-<Real>-0.7071</Real>
+<Real>0.7071</Real>
 <Imag>0.0</Imag>
 </matrix_element>
 </final_state>

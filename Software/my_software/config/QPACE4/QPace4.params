@@ -10,11 +10,11 @@ pop.subpop.0.species.pipe.source.0.prob = 0.9
 pop.subpop.0.species.pipe.source.1.prob = 0.1
 pop.subpop.0.species.pipe.source.2.prob = 0.1
 pop.subpop.0.species.pipe.source.3.prob = 0.1
-pop.subpop.0.species.pipe.source.4.prob = 0.1
 
 pop.subpop.0.species.pipe.source.1 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionMutation
 pop.subpop.0.species.pipe.source.2 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.ReplacementPipeline
 pop.subpop.0.species.pipe.source.3 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionReordering
+pop.subpop.0.species.pipe.source.4 = Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation.InstructionDulication
 pop.subpop.0.species.pipe.source.4= ec.gp.breed.MutateOneNodePipeline
 
 gp.breed.internal-xover.source.0 = ec.select.TournamentSelection
@@ -30,6 +30,9 @@ gp.breed.instruction-reorder.ns.0 = ec.gp.koza.KozaNodeSelector
 
 gp.breed.instruction-mutation.source.0 = ec.select.TournamentSelection
 gp.breed.instruction-mutation.ns.0 = ec.gp.koza.KozaNodeSelector
+
+gp.breed.instruction-duplication.source.0 = ec.select.TournamentSelection
+gp.breed.instruction-duplication.ns.0 = ec.gp.koza.KozaNodeSelector
 
 gp.breed.mutate-one-node.source.0 = ec.select.TournamentSelection
 gp.breed.mutate-one-node.ns.0 = ec.gp.koza.KozaNodeSelector
