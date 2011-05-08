@@ -3,11 +3,12 @@ package Core.Circuit.Implementation;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 import Core.Circuit.Circuit;
 import Core.Circuit.quantumgate;
-import Core.CircuitEvolution.GateImplementations.ControlledU_Gate;
-import Core.CircuitEvolution.GateImplementations.Swap_Gate;
+import Core.Circuit.GateImplementations.ControlledU_Gate;
+import Core.Circuit.GateImplementations.Swap_Gate;
 
 public class basiccircuit implements Circuit {
 	private final int						builder_id;
@@ -59,12 +60,22 @@ public class basiccircuit implements Circuit {
 		return circuit.size();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Core.Circuit.Circuit#removeLastGate()
+	 */
+	@Override
+	public void removeLastGate() throws NoSuchElementException {
+		circuit.removeLast();
+	}
+
 	@Override
 	public String toLatex(int qubits) {
 		String[] cir_diag = new String[qubits];
 
 		for (int i = 0; i < cir_diag.length; i++) {
-			cir_diag[i] = new String("&");
+			cir_diag[i] = "&";
 		}
 
 		Iterator<quantumgate> cir_iter = getCircuitlayout();

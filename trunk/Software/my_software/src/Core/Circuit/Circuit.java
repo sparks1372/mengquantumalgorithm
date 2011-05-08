@@ -1,6 +1,7 @@
 package Core.Circuit;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public interface Circuit {
 
@@ -22,6 +23,11 @@ public interface Circuit {
 	/**
 			 */
 	public int getSize();
+
+	/**
+	 * 
+	 */
+	public void removeLastGate() throws NoSuchElementException;
 
 	public String toLatex(int qubits);
 
