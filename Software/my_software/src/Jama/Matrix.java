@@ -7,12 +7,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.security.SecureRandom;
 
-import Core.CircuitEvaluator.Fitness;
+import Core.CircuitEvaluator.Suitability;
 import Utils.Complex;
 
 /**
@@ -121,7 +118,7 @@ public class Matrix implements Cloneable, Serializable {
 
 	}
 
-	public static Fitness euclid(Matrix A, Matrix B) {
+	public static Suitability euclid(Matrix A, Matrix B) {
 		if (A.n != 1) {
 			throw new IllegalArgumentException("Matrix dimensions must agree.");
 		}
@@ -141,7 +138,7 @@ public class Matrix implements Cloneable, Serializable {
 		// A.print(0, 0);
 		// B.print(0, 0);
 		// System.out.println(sum);
-		return new Fitness(sum, count);
+		return new Suitability(sum, count);
 
 	}
 
@@ -202,7 +199,7 @@ public class Matrix implements Cloneable, Serializable {
 			in = new ObjectInputStream(fis);
 			b = (Matrix) in.readObject();
 			in.close();
-			b.print(0, 0);
+			b.printMatrix();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} catch (ClassNotFoundException ex) {
@@ -226,11 +223,12 @@ public class Matrix implements Cloneable, Serializable {
 	 */
 
 	public static Matrix random(int m, int n) {
+		SecureRandom random = new SecureRandom();
 		Matrix A = new Matrix(m, n);
 		Complex[][] X = A.getArray();
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
-				X[i][j] = new Complex(Math.random(), Math.random());
+				X[i][j] = new Complex(random.nextDouble(), random.nextDouble());
 			}
 		}
 		return A;
@@ -609,9 +607,10 @@ public class Matrix implements Cloneable, Serializable {
 		Complex[][] B = X.getArray();
 		try {
 			for (int i = i0; i <= i1; i++) {
-				for (int j = j0; j <= j1; j++) {
-					B[i - i0][j - j0] = A[i][j];
-				}
+				// for (int j = j0; j <= j1; j++) {
+				// B[i - i0][j - j0] = A[i][j];
+				// }
+				System.arraycopy(A[i], j0, B[i - i0], 0, j1 - j0);
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			throw new ArrayIndexOutOfBoundsException("Submatrix indices");
@@ -677,9 +676,10 @@ public class Matrix implements Cloneable, Serializable {
 		Complex[][] B = X.getArray();
 		try {
 			for (int i = 0; i < r.length; i++) {
-				for (int j = j0; j <= j1; j++) {
-					B[i][j - j0] = A[r[i]][j];
-				}
+				// for (int j = j0; j <= j1; j++) {
+				// B[i][j - j0] = A[r[i]][j];
+				// }
+				System.arraycopy(A[r[i]], j0, B[i], 0, j1 - j0);
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			throw new ArrayIndexOutOfBoundsException("Submatrix indices");
@@ -733,7 +733,8 @@ public class Matrix implements Cloneable, Serializable {
 	public Complex[] getRowPackedCopy() {
 		Complex[] vals = new Complex[m * n];
 		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
+			for (int j = 0; j < n; j++) { // $codepro.audit.disable
+											// useArraycopyRatherThanALoop
 				vals[i * n + j] = A[i][j];
 			}
 		}
@@ -855,20 +856,6 @@ public class Matrix implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Print the matrix to stdout. Line the elements up in columns with a
-	 * Fortran-like 'Fw.d' style format.
-	 * 
-	 * @param w
-	 *            Column width.
-	 * @param d
-	 *            Number of digits after the decimal.
-	 */
-
-	public void print(int w, int d) {
-		print(new PrintWriter(System.out, true), w, d);
-	}
-
-	/**
 	 * Print the matrix to stdout. Line the elements up in columns. Use the
 	 * format object, and right justify within columns of width characters. Note
 	 * that is the matrix is to be read back in, you probably will want to use a
@@ -881,30 +868,8 @@ public class Matrix implements Cloneable, Serializable {
 	 * @see java.text.DecimalFormat#setDecimalFormatSymbols
 	 */
 
-	public void print(NumberFormat format, int width) {
-		print(new PrintWriter(System.out, true), format, width);
-	}
-
-	/**
-	 * Print the matrix to the output stream. Line the elements up in columns
-	 * with a Fortran-like 'Fw.d' style format.
-	 * 
-	 * @param output
-	 *            Output stream.
-	 * @param w
-	 *            Column width.
-	 * @param d
-	 *            Number of digits after the decimal.
-	 */
-
-	public void print(PrintWriter output, int w, int d) {
-		DecimalFormat format = new DecimalFormat();
-		format.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
-		format.setMinimumIntegerDigits(1);
-		format.setMaximumFractionDigits(d);
-		format.setMinimumFractionDigits(d);
-		format.setGroupingUsed(false);
-		print(output, format, w + 2);
+	public void printMatrix() {
+		printMatrix(new PrintWriter(System.out, true));
 	}
 
 	/**
@@ -922,7 +887,7 @@ public class Matrix implements Cloneable, Serializable {
 	 * @see java.text.DecimalFormat#setDecimalFormatSymbols
 	 */
 
-	public void print(PrintWriter output, NumberFormat format, int width) {
+	public void printMatrix(PrintWriter output) {
 		output.println(); // start on new line.
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
@@ -944,8 +909,8 @@ public class Matrix implements Cloneable, Serializable {
 								+ Double.toString(A[i][j].imag()) + "i";
 					}
 				}
-				int padding = Math.max(1, width - s.length()); // At _least_ 1
-																// space
+				int padding = Math.max(1, 13 - s.length()); // At _least_ 1
+															// space
 				for (int k = 0; k < padding; k++) {
 					output.print(' ');
 				}
@@ -956,145 +921,11 @@ public class Matrix implements Cloneable, Serializable {
 		output.println(); // end with blank line.
 	}
 
-	public void print_state(int w, int d) {
-		print_state(new PrintWriter(System.out, true), w, d);
+	public void printState() {
+		printState(new PrintWriter(System.out, true));
 	}
 
-	// /**
-	// * LU Decomposition
-	// *
-	// * @return LUDecomposition
-	// * @see LUDecomposition
-	// */
-	//
-	// public LUDecomposition lu() {
-	// return new LUDecomposition(this);
-	// }
-	//
-	// /**
-	// * QR Decomposition
-	// *
-	// * @return QRDecomposition
-	// * @see QRDecomposition
-	// */
-	//
-	// public QRDecomposition qr() {
-	// return new QRDecomposition(this);
-	// }
-	//
-	// /**
-	// * Cholesky Decomposition
-	// *
-	// * @return CholeskyDecomposition
-	// * @see CholeskyDecomposition
-	// */
-	//
-	// public CholeskyDecomposition chol() {
-	// return new CholeskyDecomposition(this);
-	// }
-	//
-	// /**
-	// * Singular Value Decomposition
-	// *
-	// * @return SingularValueDecomposition
-	// * @see SingularValueDecomposition
-	// */
-	//
-	// public SingularValueDecomposition svd() {
-	// return new SingularValueDecomposition(this);
-	// }
-	//
-	// /**
-	// * Eigenvalue Decomposition
-	// *
-	// * @return EigenvalueDecomposition
-	// * @see EigenvalueDecomposition
-	// */
-	//
-	// public EigenvalueDecomposition eig() {
-	// return new EigenvalueDecomposition(this);
-	// }
-	//
-	// /**
-	// * Solve A*X = B
-	// *
-	// * @param B
-	// * right hand side
-	// * @return solution if A is square, least squares solution otherwise
-	// */
-	//
-	// public Matrix solve(Matrix B) {
-	// return (m == n ? (new LUDecomposition(this)).solve(B)
-	// : (new QRDecomposition(this)).solve(B));
-	// }
-	//
-	// /**
-	// * Solve X*A = B, which is also A'*X' = B'
-	// *
-	// * @param B
-	// * right hand side
-	// * @return solution if A is square, least squares solution otherwise.
-	// */
-	//
-	// public Matrix solveTranspose(Matrix B) {
-	// return transpose().solve(B.transpose());
-	// }
-	//
-	// /**
-	// * Matrix inverse or pseudoinverse
-	// *
-	// * @return inverse(A) if A is square, pseudoinverse otherwise.
-	// */
-	//
-	// public Matrix inverse() {
-	// return solve(identity(m, m));
-	// }
-	//
-	// /**
-	// * Matrix determinant
-	// *
-	// * @return determinant
-	// */
-	//
-	// public double det() {
-	// return new LUDecomposition(this).det();
-	// }
-	//
-	// /**
-	// * Matrix rank
-	// *
-	// * @return effective numerical rank, obtained from SVD.
-	// */
-	//
-	// public int rank() {
-	// return new SingularValueDecomposition(this).rank();
-	// }
-	//
-	// /**
-	// * Matrix condition (2 norm)
-	// *
-	// * @return ratio of largest to smallest singular value.
-	// */
-	//
-	// public double cond() {
-	// return new SingularValueDecomposition(this).cond();
-	// }
-
-	public void print_state(NumberFormat format, int width) {
-		print(new PrintWriter(System.out, true), format, width);
-	}
-
-	public void print_state(PrintWriter output, int w, int d) {
-		DecimalFormat format = new DecimalFormat();
-		format.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
-		format.setMinimumIntegerDigits(1);
-		format.setMaximumFractionDigits(d);
-		format.setMinimumFractionDigits(d);
-		format.setGroupingUsed(false);
-		print_state(output, format, w + 2);
-	}
-
-	public void print_state(PrintWriter output, NumberFormat format, int width) {
+	public void printState(PrintWriter output) {
 		output.println(); // start on new line.
 		for (int i = 0; i < m; i++) {
 			String s = Integer.toBinaryString(i);
@@ -1120,8 +951,8 @@ public class Matrix implements Cloneable, Serializable {
 							+ Double.toString(A[i][0].imag()) + "i");
 				}
 			}
-			int padding = Math.max(1, width - s.length()); // At _least_ 1
-															// space
+			int padding = Math.max(1, 13 - s.length()); // At _least_ 1
+														// space
 			for (int k = 0; k < padding; k++) {
 				output.print(' ');
 			}
