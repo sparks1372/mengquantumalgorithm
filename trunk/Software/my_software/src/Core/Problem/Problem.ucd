@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="Problem" size="1211,1658" id="Core.Problem" metadata="uml2-1.0" initialized="true" scrolledY="45" tag="1000" key="32303037303533312D31303030204D456E6752657365617263682050726F6A6563742F73616D">
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.4/@sourceConnections.0 //@children.1/@sourceConnections.1" name="testsuite" location="447,475" size="279,176" id="Core.Problem/testsuite" runTimeClassModel="getTestcases(I),getKeys(),removeTestSet(LCore.Problem.testset;),addTestcases(LCore.Problem.testset;),testsuite(),copy(),testsets">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.4/@sourceConnections.0 //@children.1/@sourceConnections.1" name="testsuite" location="447,475" size="279,176" id="Core.Problem/testsuite" runTimeClassModel="getTestcases(I),getKeys(),removeTestSet(LCore.Problem.testset;),addTestcases(LCore.Problem.testset;),testsuite(),testsets,copy()">
     <children xsi:type="editmodel:CompartmentEditModel" size="256,18">
       <children xsi:type="editmodel:AttributeEditModel" name="testsets" id="Core.Problem/testsuite#testsets"/>
     </children>
@@ -13,7 +13,7 @@
       <children xsi:type="editmodel:MethodEditModel" name="testsuite" id="Core.Problem/testsuite#testsuite()"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/testsuite-Standard::Call->Core.Problem/testset*Core.Problem/testsuite-Soyatec::Import->Core.Problem/testset" source="//@children.0" target="//@children.5" targetEnd="//@children.0/@sourceConnections.0/@children.2" label="//@children.0/@sourceConnections.0/@children.0" sourceEnd="//@children.0/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/testsuite->Standard::Call" source="//@children.0" target="//@children.5" targetEnd="//@children.0/@sourceConnections.0/@children.2" label="//@children.0/@sourceConnections.0/@children.0" sourceEnd="//@children.0/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="75,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="43,176" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="145,0"/>
@@ -39,7 +39,7 @@
       <children xsi:type="editmodel:MethodEditModel" name="updateProblem" id="Core.Problem/Problem_Manager#updateProblem(Ljava.lang.String;Ljava.lang.String;LCore.Problem.testsuite;Ljava.lang.String;)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/Problem_Manager-Standard::Call->Core.Problem/quantumproblem*Core.Problem/Problem_Manager-Soyatec::Import->Core.Problem/quantumproblem" source="//@children.1" target="//@children.4" targetEnd="//@children.1/@sourceConnections.0/@children.2" label="//@children.1/@sourceConnections.0/@children.0" sourceEnd="//@children.1/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/Problem_Manager->Standard::Call" source="//@children.1" target="//@children.4" targetEnd="//@children.1/@sourceConnections.0/@children.2" label="//@children.1/@sourceConnections.0/@children.0" sourceEnd="//@children.1/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="75,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,27" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="172,126"/>
@@ -81,12 +81,12 @@
       <children xsi:type="editmodel:MethodEditModel" name="getNum_of_qubits" id="Core.Problem/SuperPositionalTestSet#getNum_of_qubits()"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/SuperPositionalTestSet-Standard::Call->Core.Problem/testcase*Core.Problem/SuperPositionalTestSet-Soyatec::Import->Core.Problem/testcase" source="//@children.3" target="//@children.2" targetEnd="//@children.3/@sourceConnections.0/@children.2" label="//@children.3/@sourceConnections.0/@children.0" sourceEnd="//@children.3/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/SuperPositionalTestSet->Standard::Call" source="//@children.3" target="//@children.2" targetEnd="//@children.3/@sourceConnections.0/@children.2" label="//@children.3/@sourceConnections.0/@children.0" sourceEnd="//@children.3/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="75,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="213,100" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,4"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/SuperPositionalTestSet-Standard::Derive->Core.Problem/testset*Core.Problem/SuperPositionalTestSet-Standard::Instantiate->Core.Problem/testset*Core.Problem/SuperPositionalTestSet-Soyatec::Import->Core.Problem/testset" source="//@children.3" target="//@children.5" targetEnd="//@children.3/@sourceConnections.1/@children.2" label="//@children.3/@sourceConnections.1/@children.0" sourceEnd="//@children.3/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/SuperPositionalTestSet->Standard::Derive" source="//@children.3" target="//@children.5" targetEnd="//@children.3/@sourceConnections.1/@children.2" label="//@children.3/@sourceConnections.1/@children.0" sourceEnd="//@children.3/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Derive, Import, Instantiate»" size="155,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="207,0" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,256"/>
@@ -111,7 +111,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.3/@sourceConnections.1 //@children.0/@sourceConnections.0" name="testset" location="345,912" size="190,266" id="Core.Problem/testset" runTimeClassModel="num_of_qubits,getTestcases(),getCustomGate(I),getNumberOfTestcases(),testcases,customgates,testset(I),getNum_of_qubits(),getCustomGateSize(I),addTestcases(LCore.Problem.testcase;),setCustomGate(ILJama.Matrix;),copy()">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.3/@sourceConnections.1 //@children.0/@sourceConnections.0" name="testset" location="345,912" size="190,266" id="Core.Problem/testset" runTimeClassModel="num_of_qubits,getTestcases(),getCustomGate(I),testcases,getNumberOfTestcases(),customgates,getNum_of_qubits(),testset(I),getCustomGateSize(I),addTestcases(LCore.Problem.testcase;),setCustomGate(ILJama.Matrix;),copy()">
     <children xsi:type="editmodel:CompartmentEditModel" size="167,54">
       <children xsi:type="editmodel:AttributeEditModel" name="customgates" id="Core.Problem/testset#customgates"/>
       <children xsi:type="editmodel:AttributeEditModel" name="num_of_qubits" id="Core.Problem/testset#num_of_qubits"/>
@@ -129,7 +129,7 @@
       <children xsi:type="editmodel:MethodEditModel" name="testset" id="Core.Problem/testset#testset(I)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/testset-Standard::Call->Core.Problem/testcase*Core.Problem/testset-Soyatec::Import->Core.Problem/testcase" source="//@children.5" target="//@children.2" targetEnd="//@children.5/@sourceConnections.0/@children.2" label="//@children.5/@sourceConnections.0/@children.0" sourceEnd="//@children.5/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="Core.Problem/testset->Standard::Call" source="//@children.5" target="//@children.2" targetEnd="//@children.5/@sourceConnections.0/@children.2" label="//@children.5/@sourceConnections.0/@children.0" sourceEnd="//@children.5/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="75,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="155,266" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="34,0"/>

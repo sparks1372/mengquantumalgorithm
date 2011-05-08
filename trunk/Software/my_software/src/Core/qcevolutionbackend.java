@@ -2,13 +2,10 @@ package Core;
 
 import java.util.Observable;
 
-import Core.Algorithms.QuantumInstructionEnum;
 import Core.CircuitBuilder.circuitBuilder;
-import Core.CircuitBuilder.Implementation.basiccircuitbuilder;
-import Core.CircuitEvaluator.FitnessFunction;
-import Core.CircuitEvaluator.circuitevaluator;
-import Core.CircuitEvaluator.fitnessfunctionmanager;
-import Core.CircuitEvaluator.Implementation.basiccircuitevaluator;
+import Core.CircuitEvaluator.SuitabilityMeasure;
+import Core.CircuitEvaluator.CircuitEvaluator;
+import Core.CircuitEvaluator.SuitabilityMeasureManager;
 import Core.CircuitEvolution.circuitsearchengine;
 import Core.CircuitEvolution.searchenginemanager;
 import Core.Problem.Problem_Manager;
@@ -18,8 +15,6 @@ import Core.Problem.quantumproblem;
  * @uml.dependency supplier="Core.CircuitBuilder.circuitBuilder"
  */
 public class qcevolutionbackend extends Observable {
-
-	public static final int			CUSTOMGATELIMIT	= 3;
 
 	/**
 	 * @uml.property name="circuitBuilder"
@@ -66,15 +61,12 @@ public class qcevolutionbackend extends Observable {
 	// }
 
 	protected circuitBuilder		cirbui;
-	protected circuitevaluator		cireval;
-	private final boolean[]			available_gates	= new boolean[QuantumInstructionEnum
-															.values().length];
+	protected CircuitEvaluator		cireval;
 
 	/**
 	 * @uml.property name="probmanager"
 	 */
 	private Problem_Manager			probmanager;
-
 	/**
 	 * @uml.property name="semanager"
 	 */
@@ -88,17 +80,7 @@ public class qcevolutionbackend extends Observable {
 	/**
 	 * @uml.property name="ffmanager"
 	 */
-	private fitnessfunctionmanager	ffmanager;
-
-	/**
-	 * 
-	 */
-	public qcevolutionbackend() {
-		init();
-		for (int i = 0; i < available_gates.length; i++) {
-			available_gates[i] = true;
-		}
-	}
+	private SuitabilityMeasureManager	ffmanager;
 
 	/**
 	 * @return the cirbui
@@ -110,11 +92,11 @@ public class qcevolutionbackend extends Observable {
 	/**
 	 * @return the cireval
 	 */
-	public circuitevaluator getCireval() {
+	public CircuitEvaluator getCireval() {
 		return cireval;
 	}
 
-	public FitnessFunction getCurrentff() {
+	public SuitabilityMeasure getCurrentff() {
 		return cireval.getQfitnessfunction();
 	}
 
@@ -134,7 +116,7 @@ public class qcevolutionbackend extends Observable {
 	 * @return Returns the ffmanager.
 	 * @uml.property name="ffmanager"
 	 */
-	public fitnessfunctionmanager getFfmanager() {
+	public SuitabilityMeasureManager getFfmanager() {
 		return ffmanager;
 	}
 
@@ -168,15 +150,10 @@ public class qcevolutionbackend extends Observable {
 		return semanager;
 	}
 
-	protected void init() {
-		cirbui = new basiccircuitbuilder();
-		cireval = new basiccircuitevaluator(cirbui);
-	}
-
 	private void seinit() {
 		if (currentse != null) {
 			currentse.removeAllObservers();
-			currentse.init(getCirbui(), getCireval(), available_gates);
+			currentse.init(getCirbui(), getCireval());
 			setChanged();
 			super.notifyObservers(this);
 		}
@@ -195,12 +172,12 @@ public class qcevolutionbackend extends Observable {
 	 * @param cireval
 	 *            the cireval to set
 	 */
-	public void setCireval(circuitevaluator cireval) {
+	public void setCireval(CircuitEvaluator cireval) {
 		this.cireval = cireval;
 		seinit();
 	}
 
-	public void setCurrentff(FitnessFunction currentff) {
+	public void setCurrentff(SuitabilityMeasure currentff) {
 		cireval.setQfitnessfunction(currentff);
 		seinit();
 	}
@@ -224,7 +201,7 @@ public class qcevolutionbackend extends Observable {
 	 *            The ffmanager to set.
 	 * @uml.property name="ffmanager"
 	 */
-	public void setFfmanager(fitnessfunctionmanager ffmanager) {
+	public void setFfmanager(SuitabilityMeasureManager ffmanager) {
 		this.ffmanager = ffmanager;
 	}
 

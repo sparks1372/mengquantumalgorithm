@@ -3,17 +3,13 @@
  */
 package Core.Problem.Util;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -37,9 +33,9 @@ public class Prob_XML_Parser {
 
 	}
 
-	HashMap<String, ProblemTag>	probmat;
+	private HashMap<String, ProblemTag>	probmat;
 
-	Document					dom;
+	private Document					dom;
 
 	public Prob_XML_Parser(String filename) {
 		probmat = new HashMap<String, ProblemTag>();
@@ -94,16 +90,6 @@ public class Prob_XML_Parser {
 	}
 
 	private void parseXmlFile(String filename) {
-		// get the factory
-		Schema schema = null;
-		String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
-		SchemaFactory factory = SchemaFactory.newInstance(language);
-		try {
-			schema = factory.newSchema(new File("config/problem_spec.xsd"));
-		} catch (SAXException e) {
-			e.printStackTrace();
-		}
-
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
 		// Validator validator = schema.newValidator();
@@ -115,7 +101,6 @@ public class Prob_XML_Parser {
 			// parse using builder to get DOM representation of the XML file
 			dom = db.parse(filename);
 
-			// validator.validate(new DOMSource(dom));
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
 		} catch (SAXException se) {

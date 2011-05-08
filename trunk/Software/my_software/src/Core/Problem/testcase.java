@@ -3,50 +3,67 @@ package Core.Problem;
 import java.io.Serializable;
 
 import Jama.Matrix;
+import Utils.MatrixUtils;
 
 public class testcase implements Serializable {
 
 	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -6276508731897152835L;
+
+	/**
 	 * @uml.property name="startingstate"
 	 */
-	private Matrix		startingstate;
+	private Matrix				startingstate;
 
 	/**
 	 * @uml.property name="label"
 	 */
-	private String		label;
+	private String				label;
 
 	/**
 	 * @uml.property name="id"
 	 */
-	private int			id;
+	private int					id;
 
 	/**
 	 * @uml.property name="finalstate"
 	 */
-	private Matrix		finalstate;
+	private Matrix				finalstate;
 
-	private String[]	customGates;
+	private final String[]		customGateFiles;
+	private final Matrix[]		customGates;
 
 	public testcase(int id, String label, int numCustomGates) {
 		this.id = id;
 		this.label = label;
-		customGates = new String[numCustomGates];
+		customGates = new Matrix[numCustomGates];
+		customGateFiles = new String[numCustomGates];
 	}
 
-	public testcase(int id, String label, String[] customGates) {
+	public testcase(int id, String label, String[] customGatesF) {
 		this.id = id;
 		this.label = label;
-		this.customGates = customGates;
+		customGateFiles = customGatesF;
+		customGates = new Matrix[customGateFiles.length];
+		int index = 0;
+		for (String file : customGateFiles) {
+			this.customGates[index++] = MatrixUtils.fromFile(file);
+		}
 	}
 
 	/**
 	 * @return
 	 */
 	public testcase copy() {
-		testcase to_ret = new testcase(getId(), getLabel(), getCustomGates());
+		testcase to_ret = new testcase(getId(), getLabel(),
+				getCustomGateDefinitions());
 		to_ret.setStartingstate(getStartingStateCopy());
 		to_ret.setFinalstate(getFinalStateCopy());
+		for (int i = 0; i < customGateFiles.length; i++) {
+			to_ret.setCustomGates(i, customGateFiles[i]);
+		}
 		return to_ret;
 	}
 
@@ -60,14 +77,17 @@ public class testcase implements Serializable {
 		if (!(id == tc.id)) {
 			return false;
 		}
-		if (!(label == tc.label)) {
+		if (!(label.equalsIgnoreCase(tc.label))) {
 			return false;
 		}
 		if (!(customGates.length == tc.customGates.length)) {
 			return false;
 		}
 		for (int i = 0; i < customGates.length; i++) {
-			if (!customGates[i].equalsIgnoreCase(tc.customGates[i])) {
+			if (!Matrix.equal(customGates[i], tc.customGates[i])) {
+				return false;
+			}
+			if (!(customGateFiles[i].equalsIgnoreCase(tc.customGateFiles[i]))) {
 				return false;
 			}
 		}
@@ -77,8 +97,15 @@ public class testcase implements Serializable {
 	/**
 	 * @return the customGates
 	 */
-	public String[] getCustomGates() {
-		return customGates.clone();
+	public Matrix getCustomGate(int i) throws IndexOutOfBoundsException {
+		return customGates[i].copy();
+	}
+
+	/**
+	 * @return the customGates
+	 */
+	public String[] getCustomGateDefinitions() {
+		return customGateFiles;
 	}
 
 	/**
@@ -150,15 +177,8 @@ public class testcase implements Serializable {
 	 *            the customGates to set
 	 */
 	public void setCustomGates(int index, String customGates) {
-		this.customGates[index] = customGates;
-	}
-
-	/**
-	 * @param customGates
-	 *            the customGates to set
-	 */
-	private void setCustomGates(String[] customGates) {
-		this.customGates = customGates;
+		this.customGateFiles[index] = customGates;
+		this.customGates[index] = MatrixUtils.fromFile(customGates);
 	}
 
 	/**
