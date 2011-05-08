@@ -14,6 +14,10 @@ import ec.gp.GPData;
  */
 public class QPaceData extends GPData {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 7571587128230597512L;
 	public QuantumAlgorithm	qa		= new basicquantumalgorithm();
 	public int				i;
 	public double			d;

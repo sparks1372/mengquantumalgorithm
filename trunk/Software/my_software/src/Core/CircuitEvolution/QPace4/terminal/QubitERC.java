@@ -35,6 +35,11 @@ import ec.util.DecodeReturn;
  */
 
 public class QubitERC extends ERC {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 5965155317096177010L;
+
 	public int	maxx	= 3 + 2;	// -2, -1 and 1-10
 
 	public int	q;

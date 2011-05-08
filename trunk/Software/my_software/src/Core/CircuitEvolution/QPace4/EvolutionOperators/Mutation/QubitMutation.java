@@ -24,6 +24,10 @@ import ec.util.Parameter;
  */
 public class QubitMutation extends GPBreedingPipeline {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -3979838960870572846L;
 	public static final String	P_MUTATEONENODE	= "qubit-mutation";
 	public static final int		NUM_SOURCES		= 1;
 
@@ -31,7 +35,7 @@ public class QubitMutation extends GPBreedingPipeline {
 	public GPNodeSelector		nodeselect;
 
 	/** Is our tree fixed? If not, this is -1 */
-	int							tree;
+	private int							tree;
 
 	@Override
 	public Object clone() {

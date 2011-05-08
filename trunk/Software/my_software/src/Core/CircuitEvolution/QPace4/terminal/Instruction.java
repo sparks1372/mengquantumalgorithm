@@ -18,6 +18,10 @@ import ec.util.Parameter;
  */
 public class Instruction extends GPNode {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -7481765416758579485L;
 	private Parameter			my_base;
 	public static final String	INST_ID	= "Instruction";
 	private int					value;

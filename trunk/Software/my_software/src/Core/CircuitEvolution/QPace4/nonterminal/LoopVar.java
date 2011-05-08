@@ -17,6 +17,10 @@ import ec.gp.GPNode;
  * 
  */
 public class LoopVar extends GPNode {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -8698960810548486083L;
 	public static final int	LOOP_VARIABLE	= -1;
 
 	/*

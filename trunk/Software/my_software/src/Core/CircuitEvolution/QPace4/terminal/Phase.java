@@ -18,6 +18,10 @@ import ec.util.Parameter;
  */
 public class Phase extends GPNode {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -7107417353085019008L;
 	private Parameter			my_base;
 	private static final String	INST_ID	= "Phase";
 	private int					index;

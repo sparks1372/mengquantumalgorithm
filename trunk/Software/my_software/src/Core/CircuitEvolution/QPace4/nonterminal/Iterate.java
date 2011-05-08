@@ -20,6 +20,11 @@ import ec.gp.GPNode;
  * 
  */
 public class Iterate extends GPNode {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -2009759438539440430L;
+
 	public Iterate() {
 		System.out.println("Control Constructed");
 	}
@@ -33,9 +38,7 @@ public class Iterate extends GPNode {
 	@Override
 	public void eval(EvolutionState state, int thread, GPData input,
 			ADFStack stack, GPIndividual individual, Problem problem) {
-		QuantumInstructionEnum qins;
 		exp_node int1;
-		exp_node int2;
 		QPaceData rd = ((QPaceData) (input));
 
 		// Produce the Quantum Instruction

@@ -19,6 +19,11 @@ import ec.gp.GPNode;
 import ec.util.Parameter;
 
 public class Add extends GPNode {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 2626439639861794277L;
+
 	public Add() {
 		System.out.println("Add Constructed");
 	}

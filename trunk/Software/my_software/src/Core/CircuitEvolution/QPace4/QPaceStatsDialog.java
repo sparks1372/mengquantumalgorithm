@@ -38,6 +38,10 @@ import Utils.WrapLayout;
  */
 public class QPaceStatsDialog extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -3964688651473971082L;
 	// ///// Stats fields
 	private JTextField					avFitTF;
 	private JLabel						avFitL;

@@ -17,6 +17,10 @@ import ec.gp.GPNode;
  * 
  */
 public class SystemSize extends GPNode {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -6934796916061751832L;
 	public static final int	SYSTEM_SIZE_FLAG	= 0;
 
 	/*

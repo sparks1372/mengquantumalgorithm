@@ -12,6 +12,10 @@ import javax.swing.JProgressBar;
 import GUI.MainPanel;
 
 public class StatsPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -5616705420676651820L;
 	private final static String	genStr	= "Generations";
 	private final JLabel		timeL;
 	private final JLabel		timeTA;

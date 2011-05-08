@@ -19,6 +19,11 @@ import ec.gp.GPNode;
 import ec.util.Parameter;
 
 public class Pow extends GPNode {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 6817193343954402658L;
+
 	@Override
 	public void checkConstraints(final EvolutionState state, final int tree,
 			final GPIndividual typicalIndividual, final Parameter individualBase) {
