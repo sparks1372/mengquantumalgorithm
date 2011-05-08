@@ -2,13 +2,18 @@ package Core.CircuitEvaluator.ParsimoniousSimpleFitness;
 
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Circuit.Circuit;
-import Core.CircuitEvaluator.Fitness;
-import Core.CircuitEvaluator.FitnessFunction;
+import Core.CircuitEvaluator.Suitability;
+import Core.CircuitEvaluator.SuitabilityMeasure;
 import Jama.Matrix;
 import Testing.predefined_states;
 import Utils.Complex;
 
-public class ParsimoniousSimpleFitness implements FitnessFunction {
+public class ParsimoniousSimpleFitness implements SuitabilityMeasure {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 8747499211854107724L;
+
 	public static void main(String[] args) {
 		ParsimoniousSimpleFitness test = new ParsimoniousSimpleFitness(
 				"Parsimonious Simple Fitness");
@@ -16,9 +21,9 @@ public class ParsimoniousSimpleFitness implements FitnessFunction {
 		System.out.println("2 qubits state 00, Pauli X Qubit 1");
 		Matrix final_state = predefined_states.get_2q_0();
 		Matrix expected_state = predefined_states.get_2q_1();
-		final_state.print_state(0, 0);
-		expected_state.print_state(0, 0);
-		Fitness fitness = test.evaluate(predefined_states.get_2q_0(),
+		final_state.printState();
+		expected_state.printState();
+		Suitability fitness = test.evaluate(predefined_states.get_2q_0(),
 				final_state, expected_state, null, null);
 		System.out.println("Fitness : " + fitness.getFitness());
 
@@ -34,7 +39,7 @@ public class ParsimoniousSimpleFitness implements FitnessFunction {
 	}
 
 	@Override
-	public Fitness evaluate(Matrix start_state, Matrix final_state,
+	public Suitability evaluate(Matrix start_state, Matrix final_state,
 			Matrix expected_state, Circuit circuit, QuantumAlgorithm algo) {
 
 		double fit = 0.0;
@@ -67,7 +72,7 @@ public class ParsimoniousSimpleFitness implements FitnessFunction {
 		// System.out.println("fit  = " + fit + "\ncircuit \n"
 		// + circuit.toLatex(3) + "algo " + algo.print() + "\nAlgoSum "
 		// + algo.getValSum());
-		return new Fitness(fit /* + algo.getValSum() */, count);
+		return new Suitability(fit /* + algo.getValSum() */, count);
 	}
 
 	@Override

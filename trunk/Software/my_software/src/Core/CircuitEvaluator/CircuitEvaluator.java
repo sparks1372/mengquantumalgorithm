@@ -9,19 +9,19 @@ import Core.Problem.quantumproblem;
 import Core.Problem.testset;
 import Core.Problem.testsuite;
 
-public interface circuitevaluator extends Serializable {
+public interface CircuitEvaluator extends Serializable {
 
 	public void addObserver(Observer ob);
 
 	/**
 		 */
-	public abstract Fitness Evaluate(QuantumAlgorithm alg);
+	public abstract Suitability Evaluate(QuantumAlgorithm alg);
 
 	/**
 	 * @return Returns the qfitnessfunction.
 	 * @uml.property name="qfitnessfunction"
 	 */
-	public FitnessFunction getQfitnessfunction();
+	public SuitabilityMeasure getQfitnessfunction();
 
 	/**
 	 * @return Returns the qproblem.
@@ -46,7 +46,7 @@ public interface circuitevaluator extends Serializable {
 	 *            The qfitnessfunction to set.
 	 * @uml.property name="qfitnessfunction"
 	 */
-	public void setQfitnessfunction(FitnessFunction qfitnessfunction);
+	public void setQfitnessfunction(SuitabilityMeasure qfitnessfunction);
 
 	/**
 	 * Setter of the property <tt>qproblem</tt>

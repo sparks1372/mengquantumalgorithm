@@ -1,4 +1,4 @@
-package Core.CircuitEvaluator.SimpleFitness;
+package Core.CircuitEvaluator.PhaseSensitiveFitnessNonZero;
 
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Circuit.Circuit;
@@ -7,15 +7,15 @@ import Core.CircuitEvaluator.SuitabilityMeasure;
 import Jama.Matrix;
 import Testing.predefined_states;
 
-public class SimpleFitness implements SuitabilityMeasure {
+public class PhaseSensitiveFitnessNoHits implements SuitabilityMeasure {
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1531048769612551079L;
-	private static final double	ACCURACY			= 0.00000001;
+	private static final long	serialVersionUID	= 5950330468659360530L;
 
 	public static void main(String[] args) {
-		SimpleFitness test = new SimpleFitness("Simple Fitness");
+		PhaseSensitiveFitnessNoHits test = new PhaseSensitiveFitnessNoHits(
+				"PPSF");
 
 		System.out.println("2 qubits state 00, Pauli X Qubit 1");
 		Matrix final_state = predefined_states.get_2q_0();
@@ -33,29 +33,29 @@ public class SimpleFitness implements SuitabilityMeasure {
 	/**
 	 * 
 	 */
-	public SimpleFitness(String n) {
+	public PhaseSensitiveFitnessNoHits(String n) {
 		name = n;
 	}
 
 	@Override
 	public Suitability evaluate(Matrix start_state, Matrix final_state,
 			Matrix expected_state, Circuit circuit, QuantumAlgorithm algo) {
+
 		double fit = 0.0;
 		int count = 0;
+		double resulting;
 		for (int i = 0; i < final_state.getRowDimension(); i++) {
 
-			double resulting = Math.abs(final_state.get(i, 0).mod()
-					- expected_state.get(i, 0).mod());
+			resulting = Math.abs(final_state.get(i, 0).real()
+					- expected_state.get(i, 0).real())
+					+ Math.abs(final_state.get(i, 0).imag()
+							- expected_state.get(i, 0).imag());
 
-			if (resulting > ACCURACY) {
+			if (resulting > 0.0000001) {
 				fit += resulting;
-			} else {
-				count++;
 			}
 		}
-
-		return new Suitability(fit /** 256 + algo.getValSum() */
-		, count);
+		return new Suitability(fit, count);
 	}
 
 	@Override
