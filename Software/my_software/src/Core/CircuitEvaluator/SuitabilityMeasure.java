@@ -6,7 +6,7 @@ import Core.Algorithms.QuantumAlgorithm;
 import Core.Circuit.Circuit;
 import Jama.Matrix;
 
-public interface FitnessFunction extends Serializable {
+public interface SuitabilityMeasure extends Serializable {
 
 	/**
 	 * @param start_state
@@ -16,7 +16,7 @@ public interface FitnessFunction extends Serializable {
 	 * @param algo
 	 * @return
 	 */
-	public abstract Fitness evaluate(Matrix start_state, Matrix final_state,
+	public abstract Suitability evaluate(Matrix start_state, Matrix final_state,
 			Matrix expected_state, Circuit circuit, QuantumAlgorithm algo);
 
 	/**

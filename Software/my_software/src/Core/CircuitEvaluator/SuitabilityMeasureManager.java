@@ -7,7 +7,7 @@ import java.util.Set;
 import Core.CircuitEvaluator.Util.FF_XML_Parser;
 import Core.CircuitEvaluator.Util.FitnessFunctionTag;
 
-public class fitnessfunctionmanager {
+public class SuitabilityMeasureManager {
 
 	/**
 	 * @uml.property name="availablefitnessfuntions" multiplicity="(0 -1)"
@@ -18,7 +18,7 @@ public class fitnessfunctionmanager {
 
 	/**
 			 */
-	public fitnessfunctionmanager(String se_xml_file_name) {
+	public SuitabilityMeasureManager(String se_xml_file_name) {
 		FF_XML_Parser xmlp = new FF_XML_Parser(se_xml_file_name);
 		availablefitnessfuntions = xmlp.parseDocument();
 	}
@@ -27,7 +27,7 @@ public class fitnessfunctionmanager {
 		return availablefitnessfuntions.keySet();
 	}
 
-	public FitnessFunction getFitnessFuntion(String key) {
+	public SuitabilityMeasure getFitnessFuntion(String key) {
 		Object retobj = null;
 		try {
 			FitnessFunctionTag ff = availablefitnessfuntions.get(key);
@@ -41,7 +41,7 @@ public class fitnessfunctionmanager {
 		} catch (Throwable e) {
 			System.err.println(e);
 		}
-		return (FitnessFunction) retobj;
+		return (SuitabilityMeasure) retobj;
 	}
 
 	public String getFitnessFunctionDesc(String key) {

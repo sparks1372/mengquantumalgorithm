@@ -6,7 +6,7 @@ package Core.CircuitEvaluator;
 /**
  * @author Sam Ratcliff
  */
-public class Fitness {
+public class Suitability {
 
 	/**
 	 * @uml.property name="fitness" readOnly="true"
@@ -18,7 +18,7 @@ public class Fitness {
 	 */
 	private final int		perfectcount;
 
-	public Fitness(double fitness, int perfectcount) {
+	public Suitability(double fitness, int perfectcount) {
 		super();
 		this.fitness = fitness;
 		this.perfectcount = perfectcount;

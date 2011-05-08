@@ -1,4 +1,4 @@
-package Core.CircuitEvaluator.SimpleFitness;
+package Core.CircuitEvaluator.SimpleZeroFocusFitness;
 
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Circuit.Circuit;
@@ -6,16 +6,17 @@ import Core.CircuitEvaluator.Suitability;
 import Core.CircuitEvaluator.SuitabilityMeasure;
 import Jama.Matrix;
 import Testing.predefined_states;
+import Utils.Complex;
 
-public class SimpleFitness implements SuitabilityMeasure {
+public class SimpleZeroFocusFitness implements SuitabilityMeasure {
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1531048769612551079L;
-	private static final double	ACCURACY			= 0.00000001;
+	private static final long	serialVersionUID	= -3476106261470140520L;
 
 	public static void main(String[] args) {
-		SimpleFitness test = new SimpleFitness("Simple Fitness");
+		SimpleZeroFocusFitness test = new SimpleZeroFocusFitness(
+				"Simple Fitness");
 
 		System.out.println("2 qubits state 00, Pauli X Qubit 1");
 		Matrix final_state = predefined_states.get_2q_0();
@@ -33,7 +34,7 @@ public class SimpleFitness implements SuitabilityMeasure {
 	/**
 	 * 
 	 */
-	public SimpleFitness(String n) {
+	public SimpleZeroFocusFitness(String n) {
 		name = n;
 	}
 
@@ -44,13 +45,18 @@ public class SimpleFitness implements SuitabilityMeasure {
 		int count = 0;
 		for (int i = 0; i < final_state.getRowDimension(); i++) {
 
-			double resulting = Math.abs(final_state.get(i, 0).mod()
-					- expected_state.get(i, 0).mod());
+			Complex resulting = final_state.get(i, 0).minus(
+					expected_state.get(i, 0));
+			Complex resulting_phase_flip = final_state.get(i, 0).minus(
+					expected_state.get(i, 0).times(new Complex(-1, 0)));
+			resulting = resulting.mod() < resulting_phase_flip.mod() ? resulting
+					: resulting_phase_flip;
 
-			if (resulting > ACCURACY) {
-				fit += resulting;
-			} else {
-				count++;
+			if (Math.abs(expected_state.get(i, 0).mod()) < 0.00001) {
+				fit += resulting.mod();
+				// } else if ((Math.abs(expected_state.get(i, 0).mod()
+				// - start_state.get(i, 0).mod()) < 0.00001)) {
+				// count++;
 			}
 		}
 

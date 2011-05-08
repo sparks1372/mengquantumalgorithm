@@ -20,7 +20,7 @@ import Core.Problem.testset;
 import Core.Problem.testsuite;
 import Jama.Matrix;
 
-public class basiccircuitevaluator extends Observable implements
+public class parsimoniouscircuitevaluator extends Observable implements
 		CircuitEvaluator {
 	/**
 	 * 
@@ -30,7 +30,7 @@ public class basiccircuitevaluator extends Observable implements
 	private SuitabilityMeasure			ff;
 	private final circuitBuilder	cb;
 
-	public basiccircuitevaluator(circuitBuilder cirbui) {
+	public parsimoniouscircuitevaluator(circuitBuilder cirbui) {
 		cb = cirbui;
 	}
 
@@ -38,6 +38,7 @@ public class basiccircuitevaluator extends Observable implements
 	public Suitability Evaluate(QuantumAlgorithm alg) {
 		double fitness_to_return = 0;
 		int count = 0;
+		int gateCount = 0;
 
 		if (alg.getSize() == 0) {
 
@@ -56,11 +57,13 @@ public class basiccircuitevaluator extends Observable implements
 			int numofqubits = kiter.next();
 			testset tempts = ts.getTestcases(numofqubits);
 			cir = cb.Build(alg, numofqubits);
+			gateCount += cir.getSize();
 			Iterator<testcase> tciter = tempts.getTestcases();
 			quantumgate qg;
 			while (tciter.hasNext()) {
 				tc = tciter.next();
 				qgate_iter = cir.getCircuitlayout();
+				cir.getSize();
 				Matrix state = tc.getStartingStateCopy().copy();
 				while (qgate_iter.hasNext()) {
 					qg = qgate_iter.next();
@@ -77,6 +80,8 @@ public class basiccircuitevaluator extends Observable implements
 		if (fitness_to_return > Float.MAX_VALUE) {
 			return new Suitability(Float.MAX_VALUE, 0);
 		}
+		fitness_to_return *= 1000;
+		fitness_to_return += gateCount + alg.getSize();
 
 		fitness_to_return = count != 0 ? fitness_to_return / count
 				: fitness_to_return;
