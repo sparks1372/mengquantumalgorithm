@@ -70,7 +70,8 @@ public class ComplexTest {
 		double result = fixture.arg();
 
 		// add additional test code here
-		assertEquals(0.7853981633974483, result, accuracy);
+		assertEquals(Math.atan(fixture.imag() / fixture.real()), result,
+				accuracy);
 	}
 
 	/**
@@ -87,7 +88,8 @@ public class ComplexTest {
 		double result = fixture.arg();
 
 		// add additional test code here
-		assertEquals(-0.7853981633974483, result, accuracy);
+		assertEquals(Math.atan(fixture.imag() / fixture.real()), result,
+				accuracy);
 	}
 
 	/**
@@ -104,7 +106,8 @@ public class ComplexTest {
 		double result = fixture.arg();
 
 		// add additional test code here
-		assertEquals(0.0, result, accuracy);
+		assertEquals(Math.atan(fixture.imag() / fixture.real()), result,
+				accuracy);
 	}
 
 	/**
@@ -121,7 +124,8 @@ public class ComplexTest {
 		double result = fixture.arg();
 
 		// add additional test code here
-		assertEquals(1.5708, result, accuracy);
+		assertEquals(Math.atan(fixture.imag() / fixture.real()), result,
+				accuracy);
 	}
 
 	/**
