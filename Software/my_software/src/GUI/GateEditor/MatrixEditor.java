@@ -26,7 +26,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
-import GUI.ProblemEditor.Implementation.XMLFilter;
+import GUI.ProblemEditor.XMLFilter;
 import Jama.Matrix;
 import Utils.Complex;
 import Utils.MatrixUtils;
@@ -67,10 +67,14 @@ public class MatrixEditor extends Observable implements TableModelListener,
 	private JButton					saveMatrixButton;
 	private JButton					saveAsMatrixButton;
 
-	private static final String		newMatrixStr	= "New";
-	private static final String		loadMatrixStr	= "Load";
-	private static final String		saveMatrixStr	= "Save";
-	private static final String		saveAsMatrixStr	= "Save As";
+	private static final String		newMatrixButtonStr		= "New";
+	private static final String		newMatrixToolTipStr		= "<html>Click here to create a new matrix.<br>You will be promtped to enter the number<br>of qubits the matrix is to apply to.</html>";
+	private static final String		loadMatrixButtonStr		= "Load";
+	private static final String		loadMatrixToolTipStr	= "<html>Click here to load a matrix from<br>a pre-existing XML matrix definitionfile.</html>";
+	private static final String		saveMatrixButtonStr		= "Save";
+	private static final String		saveMatrixToolTipStr	= "<html>Click here to save the current matrix<br>to the currently selected XML definition<br>file.</html>";
+	private static final String		saveAsMatrixButtonStr	= "Save As";
+	private static final String		saveAsMatrixToolTipStr	= "<html>Click here to save the current matrix<br>to a different XML definition file.</html>";
 
 	private File					selected_file;
 
@@ -227,13 +231,21 @@ public class MatrixEditor extends Observable implements TableModelListener,
 
 		upperButtonPanel = new JPanel();
 		upperButtonPanel.setLayout(new FlowLayout());
-		newMatrixButton = new JButton(newMatrixStr);
+
+		newMatrixButton = new JButton(newMatrixButtonStr);
+		newMatrixButton.setToolTipText(newMatrixToolTipStr);
 		newMatrixButton.addActionListener(this);
-		loadMatrixButton = new JButton(loadMatrixStr);
+
+		loadMatrixButton = new JButton(loadMatrixButtonStr);
+		loadMatrixButton.setToolTipText(loadMatrixToolTipStr);
 		loadMatrixButton.addActionListener(this);
-		saveMatrixButton = new JButton(saveMatrixStr);
+
+		saveMatrixButton = new JButton(saveMatrixButtonStr);
+		saveMatrixButton.setToolTipText(saveMatrixToolTipStr);
 		saveMatrixButton.addActionListener(this);
-		saveAsMatrixButton = new JButton(saveAsMatrixStr);
+
+		saveAsMatrixButton = new JButton(saveAsMatrixButtonStr);
+		saveAsMatrixButton.setToolTipText(saveAsMatrixToolTipStr);
 		saveAsMatrixButton.addActionListener(this);
 
 		newMatrixButton.setEnabled(true);
@@ -295,9 +307,13 @@ public class MatrixEditor extends Observable implements TableModelListener,
 }
 
 class MyMatixTableModel extends AbstractTableModel {
-	private final boolean	DEBUG		= false;
-	private String[]		columnNames	= {};
-	private Object[][]		data;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -3046689534961948855L;
+	private final boolean		DEBUG				= false;
+	private String[]			columnNames			= {};
+	private Object[][]			data;
 
 	public MyMatixTableModel() {
 		data = new Object[0][0];
@@ -309,7 +325,7 @@ class MyMatixTableModel extends AbstractTableModel {
 	 * contain text ("true"/"false"), rather than a check box.
 	 */
 	@Override
-	public Class getColumnClass(int c) {
+	public Class<?> getColumnClass(int c) {
 		return getValueAt(0, c).getClass();
 	}
 
