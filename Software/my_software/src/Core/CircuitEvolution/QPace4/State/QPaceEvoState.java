@@ -6,7 +6,7 @@ package Core.CircuitEvolution.QPace4.State;
 import java.io.Serializable;
 
 import Core.CircuitBuilder.circuitBuilder;
-import Core.CircuitEvaluator.circuitevaluator;
+import Core.CircuitEvaluator.CircuitEvaluator;
 import Core.CircuitEvolution.QPace4.StatsPanel;
 import ec.simple.SimpleEvolutionState;
 
@@ -20,7 +20,7 @@ public class QPaceEvoState extends SimpleEvolutionState implements Serializable 
 	 */
 	private static final long	serialVersionUID	= 704242492846236496L;
 	public circuitBuilder		cir_builder;
-	public circuitevaluator		cir_evaluator;
+	public CircuitEvaluator		cir_evaluator;
 	private int					gens;
 
 	private StatsPanel			statsPanel;

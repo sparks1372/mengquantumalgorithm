@@ -6,7 +6,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import Core.CircuitBuilder.circuitBuilder;
-import Core.CircuitEvaluator.circuitevaluator;
+import Core.CircuitEvaluator.CircuitEvaluator;
 
 /**
  * @uml.dependency supplier="Core.CircuitBuilder.circuitBuilder"
@@ -32,7 +32,7 @@ public abstract interface circuitsearchengine {
 	 * @return Returns the cevaluator.
 	 * @uml.property name="cevaluator" readOnly="true"
 	 */
-	public circuitevaluator getCevaluator();
+	public CircuitEvaluator getCevaluator();
 
 	/**
 	 * @return Returns the name.
@@ -57,7 +57,7 @@ public abstract interface circuitsearchengine {
 	 */
 	public JDialog getStatsDialog();
 
-	public void init(circuitBuilder cb, circuitevaluator ce, boolean[] ai);
+	public void init(circuitBuilder cb, CircuitEvaluator ce);
 
 	/**
 	 * 
@@ -73,7 +73,9 @@ public abstract interface circuitsearchengine {
 
 	/**
 	 * Initiate search for use without a GUI
+	 * 
+	 * @return
 	 */
-	public void search(boolean[] availableinstructions, Object[] params);
+	public boolean search(boolean[] availableinstructions, Object[] params);
 
 }

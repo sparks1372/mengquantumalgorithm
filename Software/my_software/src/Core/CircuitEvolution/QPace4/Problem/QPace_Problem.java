@@ -3,8 +3,8 @@
  */
 package Core.CircuitEvolution.QPace4.Problem;
 
-import Core.CircuitEvaluator.Fitness;
-import Core.CircuitEvaluator.circuitevaluator;
+import Core.CircuitEvaluator.Suitability;
+import Core.CircuitEvaluator.CircuitEvaluator;
 import Core.CircuitEvolution.QPace4.Data.QPaceData;
 import Core.CircuitEvolution.QPace4.Individual.QPace_Ind;
 import Core.CircuitEvolution.QPace4.State.QPaceEvoState;
@@ -22,6 +22,11 @@ import ec.simple.SimpleProblemForm;
  */
 public class QPace_Problem extends GPProblem implements SimpleProblemForm {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -2220504647580744551L;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -33,7 +38,7 @@ public class QPace_Problem extends GPProblem implements SimpleProblemForm {
 			int subpopulation, int threadnum) {
 		if (!ind.evaluated) { // don't bother reevaluating
 			QPaceEvoState qpacestate = (QPaceEvoState) state;
-			circuitevaluator evaluator = qpacestate.cir_evaluator;
+			CircuitEvaluator evaluator = qpacestate.cir_evaluator;
 			QPaceData input = new QPaceData();
 
 			for (GPTree tree : ((QPace_Ind) ind).trees) {
@@ -43,7 +48,7 @@ public class QPace_Problem extends GPProblem implements SimpleProblemForm {
 
 			((QPace_Ind) ind).qa = input.qa;
 
-			Fitness fit = evaluator.Evaluate(input.qa);
+			Suitability fit = evaluator.Evaluate(input.qa);
 
 			// the fitness better be KozaFitness!
 			KozaFitness f = ((KozaFitness) ind.fitness);

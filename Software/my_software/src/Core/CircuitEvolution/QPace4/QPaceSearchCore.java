@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.PrintWriter;
 
 import Core.CircuitBuilder.circuitBuilder;
-import Core.CircuitEvaluator.circuitevaluator;
+import Core.CircuitEvaluator.CircuitEvaluator;
 import Core.CircuitEvolution.SearchEngineCore;
 import Core.CircuitEvolution.QPace4.Individual.QPace_Ind;
 import Core.CircuitEvolution.QPace4.State.QPaceEvoState;
@@ -33,7 +33,7 @@ public class QPaceSearchCore extends SearchEngineCore {
 	 */
 	private static final long		serialVersionUID			= 266004441543008203L;
 	private final circuitBuilder	cb;
-	private final circuitevaluator	ce;
+	private final CircuitEvaluator	ce;
 	private final ParameterDatabase	parameters;
 	private QPaceEvoState			evoState;
 	private final StatsPanel		statsPanel;
@@ -258,7 +258,6 @@ public class QPaceSearchCore extends SearchEngineCore {
 		int[] seeds;
 		int breedthreads = 1;
 		int evalthreads = 1;
-		boolean store;
 		int x;
 
 		// output was already created for us.
@@ -389,7 +388,7 @@ public class QPaceSearchCore extends SearchEngineCore {
 	}
 
 	public QPaceSearchCore(ParameterDatabase params, circuitBuilder cb,
-			circuitevaluator ce, StatsPanel st) {
+			CircuitEvaluator ce, StatsPanel st) {
 		super();
 		this.cb = cb;
 		this.ce = ce;

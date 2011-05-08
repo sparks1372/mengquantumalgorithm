@@ -15,6 +15,11 @@ import ec.simple.SimpleStatistics;
  */
 public class QPACE_stats extends SimpleStatistics {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 2342784512119029234L;
+
 	/*
 	 * (non-Javadoc)
 	 * 

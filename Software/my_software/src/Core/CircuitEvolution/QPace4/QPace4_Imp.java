@@ -28,9 +28,11 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 import Core.Algorithms.QuantumInstructionEnum;
 import Core.CircuitBuilder.circuitBuilder;
-import Core.CircuitEvaluator.circuitevaluator;
+import Core.CircuitEvaluator.CircuitEvaluator;
 import Core.CircuitEvolution.SearchEngineState;
 import Core.CircuitEvolution.SearchResult;
 import Core.CircuitEvolution.circuitsearchengine;
@@ -44,7 +46,7 @@ import Utils.WrapLayout;
 public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 
 	class tickBoxListener implements ItemListener {
-		int	index;
+		private final int	index;
 
 		/**
 		 * 
@@ -73,9 +75,12 @@ public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 
 	}
 
+	private static final Logger		logger			= Logger.getLogger(QPace4_Imp.class
+															.getClass());
+
 	private JProgressBar			progressBar;
 	protected circuitBuilder		cb;
-	protected circuitevaluator		ce;
+	protected CircuitEvaluator		ce;
 	private static final String		NAME			= "QPace 4 Implementation";
 
 	protected QPaceSearchResult[]	searchres;
@@ -133,7 +138,7 @@ public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 	private JTextField				emailTA;
 	private JLabel					emailL;
 	private final static String		emailStr		= "Email Address for Completion Email. Leave blank if email is not required";
-	private boolean[]				enabledGate;
+	private final boolean[]			enabledGate;
 
 	protected int					gen;
 	private int						pop;
@@ -268,33 +273,165 @@ public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 
 				try {
 					gen = Integer.parseInt(genTA.getText());
-					pop = Integer.parseInt(popTA.getText());
-					bth = Integer.parseInt(bthTA.getText());
-					eth = Integer.parseInt(ethTA.getText());
-					mintreedepth = Integer.parseInt(mintreedepthTA.getText());
-					maxtreedepth = Integer.parseInt(maxtreedepthTA.getText());
-					el = Integer.parseInt(elTA.getText());
+					try {
+						pop = Integer.parseInt(popTA.getText());
+						try {
+							bth = Integer.parseInt(bthTA.getText());
+							try {
+								eth = Integer.parseInt(ethTA.getText());
+								try {
+									mintreedepth = Integer
+											.parseInt(mintreedepthTA.getText());
+									try {
+										maxtreedepth = Integer
+												.parseInt(maxtreedepthTA
+														.getText());
+										try {
+											el = Integer.parseInt(elTA
+													.getText());
+											try {
 
-					xover = Double.parseDouble(xoverTA.getText());
-					mut = Double.parseDouble(mutTA.getText());
-					iterval = Integer.parseInt(iterTA.getText());
-					to = emailTA.getText();
+												xover = Double
+														.parseDouble(xoverTA
+																.getText());
+												try {
+													mut = Double
+															.parseDouble(mutTA
+																	.getText());
+													try {
+														iterval = Integer
+																.parseInt(iterTA
+																		.getText());
+														to = emailTA.getText();
 
-					System.out.println("gen " + gen + " pop " + pop + " bth "
-							+ bth + " eth " + eth + " minimum tree depth "
-							+ mintreedepth + " maximum tree depth "
-							+ maxtreedepth + " xover rate " + xover
-							+ " mutation rate " + mut);
+														System.out
+																.println("gen "
+																		+ gen
+																		+ " pop "
+																		+ pop
+																		+ " bth "
+																		+ bth
+																		+ " eth "
+																		+ eth
+																		+ " minimum tree depth "
+																		+ mintreedepth
+																		+ " maximum tree depth "
+																		+ maxtreedepth
+																		+ " xover rate "
+																		+ xover
+																		+ " mutation rate "
+																		+ mut);
+														// System.out
+														// .println(ce
+														// .getQfitnessfunction()
+														// .getName()
+														// +
+														// ce.getQfitnessfunction()
+														// .getName()
+														// .contains(
+														// "Phase"));
+														pw.updateParams(
+																ce.getQfitnessfunction()
+																		.getName()
+																		.contains(
+																				"Phase"),
+																enabledGate,
+																gen, pop, bth,
+																eth,
+																mintreedepth,
+																maxtreedepth,
+																el, xover, mut,
+																time);
+														startSearch();
+														evolveDialog
+																.setVisible(false);
 
-					pw.updateParams(enabledGate, gen, pop, bth, eth,
-							mintreedepth, maxtreedepth, el, xover, mut, time);
-					startSearch();
-					evolveDialog.setVisible(false);
+													} catch (NumberFormatException ex) {
+														logger.error("NumberFormatException caught when trying to parse the search parameters - # of iterations.");
+														JOptionPane
+																.showMessageDialog(
+																		evolveDialog,
+																		"Please check the number of iterations field. This must be numeric",
+																		"Message",
+																		JOptionPane.ERROR_MESSAGE);
+													}
+												} catch (NumberFormatException ex) {
+													logger.error("NumberFormatException caught when trying to parse the search parameters - mutation rate.");
+													JOptionPane
+															.showMessageDialog(
+																	evolveDialog,
+																	"Please check the mutation rate field. This must be numeric",
+																	"Message",
+																	JOptionPane.ERROR_MESSAGE);
+												}
+											} catch (NumberFormatException ex) {
+												logger.error("NumberFormatException caught when trying to parse the search parameters - crossover rate.");
+												JOptionPane
+														.showMessageDialog(
+																evolveDialog,
+																"Please check the crossover rate field. This must be numeric",
+																"Message",
+																JOptionPane.ERROR_MESSAGE);
+											}
+										} catch (NumberFormatException ex) {
+											logger.error("NumberFormatException caught when trying to parse the search parameters - # of elites.");
+											JOptionPane
+													.showMessageDialog(
+															evolveDialog,
+															"Please check the number of elites field. This must be numeric",
+															"Message",
+															JOptionPane.ERROR_MESSAGE);
+										}
+									} catch (NumberFormatException ex) {
+										logger.error("NumberFormatException caught when trying to parse the search parameters - max tree depth.");
+										JOptionPane
+												.showMessageDialog(
+														evolveDialog,
+														"Please check the maximum tree depth field. This must be numeric",
+														"Message",
+														JOptionPane.ERROR_MESSAGE);
+									}
+								} catch (NumberFormatException ex) {
+									logger.error("NumberFormatException caught when trying to parse the search parameters - min tree depth.");
+									JOptionPane
+											.showMessageDialog(
+													evolveDialog,
+													"Please check the minimum tree depth field. This must be numeric",
+													"Message",
+													JOptionPane.ERROR_MESSAGE);
+								}
+							} catch (NumberFormatException ex) {
+								logger.error("NumberFormatException caught when trying to parse the search parameters - evaluation threads.");
+								JOptionPane
+										.showMessageDialog(
+												evolveDialog,
+												"Please check the evaluation threads field. This must be numeric",
+												"Message",
+												JOptionPane.ERROR_MESSAGE);
+							}
+						} catch (NumberFormatException ex) {
+							logger.error("NumberFormatException caught when trying to parse the search parameters - breading threads.");
+							JOptionPane
+									.showMessageDialog(
+											evolveDialog,
+											"Please check the breading threads field. This must be numeric",
+											"Message",
+											JOptionPane.ERROR_MESSAGE);
+						}
+					} catch (NumberFormatException ex) {
+						logger.error("NumberFormatException caught when trying to parse the search parameters - population.");
+						JOptionPane
+								.showMessageDialog(
+										evolveDialog,
+										"Please check the Population field. This must be numeric",
+										"Message", JOptionPane.ERROR_MESSAGE);
+					}
 				} catch (NumberFormatException ex) {
+					logger.error("NumberFormatException caught when trying to parse the search parameters - generation.");
 					JOptionPane
 							.showMessageDialog(
 									evolveDialog,
-									"Please check the Generation, Population, Breed Thread and Evalutaion Thread fields. These must be numeric",
+									"Please check the Generation field. This must be numeric",
 									"Message", JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -329,7 +466,7 @@ public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 	 * @see Core.CircuitEvolution.circuitsearchengine#getCevaluator()
 	 */
 	@Override
-	public circuitevaluator getCevaluator() {
+	public CircuitEvaluator getCevaluator() {
 		return ce;
 	}
 
@@ -348,7 +485,6 @@ public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 		JPanel individualGatePanel;
 		JPanel collectiveGatePanel = new JPanel();
 		collectiveGatePanel.setLayout(new FlowLayout());
-		int j = 0;
 		int i;
 		for (i = 0; i < gates.length; i++) {
 			l = new JLabel(gates[i].name());
@@ -363,7 +499,6 @@ public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 			collectiveGatePanel.add(individualGatePanel);
 		}
 		allowedGatePanel.add(collectiveGatePanel);
-		j = i;
 		collectiveGatePanel = new JPanel();
 		collectiveGatePanel.setLayout(new FlowLayout());
 		gates = QuantumInstructionEnum.getControl();
@@ -380,7 +515,6 @@ public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 			collectiveGatePanel.add(individualGatePanel);
 		}
 		allowedGatePanel.add(collectiveGatePanel);
-		j = i;
 		collectiveGatePanel = new JPanel();
 		collectiveGatePanel.setLayout(new FlowLayout());
 		gates = QuantumInstructionEnum.getFlowControl();
@@ -425,6 +559,13 @@ public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 			individualGatePanel.add(l);
 			individualGatePanel.add(cb);
 			collectiveGatePanel.add(individualGatePanel);
+		}
+		for (; i < 3; i++) {
+			System.out.println("I = " + i);
+			enabledGate[QuantumInstructionEnum.valueOf(gates[2 * i].name())
+					.ordinal()] = false;
+			enabledGate[QuantumInstructionEnum.valueOf(gates[2 * i + 1].name())
+					.ordinal()] = false;
 		}
 		allowedGatePanel.add(collectiveGatePanel);
 
@@ -527,7 +668,7 @@ public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 		elPanel.add(elTA);
 
 		xoverTA = new JTextField(Double.toString(xoverDef));
-		xoverTA.setPreferredSize(new Dimension(45, 25));
+		xoverTA.setPreferredSize(new Dimension(120, 25));
 		xoverL = new JLabel(xoverStr);
 
 		JPanel xoverPanel = new JPanel();
@@ -537,7 +678,7 @@ public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 		xoverPanel.add(xoverTA);
 
 		mutTA = new JTextField(Double.toString(mutDef));
-		mutTA.setPreferredSize(new Dimension(45, 25));
+		mutTA.setPreferredSize(new Dimension(120, 25));
 		mutL = new JLabel(mutStr);
 
 		JPanel mutPanel = new JPanel();
@@ -627,7 +768,7 @@ public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 	}
 
 	@Override
-	public void init(circuitBuilder cb, circuitevaluator ce, boolean[] ai) {
+	public void init(circuitBuilder cb, CircuitEvaluator ce) {
 		this.cb = cb;
 		this.ce = ce;
 
@@ -702,31 +843,94 @@ public abstract class QPace4_Imp implements circuitsearchengine, Observer {
 	}
 
 	@Override
-	public void search(boolean[] availableinstructions, Object[] p) {
-		enabledGate = availableinstructions;
+	public boolean search(boolean[] availableinstructions, Object[] p) {
+		System.arraycopy(p, 0, enabledGate, 0, enabledGate.length);
 		String[] params = (String[]) p;
 		try {
 			gen = Integer.parseInt(params[GEN_INDEX]);
-			pop = Integer.parseInt(params[POP_INDEX]);
-			bth = Integer.parseInt(params[BTH_INDEX]);
-			eth = Integer.parseInt(params[ETH_INDEX]);
-			mintreedepth = Integer.parseInt(params[MINTREE_INDEX]);
-			maxtreedepth = Integer.parseInt(params[MAXTREE_INDEX]);
-			el = Integer.parseInt(params[EL_INDEX]);
-			xover = Double.parseDouble(params[XOVER_INDEX]);
-			mut = Double.parseDouble(params[MUT_INDEX]);
-			iterval = Integer.parseInt(params[ITER_INDEX]);
-			to = (params[TO_INDEX]);
+			try {
+				pop = Integer.parseInt(params[POP_INDEX]);
+				try {
+					bth = Integer.parseInt(params[BTH_INDEX]);
+					try {
+						eth = Integer.parseInt(params[ETH_INDEX]);
+						try {
+							mintreedepth = Integer
+									.parseInt(params[MINTREE_INDEX]);
+							try {
+								maxtreedepth = Integer
+										.parseInt(params[MAXTREE_INDEX]);
+								try {
+									el = Integer.parseInt(params[EL_INDEX]);
+									try {
+										xover = Double
+												.parseDouble(params[XOVER_INDEX]);
+										try {
+											mut = Double
+													.parseDouble(params[MUT_INDEX]);
+											try {
+												iterval = Integer
+														.parseInt(params[ITER_INDEX]);
+												to = (params[TO_INDEX]);
 
-			pw.updateParams(enabledGate, gen, pop, bth, eth, mintreedepth,
-					maxtreedepth, el, xover, mut, time);
-			startSearch();
+												// System.out
+												// .println(ce
+												// .getQfitnessfunction()
+												// .getName()
+												// + ce.getQfitnessfunction()
+												// .getName()
+												// .contains(
+												// "Phase"));
+												pw.updateParams(
+														ce.getQfitnessfunction()
+																.getName()
+																.contains(
+																		"Phase"),
+														enabledGate, gen, pop,
+														bth, eth, mintreedepth,
+														maxtreedepth, el,
+														xover, mut, time);
+												startSearch();
+												return true;
+											} catch (NumberFormatException ex) {
+												logger.error("NumberFormatException caught when trying to parse the search parameters - # of iterations.");
+												return false;
+											}
+										} catch (NumberFormatException ex) {
+											logger.error("NumberFormatException caught when trying to parse the search parameters - mutation rate.");
+											return false;
+										}
+									} catch (NumberFormatException ex) {
+										logger.error("NumberFormatException caught when trying to parse the search parameters - crossover rate.");
+										return false;
+									}
+								} catch (NumberFormatException ex) {
+									logger.error("NumberFormatException caught when trying to parse the search parameters - # of elites.");
+									return false;
+								}
+							} catch (NumberFormatException ex) {
+								logger.error("NumberFormatException caught when trying to parse the search parameters - max tree depth.");
+								return false;
+							}
+						} catch (NumberFormatException ex) {
+							logger.error("NumberFormatException caught when trying to parse the search parameters - min tree depth.");
+							return false;
+						}
+					} catch (NumberFormatException ex) {
+						logger.error("NumberFormatException caught when trying to parse the search parameters - evaluation threads.");
+						return false;
+					}
+				} catch (NumberFormatException ex) {
+					logger.error("NumberFormatException caught when trying to parse the search parameters - breading threads.");
+					return false;
+				}
+			} catch (NumberFormatException ex) {
+				logger.error("NumberFormatException caught when trying to parse the search parameters - population.");
+				return false;
+			}
 		} catch (NumberFormatException ex) {
-			JOptionPane
-					.showMessageDialog(
-							evolveDialog,
-							"Please check the Generation, Population, Breed Thread and Evalutaion Thread fields. These must be numeric",
-							"Message", JOptionPane.ERROR_MESSAGE);
+			logger.error("NumberFormatException caught when trying to parse the search parameters - generation.");
+			return false;
 		}
 	}
 

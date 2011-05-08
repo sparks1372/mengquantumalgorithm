@@ -10,6 +10,11 @@ import org.jppf.server.protocol.JPPFTask;
  */
 public abstract class SearchEngineCore extends JPPFTask {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 6996895023072068277L;
+
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -93,7 +93,7 @@ public class QPace4_JPPF extends QPace4_Imp {
 						sendMail.send();
 					}
 				}
-			});
+			}, "JPPF Search Manager Thread");
 			t.start();
 
 		} catch (Exception e) {

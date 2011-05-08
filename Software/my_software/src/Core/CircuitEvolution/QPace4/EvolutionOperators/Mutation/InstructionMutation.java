@@ -24,14 +24,18 @@ import ec.util.Parameter;
  */
 public class InstructionMutation extends GPBreedingPipeline {
 
-	public static final String	P_MUTATEONENODE	= "instruction-mutation";
-	public static final int		NUM_SOURCES		= 1;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -2125843559513760656L;
+	public static final String	P_MUTATEONENODE		= "instruction-mutation";
+	public static final int		NUM_SOURCES			= 1;
 
 	/** How the pipeline chooses a subtree to mutate */
 	public GPNodeSelector		nodeselect;
 
 	/** Is our tree fixed? If not, this is -1 */
-	int							tree;
+	private int							tree;
 
 	@Override
 	public Object clone() {
@@ -162,7 +166,7 @@ public class InstructionMutation extends GPBreedingPipeline {
 		int n = sources[0].produce(min, max, start, subpopulation, inds, state,
 				thread);
 
-//		// should we bother?
+		// // should we bother?
 		if (!state.random[thread].nextBoolean(likelihood)) {
 			return reproduce(n, start, subpopulation, inds, state, thread,
 					false); // DON'T produce children from source -- we already

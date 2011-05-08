@@ -19,6 +19,11 @@ import ec.gp.GPNode;
 import ec.util.Parameter;
 
 public class Mul extends GPNode {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 4474909650205085640L;
+
 	public Mul() {
 		System.out.println("Mul Constructed");
 	}

@@ -32,7 +32,8 @@ public class Params_Writer {
 	private static final String	fixed_node_constraint	= ".nc";
 	private static final String	fixed_dot				= ".";
 	private static final String	fixed_nc_instr			= "terminalinst";
-	private static final int	base_node_count			= 24;
+	private static final int	base_node_count_s		= 28;
+	private static final int	base_node_count_p		= 32;
 	private static final String	min_tree_size_str		= "gp.tc.0.init.min-size = ";
 	private static final String	max_tree_size_str		= "gp.tc.0.init.max-size =";
 	private static final String	xoverStr				= "pop.subpop.0.species.pipe.source.0.prob = ";
@@ -50,16 +51,16 @@ public class Params_Writer {
 		fname = filename;
 	}
 
-	public void updateParams(boolean[] avail_gates, int gen, int pop, int bth,
-			int eth, int mintreedepth, int maxtreedepth, int el, double xover,
-			double mut, boolean time) {
+	public void updateParams(boolean phase, boolean[] avail_gates, int gen,
+			int pop, int bth, int eth, int mintreedepth, int maxtreedepth,
+			int el, double xover, double mut, boolean time) {
 		int true_count = 0;
 		for (boolean avail_gate : avail_gates) {
 			if (avail_gate) {
 				true_count++;
 			}
 		}
-
+		int base_node_count = phase ? base_node_count_p : base_node_count_s;
 		int node_count = base_node_count + true_count;
 		int current_node = base_node_count;
 

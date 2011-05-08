@@ -7,7 +7,6 @@ import Core.Algorithms.QuantumAlgorithm;
 import Core.Algorithms.QuantumInstructionEnum;
 import Core.Algorithms.exp_node;
 import Core.Algorithms.Implementation.basicquantumalgorithm;
-import Core.Algorithms.Implementation.ExpArith.pidiv;
 import Core.CircuitEvolution.QPace4.Data.QPaceData;
 import ec.EvolutionState;
 import ec.Problem;
@@ -25,8 +24,12 @@ public class Gate extends GPNode {
 	/**
 	 * 
 	 */
+	private static final long	serialVersionUID	= -3972540678434302863L;
+
+	/**
+	 * 
+	 */
 	public Gate() {
-		System.out.println("Gate Constructed");
 	}
 
 	/*
@@ -95,7 +98,7 @@ public class Gate extends GPNode {
 		if (QuantumInstructionEnum.hasPhase(qins)) {
 			// Produce the "Phase" value
 			children[3].eval(state, thread, input, stack, individual, problem);
-			double1 = new pidiv(rd.ex);
+			double1 = rd.ex;
 		} else {
 			double1 = null;
 		}

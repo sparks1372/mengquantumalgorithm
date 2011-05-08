@@ -5,7 +5,6 @@ package Core.CircuitEvolution.QPace4.Individual;
 
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Circuit.Circuit;
-import Core.CircuitEvolution.QPace4.Data.QPaceData;
 import Core.CircuitEvolution.QPace4.State.QPaceEvoState;
 import ec.EvolutionState;
 import ec.gp.GPIndividual;
@@ -16,13 +15,16 @@ import ec.util.Code;
  * 
  */
 public class QPace_Ind extends GPIndividual {
-	public QuantumAlgorithm	qa;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -8850922428738610284L;
+	public QuantumAlgorithm		qa;
 
 	@Override
 	public void printIndividualForHumans(final EvolutionState state,
 			final int log) {
 		state.output.println(EVALUATED_PREAMBLE + Code.encode(evaluated), log);
-		QPaceData input = new QPaceData();
 		String quanalgstring = qa.print();
 
 		Circuit cirq1 = ((QPaceEvoState) state).cir_builder.Build(qa, 1);

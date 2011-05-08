@@ -19,6 +19,11 @@ import ec.gp.GPNode;
 import ec.util.Parameter;
 
 public class Div extends GPNode {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -8273582188336744142L;
+
 	public Div() {
 		System.out.println("Div Constructed");
 	}

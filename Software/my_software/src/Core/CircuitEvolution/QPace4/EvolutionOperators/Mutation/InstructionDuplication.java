@@ -3,16 +3,13 @@
  */
 package Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation;
 
-import Core.CircuitEvolution.QPace4.nonterminal.Control;
 import Core.CircuitEvolution.QPace4.nonterminal.Gate;
-import Core.CircuitEvolution.QPace4.nonterminal.Iterate;
 import ec.EvolutionState;
 import ec.Individual;
 import ec.gp.GPBreedingPipeline;
 import ec.gp.GPIndividual;
 import ec.gp.GPNode;
 import ec.gp.GPNodeSelector;
-import ec.gp.GPTree;
 import ec.gp.breed.GPBreedDefaults;
 import ec.util.Parameter;
 
@@ -20,13 +17,13 @@ import ec.util.Parameter;
  * @author Sam Ratcliff
  * 
  */
-public class InstructionReductionMutation extends GPBreedingPipeline {
+public class InstructionDuplication extends GPBreedingPipeline {
 
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= -545230228474399893L;
-	public static final String	P_MUTATEONENODE		= "instruction-reduction";
+	private static final long	serialVersionUID	= -4191874562165428780L;
+	public static final String	P_DUPLICATEONENODE	= "instruction-duplication";
 	public static final int		NUM_SOURCES			= 1;
 
 	/** How the pipeline chooses a subtree to mutate */
@@ -37,8 +34,7 @@ public class InstructionReductionMutation extends GPBreedingPipeline {
 
 	@Override
 	public Object clone() {
-		InstructionReductionMutation c = (InstructionReductionMutation) (super
-				.clone());
+		InstructionDuplication c = (InstructionDuplication) (super.clone());
 
 		// deep-cloned stuff
 		c.nodeselect = (GPNodeSelector) (nodeselect.clone());
@@ -47,7 +43,7 @@ public class InstructionReductionMutation extends GPBreedingPipeline {
 
 	@Override
 	public Parameter defaultBase() {
-		return GPBreedDefaults.base().push(P_MUTATEONENODE);
+		return GPBreedDefaults.base().push(P_DUPLICATEONENODE);
 	}
 
 	@Override
@@ -79,7 +75,7 @@ public class InstructionReductionMutation extends GPBreedingPipeline {
 					&& ((tree < 0) || (tree >= i.trees.length))) {
 				// uh oh
 				state.output
-						.fatal("InstructionReductionMutation attempted to fix tree.0 to a value which was out of bounds of the array of the individual's trees.  Check the pipeline's fixed tree values -- they may be negative or greater than the number of trees in an individual");
+						.fatal("InstructionMutation attempted to fix tree.0 to a value which was out of bounds of the array of the individual's trees.  Check the pipeline's fixed tree values -- they may be negative or greater than the number of trees in an individual");
 			}
 
 			int t;
@@ -100,29 +96,14 @@ public class InstructionReductionMutation extends GPBreedingPipeline {
 			// pick a node
 
 			GPNode p1 = null; // the node we pick
-			GPNode p2 = null;
 
 			// pick a node in individual 1
 			p1 = nodeselect.pickNode(state, subpopulation, thread, i,
 					i.trees[t]);
 
-			if ((p1 instanceof Gate) || (p1 instanceof Control)
-					|| (p1 instanceof Iterate)) {
-				// generate a tree with a new root but the same children,
-				// which we will replace p1 with
-
-				p2 = p1.children[1];
-				i.evaluated = false;
-
-				for (int ind = 0; !(p1.parent instanceof GPTree)
-						&& (ind < ((GPNode) (p1.parent)).children.length); ind++) {
-					if (((GPNode) (p1.parent)).children[ind].getClass() == p2
-							.getClass()) {
-						((GPNode) (p1.parent)).children[ind] = p2;
-						ind = ((GPNode) (p1.parent)).children.length;
-					}
-				}
-
+			if (p1 instanceof Gate) {
+				GPNode temp = (GPNode) p1.clone();
+				p1.children[1] = temp;
 			}
 		}
 		return n;

@@ -46,7 +46,7 @@ package Core.CircuitEvolution.QPace4;
  */
 
 import java.io.IOException;
-import java.util.Random;
+import java.security.SecureRandom;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -65,8 +65,12 @@ import org.jfree.ui.RefineryUtilities;
  */
 public class HistogramDemo extends ApplicationFrame {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 7194675587377505202L;
 	/** For generating random numbers. */
-	static Random	random	= new Random();
+	private static SecureRandom	random				= new SecureRandom();
 
 	/**
 	 * Generates an array of sample data.

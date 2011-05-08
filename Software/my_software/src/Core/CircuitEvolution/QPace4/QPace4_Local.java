@@ -37,8 +37,7 @@ public class QPace4_Local extends QPace4_Imp {
 					task_array[i] = new QPaceSearchCore(pd, cb, ce,
 							(StatsPanel) getSearchStatisticsPanel());
 					task_array[i].run();
-					searchres[i] = (QPaceSearchResult) task_array[i]
-							.getResult();
+					searchres[i] = (QPaceSearchResult) task_array[i].getResult();
 					((StatsPanel) getSearchStatisticsPanel()).getProgressBar()
 							.setValue((i + 1) * geners);
 				}
@@ -49,7 +48,7 @@ public class QPace4_Local extends QPace4_Imp {
 					sendMail.send();
 				}
 			}
-		});
+		}, "Local Search (Thread Based) Manager Thread");
 		t.start();
 	}
 }

@@ -19,6 +19,11 @@ import ec.gp.GPNode;
 import ec.util.Parameter;
 
 public class Pow extends GPNode {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1602478341370719569L;
+
 	public Pow() {
 		System.out.println("Pow Constructed");
 	}

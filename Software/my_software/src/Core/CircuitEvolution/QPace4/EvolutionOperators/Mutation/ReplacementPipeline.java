@@ -5,10 +5,14 @@ package Core.CircuitEvolution.QPace4.EvolutionOperators.Mutation;
 
 import ec.EvolutionState;
 import ec.Individual;
-import ec.gp.GPInitializer;
 import ec.gp.koza.MutationPipeline;
 
 public class ReplacementPipeline extends MutationPipeline {
+
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -3859400422891077314L;
 
 	@Override
 	public int produce(final int min, final int max, final int start,
@@ -19,9 +23,8 @@ public class ReplacementPipeline extends MutationPipeline {
 		// we'll modify them from there
 		int n = sources[0].produce(min, max, start, subpopulation, inds, state,
 				thread);
-		GPInitializer initializer = ((GPInitializer) state.initializer);
 
-//		// should we bother?
+		// // should we bother?
 		if (!state.random[thread].nextBoolean(likelihood)) {
 			return reproduce(n, start, subpopulation, inds, state, thread,
 					false); // DON'T produce children from source -- we already

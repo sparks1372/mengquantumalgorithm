@@ -7,8 +7,7 @@
 package Core.CircuitEvolution.QPace4.nonterminal.arithmetic_double;
 
 import Core.Algorithms.exp_node;
-import Core.Algorithms.Implementation.ExpArith.mul;
-import Core.Algorithms.ImplementationExpTerm.val;
+import Core.Algorithms.Implementation.ExpArith.pidiv;
 import Core.CircuitEvolution.QPace4.Data.QPaceData;
 import ec.EvolutionState;
 import ec.Problem;
@@ -18,11 +17,11 @@ import ec.gp.GPIndividual;
 import ec.gp.GPNode;
 import ec.util.Parameter;
 
-public class Mul extends GPNode {
+public class PiOverPower extends GPNode {
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 6965964974826026348L;
+	private static final long	serialVersionUID	= 6817193343954402658L;
 
 	@Override
 	public void checkConstraints(final EvolutionState state, final int tree,
@@ -54,16 +53,16 @@ public class Mul extends GPNode {
 		c2 = rd.ex;
 		c2Const = rd.exConst;
 
-		if (c1Const && c2Const) {
-			rd.ex = new val(c1.evaluate(0, new int[0])
-					* c2.evaluate(0, new int[0]));
-		} else {
-			rd.ex = new mul(c1, c2);
-		}
+		// if (c1Const && c2Const) {
+		// rd.ex = new val((int) Math.pow(c1.evaluate(0, new int[0]),
+		// c2.evaluate(0, new int[0])));
+		// } else {
+		rd.ex = new pidiv(c1);
+		// }
 	}
 
 	@Override
 	public String toString() {
-		return "*";
+		return "^";
 	}
 }

@@ -19,6 +19,10 @@ import ec.util.Parameter;
  */
 public class Qubit extends GPNode {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -5815319518334002709L;
 	private Parameter			my_base;
 	private static final String	INST_ID	= "Qubit";
 	private int					value;
