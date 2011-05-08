@@ -1,27 +1,29 @@
 package Core.CircuitBuilder.Implementation;
 
+import java.security.SecureRandom;
 import java.util.ListIterator;
-import java.util.Random;
+import java.util.NoSuchElementException;
 
 import Core.Algorithms.QuantumAlgorithm;
 import Core.Algorithms.QuantumInstruction;
+import Core.Algorithms.QuantumInstructionEnum;
 import Core.Circuit.Circuit;
+import Core.Circuit.GateImplementations.ControlledU_Gate;
+import Core.Circuit.GateImplementations.Custom_Gate;
+import Core.Circuit.GateImplementations.Hadamard_Gate;
+import Core.Circuit.GateImplementations.Pauli_X;
+import Core.Circuit.GateImplementations.Pauli_Y;
+import Core.Circuit.GateImplementations.Pauli_Z;
+import Core.Circuit.GateImplementations.Phase_Gate;
+import Core.Circuit.GateImplementations.RX_Gate;
+import Core.Circuit.GateImplementations.RY_Gate;
+import Core.Circuit.GateImplementations.RZ_Gate;
+import Core.Circuit.GateImplementations.Swap_Gate;
+import Core.Circuit.GateImplementations.V_Gate;
+import Core.Circuit.GateImplementations.W_Gate;
+import Core.Circuit.GateImplementations.Zero_Gate;
 import Core.Circuit.Implementation.basiccircuit;
 import Core.CircuitBuilder.circuitBuilder;
-import Core.CircuitEvolution.GateImplementations.ControlledU_Gate;
-import Core.CircuitEvolution.GateImplementations.Custom_Gate;
-import Core.CircuitEvolution.GateImplementations.Hadamard_Gate;
-import Core.CircuitEvolution.GateImplementations.Pauli_X;
-import Core.CircuitEvolution.GateImplementations.Pauli_Y;
-import Core.CircuitEvolution.GateImplementations.Pauli_Z;
-import Core.CircuitEvolution.GateImplementations.Phase_Gate;
-import Core.CircuitEvolution.GateImplementations.RX_Gate;
-import Core.CircuitEvolution.GateImplementations.RY_Gate;
-import Core.CircuitEvolution.GateImplementations.RZ_Gate;
-import Core.CircuitEvolution.GateImplementations.Swap_Gate;
-import Core.CircuitEvolution.GateImplementations.V_Gate;
-import Core.CircuitEvolution.GateImplementations.W_Gate;
-import Core.CircuitEvolution.GateImplementations.Zero_Gate;
 import Core.CircuitEvolution.QPace4.terminal.Variables.SystemSize;
 
 public class basiccircuitbuilder implements circuitBuilder {
@@ -32,7 +34,7 @@ public class basiccircuitbuilder implements circuitBuilder {
 	private final int			Builder_ID;
 
 	public basiccircuitbuilder() {
-		Random rand = new Random();
+		SecureRandom rand = new SecureRandom();
 		Builder_ID = rand.nextInt();
 	}
 
@@ -44,6 +46,14 @@ public class basiccircuitbuilder implements circuitBuilder {
 	@Override
 	public Circuit Build(QuantumAlgorithm quantumAlgorithm, int num_qubits,
 			int[] loopvars) {
+		QuantumInstructionEnum lastInstruction;
+		int lastInt1;
+		int lastInt2;
+		double lastDouble;
+		lastInstruction = null;
+		lastInt1 = 0;
+		lastInt2 = 0;
+		lastDouble = 0.0;
 		QuantumAlgorithm[] qcarray;
 		Circuit to_return = new basiccircuit(Builder_ID);
 		if (quantumAlgorithm == null) {
@@ -64,26 +74,29 @@ public class basiccircuitbuilder implements circuitBuilder {
 			if (next_instruction.getInteger1() != null) {
 				Int1 = Math.round((float) next_instruction.getInteger1()
 						.evaluate(num_qubits, loopvars));
-				if (loopvars.length != 0) {
-					Int1 = (Int1 < 0) ? loopvars[Math.abs(Int1)
-							% loopvars.length] : Int1;
-				}
+				// if (loopvars.length != 0) {
+				Int1 = (Int1 < 0) ? Math.abs(Int1) : Int1;
+				// }
 				Int1 = (Int1 == SystemSize.SYSTEM_SIZE_FLAG) ? num_qubits
 						: Int1;
 			}
 			if (next_instruction.getInteger2() != null) {
 				Int2 = Math.round((float) next_instruction.getInteger2()
 						.evaluate(num_qubits, loopvars));
-				if (loopvars.length != 0) {
-					Int2 = (Int2 < 0) ? loopvars[Math.abs(Int2)
-							% loopvars.length] : Int2;
-				}
+				Int2 = (Int1 < 0) ? Math.abs(Int2) : Int2;
+				// if (loopvars.length != 0) {
+				// Int2 = (Int2 < 0) ? loopvars[Math.abs(Int2)
+				// % loopvars.length] : Int2;
+				// }
 				Int2 = (Int2 == SystemSize.SYSTEM_SIZE_FLAG) ? num_qubits
 						: Int2;
 			}
 			if (next_instruction.getDouble1() != null) {
 				Double1 = next_instruction.getDouble1().evaluate(num_qubits,
 						loopvars);
+				if (next_instruction.getInstruction() != QuantumInstructionEnum.Create_CCX) {
+					Double1 = Double1 % (2 * Math.PI);
+				}
 			}
 
 			// If the requested Qubit number is greater than the number of
@@ -91,66 +104,158 @@ public class basiccircuitbuilder implements circuitBuilder {
 
 			// System.out.println("Int1 = " + Int1);
 			// System.out.println("Int2 = " + Int2);
-			if (!(Int1 > num_qubits) && !(Int1 < 1)) {
+			boolean add = true;
+			try {
+				if (lastInstruction != null) {
+					if (lastInstruction == next_instruction.getInstruction()) {
+						if (QuantumInstructionEnum
+								.isSelfReversing(next_instruction
+										.getInstruction())) {
+							if (Int1 == lastInt1) {
+								if (!QuantumInstructionEnum
+										.hasSecondQubit(next_instruction
+												.getInstruction())
+										|| (Int2 == lastInt2)) {
+									if (!QuantumInstructionEnum
+											.hasPhase(next_instruction
+													.getInstruction())
+											|| (Math.abs(Double1 - lastDouble) < 0.00001)) {
+										try {
+											to_return.removeLastGate();
+											add = false;
+											lastInstruction = null;
+											lastInt1 = 0;
+											lastInt2 = 0;
+											lastDouble = 0.0;
+										} catch (NoSuchElementException e) {
+											e.printStackTrace();
+											System.out
+													.println("lastInstruction = "
+															+ lastInstruction);
+											System.out.println("lastInt1 = "
+													+ lastInt1);
+											System.out.println("lastInt2 = "
+													+ lastInt2);
+											System.out.println("lastDouble1 = "
+													+ lastDouble);
+										}
+									}
+
+								}
+							}
+						}
+					}
+				}
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				if (lastInstruction != null) {
+					System.out.println("lastInstruction = " + lastInstruction);
+				} else {
+					System.out.println("lastInstruction = null");
+				}
+				System.out.println("lastInt1 = " + lastInt1);
+				System.out.println("lastInt2 = " + lastInt2);
+				System.out.println("lastDouble1 = " + lastDouble);
+			}
+			if (add && !(Int1 > num_qubits) && !(Int1 < 1)) {
 				switch (next_instruction.getInstruction()) {
 					case Create_H:
 						to_return.addGate(Builder_ID, new Hadamard_Gate(Int1));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
 						break;
 					case Create_X:
 						to_return.addGate(Builder_ID, new Pauli_X(Int1));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
 						break;
 					case Create_Y:
 						to_return.addGate(Builder_ID, new Pauli_Y(Int1));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
 						break;
 					case Create_Z:
 						to_return.addGate(Builder_ID, new Pauli_Z(Int1));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
 						break;
 					case Create_P:
 						to_return.addGate(Builder_ID, new Phase_Gate(Int1,
 								Double1));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
+						lastDouble = Double1;
 						break;
 					case Create_RX:
 						to_return.addGate(Builder_ID,
 								new RX_Gate(Int1, Double1));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
+						lastDouble = Double1;
 						break;
 					case Create_RY:
 						to_return.addGate(Builder_ID,
 								new RY_Gate(Int1, Double1));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
+						lastDouble = Double1;
 						break;
 					case Create_RZ:
 						to_return.addGate(Builder_ID,
 								new RZ_Gate(Int1, Double1));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
+						lastDouble = Double1;
 						break;
 					case Create_SWAP:
 						if ((Int1 != Int2) && (Int2 <= num_qubits)
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new Swap_Gate(Int1,
 									Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
+							lastDouble = Double1;
 						}
 						break;
 					case Create_V:
 						to_return.addGate(Builder_ID, new V_Gate(Int1));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
 						break;
 					case Create_W:
 						to_return.addGate(Builder_ID, new W_Gate(Int1));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
 						break;
 					case Create_Zero:
 						to_return.addGate(Builder_ID, new Zero_Gate(Int1));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
 						break;
 					case Create_Custom1:
 						to_return.addGate(Builder_ID, new Custom_Gate(Int1, 0));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
 						break;
 					case Create_Custom2:
 						to_return.addGate(Builder_ID, new Custom_Gate(Int1, 1));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
 						break;
 					case Create_Custom3:
 						to_return.addGate(Builder_ID, new Custom_Gate(Int1, 2));
+						lastInstruction = next_instruction.getInstruction();
+						lastInt1 = Int1;
 						break;
 					case Create_CH:
 						if ((Int1 != Int2) && (Int2 <= num_qubits)
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new Hadamard_Gate(1)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
 						}
 						break;
 					case Create_CX:
@@ -158,6 +263,9 @@ public class basiccircuitbuilder implements circuitBuilder {
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new Pauli_X(1)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
 						}
 						break;
 					case Create_CCX:
@@ -181,6 +289,11 @@ public class basiccircuitbuilder implements circuitBuilder {
 										new ControlledU_Gate(innerGate,
 												secondTarg, (int) Math
 														.round(Double1)));
+								lastInstruction = next_instruction
+										.getInstruction();
+								lastInt1 = Int1;
+								lastInt2 = Int2;
+								lastDouble = Double1;
 							} else {
 
 								int secondTarg = Math.abs((int) Math
@@ -195,6 +308,11 @@ public class basiccircuitbuilder implements circuitBuilder {
 								to_return.addGate(Builder_ID,
 										new ControlledU_Gate(innerGate,
 												secondTarg, Int2));
+								lastInstruction = next_instruction
+										.getInstruction();
+								lastInt1 = Int1;
+								lastInt2 = Int2;
+								lastDouble = Double1;
 							}
 						}
 						break;
@@ -203,6 +321,9 @@ public class basiccircuitbuilder implements circuitBuilder {
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new Pauli_Y(1)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
 						}
 						break;
 					case Create_CZ:
@@ -210,6 +331,9 @@ public class basiccircuitbuilder implements circuitBuilder {
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new Pauli_Z(1)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
 						}
 						break;
 					case Create_CP:
@@ -217,6 +341,10 @@ public class basiccircuitbuilder implements circuitBuilder {
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new Phase_Gate(1, Double1)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
+							lastDouble = Double1;
 						}
 						break;
 					case Create_CRX:
@@ -224,6 +352,10 @@ public class basiccircuitbuilder implements circuitBuilder {
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new RX_Gate(1, Double1)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
+							lastDouble = Double1;
 						}
 						break;
 					case Create_CRY:
@@ -231,6 +363,10 @@ public class basiccircuitbuilder implements circuitBuilder {
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new RY_Gate(1, Double1)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
+							lastDouble = Double1;
 						}
 						break;
 					case Create_CRZ:
@@ -238,6 +374,10 @@ public class basiccircuitbuilder implements circuitBuilder {
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new RZ_Gate(1, Double1)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
+							lastDouble = Double1;
 						}
 						break;
 					case Create_CV:
@@ -245,6 +385,9 @@ public class basiccircuitbuilder implements circuitBuilder {
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new V_Gate(1)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
 						}
 						break;
 					case Create_CW:
@@ -252,6 +395,9 @@ public class basiccircuitbuilder implements circuitBuilder {
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new W_Gate(1)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
 						}
 						break;
 					case Create_CCustom1:
@@ -259,6 +405,9 @@ public class basiccircuitbuilder implements circuitBuilder {
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new Custom_Gate(1, 0)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
 						}
 						break;
 					case Create_CCustom2:
@@ -266,6 +415,9 @@ public class basiccircuitbuilder implements circuitBuilder {
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new Custom_Gate(1, 1)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
 						}
 						break;
 					case Create_CCustom3:
@@ -273,6 +425,9 @@ public class basiccircuitbuilder implements circuitBuilder {
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(
 									(new Custom_Gate(1, 2)), Int1, Int2));
+							lastInstruction = next_instruction.getInstruction();
+							lastInt1 = Int1;
+							lastInt2 = Int2;
 						}
 						break;
 					// case Root:
@@ -287,9 +442,12 @@ public class basiccircuitbuilder implements circuitBuilder {
 					case Iterate:
 						qcarray = next_instruction.getSubalg();
 						new_itervals = new int[loopvars.length + 1];
-						for (int j = 0; j < loopvars.length; j++) {
-							new_itervals[j + 1] = loopvars[j];
-						}
+						// for (int j = 0; j < loopvars.length; j++) {
+						// new_itervals[j + 1] = loopvars[j];
+						// }
+						System.arraycopy(loopvars, 0, new_itervals, 1,
+								loopvars.length);
+						lastInstruction = null;
 
 						for (int i = 1; (qcarray.length > 0) && (i <= Int1); i++) {
 							try {
@@ -310,6 +468,7 @@ public class basiccircuitbuilder implements circuitBuilder {
 							new_itervals[k + 1] = loopvars[k];
 							k++;
 						}
+						lastInstruction = null;
 
 						for (int i = Int1; (qcarray.length > 0) && (1 <= i); i--) {
 							try {
