@@ -10,6 +10,10 @@ import Core.Algorithms.exp_node;
  * 
  */
 public class add implements exp_node {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 8658892359021531494L;
 	private final exp_node	child1;
 	private final exp_node	child2;
 

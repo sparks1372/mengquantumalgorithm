@@ -10,6 +10,10 @@ import Core.Algorithms.exp_node;
  * 
  */
 public class pow implements exp_node {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -7428229072725781502L;
 	private final exp_node	child1;
 	private final exp_node	child2;
 

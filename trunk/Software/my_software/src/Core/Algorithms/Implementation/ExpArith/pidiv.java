@@ -10,7 +10,11 @@ import Core.Algorithms.exp_node;
  * 
  */
 public class pidiv implements exp_node {
-	private final exp_node	child1;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1103588697474932807L;
+	private final exp_node		child1;
 
 	/**
 	 * 
@@ -27,7 +31,8 @@ public class pidiv implements exp_node {
 	@Override
 	public double evaluate(int sys_size, int[] loopvar) {
 		double toReturn;
-		toReturn = Math.PI / Math.pow(2, child1.evaluate(sys_size, loopvar));
+		toReturn = Math.PI
+				/ Math.pow(2, child1.evaluate(sys_size, loopvar) % 10);
 		return toReturn;
 	}
 

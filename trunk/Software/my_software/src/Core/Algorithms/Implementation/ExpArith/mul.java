@@ -10,6 +10,10 @@ import Core.Algorithms.exp_node;
  * 
  */
 public class mul implements exp_node {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -9095244969913948706L;
 	private final exp_node	child1;
 	private final exp_node	child2;
 

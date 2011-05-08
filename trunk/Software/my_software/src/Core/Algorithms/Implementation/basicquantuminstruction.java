@@ -6,6 +6,10 @@ import Core.Algorithms.QuantumInstructionEnum;
 import Core.Algorithms.exp_node;
 
 public class basicquantuminstruction implements QuantumInstruction {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -7387521810547397545L;
 	private QuantumInstructionEnum	inst;
 	private exp_node				gate1;
 	private exp_node				gate2;

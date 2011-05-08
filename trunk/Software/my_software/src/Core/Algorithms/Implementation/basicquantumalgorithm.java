@@ -10,9 +10,13 @@ import Core.Algorithms.QuantumInstructionEnum;
 import Core.Algorithms.exp_node;
 
 public class basicquantumalgorithm implements QuantumAlgorithm {
+	/**
+	 * 
+	 */
+	private static final long						serialVersionUID	= -3625148453956686365L;
 	private final LinkedList<QuantumInstruction>	inst_list;
-	private int										size	= 0;
-	private int										val_sum	= 0;
+	private int										size				= 0;
+	private int										val_sum				= 0;
 
 	public basicquantumalgorithm() {
 		inst_list = new LinkedList<QuantumInstruction>();
@@ -106,6 +110,7 @@ public class basicquantumalgorithm implements QuantumAlgorithm {
 					ins = ins.concat("}\n");
 					break;
 				case Iterate:
+				case RevIterate:
 					if ((qi.getSubalg().length != 0)) {
 						ins = qi.getInstruction().name() + " for "
 								+ qi.getInteger1().toPrint()

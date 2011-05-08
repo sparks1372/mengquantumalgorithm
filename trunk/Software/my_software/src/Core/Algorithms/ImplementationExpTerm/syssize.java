@@ -11,6 +11,11 @@ import Core.Algorithms.exp_node;
  */
 public class syssize implements exp_node {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 4039344166927957436L;
+
 	/*
 	 * (non-Javadoc)
 	 * 

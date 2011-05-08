@@ -10,6 +10,10 @@ import Core.Algorithms.exp_node;
  * 
  */
 public class val implements exp_node {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -4041346175526464899L;
 	private final double	value;
 
 	/**

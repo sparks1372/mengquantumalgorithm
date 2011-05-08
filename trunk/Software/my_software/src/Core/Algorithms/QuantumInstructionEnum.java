@@ -42,17 +42,27 @@ public enum QuantumInstructionEnum implements Serializable {
 	public static QuantumInstructionEnum[] getControl() {
 		QuantumInstructionEnum[] stand = new QuantumInstructionEnum[11];
 		int i = 0;
-		stand[i++] = Create_CH;
-		stand[i++] = Create_CX;
-		stand[i++] = Create_CCX;
-		stand[i++] = Create_CY;
-		stand[i++] = Create_CZ;
-		stand[i++] = Create_CP;
-		stand[i++] = Create_CRX;
-		stand[i++] = Create_CRY;
-		stand[i++] = Create_CRZ;
-		stand[i++] = Create_CW;
-		stand[i++] = Create_CV;
+		stand[i] = Create_CH;
+		i++;
+		stand[i] = Create_CX;
+		i++;
+		stand[i] = Create_CY;
+		i++;
+		stand[i] = Create_CZ;
+		i++;
+		stand[i] = Create_CP;
+		i++;
+		stand[i] = Create_CV;
+		i++;
+		stand[i] = Create_CW;
+		i++;
+		stand[i] = Create_CRX;
+		i++;
+		stand[i] = Create_CRY;
+		i++;
+		stand[i] = Create_CRZ;
+		i++;
+		stand[i] = Create_CCX;
 		return stand;
 	}
 
@@ -71,27 +81,40 @@ public enum QuantumInstructionEnum implements Serializable {
 	public static QuantumInstructionEnum[] getFlowControl() {
 		QuantumInstructionEnum[] stand = new QuantumInstructionEnum[3];
 		int i = 0;
-		stand[i++] = Iterate;
-		stand[i++] = RevIterate;
-		stand[i++] = Body;
+		stand[i] = Iterate;
+		i++;
+		stand[i] = RevIterate;
+		i++;
+		stand[i] = Body;
 		return stand;
 	}
 
 	public static QuantumInstructionEnum[] getStandard() {
 		QuantumInstructionEnum[] stand = new QuantumInstructionEnum[12];
 		int i = 0;
-		stand[i++] = Create_H;
-		stand[i++] = Create_X;
-		stand[i++] = Create_Y;
-		stand[i++] = Create_Z;
-		stand[i++] = Create_P;
-		stand[i++] = Create_V;
-		stand[i++] = Create_W;
-		stand[i++] = Create_RX;
-		stand[i++] = Create_RY;
-		stand[i++] = Create_RZ;
-		stand[i++] = Create_SWAP;
-		stand[i++] = Create_Zero;
+		stand[i] = Create_H;
+		i++;
+		stand[i] = Create_X;
+		i++;
+		stand[i] = Create_Y;
+		i++;
+		stand[i] = Create_Z;
+		i++;
+		stand[i] = Create_P;
+		i++;
+		stand[i] = Create_V;
+		i++;
+		stand[i] = Create_W;
+		i++;
+		stand[i] = Create_RX;
+		i++;
+		stand[i] = Create_RY;
+		i++;
+		stand[i] = Create_RZ;
+		i++;
+		stand[i] = Create_SWAP;
+		i++;
+		stand[i] = Create_Zero;
 
 		return stand;
 	}
@@ -131,6 +154,28 @@ public enum QuantumInstructionEnum implements Serializable {
 			case Create_CCustom1:
 			case Create_CCustom2:
 			case Create_CCustom3:
+				return true;
+			default:
+				return false;
+		}
+
+	}
+
+	public static boolean isSelfReversing(QuantumInstructionEnum i) {
+		switch (i) {
+			case Create_H:
+			case Create_V:
+			case Create_W:
+			case Create_X:
+			case Create_Y:
+			case Create_Z:
+			case Create_CH:
+			case Create_CV:
+			case Create_CW:
+			case Create_CX:
+			case Create_CY:
+			case Create_CZ:
+			case Create_SWAP:
 				return true;
 			default:
 				return false;
