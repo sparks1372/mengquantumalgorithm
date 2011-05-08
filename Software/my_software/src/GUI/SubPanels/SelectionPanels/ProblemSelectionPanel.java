@@ -1,7 +1,7 @@
 /**
  * @Author = Sam Ratcliff
  */
-package GUI.SubPanels;
+package GUI.SubPanels.SelectionPanels;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

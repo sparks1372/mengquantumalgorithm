@@ -21,6 +21,9 @@ import Core.qcevolutionbackend;
 import Core.CircuitEvolution.SearchEngineState;
 import Core.CircuitEvolution.SearchResult;
 import Core.CircuitEvolution.circuitsearchengine;
+import GUI.SubPanels.ResultPanels.ResultPanel;
+import GUI.SubPanels.StatePanels.finalStateVisualiserTabPanel;
+import GUI.SubPanels.StatePanels.stateVisualiserTabPanel;
 
 /**
  * @author Sam Ratcliff

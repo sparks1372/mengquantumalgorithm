@@ -1,7 +1,7 @@
 /**
  * @Author = Sam Ratcliff
  */
-package GUI.SubPanels;
+package GUI.SubPanels.StatePanels;
 
 import java.awt.Component;
 import java.awt.Font;

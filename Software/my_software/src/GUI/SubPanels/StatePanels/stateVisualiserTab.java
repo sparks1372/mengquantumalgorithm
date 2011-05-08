@@ -1,7 +1,7 @@
 /**
  * @Author = Sam Ratcliff
  */
-package GUI.SubPanels;
+package GUI.SubPanels.StatePanels;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -39,6 +39,7 @@ public class stateVisualiserTab extends JPanel implements ListSelectionListener 
 	protected final testset			tset;
 	public static int				selectorWidth;
 	private final JLabel			tc_label;
+	protected JPanel				statePanel;
 
 	/**
 	 * @param ts
@@ -49,6 +50,8 @@ public class stateVisualiserTab extends JPanel implements ListSelectionListener 
 		model = new DefaultListModel();
 		tset = ts;
 
+		statePanel = new JPanel();
+		statePanel.setLayout(new BoxLayout(statePanel, BoxLayout.PAGE_AXIS));
 		startFinalTabSelector = new JTabbedPane();
 		tc_label = new JLabel("Test Case");
 		Iterator<testcase> iter = tset.getTestcases();
@@ -91,7 +94,8 @@ public class stateVisualiserTab extends JPanel implements ListSelectionListener 
 	protected void addCorrectPanel() {
 		startFinalTabSelector.add(startStateVisualiser, "Starting State");
 		startFinalTabSelector.add(finalStateVisualiser, "Final State");
-		this.add(startFinalTabSelector, BorderLayout.CENTER);
+		statePanel.add(startFinalTabSelector);
+		this.add(statePanel, BorderLayout.CENTER);
 	}
 
 	public int getSelectedIndex() {

@@ -8,7 +8,7 @@ import java.awt.Dimension;
 import javax.swing.JScrollPane;
 
 import Core.Circuit.Circuit;
-import GUI.SubPanels.ResultPanels.Util.CircuitPanel;
+import GUI.CircuitVisualiser.CircuitRendererPanel;
 
 /**
  * @author Sam Ratcliff
@@ -20,7 +20,7 @@ public class CircuitParentPanel extends JScrollPane {
 	 */
 	private static final long	serialVersionUID	= 188924310281950586L;
 	private static final String	nameStr				= "Circuit";
-	private CircuitPanel		cPanel;
+	private CircuitRendererPanel		cPanel;
 
 	/**
 	 * 
@@ -51,7 +51,7 @@ public class CircuitParentPanel extends JScrollPane {
 	 * @param num
 	 */
 	public void update(Circuit circuit, int num) {
-		cPanel = new CircuitPanel(circuit, num);
+		cPanel = new CircuitRendererPanel(circuit, num);
 		setViewportView(cPanel);
 	}
 

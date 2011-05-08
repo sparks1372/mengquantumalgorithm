@@ -1,7 +1,7 @@
 /**
  * @Author = Sam Ratcliff
  */
-package GUI.SubPanels;
+package GUI.SubPanels.SelectionPanels;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -31,32 +31,31 @@ import GUI.MainPanel;
  * @author Sam Ratcliff
  * 
  */
-public class FitnessFunctionSelectionPanel extends JPanel implements
+public class SearchEngineSelectionPanel extends JPanel implements
 		ActionListener, Observer {
 	/**
 	 * 
 	 */
-	private static final long			serialVersionUID	= -7444363721218072158L;
+	private static final long			serialVersionUID	= 4691811963577024360L;
 	private final JComboBox				selection;
 	private final ComboBoxModel			selection_model;
 	private final JTextPane				description;
 	private final JScrollPane			description_scroller;
 	private final qcevolutionbackend	backend;
-	private static String				psLabelStr			= "Fitness Function Selection";
+	private static String				psLabelStr			= "Search Engine Selection";
 	private JLabel						psLabel;
 	private JPanel						labelPanel;
 
 	/**
 	 * 
 	 */
-	public FitnessFunctionSelectionPanel(qcevolutionbackend be) {
+	public SearchEngineSelectionPanel(qcevolutionbackend be) {
 		this.setLayout(new BorderLayout());
 		backend = be;
 
-		Set<String> probs = backend.getFfmanager()
-				.getAvailableFitnessFunctions();
+		Set<String> probs = backend.getSemanager().getAvailableSearchEngines();
 		String[] options = new String[probs.size() + 1];
-		options[0] = "Please Select Fitness Function";
+		options[0] = "Please Select Search Engine";
 		int index = 1;
 		Iterator<String> iter = probs.iterator();
 		while (iter.hasNext()) {
@@ -80,14 +79,14 @@ public class FitnessFunctionSelectionPanel extends JPanel implements
 		// description_scroller.setPreferredSize(new Dimension(250, 155));
 		description_scroller.setMinimumSize(new Dimension(10, 10));
 
-		if (backend.getCurrentff() != null) {
-			String key = backend.getCurrentff().getName();
+		if (backend.getCurrentse() != null) {
+			String key = backend.getCurrentse().getName();
 			selection_model.setSelectedItem(key);
-			description.setText(backend.getFfmanager().getFitnessFunctionDesc(
-					key));
+			description
+					.setText(backend.getSemanager().getSearchEngineDesc(key));
 		}
 
-		be.addObserver(this);
+		backend.addObserver(this);
 		if (null != backend.getCurrentse()) {
 			backend.getCurrentse().addObserver(this);
 		}
@@ -114,12 +113,12 @@ public class FitnessFunctionSelectionPanel extends JPanel implements
 	public void actionPerformed(ActionEvent e) {
 		JComboBox cb = (JComboBox) e.getSource();
 		if (cb.getSelectedIndex() != 0) {
-			String ff_key = (String) cb.getSelectedItem();
-			description.setText(backend.getFfmanager().getFitnessFunctionDesc(
-					ff_key));
-			backend.setCurrentff(backend.getFfmanager().getFitnessFuntion(
-					ff_key));
+			String se_key = (String) cb.getSelectedItem();
+			description.setText(backend.getSemanager().getSearchEngineDesc(
+					se_key));
+			backend.setCurrentse(backend.getSemanager().getSearchEngine(se_key));
 		}
+
 	}
 
 	private void setupLabels() {
