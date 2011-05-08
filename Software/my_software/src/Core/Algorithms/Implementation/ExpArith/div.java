@@ -10,8 +10,12 @@ import Core.Algorithms.exp_node;
  * 
  */
 public class div implements exp_node {
-	private final exp_node	child1;
-	private final exp_node	child2;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -7761850537335601579L;
+	private final exp_node		child1;
+	private final exp_node		child2;
 
 	/**
 	 * 
@@ -30,8 +34,8 @@ public class div implements exp_node {
 	public double evaluate(int sys_size, int[] loopvar) {
 		double toReturn;
 		double c2eval = child2.evaluate(sys_size, loopvar);
-		toReturn = c2eval == 0 ? Integer.MAX_VALUE : child1.evaluate(sys_size,
-				loopvar) / c2eval;
+		toReturn = c2eval == 0 ? 0 : child1.evaluate(sys_size, loopvar)
+				/ c2eval;
 		return toReturn;
 	}
 
@@ -42,7 +46,7 @@ public class div implements exp_node {
 	 */
 	@Override
 	public String toPrint() {
-		return "(" + child1.toPrint() + ")-(" + child2.toPrint() + ")";
+		return "(" + child1.toPrint() + ")/(" + child2.toPrint() + ")";
 	}
 
 	/*

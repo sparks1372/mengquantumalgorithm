@@ -10,7 +10,11 @@ import Core.Algorithms.exp_node;
  * 
  */
 public class loopvar implements exp_node {
-	private final exp_node	child1;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 4920171370053452182L;
+	private final exp_node		child1;
 
 	/**
  * 
@@ -41,7 +45,7 @@ public class loopvar implements exp_node {
 	 */
 	@Override
 	public String toPrint() {
-		return "Loop_Var(" + child1.toPrint() + ")";
+		return "Loop_Vars[" + child1.toPrint() + "]";
 	}
 
 	/*
