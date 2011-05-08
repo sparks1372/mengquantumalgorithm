@@ -14,13 +14,23 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.apache.log4j.PropertyConfigurator;
+
 /**
  * @author Sam Ratcliff
  * 
  */
 public class StandaloneEditor extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -7370618660262825246L;
+
 	public static void main(final String[] args) {
+
+		PropertyConfigurator.configure("config/log4j.properties");
+
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
