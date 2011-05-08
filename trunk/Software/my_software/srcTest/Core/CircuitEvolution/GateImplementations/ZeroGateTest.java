@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import Core.Circuit.GateImplementations.Zero_Gate;
 import Jama.Matrix;
 import Testing.predefined_states;
 import Utils.Complex;
@@ -19,7 +20,7 @@ public class ZeroGateTest {
 
 	/**
 	 * Test method for
-	 * {@link Core.CircuitEvolution.GateImplementations.Hadamard_Gate#apply(Jama.Matrix)}
+	 * {@link Core.Circuit.GateImplementations.Hadamard_Gate#apply(Jama.Matrix)}
 	 * .
 	 */
 	@Test
@@ -55,15 +56,24 @@ public class ZeroGateTest {
 
 		test_state = predefined_states.get_2q_1();
 
+		oracle = new Matrix(4, 1);
+		oracle.set(1, 0, new Complex(1, 0));
+
 		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_1", Matrix.equal(result, oracle));
 
 		test_state = predefined_states.get_2q_2();
 
+		oracle = new Matrix(4, 1);
+		oracle.set(0, 0, new Complex(1, 0));
+
 		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_2", Matrix.equal(result, oracle));
 
 		test_state = predefined_states.get_2q_3();
+
+		oracle = new Matrix(4, 1);
+		oracle.set(1, 0, new Complex(1, 0));
 
 		result = test.apply(test_state, null);
 		assertTrue("Fail on get_2q_3", Matrix.equal(result, oracle));

@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import Core.Circuit.GateImplementations.ControlledU_Gate;
+import Core.Circuit.GateImplementations.Pauli_X;
 import Jama.Matrix;
 import Testing.predefined_states;
 import Utils.Complex;
@@ -19,7 +21,7 @@ public class ControlledUGateTest {
 
 	/**
 	 * Test method for
-	 * {@link Core.CircuitEvolution.GateImplementations.Hadamard_Gate#apply(Jama.Matrix)}
+	 * {@link Core.Circuit.GateImplementations.Hadamard_Gate#apply(Jama.Matrix)}
 	 * .
 	 */
 	@Test

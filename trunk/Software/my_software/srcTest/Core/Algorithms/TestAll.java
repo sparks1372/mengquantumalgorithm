@@ -1,4 +1,4 @@
-package Jama;
+package Core.Algorithms;
 
 import org.junit.runner.JUnitCore;
 import org.junit.runner.RunWith;
@@ -9,13 +9,14 @@ import org.junit.runners.Suite;
  * of the tests within its package as well as within any subpackages of its
  * package.
  *
- * @generatedBy CodePro at 19/04/11 00:54
+ * @generatedBy CodePro at 06/05/11 21:54
  * @author sam
  * @version $Revision: 1.0 $
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	MatrixTest.class,
+	exp_nodeTest.class,
+	Core.Algorithms.Implementation.TestAll.class,
 })
 public class TestAll {
 
@@ -24,7 +25,7 @@ public class TestAll {
 	 *
 	 * @param args the command line arguments
 	 *
-	 * @generatedBy CodePro at 19/04/11 00:54
+	 * @generatedBy CodePro at 06/05/11 21:54
 	 */
 	public static void main(String[] args) {
 		JUnitCore.runClasses(new Class[] { TestAll.class });
