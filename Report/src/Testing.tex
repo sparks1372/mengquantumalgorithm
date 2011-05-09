@@ -6,18 +6,6 @@ Many of the components created for the framework were tested by unit testing.
 With the framework created in Java, JUnit 4\cite{junitweb} was used to produce and run the unit tests.
 Not all components were suitable for unit testing, e.g. those clases providing higher level control rather than simple encapsulated functionality.
 
-The components that were unit tested are listed below:
-\begin{itemize}
- \item Complex class
- \item Matrix class
- \item All gate implementations
- \item Circuit implementation
- \item Expnode implementation
- \item Algorithm implementation
- \item Suitability measures
- \item Manager classes
-\end{itemize}
-
 % In the unit tests the test values were chosen in accordance with partition testing to ensure that the test were more complete and tested for the incorrect and the correct partitions with equal weight.
 
 \subsection{Complex Number Implementation Unit Tests}
@@ -31,7 +19,7 @@ The tests of the \emph{toString} and \emph{parseComplex} methods were combined t
 For the numeric methods, Octave\cite{octweb} was used to create test oracles.
 
 \subsection{Matrix Implementation Unit Tests}
-The Matrix is based on a third party implementation but due to both its importance to the correct operation of the framework and the extent of the modification made to it, extensive unit testing was performed.
+The Matrix class is based on a third party implementation but due to both its importance to the correct operation of the framework and the extent of the modification made to it, extensive unit testing was performed.
 Even though the framework only requires the correct operation of unitary matrices the testing was not restricted to unitary matrices.
 Test matrices were created as real only,  imaginary only and real and imaginary complex values with both positive and negative values.
 
@@ -49,7 +37,7 @@ To reduce the probability of errors being introduced into the test oracles used 
 QCF does not provide all of the gates defined in Table \ref{tab:providedgates}.
 For the missing gates, Matlab functions were created using the definitions in Table \ref{tab:providedgates}.
 
-To test the custom gate implementation XML files were created with the definitions of all single qubit gates.
+To test the custom gate implementation XML files were created with the definitions of some single qubit gates.
 Custom gates were created using these XML files and all the unit tests for the respective gate were applied.
 This ensured that the operation of the custom gate is functionally equivalent to the non-custom gates.
 
@@ -163,7 +151,7 @@ This is used by the unit test to ensure that the object created by the manager a
 
 \section{Integration Tests}
 As mentioned in Section \ref{sec:unittests}, the framework contains classes that coordinate the interaction between the functional classes.
-The integration tests were designed to test these classes in particular.
+The integration tests were designed to test these classes.
 These classes in particular were:
 \begin{enumerate}
  \item The circuit builder implementation - \emph{basiccircuitbuilder}
@@ -215,18 +203,16 @@ The theoretical suitability value of each algorithm was determined and then comp
 Two additional tests were produced to test the \emph{getResults} and \emph{getTrace} methods.
 The test oracles were test suites and arrays of test suites respectively.
 
-\section{System Testing}
-\label{sec:systests}
-
 \section{Client GUI Testing}
 \label{sec:clientguitests}
 The client GUI that is provided alongside the framework was tested using scenario based testing.
 A scenario was created to verify each of the client requirements.
+These scenaroios were carried out on both Linux and Windows.
 
 \section{Summary}
 
 The above summarises the levels of testing carried out.
-Although most did indeed work as intended testing did reveal errors.
+Although most the software did indeed work as intended testing did reveal errors.
 For example, originally the Controlled-U gate was implemented using only Equation \ref{eq:clu} and not Equation \ref{eq:chu}, see Section \ref{sec:quantumgates}.
 This was found to be a bug as the Controlled-U gate only worked when the control bit was of a lower significant qubit than the target qubit.
 Other tests found a bug where with the QCircuit representation when a Controlled-U gate has at least one qubit in-between the control and target qubits.
