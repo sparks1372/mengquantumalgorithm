@@ -98,6 +98,8 @@ Put the value $0.5$ in the second column of the rows labelled with the states $\
 The output state is shown in the right hand table.
 Put the value $0.5$ in the second column of the rows labelled with the states $\ket{1100}$, $\ket{1101}$, $\ket{1110}$ and $\ket{1111})$.
 The value $0.5$ is used as it means that the probability of any of them is $\frac{1}{4}$ as no specific output is desired as long as the two most significant qubits match.
+This is just one way this could be encoded, the state $\ket{1100}$ could be given the value $1$ while all the others are given $0$.
+This difficulty with representing the Max Permutation problem is explained in more detail in Section \ref{sec:simplsuitmeas}.
 
 \item \label{enum:addtcstep} Using the mouse, left click on the button labelled ``Add Test Case''.
 We shall now enter test case $10$.
@@ -221,9 +223,8 @@ This shall open up a new dialog box specific for the search engine selected.
 
 \item \label{enum:searchsettings} Most default settings shall be maintained.
 The three items that shall be changed are the number of generations, the mutation rate and the number of search iterations.
-Using the mouse, left click in the text area to the right of the ``Generations'' label and enter $2000$.
-Using the mouse, left click in the text area to the right of the ``Mutation Rate'' label and enter $0.3$.
 Using the mouse, left click in the text area to the right of the ``Number of Iterations'' label and enter $3$.
+Unselect all instructions except \emph{Create\_H}, \emph{Create\_CH}, \emph{Create\_X}, \emph{Create\_CX}, \emph{Create\_CCX}, \emph{Create\_R}, \emph{Create\_CR}, \emph{Iterate}, \emph{RevIterate} and \emph{Body}.
 
 \item To start the search, click on the button labelled ``Evolve Now''.
 This shall initiate the search and the dialog box shall close.
@@ -231,13 +232,13 @@ All the selection drop down lists will be disabled so that changes cannot be mad
 During the search, a statistics panel is provided as can be see in Figure \ref{fig:walkthrough8}.
 If the JPPF version of the search engine were selected,  the statistics panel would provide much less information due to the amount of information available due to the distribution.
 
-\item When the search is complete, the results shall be displayed in the central panel as can be seen in Figure \ref{fig:walkthrough9}.
+\item When the search is complete, the results shall be displayed in the central panel as can be seen in Figure \ref{fig:walkthrough9a}.
 
 \end{enumerate}
 
 \section{Analysing the Search Results}
 
-Once the search is completed, the results are shown in the central panel as can be seen in Figure \ref{fig:walkthrough9}.
+Once the search is completed, the results are shown in the central panel as can be seen in Figure \ref{fig:walkthrough9a}.
 This section assumes that the results are produced by following the steps in Section \ref{sec:carryingoutthesearch}.
 
 \subsection{Which Search Result?}
@@ -249,6 +250,16 @@ All search results are available for the user to analyse.
 
 The user interface provides a drop down list of all the available search results.
 Below the drop down list are the details of the selected results.
+The results of the three searches are shown in Figures \ref{fig:walkthrough9a}, \ref{fig:walkthrough9b} and \ref{fig:walkthrough9c}.
+
+\section{Analysing the Search Results}
+
+The client provides access to some search statistics.
+The dialog box containing this information can be launched by the ``Statistics'' button shown alongside the drop down list in the central area.
+The dialog that is lauched can be seen in Figure \ref{fig:walkthrough10}.
+
+Figure \ref{fig:walkthrough11} shows the statistics after $100$ iterations of a search to find the entanglement circuit, a Hadamard on gate $1$ followed by a Pauli-X gate on qubit $2$ controlled by qubit $1$.
+The statistics show the histogram of which generation an ideal solution was found.
 
 \clearpage
 \section{Referenced Figures}
@@ -303,7 +314,31 @@ Below the drop down list are the details of the selected results.
 \end{figure}
 
 \begin{figure}
-  \includegraphics[width=\textwidth]{walkthrough9.png}
- \caption{Client GUI after Search is Complete}
- \label{fig:walkthrough9}
+  \includegraphics[width=\textwidth]{walkthrough9a.png}
+ \caption{Client GUI after Search is Complete - Result 0}
+ \label{fig:walkthrough9a}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{walkthrough9b.png}
+ \caption{Client GUI after Search is Complete - Result 1}
+ \label{fig:walkthrough9b}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{walkthrough9c.png}
+ \caption{Client GUI after Search is Complete - Result 2}
+ \label{fig:walkthrough9c}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{walkthrough10.png}
+ \caption{Client GUI Showing the Search Statistics}
+ \label{fig:walkthrough10}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{walkthrough11.png}
+ \caption{Client GUI Showing the Search Statistics of Entanglement Search}
+ \label{fig:walkthrough11}
 \end{figure}

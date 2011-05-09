@@ -49,8 +49,8 @@
 \RequirePackage{fixltx2e}
 \RequirePackage{ifthen}
 
-% \pagestyle{plain}
-\pagestyle{headings}
+\pagestyle{plain}
+% \pagestyle{headings}
 \renewcommand{\partpagestyle}{empty}
 
 % Reference control
@@ -131,6 +131,16 @@
                          {, but not \UoYCSP@excludes}%
              }%
              .%
+
+  \vspace{\fill}
+
+    Number of pages = 69.
+
+
+    This includes the body of the report,%
+    title page, abstract page, Contents, List of Figures and List of Tables
+    but not any Appendices or blank sides.
+    
 }
 
 \let\old@abstract\abstract

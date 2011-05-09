@@ -8,9 +8,7 @@
 \begin{algorithm}
  \begin{algorithmic}
 \STATE Create\_Custom1 on gate Loop\_Vars[54.0]
-\STATE RevIterate on gate System\_Size
 \STATE Create\_H on gate Loop\_Vars[5.0]
-\STATE RevIterate on gate System\_Size
 \STATE Create\_CCustom1 on gate 1.0 and gate System\_Size
 \STATE Create\_H on gate 1.0
 \STATE Create\_V on gate 54.0
@@ -174,8 +172,8 @@ $
  \end{tabular}
 \begin{tabular}{|ccccccc|}
 \hline
-  Create\_H & Create\_X& Create\_Y& Create\_Z & Create\_P & Create\_Custom1 & Body \\
-  Create\_CH & Create\_CX & Create\_CY & Create\_CZ & Create\_CP & Create\_CCustom1 & Iterate \\
+  Create\_H & Create\_X& Create\_Y& Create\_Z & Create\_R & Create\_Custom1 & Body \\
+  Create\_CH & Create\_CX & Create\_CY & Create\_CZ & Create\_CR & Create\_CCustom1 & Iterate \\
    & Create\_CCX &  & &  &  &  \\
 \hline
  \end{tabular}
@@ -189,22 +187,22 @@ $
 
 \begin{algorithm}
  \begin{algorithmic}
-\STATE Create\_CP on gate 2.0 and gate 6.0 with phase 1.0
+\STATE Create\_CR on gate 2.0 and gate 6.0 with phase 1.0
 \STATE Create\_H on gate 2.0
 \STATE Create\_H on gate 3.0
 \STATE Create\_H on gate 1.0
 \STATE Create\_Custom1 on gate 1.0
-\STATE Create\_CP on gate Loop\_Vars[3.0] and gate 48.0 with phase Loop\_Vars[2.0]
-\STATE Create\_CP on gate 2.0 and gate 6.0 with phase 1.0
+\STATE Create\_CR on gate Loop\_Vars[3.0] and gate 48.0 with phase Loop\_Vars[2.0]
+\STATE Create\_CR on gate 2.0 and gate 6.0 with phase 1.0
 \STATE Create\_H on gate 39.0
-\STATE Create\_CP on gate 2.0 and gate 6.0 with phase 1.0
+\STATE Create\_CR on gate 2.0 and gate 6.0 with phase 1.0
 \STATE Create\_H on gate 2.0
 \STATE Create\_H on gate 3.0
 \STATE Create\_H on gate 31.0
-\STATE Create\_CP on gate 2.0 and gate 6.0 with phase 1.0
+\STATE Create\_CR on gate 2.0 and gate 6.0 with phase 1.0
 \STATE Create\_H on gate Loop\_Vars[2.0]
 \STATE Create\_H on gate 1.0
-\STATE Create\_CP on gate 79.0 and gate Loop\_Vars[10.0] with phase Loop\_Vars[2.0]
+\STATE Create\_CR on gate 79.0 and gate Loop\_Vars[10.0] with phase Loop\_Vars[2.0]
  \end{algorithmic}
 \caption{Evolved Solution for Deutsch Jozsa Problem}
 \label{alg:evodeutschjozsa}
@@ -216,8 +214,8 @@ $
 \begin{figure}[h!]
 \[
 \Qcircuit @C=1.0em @R=.7em {
-&\qw&\qw&\gate{H}&\gate{H}&\gate{H}&\ctrl{1} &\qw&\gate{H}&\gate{H}&\ctrl{1} &\qw&\\%2
-&\gate{H}&\gate{H}&\qw&\qw&\qw&\gate{C0} \qwx &\gate{H}&\qw&\qw&\gate{C0} \qwx &\gate{H}&\\%1
+&\gate{H}&\qw&\qw&\qw&\\%2
+&\qw&\gate{H}&\gate{C0}&\gate{H}&\\%1
 }
 \]
 \caption{Deutsch Jozsa Solution - Two Qubits }
@@ -225,13 +223,121 @@ $
 \begin{figure}[h!]
 \[
 \Qcircuit @C=1.0em @R=.7em {
-&\qw&\qw&\gate{H}&\qw&\gate{H}&\gate{H}&\qw&\qw&\gate{H}&\qw&\gate{H}&\qw&\qw&\\%3
-&\qw&\qw&\qw&\gate{H}&\qw&\qw&\ctrl{1} &\qw&\qw&\gate{H}&\qw&\ctrl{1} &\qw&\\%2
-&\gate{H}&\gate{H}&\qw&\qw&\qw&\qw&\gate{C0} \qwx &\gate{H}&\qw&\qw&\qw&\gate{C0} \qwx &\gate{H}&\\%1
+&\qw&\gate{H}&\qw&\qw&\qw&\qw&\\%3
+&\gate{H}&\qw&\qw&\qw&\gate{H}&\qw&\\%2
+&\qw&\qw&\gate{H}&\gate{C0}&\qw&\gate{H}&\\%1
 }
 \]
 \caption{Deutsch Jozsa Solution - Three Qubits }
 \end{figure}
+\begin{figure}[h!]
+\[
+\Qcircuit @C=1.0em @R=.7em {
+&\qw&\qw&\qw&\qw&\qw&\qw&\gate{H}&\qw&\\%4
+&\qw&\gate{H}&\qw&\qw&\qw&\gate{H}&\qw&\qw&\\%3
+&\gate{H}&\qw&\qw&\qw&\gate{H}&\qw&\qw&\qw&\\%2
+&\qw&\qw&\gate{H}&\gate{C0}&\qw&\qw&\qw&\gate{H}&\\%1
+}
+\]
+\caption{Deutsch Jozsa Solution - Four Qubits }
+\label{fig:evodeutschjozsafourq}
+\end{figure}
+
+\clearpage
+\section{0..3 Max Permutation Problem}
+\label{sec:maxpermsol}
+
+\subsection{Search Parameters}
+\label{sec:maxpermsearchparams}
+
+\begin{figure}[h!]
+\begin{center}
+ \begin{tabular}{|cc|cc|}
+\hline
+  Population Size & 128 & Generations & 128 \\
+  \# of Breeder Threads & 8 & \# of Evaluation Threads & 8 \\
+  \# of Elites & 1 & Number of Iterations & 1 \\
+  Minimum Initial Tree Depth & 1 & Maximum Initial Tree Depth & 30 \\
+  CrossOver Rate & 0.9 & Mutation Rate & 0.003846154 \\
+\hline
+ \end{tabular}
+ \begin{tabular}{cc}
+  \textbf{Search Engine} & Genetic Programming - QPace Local \\
+  \textbf{Suitability Measure} & Simple Suitability - Zero Focessed \\
+ \end{tabular}
+ \begin{tabular}{|ccccc|}
+\hline
+  Create\_H & Create\_X & Create\_R & Body & Iterate \\
+  Create\_CH & Create\_CX & Create\_CR & Create\_CCX & RevIterate \\
+\hline
+ \end{tabular}
+\end{center}
+\caption{Search Parameters Used for 0..3 Max Permutation Problem}
+\label{fig:maxpermparams}
+\end{figure}
+
+\clearpage
+\subsection{Algorithm}
+\begin{algorithm}
+ \begin{algorithmic}
+\STATE \{
+\STATE Iterate for 10.0 iterations \{
+\STATE \}
+\STATE \}
+\STATE Create\_X on gate Loop\_Vars[8.0]
+\STATE Create\_CX on gate 17.0 and gate 45.0
+\STATE Create\_CH on gate 7.0 and gate 17.0
+\STATE Iterate for 95.0 iterations \{
+\STATE Create\_R on gate Loop\_Vars[4.0] with phase Loop\_Vars[1.0]
+\STATE \}
+\STATE Create\_H on gate 102.0
+\STATE \{
+\STATE \{
+\STATE Create\_CCX on gate 2.0 and gate 1.0 with phase 2.0
+\STATE \}
+\STATE Create\_X on gate 2.0
+\STATE \}
+\STATE Iterate for 10.0 iterations \{
+\STATE \}
+\STATE Create\_CCX on gate System\_Size and gate 1.0 with phase 2.0
+\end{algorithmic}
+\caption{Full Algorithm to Produce the Solution for the Max Permutation Problem}
+\label{alg:03permfullalg}
+\end{algorithm}
+
+\clearpage
+\subsection{Measurement Probabilities}
+\label{sec:maxpermmeasprobs}
+\centering
+ \begin{tabular}{c|c|c|c|c|}
+\textbf{Test Case} & $\ket{00}$& $\ket{01}$& $\ket{10}$& $\ket{11}$ \\
+1 & 0.25 & 0.00 & 0.25 & \textbf{0.50} \\
+2 & 0.00 & 0.25 & \textbf{0.50} & 0.25 \\
+3 & 0.25 & 0.00 & 0.25 & \textbf{0.50} \\
+4 & 0.00 & 0.25 & \textbf{0.50} & 0.25 \\
+5 & 0.25 & \textbf{0.50} & 0.25 & 0.00 \\
+6 & 0.25 & \textbf{0.50} & 0.25 & 0.00 \\
+7 & 0.25 & 0.00 & 0.25 & \textbf{0.50} \\
+8 & 0.00 & 0.25 & \textbf{0.50} & 0.25 \\
+9 & 0.25 & 0.00 & 0.25 & \textbf{0.50} \\
+10 & 0.00 & 0.25 & \textbf{0.50} & 0.25 \\
+11 & 0.25 & \textbf{0.50} & 0.25 & 0.00 \\
+12 & 0.25 & \textbf{0.50} & 0.25 & 0.00 \\
+13 & 0.25 & 0.00 & 0.25 & \textbf{0.50} \\
+14 & 0.00 & 0.25 & \textbf{0.50} & 0.25 \\
+15 & 0.25 & 0.00 & 0.25 & \textbf{0.50} \\
+16 & 0.00 & 0.25 & \textbf{0.50} & 0.25 \\
+17 & 0.25 & \textbf{0.50} & 0.25 & 0.00 \\
+18 & 0.25 & \textbf{0.50} & 0.25 & 0.00 \\
+19 & \textbf{0.50} & 0.25 & 0.00 & 0.25 \\
+20 & \textbf{0.50} & 0.25 & 0.00 & 0.25 \\
+21 & \textbf{0.50} & 0.25 & 0.00 & 0.25 \\
+22 & \textbf{0.50} & 0.25 & 0.00 & 0.25 \\
+23 & \textbf{0.50} & 0.25 & 0.00 & 0.25 \\
+24 & \textbf{0.50} & 0.25 & 0.00 & 0.25
+ \end{tabular}
+
+The bold values are the probability of the desired states, the solution states.
 
 \clearpage
 \section{Quantum Fourier Transform Experiment}
@@ -536,23 +642,19 @@ $
   CrossOver Rate & 0.9 & Mutation Rate & 0.003846154 \\
 \hline
  \end{tabular}
-
-\end{center}
-\caption{Search Parameters used for Quantum Fourier Transform Search}
-\label{fig:qftparams}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{center}
- \begin{tabular}{|ccccc|}
+ \begin{tabular}{cc}
+  \textbf{Search Engine} & Genetic Programming - QPace Local \\
+  \textbf{Suitability Measure} & Phase Sensitive \\
+ \end{tabular}
+ \begin{tabular}{|cccc|}
 \hline
-  Create\_H & Create\_P & Create\_SWAP & Body \\
-  Create\_CH  & Create\_CP & Iterate & RevIterate\\
+  Create\_H & Create\_R & Create\_SWAP & Body \\
+  Create\_CH  & Create\_CR & Iterate & RevIterate\\
 \hline
  \end{tabular}
 \end{center}
 \caption{Algorithm Instructions used for Quantum Fourier Transform Search}
-\label{fig:qftgates}
+\label{fig:qftparams}
 \end{figure}
 
 
@@ -561,40 +663,46 @@ $
 \label{sec:evoqftalgo}
 \begin{algorithm}
  \begin{algorithmic}
+\STATE Create\_SWAP on gate 4.0 and gate 1.0
 \STATE Create\_CH on gate 1.0 and gate 5.0
+\STATE Create\_SWAP on gate 5.0 and gate (Loop\_Vars[4.0])+(16.0)
 \STATE Create\_CH on gate 1.0 and gate 5.0
-\STATE Create\_CP on gate Loop\_Vars[1.0] and gate 45.0 with phase 3.0
+\STATE Iterate for 5.0 iterations \{
 \STATE Create\_CH on gate 1.0 and gate 6.0
-\STATE Create\_SWAP on gate Loop\_Vars[Loop\_Vars[1.0]] and gate 1.0
-\STATE RevIterate on gate 16.0
+\STATE \}
+\STATE Create\_SWAP on gate 14.0 and gate 1.0
+\STATE Create\_CR on gate (14.0)x(Loop\_Vars[30.0]) and gate Loop\_Vars[Loop\_Vars[5.0]] with phase Loop\_Vars[3.0]
 \STATE Create\_CH on gate 1.0 and gate 5.0
 \STATE Create\_CH on gate 1.0 and gate 5.0
-\STATE Create\_CH on gate 1.0 and gate 5.0
-\STATE Create\_CH on gate 9.0 and gate 5.0
-\STATE Create\_CH on gate 9.0 and gate 5.0
-\STATE Create\_CH on gate 1.0 and gate 5.0
+\STATE Create\_CR on gate 20.0 and gate Loop\_Vars[Loop\_Vars[8.0]] with phase (Loop\_Vars[3.0])x(1.0)
+\STATE Create\_CH on gate 5.0 and gate 5.0
+\STATE Create\_SWAP on gate 20.0 and gate 5.0
 \STATE Create\_CH on gate 1.0 and gate 6.0
+\STATE Create\_SWAP on gate Loop\_Vars[(Loop\_Vars[38.0])-((80.0)x(Loop\_Vars[9.0]))] and gate 1.0
+\STATE Create\_SWAP on gate 9.0 and gate 1.0
+\STATE \{
 \STATE Create\_CH on gate 1.0 and gate 5.0
-\STATE Create\_CP on gate 1.0 and gate 5.0 with phase Loop\_Vars[3.0]
-\STATE Create\_SWAP on gate 4.0 and gate 16.0
-\STATE Create\_CH on gate Loop\_Vars[7.0] and gate 5.0
-\STATE RevIterate on gate (10.0)+(Loop\_Vars[7.0])
-\STATE RevIterate on gate Loop\_Vars[9.0]
-\STATE Create\_SWAP on gate 4.0 and gate 378.0
-\STATE Create\_SWAP on gate Loop\_Vars[9.0] and gate Loop\_Vars[4.0]
+\STATE Create\_H on gate 16.0
+\STATE \}
+\STATE Create\_SWAP on gate ((Loop\_Vars[16.0])-(Loop\_Vars[Loop\_Vars[9.0]]))-(14.0) and gate 16.0
+\STATE Create\_H on gate 23.0
+\STATE Create\_CH on gate 9.0 and gate 5.0
+\STATE Create\_H on gate (Loop\_Vars[9.0])+(7.0)
+\STATE Create\_SWAP on gate Loop\_Vars[9.0] and gate (Loop\_Vars[9.0])+(7.0)
 \STATE Iterate for Loop\_Vars[9.0] iterations \{
-\STATE Create\_CP on gate Loop\_Vars[9.0] and gate 7.0 with phase 3.0
-\STATE Create\_CP on gate Loop\_Vars[12.0] and gate (Loop\_Vars[4.0])-((8.0)+(Loop\_Vars[9.0])) with phase 2.0
-\STATE Create\_CP on gate Loop\_Vars[9.0] and gate Loop\_Vars[12.0] with phase 3.0
-\STATE RevIterate on gate 4.0
-\STATE Create\_CP on gate Loop\_Vars[(Loop\_Vars[20.0])-(Loop\_Vars[4.0])] and gate 213.0 with phase 3.0
-\STATE Create\_SWAP on gate 17.0 and gate 10.0
-\STATE Create\_CP on gate 0.0 and gate (5.0)-(Loop\_Vars[4.0]) with phase 2.0
-\STATE Create\_SWAP on gate Loop\_Vars[4.0] and gate 10.0
+\STATE Create\_CR on gate Loop\_Vars[Loop\_Vars[4.0]] and gate 20.0 with phase 3.0
 \STATE Create\_CH on gate 1.0 and gate 5.0
-\STATE Create\_CP on gate 1.0 and gate Loop\_Vars[Loop\_Vars[9.0]] with phase Loop\_Vars[3.0]
-\STATE Create\_CH on gate 2.0 and gate 5.0
-\STATE Create\_H on gate Loop\_Vars[(Loop\_Vars[4.0])-(37.0)]
+\STATE Create\_SWAP on gate 4.0 and gate 1.0
+\STATE Create\_H on gate 16.0
+\STATE Create\_SWAP on gate 9.0 and gate 23.0
+\STATE Create\_SWAP on gate Loop\_Vars[4.0] and gate 14.0
+\STATE Create\_CR on gate 0.0 and gate (5.0)-(Loop\_Vars[4.0]) with phase 2.0
+\STATE Create\_CH on gate 1.0 and gate 5.0
+\STATE Create\_CR on gate 7.0 and gate 12.0 with phase Loop\_Vars[3.0]
+\STATE Create\_H on gate 10.0
+\STATE Create\_CH on gate 1.0 and gate 5.0
+\STATE Create\_CR on gate 1.0 and gate Loop\_Vars[Loop\_Vars[9.0]] with phase Loop\_Vars[3.0]
+\STATE Create\_H on gate Loop\_Vars[((Loop\_Vars[6.0])-((9.0)-((9.0)-(Loop\_Vars[Loop\_Vars[34.0]]))))-(-19.0)]
 \STATE \}
  \end{algorithmic}
 \caption{Full Algorithm to Produce the Quantum Fourier Transform}
@@ -609,8 +717,8 @@ $
 \subfigure[Two Qubits]{
 $
 \Qcircuit @C=1.0em @R=.7em {
-&\qswap &\qw&\ctrl{1} &\gate{H}&\\%2
-&\qswap \qwx &\gate{H}&\gate{R(2.0)} \qwx &\qw&\\%1
+&\qswap &\qw&\ctrl{1} &\gate{H}&\qw&\\%2
+&\qswap \qwx &\gate{H}&\gate{R(2.0)} \qwx &\qw&\qw&\\%1
 &&&
 }
 $
@@ -618,19 +726,19 @@ $
 \subfigure[Three Qubits]{
 $
 \Qcircuit @C=1.0em @R=.7em {
-&\qswap &\qw&\qw&\qw&\gate{R(2.0)}&\ctrl{2} &\gate{H}&\\%3
-&\qw \qwx&\qw&\ctrl{1} &\gate{H}&\ctrl{-1} \qwx&\qw \qwx&\qw&\\%2
-&\qswap \qwx &\gate{H}&\gate{R(2.0)} \qwx &\qw&\qw&\gate{R(3.0)} \qwx &\qw&\\%1
+&\qswap &\qw&\qw&\qw&\gate{R(2.0)}&\ctrl{2} &\gate{H}&\qw&\\%3
+&\qw \qwx&\qw&\ctrl{1} &\gate{H}&\ctrl{-1} \qwx&\qw \qwx&\qw&\qw&\\%2
+&\qswap \qwx &\gate{H}&\gate{R(2.0)} \qwx &\qw&\qw&\gate{R(3.0)} \qwx &\qw&\qw&\\%1
 }
 $
 }
 \subfigure[Four Qubits]{
 $
 \Qcircuit @C=1.0em @R=.7em {
-&\qswap &\qw&\gate{R(2.0000)}&\qw&\qw&\gate{R(2.0000)}&\qw&\qw&\gate{R(2.0000)}&\ctrl{3} &\gate{H}&\\%4
-&\qw \qwx&\qw&\ctrl{-1} \qwx&\qw&\qw&\qw \qwx&\ctrl{2} &\gate{H}&\qw \qwx&\qw \qwx&\qw&\\%3
-&\qw \qwx&\qw&\qw&\ctrl{1} &\gate{H}&\ctrl{-2} \qwx&\qw \qwx&\qw&\qw \qwx&\qw \qwx&\qw&\\%2
-&\qswap \qwx &\gate{H}&\qw&\gate{R(2.0000)} \qwx &\qw&\qw&\gate{R(3.0000)} \qwx &\qw&\ctrl{-3} \qwx&\gate{R(4.0000)} \qwx &\qw&\\%1
+&\qswap &\qw&\gate{R(2.0000)}&\qw&\qw&\gate{R(2.0000)}&\qw&\qw&\gate{R(2.0000)}&\ctrl{3} &\gate{H}&\qw&\\%4
+&\qw \qwx&\qw&\ctrl{-1} \qwx&\qw&\qw&\qw \qwx&\ctrl{2} &\gate{H}&\qw \qwx&\qw \qwx&\qw&\qw&\\%3
+&\qw \qwx&\qw&\qw&\ctrl{1} &\gate{H}&\ctrl{-2} \qwx&\qw \qwx&\qw&\qw \qwx&\qw \qwx&\qw&\qw&\\%2
+&\qswap \qwx &\gate{H}&\qw&\gate{R(2.0000)} \qwx &\qw&\qw&\gate{R(3.0000)} \qwx &\qw&\ctrl{-3} \qwx&\gate{R(4.0000)} \qwx &\qw&\qw&\\%1
 }
 $
 \label{fig:appevoqft4qubits}
@@ -638,104 +746,3 @@ $
 \caption{Evolved Quantum Fourier Transform Solution}
 \label{fig:appevoqftsol}
 \end{figure}
-
-\clearpage
-\section{0..3 Max Permutation Problem}
-\label{sec:maxpermsol}
-
-\subsection{Search Parameters}
-\label{sec:qftsearchparams}
-
-\begin{figure}[h!]
-\begin{center}
- \begin{tabular}{|cc|cc|}
-\hline
-  Population Size & 128 & Generations & 4000 \\
-  \# of Breeder Threads & 8 & \# of Evaluation Threads & 8 \\
-  \# of Elites & 1 & Number of Iterations & 1 \\
-  Minimum Initial Tree Depth & 1 & Maximum Initial Tree Depth & 30 \\
-  CrossOver Rate & 0.9 & Mutation Rate & 0.1 \\
-\hline
- \end{tabular}
-
-\end{center}
-\caption{Search Parameters used for Quantum Fourier Transform Search}
-\label{fig:qftparams}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{center}
- \begin{tabular}{|ccccc|}
-\hline
-  Create\_H & Create\_X & Create\_P & Create\_SWAP & Body \\
-  Create\_CH & Create\_CX & Create\_CP & Create\_CCX & Iterate \\
-\hline
- \end{tabular}
-\end{center}
-\caption{Algorithm Instructions used for Quantum Fourier Transform Search}
-\label{fig:qftgates}
-\end{figure}
-
-\clearpage
-\subsection{Algorithm}
-\begin{algorithm}
- \begin{algorithmic}
-\STATE \{
-\STATE Iterate for 10.0 iterations \{
-\STATE \}
-\STATE \}
-\STATE Create\_X on gate Loop\_Vars[8.0]
-\STATE Create\_CX on gate 17.0 and gate 45.0
-\STATE Create\_CH on gate 7.0 and gate 17.0
-\STATE Iterate for 95.0 iterations \{
-\STATE Create\_P on gate Loop\_Vars[4.0] with phase Loop\_Vars[1.0]
-\STATE \}
-\STATE Create\_H on gate 102.0
-\STATE \{
-\STATE \{
-\STATE Create\_CCX on gate 2.0 and gate 1.0 with phase 2.0
-\STATE \}
-\STATE Create\_X on gate 2.0
-\STATE \}
-\STATE Iterate for 10.0 iterations \{
-\STATE \}
-\STATE RevIterate on gate System\_Size
-\STATE Create\_CCX on gate System\_Size and gate 1.0 with phase 2.0
- \end{algorithmic}
-\caption{Full Algorithm to Produce the Solution for the Max Permutation Problem}
-\label{alg:03permfullalg}
-\end{algorithm}
-
-\clearpage
-\subsection{Measurement Probabilities}
-\label{sec:maxpermmeasprobs}
-\centering
- \begin{tabular}{c|c|c|c|c|}
-\textbf{Test Case} & $\ket{00}$& $\ket{01}$& $\ket{10}$& $\ket{11}$ \\
-1 & 0.25 & 0.00 & 0.25 & \textbf{0.50} \\
-2 & 0.00 & 0.25 & \textbf{0.50} & 0.25 \\
-3 & 0.25 & 0.00 & 0.25 & \textbf{0.50} \\
-4 & 0.00 & 0.25 & \textbf{0.50} & 0.25 \\
-5 & 0.25 & \textbf{0.50} & 0.25 & 0.00 \\
-6 & 0.25 & \textbf{0.50} & 0.25 & 0.00 \\
-7 & 0.25 & 0.00 & 0.25 & \textbf{0.50} \\
-8 & 0.00 & 0.25 & \textbf{0.50} & 0.25 \\
-9 & 0.25 & 0.00 & 0.25 & \textbf{0.50} \\
-10 & 0.00 & 0.25 & \textbf{0.50} & 0.25 \\
-11 & 0.25 & \textbf{0.50} & 0.25 & 0.00 \\
-12 & 0.25 & \textbf{0.50} & 0.25 & 0.00 \\
-13 & 0.25 & 0.00 & 0.25 & \textbf{0.50} \\
-14 & 0.00 & 0.25 & \textbf{0.50} & 0.25 \\
-15 & 0.25 & 0.00 & 0.25 & \textbf{0.50} \\
-16 & 0.00 & 0.25 & \textbf{0.50} & 0.25 \\
-17 & 0.25 & \textbf{0.50} & 0.25 & 0.00 \\
-18 & 0.25 & \textbf{0.50} & 0.25 & 0.00 \\
-19 & \textbf{0.50} & 0.25 & 0.00 & 0.25 \\
-20 & \textbf{0.50} & 0.25 & 0.00 & 0.25 \\
-21 & \textbf{0.50} & 0.25 & 0.00 & 0.25 \\
-22 & \textbf{0.50} & 0.25 & 0.00 & 0.25 \\
-23 & \textbf{0.50} & 0.25 & 0.00 & 0.25 \\
-24 & \textbf{0.50} & 0.25 & 0.00 & 0.25
- \end{tabular}
-
-The bold values are the probability of the desired states, the solution states.

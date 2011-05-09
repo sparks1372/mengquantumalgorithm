@@ -61,7 +61,7 @@
 \chapter{Architechture Diagram}
 \label{sec:archdesign}
 \centering
-\includegraphics[height=0.85\textheight]{highlevelarchitecture.jpg}
+\includegraphics[height=0.95\textheight]{HighLevelArch.png}
 \cleardoublepage
 \endgroup
 
@@ -79,7 +79,7 @@
 </searchengine>
 \end{lstlisting}
 
-\section{Problem Definition XML Outline}
+\section{Search Problem Definition XML Outline}
 \label{sec:probmanspecxml}
 \lstset{language = XML}
 \begin{lstlisting}
@@ -90,6 +90,65 @@
 	  <Desc>PROBLEM DESCRIPTION</Desc>
 	</prob>
 </Problems>
+\end{lstlisting}
+
+
+\section{Suitability Measure Definition XML Outline}
+\label{sec:probmanspecxml}
+\lstset{language = XML}
+\begin{lstlisting}
+<FitnessFunc>
+	<FitnessFunctionTag>
+	  <Name>SUITABILITY MEASURE NAME</Name>
+	  <Class>IMPLEMENTING FULLY QUALIFIED CLASS NAME</Class>
+	  <Desc>SUITABILITY MEASURE DESCRIPTION</Desc>
+	</FitnessFunctionTag>
+</FitnessFunc>
+\end{lstlisting}
+
+
+\section{Matrix Definition XML Outline}
+\label{sec:probmanspecxml}
+\lstset{language = XML}
+\begin{lstlisting}
+<Matrix NumQubits="NUM OF QUBITS">
+	<MatrixElement Row="ROW INDEX" Column="COLUMN INDEX">
+	  <Real>REAL COMPONENT</Real>
+	  <Imag>IMAGINARY COMPONENT</Imag>
+	</MatrixElement>
+</Matrix>
+\end{lstlisting}
+
+
+\section{Test Suit Definition XML Outline}
+\label{sec:probmanspecxml}
+\lstset{language = XML}
+\begin{lstlisting}
+<testsuite NumCustomGates="NUMBER OF CUSTOM GATE">
+	<testset NumQubits="SYSTEM SIZE FOR THIS TEST SET">
+	    <testcase><!--0-->
+		<custom_gate>CUSTOM GATE XML FILE NAME</custom_gate>
+		<starting_state>
+		    <matrix_element><!-- 0-->
+			<Real>REAL COMPONENT</Real>
+			<Imag>IMAGINARY COMPONENT</Imag>
+		    </matrix_element>
+		    .
+		    .
+		    .
+		</starting_state>
+		<final_state>
+		    <matrix_element><!-- 0-->
+			<Real>REAL COMPONENT</Real>
+			<Imag>IMAGINARY COMPONENT</Imag>
+		    </matrix_element>
+		    .
+		    .
+		    .
+		</final_state>
+	    </testcase>
+	</testset>
+</testsuite>
 \end{lstlisting}
 
 \clearpage
@@ -110,7 +169,7 @@
 \hline
 \textbf{Create\_Z} & Create a Pauli-Z Gate & & \textbf{Create\_CZ} & Create a Controlled Pauli-Z Gate \\
 \hline
-\textbf{Create\_P} & Create a Phase Gate & & \textbf{Create\_CP} & Create a Controlled Phase Gate \\
+\textbf{Create\_R} & Create a R(k) Phase Gate & & \textbf{Create\_CR} & Create a Controlled R(k) Phase Gate \\
 \hline
 \textbf{Create\_V} & Create a V Gate & & \textbf{Create\_CV} & Create a Controlled V Gate \\
 \hline

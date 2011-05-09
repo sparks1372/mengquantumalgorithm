@@ -140,10 +140,8 @@ The gate $C0$ is ``Custom Gate 1'' provided by the test cases, i.e. the custom u
 \subfigure[Search Result]{
 $
 \Qcircuit @C=1.0em @R=.7em {
-&\gate{C0}&\gate{H}&\ctrl{1} &\qw&\ctrl{1} &\qw&\\%2
-&\qw&\qw&\gate{C0} \qwx &\gate{H}&\gate{C0} \qwx &\gate{H}&\\%1
-% &\gate{H}&\qw&\multigate{1}{C0}&\qw&\\%2
-% &\qw&\gate{H}&\ghost{C0}&\gate{H}&\\%1
+&\gate{C0}&\gate{H}&\ctrl{1} &\qw&\ctrl{1} &\qw&\qw&\\%2
+&\qw&\qw&\gate{C0} \qwx &\gate{H}&\gate{C0} \qwx &\gate{H}&\qw&\\%1
 }
 $
 \label{fig:evodeutschcir}
@@ -151,10 +149,8 @@ $
 \subfigure[Hand Optimised]{
 $
 \Qcircuit @C=1.0em @R=.7em {
-&\qw&\gate{H}&\qw &\qw&\ctrl{1} &\qw&\\%2
-&\qw&\qw&\qw &\gate{H}&\gate{C0} \qwx &\gate{H}&\\%1
-% &\gate{H}&\qw&\multigate{1}{C0}&\qw&\\%2
-% &\qw&\gate{H}&\ghost{C0}&\gate{H}&\\%1
+&\qw&\gate{H}&\qw &\qw&\ctrl{1} &\qw&\qw&\\%2
+&\qw&\qw&\qw &\gate{H}&\gate{C0} \qwx &\gate{H}&\qw&\\%1
 }
 $
 \label{fig:evodeutschcirhand}
@@ -240,6 +236,8 @@ The gate $C0$ is ``Custom Gate 1'' provided by the test cases, i.e. the custom u
 The $C0$ gate rendering has also been modified to take into account the knowledge of gate size that the framework cannot assume when producing the QCircuit representation.
 The full circuits in Section \ref{sec:DeutschJozsaExpAppFullCirs} are exactly as the framework produced them and do not show the actual gate size.
 The controls shown in the circuits of Section \ref{sec:DeutschJozsaExpAppFullCirs} are also removed as they cannot be on a qubit affected by $C0$, see Section \ref{sec:quantumgates}.
+The algorithm is almost scalable.
+The circuit produced for a system size of $4$ is shown in Figure \ref{fig:evodeutschjozsafourq} in Section \ref{sec:DeutschJozsaExpAppFullCirs}.
 
 
 \begin{figure}
@@ -247,17 +245,17 @@ The controls shown in the circuits of Section \ref{sec:DeutschJozsaExpAppFullCir
 \subfigure[Two Qubits]{
 $
 \Qcircuit @C=1.0em @R=.7em {
-&\gate{H}&\qw&\qw&\qw&\\%2
-&\qw&\gate{H}&\gate{C0}&\gate{H}&\\%1
+&\gate{H}&\qw&\qw&\qw&\qw&\\%2
+&\qw&\gate{H}&\gate{C0}&\gate{H}&\qw&\\%1
 }
 $
 \label{fig:deutjoz2qubits}}
 \subfigure[Three Qubits]{
 $
 \Qcircuit @C=1.0em @R=.7em {
-&\qw&\gate{H}&\qw&\qw&\qw&\qw&\\%3
-&\gate{H}&\qw&\qw&\qw&\gate{H}&\qw&\\%2
-&\qw&\qw&\gate{H}&\gate{C0}&\qw&\gate{H}&\\%1
+&\qw&\gate{H}&\qw&\qw&\qw&\qw&\qw&\\%3
+&\gate{H}&\qw&\qw&\qw&\gate{H}&\qw&\qw&\\%2
+&\qw&\qw&\gate{H}&\gate{C0}&\qw&\gate{H}&\qw&\\%1
 }
 $
 % \caption{Deutsch-Jozsa Solution - Three Qubits - Hand Optimised}
@@ -296,6 +294,7 @@ To the best of my knowledge this solution has not been found through heuristic s
 The previous attempt made by Spector \emph{et al.}\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} also only used a single call to the oracle.
 However, Spector \emph{et al.} placed that restriction on the search and were only searching for the circuit for the 3 qubit problem and the result was only probabilistic.
 No such restriction was placed during the experiment to produce Algorithm \ref{alg:evodeutschjozsa}.
+
 
 % Even the hand optimised circuits are not optimal, they contain more calls to the oracle, the \emph{C0} gates, compared to the standard Deutsch-Jozsa circuits, Figure \ref{Deutsch-Jozsa-Cir}.
 % The Deutsch-Jozsa circuit only use a single call to oracle whereas the circuits in Figures \ref{fig:deutjoz2qubits} and \ref{fig:deutjoz3qubits} make two calls.
@@ -347,9 +346,11 @@ Reflecting on the difficulties encountered when specifying the desired output st
 The difficulties encountered and the Zero Focussed variant are described fully in Section \ref{sec:simplsuitmeas}.
 With the new suitability measure implemented the results were astounding.
 
-All instructions were included in the search except \emph{Create\_SWAP}, \emph{Create\_Zero} and \emph{RevIterate}.
-% These were removed when the search was not making progress.
-The search parameters were the defaults except the mutation rate was set to $0.003846154$, $\frac{0.1}{26}$, and time was not used as the seeds so this experiment is reproducible.
+
+The final search parameters used are shown in Figure \ref{fig:maxpermparams} in Section \ref{sec:maxpermsearchparams}.
+% All instructions were included in the search except \emph{Create\_SWAP}, \emph{Create\_Zero} and \emph{RevIterate}.
+% % These were removed when the search was not making progress.
+% The search parameters were the defaults except the mutation rate was set to $0.003846154$, $\frac{0.1}{26}$, and time was not used as the seeds so this experiment is reproducible.
 
 Algorithm \ref{alg:03permalg} was proffered as the solution.
 The circuit produced when \emph{System\_Size} is $4$ is shown in Figure \ref{fig:03circuitsol}.
@@ -387,10 +388,10 @@ If this were $C 4$ instead it would indicate that the second control qubit would
 \centering
 $
 \Qcircuit @C=1.0em @R=.7em {
-&\gate{X}&\qw&\\%4
-&\qw&\qw&\\%3
-&\qw&\gate{X T 4}&\\%2
-&\qw&\ctrl{-1} \qwx&\\%1
+&\gate{X}&\qw&\qw&\\%4
+&\qw&\qw&\qw&\\%3
+&\qw&\gate{X T 4}&\qw&\\%2
+&\qw&\ctrl{-1} \qwx&\qw&\\%1
 }
 $
 \caption{0..3 Max Permutation Solution}
@@ -417,15 +418,15 @@ All test states are provided in Section \ref{sec:quantfourtransexp}.
 
 The search engine that was used was the Q-Pace based search engine provided with the framework, see Section \ref{sec:provsearcheng}.
 The suitability measure that was used was the ``Phase Sensitive'' suitability measure, see Section \ref{sec:phaseawaresuitmeas}.
-The final search parameters used are shown in Figures \ref{fig:qftparams} and \ref{fig:qftgates} in Section \ref{sec:qftsearchparams}.
+The final search parameters used are shown in Figure \ref{fig:qftparams} in Section \ref{sec:qftsearchparams}.
 
 \begin{figure}
 \centering
 \subfigure[Two Qubits]{
 $
 \Qcircuit @C=1.0em @R=.7em {
-&\qswap &\qw&\ctrl{1} &\gate{H}&\\%2
-&\qswap \qwx &\gate{H}&\gate{R(2.0)} \qwx &\qw&\\%1
+&\qswap &\qw&\ctrl{1} &\gate{H}&\qw&\\%2
+&\qswap \qwx &\gate{H}&\gate{R(2.0)} \qwx &\qw&\qw&\\%1
 &&&
 }
 $
@@ -433,9 +434,9 @@ $
 \subfigure[Three Qubits]{
 $
 \Qcircuit @C=1.0em @R=.7em {
-&\qswap &\qw&\qw&\qw&\gate{R(2.0)}&\ctrl{2} &\gate{H}&\\%3
-&\qw \qwx&\qw&\ctrl{1} &\gate{H}&\ctrl{-1} \qwx&\qw \qwx&\qw&\\%2
-&\qswap \qwx &\gate{H}&\gate{R(2.0)} \qwx &\qw&\qw&\gate{R(3.0)} \qwx &\qw&\\%1
+&\qswap &\qw&\qw&\qw&\gate{R(2.0)}&\ctrl{2} &\gate{H}&\qw&\\%3
+&\qw \qwx&\qw&\ctrl{1} &\gate{H}&\ctrl{-1} \qwx&\qw \qwx&\qw&\qw&\\%2
+&\qswap \qwx &\gate{H}&\gate{R(2.0)} \qwx &\qw&\qw&\gate{R(3.0)} \qwx &\qw&\qw&\\%1
 }
 $
 }
@@ -443,13 +444,13 @@ $
 \label{fig:evoqftsol}
 \end{figure}
 
-As can be seen in Figure \ref{fig:qftgates} the search only included a few of the instructions.
+As can be seen in Figure \ref{fig:qftparams} the search only included a few of the instructions.
 However, the only instructions that are not included in this experiment but were in the experiment carried out by Massey are the Pauli-X instructions.
 However, the suitability measure used by Massey was specifically for the QFT and included a term that punished a solution with an incorrect number of swap gates.
 The suitability measure used in this experiment was not modified for the QFT in any way.
 
 The algorithm produced as the result of the search can be found in Algorithm \ref{alg:qftfullalg} in Section \ref{sec:evoqftalgo}.
-This algorithm has been slightly optimised by removing iterate statements with empty bodies.
+This algorithm has been slightly optimised by removing control structures with empty bodies so it will fit on a single.
 The circuits produced by this algorithm for system sizes of $2$ and $3$ qubits can be seen in Figure \ref{fig:evoqftsol}.
 These circuits have not been manually optimised but are exactly as the algorithm produced them.
 
