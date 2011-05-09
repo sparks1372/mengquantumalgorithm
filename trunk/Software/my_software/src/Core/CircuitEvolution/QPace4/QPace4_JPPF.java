@@ -13,7 +13,6 @@ import org.jppf.server.protocol.JPPFTask;
 import Core.CircuitEvolution.SearchEngineState;
 import Utils.JPPFHelper;
 import Utils.SendMail;
-import ec.util.ParameterDatabase;
 
 public class QPace4_JPPF extends QPace4_Imp {
 
@@ -30,7 +29,6 @@ public class QPace4_JPPF extends QPace4_Imp {
 		// resetProgressBar();
 		updateState(SearchEngineState.Searching);
 		String[] pstr = { "-file", filename };
-		ParameterDatabase pd = QPaceSearchCore.loadParameterDatabase(pstr);
 		searchres = new QPaceSearchResult[iterval];
 		boolean block = false;
 
@@ -46,7 +44,7 @@ public class QPace4_JPPF extends QPace4_Imp {
 			final QPaceSearchCore[] task_array = new QPaceSearchCore[iterval];
 
 			for (int i = 0; i < iterval; i++) {
-				task_array[i] = new QPaceSearchCore(pd, cb, ce, null);
+				task_array[i] = new QPaceSearchCore(pstr, cb, ce, null);
 				// add a task to the job.
 				job.addTask(task_array[i]);
 			}

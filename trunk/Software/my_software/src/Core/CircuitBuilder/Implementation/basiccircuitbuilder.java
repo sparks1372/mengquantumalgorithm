@@ -179,7 +179,7 @@ public class basiccircuitbuilder implements circuitBuilder {
 						lastInstruction = next_instruction.getInstruction();
 						lastInt1 = Int1;
 						break;
-					case Create_P:
+					case Create_R:
 						to_return.addGate(Builder_ID, new Phase_Gate(Int1,
 								Double1));
 						lastInstruction = next_instruction.getInstruction();
@@ -336,7 +336,7 @@ public class basiccircuitbuilder implements circuitBuilder {
 							lastInt2 = Int2;
 						}
 						break;
-					case Create_CP:
+					case Create_CR:
 						if ((Int1 != Int2) && (Int2 <= num_qubits)
 								&& (Int2 >= 1)) {
 							to_return.addGate(Builder_ID, new ControlledU_Gate(

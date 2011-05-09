@@ -8,7 +8,7 @@ public enum QuantumInstructionEnum implements Serializable {
 	Create_X, // 1
 	Create_Y, // 2
 	Create_Z, // 3
-	Create_P, // 4
+	Create_R, // 4
 	Create_SWAP, // 5
 	Create_V, // 6
 	Create_W, // 7
@@ -25,7 +25,7 @@ public enum QuantumInstructionEnum implements Serializable {
 	Create_CCX, // 15
 	Create_CY, // 16
 	Create_CZ, // 17
-	Create_CP, // 18
+	Create_CR, // 18
 	Create_CRX, // 19
 	Create_CW, // 20
 	Create_CV, // 21
@@ -50,7 +50,7 @@ public enum QuantumInstructionEnum implements Serializable {
 		i++;
 		stand[i] = Create_CZ;
 		i++;
-		stand[i] = Create_CP;
+		stand[i] = Create_CR;
 		i++;
 		stand[i] = Create_CV;
 		i++;
@@ -100,7 +100,7 @@ public enum QuantumInstructionEnum implements Serializable {
 		i++;
 		stand[i] = Create_Z;
 		i++;
-		stand[i] = Create_P;
+		stand[i] = Create_R;
 		i++;
 		stand[i] = Create_V;
 		i++;
@@ -121,11 +121,11 @@ public enum QuantumInstructionEnum implements Serializable {
 
 	public static boolean hasPhase(QuantumInstructionEnum i) {
 		switch (i) {
-			case Create_P:
+			case Create_R:
 			case Create_RX:
 			case Create_RY:
 			case Create_RZ:
-			case Create_CP:
+			case Create_CR:
 			case Create_CRX:
 			case Create_CCX:
 			case Create_CRY:
@@ -140,7 +140,7 @@ public enum QuantumInstructionEnum implements Serializable {
 	public static boolean hasSecondQubit(QuantumInstructionEnum i) {
 		switch (i) {
 			case Create_CH:
-			case Create_CP:
+			case Create_CR:
 			case Create_CRX:
 			case Create_CRY:
 			case Create_CRZ:

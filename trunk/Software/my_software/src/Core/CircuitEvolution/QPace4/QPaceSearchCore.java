@@ -34,7 +34,8 @@ public class QPaceSearchCore extends SearchEngineCore {
 	private static final long		serialVersionUID			= 266004441543008203L;
 	private final circuitBuilder	cb;
 	private final CircuitEvaluator	ce;
-	private final ParameterDatabase	parameters;
+	// private final ParameterDatabase parameters;
+	private final String[]			args;
 	private QPaceEvoState			evoState;
 	private final StatsPanel		statsPanel;
 
@@ -387,12 +388,12 @@ public class QPaceSearchCore extends SearchEngineCore {
 		return generator;
 	}
 
-	public QPaceSearchCore(ParameterDatabase params, circuitBuilder cb,
+	public QPaceSearchCore(String[] args, circuitBuilder cb,
 			CircuitEvaluator ce, StatsPanel st) {
 		super();
 		this.cb = cb;
 		this.ce = ce;
-		this.parameters = params;
+		this.args = args;
 		this.statsPanel = st;
 	}
 
@@ -406,7 +407,7 @@ public class QPaceSearchCore extends SearchEngineCore {
 		// We could have done this using the previous parameter database, but
 		// it's no big deal.
 		try {
-
+			ParameterDatabase parameters = loadParameterDatabase(args);
 			// Initialize the EvolutionState, then set its job variables
 			evoState = initialize(parameters, 0); // pass in job# as the seed
 													// increment

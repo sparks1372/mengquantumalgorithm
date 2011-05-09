@@ -5,7 +5,6 @@ package Core.CircuitEvolution.QPace4;
 
 import Core.CircuitEvolution.SearchEngineState;
 import Utils.SendMail;
-import ec.util.ParameterDatabase;
 
 public class QPace4_Local extends QPace4_Imp {
 
@@ -21,9 +20,7 @@ public class QPace4_Local extends QPace4_Imp {
 		resetProgressBar();
 
 		updateState(SearchEngineState.Searching);
-		String[] pstr = { "-file", filename };
-		final ParameterDatabase pd = QPaceSearchCore
-				.loadParameterDatabase(pstr);
+		final String[] pstr = { "-file", filename };
 		searchres = new QPaceSearchResult[iterval];
 		final String probname = this.ce.getQproblem().getName();
 		final QPaceSearchCore[] task_array = new QPaceSearchCore[iterval];
@@ -34,7 +31,7 @@ public class QPace4_Local extends QPace4_Imp {
 			@Override
 			public void run() {
 				for (int i = 0; i < iterval; i++) {
-					task_array[i] = new QPaceSearchCore(pd, cb, ce,
+					task_array[i] = new QPaceSearchCore(pstr, cb, ce,
 							(StatsPanel) getSearchStatisticsPanel());
 					task_array[i].run();
 					searchres[i] = (QPaceSearchResult) task_array[i].getResult();
