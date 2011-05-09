@@ -172,6 +172,10 @@ public class basiccircuit implements Circuit {
 			}
 		}
 
+		for (int i = 0; i < qubits; i++) {
+			cir_diag[i] = cir_diag[i].concat("\\qw&");
+		}
+
 		String to_return = new String();
 		int qubit = cir_diag.length;
 		String new_line = "\\\\%" + qubit + "\n";
@@ -183,7 +187,8 @@ public class basiccircuit implements Circuit {
 			new_line = "\\\\%" + --qubit + "\n";
 		}
 
-		to_return = to_return.concat("}\n\\]\n\\end{figure}\n");
+		to_return = to_return.concat("}\n\\]\n\\caption{Circuit for " + qubits
+				+ " qubits}\n\\end{figure}\n");
 
 		return to_return;
 
