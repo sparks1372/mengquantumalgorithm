@@ -2,7 +2,7 @@
 <testsuite NumCustomGates="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="testset_xml_spec.xsd">
 <testset NumQubits="2">
 <testcase><!--Test Case 1-->
-<custom_gate>/home/sam/University/Project/trunk/Software/my_software/config/CustomGates/deutsch1.xml</custom_gate>
+<custom_gate>config/CustomGates/deutsch1.xml</custom_gate>
 <starting_state>
 <matrix_element><!-- 00-->
 <Real>0.0</Real>
@@ -41,7 +41,7 @@
 </final_state>
 </testcase>
 <testcase><!--Test Case 2-->
-<custom_gate>/home/sam/University/Project/trunk/Software/my_software/config/CustomGates/deutsch2.xml</custom_gate>
+<custom_gate>config/CustomGates/deutsch2.xml</custom_gate>
 <starting_state>
 <matrix_element><!-- 00-->
 <Real>0.0</Real>
@@ -80,7 +80,7 @@
 </final_state>
 </testcase>
 <testcase><!--Test Case 3-->
-<custom_gate>/home/sam/University/Project/trunk/Software/my_software/config/CustomGates/deutsch3.xml</custom_gate>
+<custom_gate>config/CustomGates/deutsch3.xml</custom_gate>
 <starting_state>
 <matrix_element><!-- 00-->
 <Real>0.0</Real>
@@ -119,7 +119,7 @@
 </final_state>
 </testcase>
 <testcase><!--Test Case 4-->
-<custom_gate>/home/sam/University/Project/trunk/Software/my_software/config/CustomGates/deutsch4.xml</custom_gate>
+<custom_gate>config/CustomGates/deutsch4.xml</custom_gate>
 <starting_state>
 <matrix_element><!-- 00-->
 <Real>0.0</Real>
@@ -160,7 +160,7 @@
 </testset>
 <testset NumQubits="3">
 <testcase><!--Test Case 1-->
-<custom_gate>/home/sam/University/Project/trunk/Software/my_software/config/CustomGates/deutschjozsa/f1.xml</custom_gate>
+<custom_gate>config/CustomGates/deutschjozsa/f1.xml</custom_gate>
 <starting_state>
 <matrix_element><!-- 000-->
 <Real>0.0</Real>
@@ -231,7 +231,7 @@
 </final_state>
 </testcase>
 <testcase><!--Test Case 2-->
-<custom_gate>/home/sam/University/Project/trunk/Software/my_software/config/CustomGates/deutschjozsa/f2.xml</custom_gate>
+<custom_gate>config/CustomGates/deutschjozsa/f2.xml</custom_gate>
 <starting_state>
 <matrix_element><!-- 000-->
 <Real>0.0</Real>
@@ -302,7 +302,7 @@
 </final_state>
 </testcase>
 <testcase><!--Test Case 3-->
-<custom_gate>/home/sam/University/Project/trunk/Software/my_software/config/CustomGates/deutschjozsa/f3.xml</custom_gate>
+<custom_gate>config/CustomGates/deutschjozsa/f3.xml</custom_gate>
 <starting_state>
 <matrix_element><!-- 000-->
 <Real>0.0</Real>
@@ -373,7 +373,7 @@
 </final_state>
 </testcase>
 <testcase><!--Test Case 4-->
-<custom_gate>/home/sam/University/Project/trunk/Software/my_software/config/CustomGates/deutschjozsa/f4.xml</custom_gate>
+<custom_gate>config/CustomGates/deutschjozsa/f4.xml</custom_gate>
 <starting_state>
 <matrix_element><!-- 000-->
 <Real>0.0</Real>
@@ -444,7 +444,7 @@
 </final_state>
 </testcase>
 <testcase><!--Test Case 5-->
-<custom_gate>/home/sam/University/Project/trunk/Software/my_software/config/CustomGates/deutschjozsa/f5.xml</custom_gate>
+<custom_gate>config/CustomGates/deutschjozsa/f5.xml</custom_gate>
 <starting_state>
 <matrix_element><!-- 000-->
 <Real>0.0</Real>
@@ -515,7 +515,7 @@
 </final_state>
 </testcase>
 <testcase><!--Test Case 6-->
-<custom_gate>/home/sam/University/Project/trunk/Software/my_software/config/CustomGates/deutschjozsa/f6.xml</custom_gate>
+<custom_gate>config/CustomGates/deutschjozsa/f6.xml</custom_gate>
 <starting_state>
 <matrix_element><!-- 000-->
 <Real>0.0</Real>
@@ -586,7 +586,7 @@
 </final_state>
 </testcase>
 <testcase><!--Test Case 7-->
-<custom_gate>/home/sam/University/Project/trunk/Software/my_software/config/CustomGates/deutschjozsa/f7.xml</custom_gate>
+<custom_gate>config/CustomGates/deutschjozsa/f7.xml</custom_gate>
 <starting_state>
 <matrix_element><!-- 000-->
 <Real>0.0</Real>
@@ -657,7 +657,7 @@
 </final_state>
 </testcase>
 <testcase><!--Test Case 8-->
-<custom_gate>/home/sam/University/Project/trunk/Software/my_software/config/CustomGates/deutschjozsa/f8.xml</custom_gate>
+<custom_gate>config/CustomGates/deutschjozsa/f8.xml</custom_gate>
 <starting_state>
 <matrix_element><!-- 000-->
 <Real>0.0</Real>
