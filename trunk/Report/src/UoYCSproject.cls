@@ -36,7 +36,7 @@
 
 % Koma-script report style
 \PassOptionsToPackage{twoside}{typearea}
-\LoadClass[11pt,twoside,abstracton,pointlessnumbers,BCOR13mm,DIVcalc, pagesize=auto, paper=a4]{scrreprt}
+\LoadClass[11pt,twoside,abstracton,pointlessnumbers,DIVcalc,smallheadings, pagesize=auto, paper=a4]{scrreprt}
 
 \RequirePackage[T1]{fontenc} % prevents < in text mode turning into
 \RequirePackage{textcomp}    % ?', etc
@@ -49,6 +49,7 @@
 \RequirePackage{fixltx2e}
 \RequirePackage{ifthen}
 
+% \pagestyle{plain}
 \pagestyle{headings}
 \renewcommand{\partpagestyle}{empty}
 

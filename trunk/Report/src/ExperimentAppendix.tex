@@ -153,6 +153,7 @@ $
  \label{fig:deutschjozsafunctions}
 \end{figure}
 
+\clearpage
 \subsection{Search Parameters}
 \label{sec:deutschjozsasearchparams}
 
@@ -209,6 +210,7 @@ $
 \label{alg:evodeutschjozsa}
 \end{algorithm}
 
+\clearpage
 \subsection{Full Circuits}
 \label{sec:DeutschJozsaExpAppFullCirs}
 \begin{figure}[h!]
@@ -220,7 +222,6 @@ $
 \]
 \caption{Deutsch Jozsa Solution - Two Qubits }
 \end{figure}
-\clearpage
 \begin{figure}[h!]
 \[
 \Qcircuit @C=1.0em @R=.7em {
@@ -231,6 +232,7 @@ $
 \]
 \caption{Deutsch Jozsa Solution - Three Qubits }
 \end{figure}
+
 \clearpage
 \section{Quantum Fourier Transform Experiment}
 \label{sec:quantfourtransexp}
@@ -519,6 +521,7 @@ $
  \label{fig:qfttwoqubits}
 \end{figure}
 
+\clearpage
 \subsection{Search Parameters}
 \label{sec:qftsearchparams}
 
@@ -553,29 +556,24 @@ $
 \end{figure}
 
 
+\clearpage
 \subsection{Algorithm}
 \label{sec:evoqftalgo}
 \begin{algorithm}
  \begin{algorithmic}
-\STATE {
 \STATE Create\_CH on gate 1.0 and gate 5.0
 \STATE Create\_CH on gate 1.0 and gate 5.0
-\STATE }
 \STATE Create\_CP on gate Loop\_Vars[1.0] and gate 45.0 with phase 3.0
 \STATE Create\_CH on gate 1.0 and gate 6.0
 \STATE Create\_SWAP on gate Loop\_Vars[Loop\_Vars[1.0]] and gate 1.0
 \STATE RevIterate on gate 16.0
 \STATE Create\_CH on gate 1.0 and gate 5.0
 \STATE Create\_CH on gate 1.0 and gate 5.0
-\STATE {
 \STATE Create\_CH on gate 1.0 and gate 5.0
-\STATE }
 \STATE Create\_CH on gate 9.0 and gate 5.0
 \STATE Create\_CH on gate 9.0 and gate 5.0
-\STATE {
 \STATE Create\_CH on gate 1.0 and gate 5.0
 \STATE Create\_CH on gate 1.0 and gate 6.0
-\STATE }
 \STATE Create\_CH on gate 1.0 and gate 5.0
 \STATE Create\_CP on gate 1.0 and gate 5.0 with phase Loop\_Vars[3.0]
 \STATE Create\_SWAP on gate 4.0 and gate 16.0
@@ -584,47 +582,30 @@ $
 \STATE RevIterate on gate Loop\_Vars[9.0]
 \STATE Create\_SWAP on gate 4.0 and gate 378.0
 \STATE Create\_SWAP on gate Loop\_Vars[9.0] and gate Loop\_Vars[4.0]
-\STATE Iterate for Loop\_Vars[9.0] iterations {
-\STATE Iterate for 4.0 iterations {
-\STATE }
+\STATE Iterate for Loop\_Vars[9.0] iterations \{
 \STATE Create\_CP on gate Loop\_Vars[9.0] and gate 7.0 with phase 3.0
 \STATE Create\_CP on gate Loop\_Vars[12.0] and gate (Loop\_Vars[4.0])-((8.0)+(Loop\_Vars[9.0])) with phase 2.0
 \STATE Create\_CP on gate Loop\_Vars[9.0] and gate Loop\_Vars[12.0] with phase 3.0
-\STATE Iterate for 4.0 iterations {
-\STATE }
 \STATE RevIterate on gate 4.0
-\STATE Iterate for 4.0 iterations {
-\STATE }
-\STATE {
-\STATE Iterate for 4.0 iterations {
-\STATE }
-\STATE }
 \STATE Create\_CP on gate Loop\_Vars[(Loop\_Vars[20.0])-(Loop\_Vars[4.0])] and gate 213.0 with phase 3.0
-\STATE Iterate for 4.0 iterations {
-\STATE }
-\STATE {
-\STATE }
 \STATE Create\_SWAP on gate 17.0 and gate 10.0
 \STATE Create\_CP on gate 0.0 and gate (5.0)-(Loop\_Vars[4.0]) with phase 2.0
-\STATE Iterate for 4.0 iterations {
-\STATE }
-\STATE {
-\STATE }
 \STATE Create\_SWAP on gate Loop\_Vars[4.0] and gate 10.0
 \STATE Create\_CH on gate 1.0 and gate 5.0
 \STATE Create\_CP on gate 1.0 and gate Loop\_Vars[Loop\_Vars[9.0]] with phase Loop\_Vars[3.0]
 \STATE Create\_CH on gate 2.0 and gate 5.0
 \STATE Create\_H on gate Loop\_Vars[(Loop\_Vars[4.0])-(37.0)]
-\STATE }
+\STATE \}
  \end{algorithmic}
 \caption{Full Algorithm to Produce the Quantum Fourier Transform}
 \label{alg:qftfullalg}
 \end{algorithm}
 
 
+\clearpage
 \subsection{Circuits}
 \label{sec:evoqftcir}
-\begin{figure}
+\begin{figure}[h!]
 \subfigure[Two Qubits]{
 $
 \Qcircuit @C=1.0em @R=.7em {
@@ -695,28 +676,29 @@ $
 \label{fig:qftgates}
 \end{figure}
 
+\clearpage
 \subsection{Algorithm}
 \begin{algorithm}
  \begin{algorithmic}
-\STATE {
-\STATE Iterate for 10.0 iterations {
-\STATE }
-\STATE }
+\STATE \{
+\STATE Iterate for 10.0 iterations \{
+\STATE \}
+\STATE \}
 \STATE Create\_X on gate Loop\_Vars[8.0]
 \STATE Create\_CX on gate 17.0 and gate 45.0
 \STATE Create\_CH on gate 7.0 and gate 17.0
-\STATE Iterate for 95.0 iterations {
+\STATE Iterate for 95.0 iterations \{
 \STATE Create\_P on gate Loop\_Vars[4.0] with phase Loop\_Vars[1.0]
-\STATE }
+\STATE \}
 \STATE Create\_H on gate 102.0
-\STATE {
-\STATE {
+\STATE \{
+\STATE \{
 \STATE Create\_CCX on gate 2.0 and gate 1.0 with phase 2.0
-\STATE }
+\STATE \}
 \STATE Create\_X on gate 2.0
-\STATE }
-\STATE Iterate for 10.0 iterations {
-\STATE }
+\STATE \}
+\STATE Iterate for 10.0 iterations \{
+\STATE \}
 \STATE RevIterate on gate System\_Size
 \STATE Create\_CCX on gate System\_Size and gate 1.0 with phase 2.0
  \end{algorithmic}
@@ -724,6 +706,7 @@ $
 \label{alg:03permfullalg}
 \end{algorithm}
 
+\clearpage
 \subsection{Measurement Probabilities}
 \label{sec:maxpermmeasprobs}
 \centering

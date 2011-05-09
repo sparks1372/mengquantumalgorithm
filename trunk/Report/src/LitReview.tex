@@ -25,14 +25,14 @@ The chapter concludes with a statement of intent for this project.
 %What is Quantum Computation
 In classical computers, computation is performed using the discrete values of $0$ and $1$.
 These values are typically indicated by +$5$V and $0$V signals propagating round circuits.
-A signal can only be $0$ or $1$, there is no in-between value.
-Each signal can indicate the value of a single 'bit' of data.
-A combination of n bits can be used to represent a number from $0$ to $2^n-1$, an n-bit number.
-Classical computation works through the manipulation of these n-bits.
+A signal can only be interpreted as $0$ or $1$, there is no in-between value.
+Each signal can indicate the value of a single bit of data.
+A combination of $n$ bits can be used to represent a number from $0$ to $2^n-1$, an $n$ bit number.
+Classical computation works through the manipulation of these $n$ bits.
 
 Qubits are the quantum equivalent of the classical bit.
 Like the classical bit, a qubit can be in one of two states, $\ket{0}$ or $\ket{1}$.
-The notation used to specify quantum states is the Dirac\cite{dirac2004principles} 'Bra-Ket' notation.
+The notation used to specify quantum states is the Dirac\cite{dirac2004principles} ``Bra-Ket'' notation.
 
 %Explanation of Bra-Ket notation
 % To write the state of a superposition it is usual to use the 'Bra-Ket' notation, introduced by Dirac\cite{dirac2004principles}.
@@ -60,14 +60,14 @@ a_n
 
 %%REWORDED
 A quantum state can be visualised as a point of the Bloch sphere, shown in Figure \ref{BlochSphere}, that represents the quantum state space.
-The shown Bloch sphere is for a single qubit, the principle can be extended to an n-qubit however the visualisation breaks down.
+The shown Bloch sphere is for a single qubit, the principle can be extended to $n$ qubits however the visualisation breaks down.
 All quantum states can be described using the Bloch sphere.
 The states that this project is concerned with are those that lie on the surface of the respective Bloch sphere, known as ``pure'' states.
 %%
 
 In quantum mechanics, a Ket is used to indicate a state, for example $\ket{0}$ is the state equivalent to logical $0$ whereas $\ket{1}$ is the state equivalent to logical $1$.
 
-A dual to the Ket notation is the 'Bra' notation, $\bra{a}$.
+A dual to the Ket notation is the Bra notation, $\bra{a}$.
 This notation is used to denote the 'dual vector' of the corresponding Ket.
 For a state vector represented by Equation \ref{ket_explanation_example} there is a dual vector representing its Hermitian Conjugate, Equation \ref{bra_explanation_example}.
 The Hermitian Conjugate of a vector is the transpose of the vector after each entry is replaced by its complex conjugate.
@@ -118,10 +118,10 @@ $\ket{1}
 1\\
 \end{pmatrix}
 $
-it is possible to represent single qubit unitary operations in the 'Bra-Ket' notation.
+it is possible to represent single qubit operations in the ``Bra-Ket'' notation.
 For example, the NOT gate performs a simple negation of a qubit's value.
 This can be written as $\ket{0}\bra{1} + \ket{1}\bra{0}$.
-Substituting in the vector values we have
+Substituting in the vector values we have:
 \begin{equation}
 \begin{tabular}{ r c l }
 \(\begin {pmatrix}
@@ -167,7 +167,7 @@ Substituting in the vector values we have
 This matrix can be seen as a transformation matrix for the NOT operation.
 In quantum computation, the NOT gate is one of the $4$ gates known as the Pauli gates, more specifically it is the Pauli-X gate.
 It is called the Pauli-X gate as it can be seen as a rotation of $\pi$ radians about the X axis of the Bloch sphere, Figure \ref{BlochSphere}.
-The Pauli gates are named after Wolfgang Pauli who introduced the matrices that define them.
+The Pauli gates are named after Wolfgang Pauli who published the matrices that define them.
 
 % Definition of Unitary
 The matrices representing the Pauli-X gate and all other quantum logic gates are \emph{unitary}.
@@ -180,10 +180,10 @@ U == UU^{\dagger} = I_n
 
 % Reversible logic
 %%REWORDED
-Unitary transformation are physically reversible.
+Unitary transformations are physically reversible.
 Some classical gates are not.
-For example, AND function looses information about their inputs and can be represented as $AND(a,b)\rightarrow{a\wedge{b}}$.
-However, for practical purposes it is possible to produce physically reversible versions by incorporating suplimentary information in the output.
+For example, the AND function looses information about the inputs and can be represented as the function $AND(a,b)\rightarrow{a\wedge{b}}$.
+However, for practical purposes it is possible to produce physically reversible versions by incorporating supplementary information in the output.
 For the AND operation both inputs have to be provided in the output so the function becomes $AND(a,b)\rightarrow{(a,b,a\wedge{b})}$.
 %%
 
@@ -192,7 +192,7 @@ All the details of quantum computation introduced so far do not offer anything m
 The power of quantum computation comes from the use of superposition.
 Superposition is the ability of a qubit to be in both the $\ket{0}$ and $\ket{1}$ states simultaneously with certain probabilities.
 It is not possible to observe the superposition of a qubit.
-When observed the superposition 'collapses' to either $\ket{0}$ or $\ket{1}$, the basis states.
+When observed the superposition ``collapses'' to either $\ket{0}$ or $\ket{1}$, the computational basis states.
 The probability of the superposition collapsing to a specific state is determined by the superposition's complex amplitudes.
 
 \begin{equation}
@@ -201,18 +201,20 @@ The probability of the superposition collapsing to a specific state is determine
 \end{equation}
 
 The notation for the superposition of states that a qubit is currently in is shown in Equation \ref{superposition_explanaiton}.
-It is the same as for the basis states except the values of $\alpha$ and $\beta$ are omitted when writing the basis states.
+% It is the same as for the basis states except the values of $\alpha$ and $\beta$ are omitted when writing the basis states.
 $\alpha$ and $\beta$ are the probability amplitudes for the respective states and are expressed as complex numbers.
+The complex probability amplitudes have phases that can interfere with each other through computation.
+However, only relative phase factors can be observed.
 The probability of the state in Equation \ref{superposition_explanaiton} collapsing to the basis state $\ket{0}$ is given by $\vert\alpha\vert^2$.
 Similarly, the probability of this state collapsing to the basis state $\ket{1}$ is $\vert\beta\vert^2$.
 The overall probability of a superposition collapsing to any of the states it contains must equal $1$.
-For the basis state $\ket{0}$, $\alpha==1$ and $\beta==0$ whereas for the basis state $\ket{1}$, $\alpha==0$ and $\beta==1$.
+For the basis state $\ket{0}$ $\alpha==1$ and $\beta==0$ whereas for the basis state $\ket{1}$ $\alpha==0$ and $\beta==1$.
 Any state where $\alpha$ and $\beta$ do not equal $1$ and $0$ is in superposition.
 
-The state $\frac{1}{\sqrt{2}}\ket{0}+\frac{1}{\sqrt{2}}\ket{1}$ is an equal superposition where the collapse under observation to $\ket{0}$ is just as likely as collapsing to $\ket{1}$.
+The state $\frac{1}{\sqrt{2}}\ket{0}+\frac{1}{\sqrt{2}}\ket{1}$ is an equal superposition where the collapse under observation to $\ket{0}$ is just as likely as collapsing to $\ket{1}$, probabilities of $|\frac{1}{\sqrt{2}}|^2=\frac{1}{2}$.
 With $n$ qubits in equal superposition, there are $n$ binary values that have an equal probability of taking the value $0$ as the value $1$.
 With an ordering decided of these qubits, collapsing the superposition of each qubit will result in a binary value of length n.
-With all probabilities being $\frac{1}{2}$ this binary value takes a truly random value between $0$ and $2^n-1$.
+With the probabilities of each qubit being $\frac{1}{2}$ this binary value takes a truly random value between $0$ and $2^n-1$.
 It is not possible to produce a truly random number using a classical computer.
 Equation \ref{superposition_explanaiton_sum} is a generalisation for the equal superposition state over $n$ qubits.
 
@@ -224,7 +226,7 @@ Equation \ref{superposition_explanaiton_sum} is a generalisation for the equal s
 In 1935, Erwin Schr$\ddot{o}$ginger\cite{SchroedingersCat} proposed a thought experiment to explain the idea of superposition.
 Imagine a cat in a fully opaque box with a vial of poison.
 The vial may break at any time, a truly random variable.
-After sealing the box the state of the cat is not known.
+After sealing the box the liveness state of the cat is not known.
 The cat could be alive if the vial has not broken but could just as likely be dead.
 Only by looking inside the box will the state of the cat be known.
 Until this time the cat could be thought of as both alive and dead at the same time.
@@ -232,9 +234,9 @@ If we assign 'dead' to the state $\ket{0}$ and 'alive' to the state $\ket{1}$ th
 Therefore, just as the cat can be thought of as both dead and alive at the same time, a qubit in the superposition $\frac{1}{\sqrt{2}}\vert0\rangle+\frac{1}{\sqrt{2}}\vert1\rangle$ can be thought of both in the $\ket{0}$ and $\ket{1}$ states at the same time.
 This leads to a very powerful property of quantum computers.
 With $n$ classical bits, a single number in the range $0$ to $2^n-1$ can be expressed at any one time.
-However with $n$ quantum qubits, every number in the range $0$ to $2^n-1$ can be expressed at any one time.
-Quantum mechanics is said to be linear.
-Unitary operations can distribute over linear sums.
+However with $n$ quantum qubits, every number in the range $0$ to $2^n-1$ can be expressed at the same time.
+
+Quantum mechanics is said to be linear and unitary operations can distribute over linear sums.
 As a quantum state can be expressed as the linear sum in Equation \ref{superposition_explanaiton_sum} the computation over all $2^n$ inputs to be performed in parallel.
 This is represented by Equation\ref{eqn:uequiv}.%%%%%%%%%%%%%%%%%
 
@@ -346,7 +348,7 @@ In Dirac notation this is $\ket{0}\bra{0} + \ket{1}(-\bra{1}$), and Equation \re
 
 The Pauli-Y gate is similar to both the Pauli-X and Pauli-Z gates, but differs in the axis about which it performs the rotation.
 The Pauli-Y gate rotates the quantum state by $\pi$ radians about the Y axis.
-This represents a phase flip followed by a bit flip.
+% This represents a phase flip followed by a bit flip.
 In Dirac notation this is $\ket{0}(i\bra{1}) + \ket{1}(-i\bra{0}$), and Equation \ref{eqn:pauliycalc} shows the matrix form.
 \begin{equation}
 \label{eqn:pauliycalc}
@@ -407,9 +409,9 @@ $\ket{1}$ & $\ket{1}$ & $\ket{0}$ \\
 \label{CNOTTruthTable}
 \end{table}
 
-The CNOT gate has a control input which it requires to be in the logical $\ket{1}$ state for the NOT operation on the second input to be carried out.
+The CNOT gate has a control qubit which is required to be in the state $\ket{1}$ for the NOT operation on the target qubit to be carried out.
 In classical logic this would extend the truth table to be as shown in Table \ref{CNOTTruthTable}.
-The truth table of the CNOT gate is the same as that of the XOR gate.
+The truth table of the CNOT gate is the same as that of the classical XOR gate.
 The Dirac notation of the CNOT gate is $\ket{00}\bra{00}+\ket{01}\bra{01}+\ket{10}\bra{11}+\ket{11}\bra{10}$.
 
 Circuit representations of the CNOT gate are shown in Figure \ref{fig:controlnotcir}.
@@ -522,7 +524,7 @@ a_{10}b_{10} && a_{10}b_{11} & a_{11}b_{10} && a_{11}b_{11}
 \label{eq:tensorop}
 \end{eqnarray}
 
-So when applying this to the matrices of Pauli-X as A and the Pauli-I as B we get the unitary matrix for the corresponding $\mathcal{F}$ gate.
+So when applying this to the matrices of Pauli-X as A and the Pauli-I as B we get the unitary matrix for the corresponding $\mathcal{F}$ gate, shown in Figure \ref{fig:singatetwocirsubfig3}.
 This can be seen in Equation \ref{eq:tensoropXI}.
 
 \begin{eqnarray}
@@ -537,14 +539,14 @@ X \otimes I =
 1 && 0 \\
 0 && 1
 \end{pmatrix} & = & \begin{pmatrix}
-0B && 1B \\
-1B && 0B
+0I && 1I \\
+1I && 0I
 \end{pmatrix}  \nonumber \\
    & = & \begin{pmatrix}
-0x1 && 0x0 & 1x1 && 1x0\\
-0x0 && 0x1 & 1x0 && 1x1\\
-1x1 && 1x0 & 0x1 && 0x0\\
-1x0 && 1x1 & 0x0 && 0x1
+0\times{1} && 0\times{0} & 1\times{1} && 1\times{0}\\
+0\times{0} && 0\times{1} & 1\times{0} && 1\times{1}\\
+1\times{1} && 1\times{0} & 0\times{1} && 0\times{0}\\
+1\times{0} && 1\times{1} & 0\times{0} && 0\times{1}
 \end{pmatrix} \nonumber  \\
    & = & \begin{pmatrix}
 0 && 0 & 1 && 0\\
@@ -555,9 +557,30 @@ X \otimes I =
 \label{eq:tensoropXI}
 \end{eqnarray}
 
-Tensor product scales to any number of qubits and therefore can produce $2^n\times{2^n}$ matrices for systems involving $n$ qubits.
+Tensor product scales to any number of qubits and can therefore produce $2^n\times{2^n}$ matrices for systems involving $n$ qubits.
 The tensor product cannot however be used in this same way to produce unitary matrices for controlled gates.
 It can only be used when the action on each qubit is independent.
+
+More than two matrices be combined by the tensor product operation, $A\otimes{B}\otimes{C}$.
+The operation is broken down from right to left into a number of two qubit operations, $A\otimes(B\otimes{C}$.
+The ordering of the matrices is important.
+Assuming $A$, $B$ and $C$ are single qubit quantum operations the operation encoded by $A$ would operate on the highest significant qubit while the operation encoded by $C$ would operate on the lowest significant qubit.
+The operation encoded by $B$ would operate on the middle qubit.
+
+%Entanglement
+
+Not all multiple qubit states can be expressed as the tensor products of individual states.
+Such states are said to be entangled.
+An example with two qubits is the state $\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$.
+This state cannot be factored into two quantum states, one for each qubit.
+This is also a superposition of two states and under observation the superposition will collapse to one of $\ket{00}$ or $\ket{11}$.
+Thus when one of the qubits is observed and is seen to be in state $\ket{0}$ we can deduce that that the other qubit is also in the state $\ket{0}$.
+Similarly, if the qubits were observed to be in the state $\ket{1}$ we can deduce that that the other qubit is also in the state $\ket{1}$.
+% What is important to not is that if we are to observe one of the qubits in this state, it is possible to know the state of the other qubit without observing it.
+% Taking the example state, if the higher significant qubit is observed to be in the state $\ket{0}$ it can be deduced that the lower significant qubit is also in the state $\ket{0}$ 
+% The same is true if the higher significant qubit is observed to be in the state $\ket{1}$, the lower significant qubit is also in the state $\ket{1}$
+It is important to note that this property is maintained regardless of spacial separation.
+
 
 \section{An Introduction to Quantum Circuits and Algorithms}
 %Known Quantum Algorithms
@@ -565,8 +588,8 @@ It can only be used when the action on each qubit is independent.
 Quantum computational artefacts can be considered at various levels of abstraction.
 At the implementation level computation is the application of a sequence of specific operations.
 This sequence of operations shall be referred to as a circuit.
-A circuit generally operates over a quantum system of a specific size, referred to as the system size.
-For example a circuit could invert, by applying the Pauli-X operation, to each qubit of a three qubit state.
+A circuit generally operates over a quantum system of a fixed size, referred to as the system size.
+For example a circuit could invert, by applying the Pauli-X operation, each qubit of a three qubit state.
 A program is an artefact that when evaluated produces a circuit.
 An algorithm is an artefact that when instantiated with the system size produces a program.
 This relationship can be seen in Figure \ref{fig:comartefacts}.
@@ -636,18 +659,18 @@ This gives three artefacts, each at a different level of abstraction that can be
 \end{itemize}
 
 The same is true for quantum processing design.
-The design can either be done at the gate level, program level or parametrisable algorithm level.
+The design can either be done at the circuit level, program level or parametrisable algorithm level.
 
 Currently there are very few problems for which a quantum solution is known.
 Peter Shor published a discussion on the progress made ``in discovering algorithms for computation on a quantum computer''\cite{Shor:2004:PQA:1032132.1032149}.
 Shor suggests two possible reasons for the lack of quantum algorithms.
-The first is ``that there might really be only a few problems for which quantum computers can offer a substantial speed-up over classical computers''\cite{Shor:2004:PQA:1032132.1032149}.
+The first was ``that there might really be only a few problems for which quantum computers can offer a substantial speed-up over classical computers''\cite{Shor:2004:PQA:1032132.1032149}.
 This would indeed make the discovery of useful quantum algorithms difficult.
 However, I feel this is rather pessimistic.
 The main focus of the paper published by Feynman\cite{Feynman82simulatingphysics} was the problem of simulating the physics of quantum mechanics on a classical computer.
-This to suggests there would be the potential of many applications of quantum computers, even if they aren't analogous to the classical computational applications.
+This suggests there would be the potential of many applications of quantum computers, even if they aren't analogous to classical computational applications.
 
-The second is ``that quantum computers operate in a manner so non-intuitive, and so different from classical computers''\cite{Shor:2004:PQA:1032132.1032149} that our current algorithm knowledge is close to useless.
+The second reason was ``that quantum computers operate in a manner so non-intuitive, and so different from classical computers''\cite{Shor:2004:PQA:1032132.1032149} that our current algorithm knowledge is close to useless.
 This, in my opinion, is a much more significant obstacle.
 Quantum mechanics is seen by many as a confusing and mystical subject.
 Prize winning mathematician and physicist Roger Penrose is attributed to the remark ``Quantum mechanics makes absolutely no sense''.
@@ -659,7 +682,7 @@ I think this applies to many areas of research including quantum computation.
 Research into the use of heuristic search techniques to assist in the design of quantum algorithms has shown promise.
 Several different techniques have been used to varying success.
 Not only do the techniques differ, but so do the target artefacts.
-Research has been presented to design at all three levels of abstraction outlined above.
+Research has been presented to design at each of the three levels of abstraction outlined above.
 
 In the following sections several quantum algorithms shall be explained in detail.
 This is followed by an overview of the research that has been carried out using heuristic search to perform quantum algorithm synthesis.
@@ -669,22 +692,22 @@ This is followed by an overview of the research that has been carried out using 
 In 1985, Deutsch\cite{Deutsch85quantumtheory} proposed a probabilistic solution to a simple promise problem.
 The solution was improved to a deterministic solution by Cleve et al.\cite{Cleve98quantumalgorithms}.
 Despite the improvement being produced by Cleve et al. the algorithm is popularly known as the Deutsch algorithm.
-The algorithm presented in \cite{Deutsch85quantumtheory} was the first application where quantum computation was shown to be provably faster than classical computation.
+% The algorithm presented in \cite{Deutsch85quantumtheory} was the first application where quantum computation was shown to be provably faster than classical computation.
 
 The Deutsch algorithm is intended to solve the following problem:
 \begin{quote}
 Given a function $f:\{0,1\}\to\{0,1\}$, state whether it is either a balanced, or constant function.
-The function $f(x)$ is guaranteed to be either constant or balanced.
+The ``promise'' is that the function $f$ is guaranteed to be either balanced or constant.
 \end{quote}
-The algorithm's major breakthrough was that it only required a single invocation of the function $f(x)$ to decide on which category that function belonged.
+The algorithm's major breakthrough was that it only required a single invocation of the function $f$ to decide in which category it belonged.
 The best classical approach requires two invocations.
-This was the first algorithm to exploit quantum mechanics to compute the solution to a problem provably more efficiently, with efficiency defined as the number of invocation of $f(x)$, than a classical computer.
+This was the first algorithm to exploit quantum mechanics to compute the solution to a problem provably more efficiently, with efficiency defined as the number of invocation of $f$, than a classical solution.
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
 &			&  1 &		&  2 &				&  3 &		&  4 &		\\
-& \lstick{\ket{0}} 	& \qw& \gate{H} & \qw& \gate{\mathcal{F}} 	& \qw& \gate{H} &\qw& \meter \\
+& \lstick{\ket{0}} 	& \qw& \gate{H} & \qw& \gate{\mathcal{f}} 	& \qw& \gate{H} &\qw& \meter \\
 & \lstick{\ket{1}} 	& \qw& \gate{H} & \qw& \targ\qwx 		& \qw& \qw	&\qw& \rstick{\ket{0}-\ket{1}}\qw  
 }
 \]
@@ -695,9 +718,8 @@ This was the first algorithm to exploit quantum mechanics to compute the solutio
 The circuit for this algorithm is presented in Figure \ref{Deutsch-Cir}.
 Despite this being known as the Deutsch Algorithm, the solution is a circuit rather than a parametrisable list of instruction.
 The maths does not scale to functions with greater than a single input qubit.
-Between the points $2$ and $3$ in Figure \ref{Deutsch-Cir} is the insertion of the function $f$.
-This gate is a modified Controlled-Not gate.
-The standard Controlled-Not gate used the value of the control qubit to decide whether to perform the Pauli-X operation.
+Between points $2$ and $3$ in Figure \ref{Deutsch-Cir} is a modified Controlled-Not gate.
+The standard Controlled-Not gate uses the value of the control qubit to decide whether to perform the Pauli-X operation.
 This modified gate does not use the control qubit value, $x$, but the result of the $f(x)$ to decide whether to perform the Pauli-X operation.
 However, just as with the standard Controlled-Not gate, this modified version does not affect the value of the qubits used by the control function.
 
@@ -782,46 +804,48 @@ However, just as with the standard Controlled-Not gate, this modified version do
 
 When the modified Controlled-Not operation is activated by $f(\ket{0})$ it can be seen as a phase flip on the state $\ket{0}$.
 The same is true for the state $\ket{1}$.
-The state of the lower qubit at label $2$ is $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ which when a Pauli-X operation is applied results in the state $\frac{1}{\sqrt{2}}(\ket{1}-\ket{0})$ that can be rewritten as $\frac{-1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+This doesn't seem to follow the operation previously given for the Pauli-X gate or the statement just made that the control qubit is not affected.
+However, as he state of the lower qubit at label $2$ is $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ when the Pauli-X operation is applied the state is transformed to $\frac{1}{\sqrt{2}}(\ket{1}-\ket{0})$ which can be rewritten as $\frac{-1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+The negative sign propagates through the maths and can be viewed as acting on the upper qubit.
 
-If the function is balanced only one of the two states in the superposition of the upper qubit will activate Pauli-X operation.
-This results in the effective phase flip only applying on one of the states inside the superposition
-The resulting state is equivalent to $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ regardless of whether $\ket{0}$ or $\ket{1}$ activates the Pauli-X operation as $-1$ can be factored out as a global phase that is unobservable.
-When the state $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ is passed through the final Hadamard gate results in $\ket{1}$.
+If the function is balanced only one of the two states in the superposition of the upper qubit will activate the Pauli-X operation.
+This results in the effective phase flip applying only on one of the states inside the superposition
+The resulting upper qubit state is equivalent to $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ regardless of whether $\ket{0}$ or $\ket{1}$ activates the Pauli-X operation as $-1$ can be factored out as unobservable global phase.
+When the final Hadamard gate is applied to the state $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ the state of the upper qubit is $\ket{1}$.
 
 If the function is constant both or neither of the states in the superposition, $\ket{0}$ and $\ket{1}$, activate Pauli-X operation.
 If both activate the operation, the effective phase flip is applied to both the states inside the superposition resulting in a global, and therefore unobservable, phase flip.
-This results in the state $\frac{-1}{\sqrt{2}}(\ket{0}+\ket{1})$.
-If neither activate the operation the state remains as $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
-Both these states when passed through the final Hadamard gate result in $\ket{0}$.
+This results in the upper qubit being in state $\frac{-1}{\sqrt{2}}(\ket{0}+\ket{1})$.
+If neither activate the operation the upper qubit remains in the state $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+The application of the final Hadamard gate on these states produces on the upper qubit the state $\pm\ket{0}$, with only $\ket{0}$ observable.
 
 These two results are distinct.
-A balanced function results in $\ket{1}$ and a constant function results in $\ket{1}$.
+A balanced function results in $\ket{1}$ and a constant function results in $\ket{0}$.
 
 This algorithm is very neat and simple.
-It performs the task required in a deterministic manner and outperforms the classical equivalent.
-It does however reinforce the statement made by Shor\cite{Shor:2004:PQA:1032132.1032149} concerning the lack of background knowledge that can be drawn upon to create these algorithms.
+It performs in a deterministic manner and outperforms the classical equivalent.
+It does however reinforce the statement made by Shor\cite{Shor:2004:PQA:1032132.1032149} regarding the lack of background knowledge that can be drawn upon to create these algorithms.
 The construction of such an algorithm cannot be produced simply by understanding the concepts of classical algorithm design.
 
-The main observation that should be taken from this algorithm is how the output is observed on the quibit that is not directly acted on but provides the input to the function $f$.
+The main observation that should be taken from this algorithm is how the output is observed on the quibit that is not physically acted on by the modified CNOT gate.
 As mentioned above, if the circuit between points $3$ and $4$ in Figure \ref{Deutsch-Cir} were analysed by hand as a classical circuit, the input qubit would not be affected.
-However, when it becomes a quantum circuit and the qubits are placed in superposition, the control qubit is affected.
-This is a prime example the solution requires the understanding of the subtle implications of superposition and the vision to exploit it.
+However, when it becomes a quantum circuit with the addition of phase, the control qubit is affected.
+This is a prime example where the solution requires the understanding of the subtle implications of complex probability amplitudes in superposition and the vision to exploit it.
 
 \subsection{Deutsch-Jozsa Algorithm}
 \label{sec:DeutJozsaAlg}
 
 %Deutsch-Jozsa Algorithm
 The Deutsch-Jozsa algorithm\cite{1992-deutsch} is a generalisation and improvement over the earlier Deutsch algorithm\cite{Deutsch85quantumtheory}.
-The algorithm was the improved by Cleve et al.\cite{Cleve98quantumalgorithms}
+The algorithm was improved by Cleve et al.\cite{Cleve98quantumalgorithms}.
 The improved algorithm is still generally referred to as the Deutsch-Jozsa algorithm.
 
-In 1992 David Deutsch and Richard Jozsa\cite{1992-deutsch} presented an extension to the Deutsch algorithm, Section \ref{sec:DeutAlg}, that allowed for functions $f:\{0,1\}^{2n}\to\{0,1\}$ to be categorised as constant or balanced.
-The algorithm was probabilistic but also required 2 invocations to the function $f(x)$.
+In 1992 David Deutsch and Richard Jozsa\cite{1992-deutsch} presented an extension to the Deutsch algorithm, Section \ref{sec:DeutAlg}, that allowed for functions $f:\{0,1\}^{2^n}\to\{0,1\}$ to be categorised as constant or balanced.
+The algorithm was probabilistic and required 2 invocations to the function $f$.
 This means that in the worst case, with $n=1$, the algorithm will perform worse than both the original Deutsch algorithm\cite{Deutsch85quantumtheory} and the classical algorithm due to the probabilistic nature of its result.
-This is a very limited case and performance improves as the value of n increases.
-The improvement by Cleve et al. reduces this to a single invocation to the function $f(x)$.
-As with the original Deutsch algorithm, the number of invocations of $f(x)$ is constant, truly independent of both $n$ and $f(x)$.
+This is a very limited case and performance improves as the value of $n$ increases.
+The improvement by Cleve et al. reduces this to a single invocation of the function $f$ and is deterministic.
+As with the original Deutsch algorithm, the number of invocations of $f$ is constant, truly independent of both $n$ and $f$.
 This is again an improvement over the classical algorithm which requires in the worst case $2^{n-1}+1$ to be certain of the function's classification.
 
 \begin{figure}
@@ -893,26 +917,27 @@ The algorithm requires $n$ input qubits and a single ancillary qubit.
 % This gives a clear deterministic distinction between when $f$ is constant or balanced requiring just a single invocation of $f$.
 % If the observation is $\ket{0}^{\otimes{n}}$ then $f(x)$ is constant, if the observation is any other state $f(x)$ is balanced.
 
-The algorithm works effectively in the same way.
+The algorithm effectively works in the same way.
 The only difference is that the state produced by each balanced function is potentially different.
-All that can be said for certain is that only a constant function can produce the observed state $\ket{0}^{\otimes{n}}$.
-As it is promised that the function is either constant or balanced this results in two distinct cases.
+% All that can be said for certain is that only a constant function can produce the observed state $\ket{0}^{\otimes{n}}$.
+% As it is promised that the function is either constant or balanced this results in two distinct cases.
 If the observed state is $\ket{0}^{\otimes{n}}$ the function $f$ is constant.
 If the observed state is any other state the function $f$ is balanced.
 
 The similarities between the original Deutsch algorithm and the more general Deutsch-Jozsa algorthim are quite apparent.
-The Deutsch-Jozsa again uses superposition to create an effect on the input qubits when the action is taken on the ancillary qubit.
+The Deutsch-Jozsa algorithm again uses superposition $\ket{0}-\ket{1}$ to cause an affect on the state of the input qubit when the action is physically performed on the ancillary qubit.
 
 \subsection{Grover's Search Algorithm}	
 \label{sec:grovers}
 %Grovers Database search algorithm
-The Grover Search algorithm\cite{Grover:1996rk} is an search problem to find a solution $x$ such that $f(x)=True$ for some predicate $f$.
-The algorithm does not exploit or assume any structure, such as sorting, in the data set that it is searching.
+The Grover Search algorithm\cite{Grover:1996rk} is a search problem to find a solution $x$ such that $f(x)=True$ for some predicate $f$.
+The algorithm does not exploit or assume any structure, such as sorting, in the data set over which it is searching.
 
 It has previously been proven\cite{Bennett:1996iu} that the lower complexity limit for any algorithm identifying an element without knowledge of underlying structure in the data is $\Omega(\sqrt{N})$.
-$N$ represents the number of elements in the search space, assume $N=2^n$.
+$N$ represents the number of elements in the search space.
+It is assumed $N=2^n$.
 The complexity is measured by the number of elements which need to be queried in order to find the desired element.
-The Grover Search algorithm has the complexity $O(\sqrt{N})$ and so `is within a constant factor of the fastest possible quantum mechanical algorithm`\cite{Grover:1996rk}.
+The Grover Search algorithm has the complexity $O(\sqrt{N})$ and so ``is within a constant factor of the fastest possible quantum mechanical algorithm''\cite{Grover:1996rk}.
 
 \begin{figure}
 \begin{center}
@@ -953,17 +978,17 @@ Any state whose observation will provide one of the $M$ solutions solves the sea
 
 The mechanisms used within the algorithm to produce a solution to the problem are more subtle than those used but the Deutsch-Jozsa algorithm.
 The algorithm does not perform the computation in a single step.
-The algorithm requires $O(\sqrt{N})$ steps after Figure \ref{fig:groversinit} has been applied.
-The circuit that is repeated is that shown in Figure \ref{Grovers-Search-Cir}.
+After the initialisation circuit has been applied, see Firgure \ref{fig:groversinit}, the circuit shown in Figure \ref{Grovers-Search-Cir} is repeated in $O(\sqrt{N})$ times.
+The actual number of times depends on $N$ and the number of solutions, $M$.
 
 The algorithm works on amplification.
-Each time the circuit is applied the probability amplitude of the desired solution is increased by $\sqrt{\frac{M}{N}}$ Radians.
-After $\frac{\pi\sqrt{N}}{4\sqrt{M}}$ repetitions the probability amplitude of observing the correct state is the same as the combined probability amplitudes of all other states after the circuit in Figure \ref{fig:groversinit} was initially applied.
-The value of $M$ is required to calculate the number of repetitions to perform.
+Each time the circuit is applied the probability amplitude of the desired solution is increased.
 
-The application of Figure \ref{Grovers-Search-Cir} can be seen as rotating around the Bloch Sphere of the $n$ qubit system, see Figure \ref{BlochSphere}.
+The application of Figure \ref{Grovers-Search-Cir} can be seen as rotating by $\sqrt{\frac{M}{N}}$ Radians around the Bloch Sphere of the $n$ qubit system, see Figure \ref{BlochSphere}.
 The state $\ket{1}$ would represent the state in which only solutions have non-zero probability amplitudes.
 The state $\ket{1}$ would represent the state in which only solutions have zero probability amplitudes.
+After $\frac{\pi\sqrt{N}}{4\sqrt{M}}$ repetitions the probability of observing the correct state is the same as the combined probabilities of all other states after the circuit in Figure \ref{fig:groversinit} was initially applied.
+The value of $M$ is required to calculate the number of repetitions to perform.
 With the it being a sphere, the repeated rotations around a fixed axis shall always be cyclical.
 Therefore the probability amplitude of the desired state is cyclical.
 If Figure \ref{Grovers-Search-Cir} is repeated more than $\frac{\pi\sqrt{N}}{4\sqrt{M}}$ times the probability amplitude of observing the correct state starts decreasing by $\sqrt{\frac{M}{N}}$ Radians.
@@ -1047,7 +1072,7 @@ If Figure \ref{Grovers-Search-Cir} is repeated more than $\frac{\pi\sqrt{N}}{4\s
 \subsection{Shor's Factorisation Algorithm}
 \label{sec:shorsalg}
 %Shors Algorithm
-In 1994, Peter Shor astonished the computer science community with a quantum factorisation algorithm\cite{Shor:1994jg}.
+In 1994, Peter Shor astonished, and worried, the computer science community with a quantum factorisation algorithm\cite{Shor:1994jg}.
 This allowed the factorisation of integers into their constituent primes in polynomial time.
 This algorithm is not a pure quantum algorithm, but a hybrid algorithm.
 It has both a quantum and classical portion.
@@ -1086,16 +1111,16 @@ $
 \end{figure}
 
 The algorithm exploits the phase components of the complex probability amplitudes.
-The quantum portion of the algorithm itself, shown in Figure \ref{shorcirc}, is more general than is often explained.
+The quantum portion of the algorithm, shown in Figure \ref{shorcirc}, is more general than is often explained.
 
 The quantum portion is simply a periodicity finding algorithm.
 The period of certain functions, such as $a^x(mod N)$, can be used with elements of number theory to find the factors of a number.
-However, the function $f$ in the circuit shown in Figure \ref{shorcirc} could be replaced by any periodic function and the period would be found.
+However, the function $f$ in the circuit shown in Figure \ref{shorcirc} could be replaced by any periodic function in order to find it's period.
 
 For example, the Grovers search algorithm in Section \ref{sec:grovers} requires the number of solutions, $M$, to be known.
 If $M$ is initially unknown, Shor's algorithm can be used to find it.
-Grovers algorithm is explained as rotations around the Bloch sphere representing the $n$ qubit system by a fixed angle.
-For $n$ greater than $1$ the Bloch sphere becomes a hypersphere.
+Grovers algorithm is can be explained as rotations by a fixed angle around a Bloch sphere representing the $n$ qubit system.
+% For $n$ greater than $1$ the Bloch sphere becomes a hypersphere.
 Rotation around a hypersphere by a fixed angle is periodic. 
 With this period known for a certain instance of Grovers algorithm the value of $M$ can be calculated as each rotation is $\sqrt{\frac{M}{N}}$ Radians.
 This is known as Quantum Counting\cite{Brassard:1998vj}.
@@ -1251,11 +1276,16 @@ Alice has a quantum state, $\ket{\Psi}$, to send to Bob.
 However, Alice and Bob can only communicate using a classical communication channel.
 \end{center}
 
-With a classical state this would not be an issue.
-Measurements on the different components of Alice's state could be made and then communicated using the channel to Bob.
-Using these measurements Bob can recreate the state.
-Unfortunately this is not possible for quantum states.
-With quantum computation exploiting the power of quantum mechanics these measurements cannot be performed without the state being irreversibly altered.
+There is no assumption that Alice actually ``knows'' the quantum state $\ket{\Psi}=\alpha\ket{0}+\beta\ket{1}$, that is she may possess the physical qubit but be unaware of the actual values of $\alpha$ and $\beta$.
+Furthermore, measurement would cause the qubit to collapse to $\ket{0}$ or $\ket{1}$.
+We cannot ``look up'' and send the value of the state as we might do for a classically stored bit of information.
+However, quantum mechanics provides a solution.
+
+% With a classical state this would not be an issue.
+% Measurements on the different components of Alice's state could be made and then communicated using the channel to Bob.
+% Using these measurements Bob can recreate the state.
+% Unfortunately this is not possible for quantum states.
+% With quantum computation exploiting the power of quantum mechanics these measurements cannot be performed without the state being irreversibly altered.
 
 % The ``No Cloning Theorm'' in the field of quantum computation is the results of quantum mechanic's ``Uncertainty Principle''.
 % The ``Uncertainty Principle'' states that ``that
@@ -1281,10 +1311,10 @@ With quantum computation exploiting the power of quantum mechanics these measure
 \begin{figure}
 \[
 \Qcircuit @C=.7em @R=.4em @! {
-			& 1 &		&		& 2 	&		&	& 3 	&	&4	&  			& 		& 5 \\
-\lstick{\ket{\psi}} 	& \qw & \qw  	& \qw 	 	& \qw	& \ctrl{1} 	& \gate{H} & \qw & \meter &\cw	&\cw 			& \control \cw\\
-\lstick{\ket{0}} 	& \qw & \qw 	& \targ  	& \qw	& \targ		& \qw 	& \qw 	&\meter	&\cw	&\control \cw 		& \cwx\\
-\lstick{\ket{0}} 	& \qw & \gate{H} & \ctrl{-1} 	& \qw 	& \qw		&\qw 	& \qw	& \qw	&\qw 	& \gate{X} \cwx 	& \gate{Z} \cwx & \qw
+			& 1 		&		&		& 2 			&		&		& 3 		&		&4	&  			& 		& 5 \\
+			&		&		&  		& \lstick{\ket{\psi}}	& \ctrl{1} 	& \gate{H} 	& \qw		& \meter	&\cw	&\cw 			& \control \cw&\\
+\lstick{\ket{0}} 	& \qw 		& \qw 		& \targ  	& \qw			& \targ		& \qw 		& \qw		& \meter	&\cw	&\control \cw 		& \cwx&\\
+\lstick{\ket{0}} 	& \qw 		& \gate{H} 	& \ctrl{-1} 	& \qw 			& \qw		&\qw 		& \qw		& \qw		&\qw 	& \gate{X} \cwx 	& \gate{Z} \cwx & \qw
 }
 \]
 \label{quantelcir}
@@ -1293,21 +1323,24 @@ With quantum computation exploiting the power of quantum mechanics these measure
 % \section{The Current State of Quantum Computing}
 
 The circuit implementing the solution can be seen in Figure \ref{quantelcir}.
-The numbers above the circuit shall be used in the following explanation.
+The numbers above the circuit will be used in the following explanation.
 
-For Alice to send the state $\ket{\Psi}$, $\alpha\ket{0}+\beta\ket{1}$, to Bob they must share the entangled state $\ket{\Phi}$,$\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$.
-State $\ket{\Phi}$ is created between labels $1$ and $2$.
-This results in an overall state at label $2$ equally that shown in Equation \ref{eqn:teleinitstate}.
+For Alice to send the state $\ket{\Psi}=\alpha\ket{0}+\beta\ket{1}$ to Bob they must share the entangled state $\ket{\Phi}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$.
+The state $\ket{\Phi}$ is created between labels $1$ and $2$.
+This requires a two qubit operation, which requires physical proximity of the qubits.
+Once the qubits are entangled, the lowest significant, bottom, qubit is transported to Bob.
+Now the teleportation part of the algorithm is carried out.
+$\ket{\Psi}=\alpha\ket{0}+\beta\ket{1}$ may now be created or may have existed prior to the entanglement process.
+The state at label $2$ is shown in Equation \ref{eqn:teleinitstate}.
 The subscript letters show the qubits are held by Alice and and the qubit held by Bob.
-
 \begin{equation}
- \frac{1}{\sqrt{2}}(\alpha\ket{00}_A\ket{0}_B+\beta\ket{10}_A\ket{0}_B+\alpha\ket{01}_A\ket{1}_B+\beta\ket{11}_A\ket{1}_B)
+ \alpha\ket{0}+\beta\ket{1}(\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})) = \frac{1}{\sqrt{2}}(\alpha\ket{00}_A\ket{0}_B+\beta\ket{10}_A\ket{0}_B+\alpha\ket{01}_A\ket{1}_B+\beta\ket{11}_A\ket{1}_B)
  \label{eqn:teleinitstate}
 \end{equation}
 
-Alice transforms her qubits between labels $2$ and $3$ before measurement to the state shown in Equation \ref{eqn:telelab3}.
-
+The operations between labels $2$ and $3$ produce the state in Equation \ref{eqn:telelab3}.
 \begin{eqnarray}
+ \label{eqn:telelab3}
  \frac{1}{2}(
 \alpha\ket{00}_A\ket{0}_B+
 \alpha\ket{10}_A\ket{0}_B+
@@ -1317,10 +1350,15 @@ Alice transforms her qubits between labels $2$ and $3$ before measurement to the
 \alpha\ket{11}_A\ket{1}_B+
 \beta\ket{00}_A\ket{1}_B-
 \beta\ket{10}_A\ket{1}_B)\nonumber
- \label{eqn:telelab3}
 \end{eqnarray}
 
-This transformation ensures that the measurements between labels $3$ and $4$ do not collapse the superposition on Bob's qubit.
+Between labels $3$ and $4$, Alice will observe one of four possible states $\ket{00}$, $\ket{01}$, $\ket{10}$ or $\ket{11}$.
+Alice can communicate this observed state to Bob using the classical communication channel.
+The observed state indicates which variant of $\ket{\Psi}$ is the state of Bob's qubit.
+Table \ref{tab:qtelepregress} shows the relationship between the observation made by Alice and the state of Bob's qubit.
+With the state observed by Alice, Bob can use Table \ref{tab:qtelepregress} to find out what operations need to be applied to recover the original state $\ket{\Psi}$.
+Table \ref{tab:qtelepregress} shows how the state observed by Alice affects Bob's qubit and how the state $\ket{\Psi}$ can be recovered.
+
 % 
 % \begin{center}
 %   \begin{tabular}{ccc}
@@ -1332,9 +1370,6 @@ This transformation ensures that the measurements between labels $3$ and $4$ do 
 %     $\ket{1}_A$ & $\ket{1}_A$ & $\alpha\ket{1}_B-\beta\ket{0}_B$
 %   \end{tabular}
 % \end{center}
-Based on the measurement, Alice can control the operations applied by Bob between labels $4$ and $5$.
-To communicate the control she uses the available classical communication channel.
-The evolution of the state between label's $3$ and $5$ is shown in Table \ref{tab:qtelepregress}.
 
 \begin{table}
 
@@ -1382,22 +1417,23 @@ At label $5$ Bob is in possession of the original state $\ket{\Psi}$.
 % ways to simulate them
 Nature inspired computation is a highly active research area.
 Taking inspiration from nature and biological theories, search techniques such as Genetic Algorithms and Genetic Programming are being employed to a wide rage of industrial problems.
-What makes these approaches different is that they are based on a population, or 'generation', of individuals.
-The basic principle is to evaluate the ``fitness'' of all individuals in the generation, select the individuals with probabilities based on their fitness.
-Mutate each selected individual randomly and add it to the next 'generation' of individuals.
-Along with mutation, a computational analogy to biology's reproduction, called crossover, can be used.
+What makes these approaches different is that they are based on a population, or ``generation'', of individuals.
+The basic principle is to evaluate the ``suitability'' of all individuals in the generation, select the individuals with probabilities based on their suitability.
+Mutate each selected individual with a fixed probability and add it to the next 'generation' of individuals.
+Alongside mutation, a computational analogy to biology's reproduction, called crossover, can be used.
 Crossover takes two, or potentially more, selected individuals and combines them to produce other individuals which are then added to the next 'generation'.
 The each cycle of evaluate, selection and mutation and/or crossover produces a 'generation' of individuals.
-The process repeats until a required 'fitness' is found or a resource limit is reached, time or number of generations produced for example.
-As the process progresses, with the a reasonable representation and fitness function, the average 'fitness' of each generation should improve.
+The process repeats until a required suitability is found or a resource limit is reached, time or number of generations produced for example.
+As the process progresses, with the a reasonable representation and suitability measure, the average suitability of each generation should improve.
 
 The use of evolutionary techniques to try synthesize quantum algorithms is not new.
-There are many examples of successes in producing solutions to problems already solved by a manual approach and some producing novel solutions to previously quantumly unsolved problems.
+There are many examples of successes in producing solutions to problems already solved by a manual approach and some producing novel solutions to problems without previously known quamtum solutions.
 The techniques used vary from Genetic Algorithms to Genetic Programming with varying success.
 
-Not only is the technique varied, the desired solution is also varied.
-Some research focuses on the evolution of quantum circuits or programs, whereas some focus on more general quantum algorithms which take a parameter representing the number of input qubits.
-Due to the exponential increase in resources required for simulation with an increase in qubits the generality of the quantum algorithms is not usually tested on large systems.
+Not only are the techniques varied, the representation of the desired solutions are also varied.
+Some research focuses on the evolution of quantum circuits or programs, whereas some focus on more general quantum algorithms.
+As the system size increases the resources required for simulation increase exponentially
+As a result quantum algorithms are not usually tested on large system sizes.
 
 \subsection{Q-PACE I}
 Massey\cite{masseythesis,masseymeng} explores both Genetic Algorithms and Genetic Programming as search techniques.
@@ -1412,14 +1448,14 @@ This is clearly not desirable as increasing the array length increases the searc
 
 \subsection{Q-PACE II}
 Q-PACE II\cite{masseythesis} is a suite based on Q-PACE I but uses Genetic Programming instead.
-However in contrast to Q-PACE I, Q-PACE II is able to handle variable length solutions. 
+This allows Q-PACE II to handle variable length solutions. 
 Individuals are represented as lists of quantum gates parametrized with the label representing the type of gate, target and control qubits and phase factor.
 
 Unitary operators, gate implementations, are just bijective functions acting on state vectors.
 Matrix multiplication is a simple representation of unitary application, however it is very computationally expensive.
-Some operations can be implemented more efficiently as simple sets of instructions, referred to as vector manipulation, that when followed produce exactly the same final state as the matrix multiplication.
-Algorithm \ref{fig:paulixvectorrepresentation} shows the vector manipulation of the Pauli-X gate of quantum state $S$.
-Q-PACE II includes the use of vector manipulation rather than matrix manipulation to improve efficiency.
+Some operations can be implemented more efficiently as simple sets of instructions, referred to in this report as direct vector manipulation, that when followed produce exactly the same final state as the matrix multiplication.
+Algorithm \ref{fig:paulixvectorrepresentation} shows the direct vector manipulation of the Pauli-X gate of quantum state $S$.
+Q-PACE II includes the use of direct vector manipulation rather than matrix manipulation to improve efficiency.
 \begin{algorithm}
 \begin{algorithmic}
 \FOR{$k$ : $k\rightarrow2^n$ : $k+2^m$} 
@@ -1430,15 +1466,15 @@ Q-PACE II includes the use of vector manipulation rather than matrix manipulatio
 \ENDFOR
 \ENDFOR
 \end{algorithmic}
-\caption{Pauli-X Gate Vector Manipulation}
+\caption{Pauli-X Gate Direct Vector Manipulation}
 \label{fig:paulixvectorrepresentation}
 \end{algorithm}
 
 The representation used in Q-PACE II cannot express a Toffoli, Controlled-Controlled-Not, gate as a single gate.
-This makes evolving a half-adder circuit more than a trivial test.
-When Q-PACE II is tested against producing a circuit with the specification $\ket{x, y, z}\rightarrow\ket{x,x \oplus y, x \wedge y}$ it is able to produce several exact solutions.
+This made evolving a half-adder circuit more than a trivial test.
+When Q-PACE II was asked to produce a circuit with the specification $\ket{x, y, z}\rightarrow\ket{x,x \oplus y, x \wedge y}$ it was able to produce several exact solutions.
 One of these was claimed, at the time, to be the ``best known solution to the problem''\cite{masseythesis} with the restricted gate set.
-Q-PACE II was also challenged to produce a circuit to implement $\ket{c, a, b, z}\rightarrow\ket{c, a, (a+b)_0, (a+b)_1}$ and again produced ``the most efficient solution to this particular problem''\cite{masseythesis}.
+Q-PACE II was also asked to produce a circuit to implement $\ket{c, a, b, z}\rightarrow\ket{c, a, (a+b)_0, (a+b)_1}$ and again produced ``the most efficient solution to this particular problem''\cite{masseythesis}.
 
 % \begin{equation}
 % \begin{pmatrix}
@@ -1457,7 +1493,7 @@ Q-PACE II was also challenged to produce a circuit to implement $\ket{c, a, b, z
 All tests of Q-PACE outlined above were focussed on producing deterministic solutions.
 During experiments focussed on more complicated problems deterministic solutions were not found.
 Following on from the work carried out by Spector et al\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112}, Massey changed to a probabilistic approach.
-The definition, referring to the target state $a\ket{000}+b\ket{001}$, of a probabilistic solution used by Massey is:
+The definition, referring to the target state $a\ket{000}+b\ket{001}$, of a probabilistic solution with an acceptance level of $0.5$ is:
 
 \begin{quote}
 The probability of measuring $\ket{000}$ is at least $0.5 \times a\bar{a}$, and the probability of measuring $\ket{001}$ is at least $0.5 \times b\bar{b}$.\cite{masseythesis}
@@ -1468,14 +1504,13 @@ With this focus on probabilistic correctness, the Q-PACE II software was used to
  \ket{a_1, a_0, b_1, b_0, z_1, z_0} \rightarrow \ket{a_1, a_0, (a+b)_2, (a+b)_1, (a+b)_0, z_0}
  \label{eqn:halfadderspec}
 \end{equation}
-The result was, despite focussing on probabilistic correctness, a deterministic solution\cite{masseythesis}.
+The result was, despite aiming for probabilistic correctness, a deterministic solution\cite{masseythesis}.
 % The evolved circuit was not as efficient by that presented in \cite{Vedral:1995ga} but was still deterministic.
 
 
 \subsection{Spector \emph{et al}, Deutsch's Early Promise Problem}
 \label{sec:spectordeutschmajon}
-Lee Spector \emph{et al.}\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} published a paper that used a different evolutionary approach.
-They used Genetic Programming to produce a better than classical solution to ``Deutsch's Early Promise''\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} problem.
+Lee Spector \emph{et al.}\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} published a paper that used Genetic Programming to produce a better than classical solution to ``Deutsch's Early Promise''\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} problem.
 This was not an unsolved problem as explained in Sections \ref{sec:DeutAlg} and \ref{sec:DeutJozsaAlg}, however it was an example of where quantum computation was known to be more efficient than any possible classical approaches.
 The specific problem presented was where the number of input qubits for $f$ was two.
 This makes it more comparable to the Deutsch-Jozsa algorithm than the original Deutsch algorithm.
@@ -1483,19 +1518,19 @@ This makes it more comparable to the Deutsch-Jozsa algorithm than the original D
 The genetic programming approach taken was the traditional tree based representation.
 The level at which the solution was represented was higher than that of both Q-PACE I and Q-PACE II.
 Both Q-PACE and Q-PACE II evolved quantum circuits whereas Spector represent solutions as ``classical programs which, when executed, construct quantum gate arrays''.
-This is the quantum program representation as defined earlier.
+This is equivalent to the quantum program definition given earlier.
 
-The best solution produced was a circuit that was different to the Deutsch-Jozsa circuit, Figure \ref{Deutsch-Jozsa-Cir}.
-It was a solution however it was a probabilistic answer to the problem rather than detemistic like the Deutsch-Jozsa solution, Section \ref{sec:DeutJozsaAlg}.
+The best solution produced was a circuit that was different to the Deutsch-Jozsa circuit, Figure \ref{Deutsch-Jozsa-Cir} and was a probabilistic answer to the problem rather than deterministic.
 
 As well as fixed size solutions, the function set, non-terminal set for the Genetic Programming tree, included the control structures required to produce parameterisable quantum algorithms.
-These were not used to attempt a parameterisable solution to the Deutsch Jozsa problem, which would have seemed the more obvious progression, but the \emph{majority-on} problem.
-The majority-on problem it to decide whether the output of a function has a majority of outputs being $1$.
+These were not used to attempt a parameterisable solution to the Deutsch Jozsa problem, which would have seemed the more obvious progression.
+Instead Spetor et. al. tried to find a solution to the majority-on problem.
+The majority-on problem is to decide whether the output of a function, $f$, has a majority of outputs being $1$.
 
-The best solution was a parameterisable algorithm which, for functions with a large variation from $2^{n-1}$ of $1$'s the solution performed well.
-However, when tested on functions with $2^{n-1}$ inputs evaluating to $1$ the solution ends up with an output error of $0.5$.
+The best solution found was a parametrisable algorithm, which for functions with a large variation from $2^{n-1}$ of $1$'s the solution performed well.
+However, when tested on functions with $2^{n-1}$ inputs evaluating to $f(x)=1$ the solution ends up with an output error of $0.5$.
 
-Both the solution for the Deutsch problem and the \emph{majority-on} problem were searched for with a probabilistic approach, looking for solutions with an output error of lower than 0.48 rather than for deterministic solutions.
+Both the solution for the Deutsch problem and the \emph{majority-on} problem were searched for with a probabilistic approach, looking for solutions with an acceptance level of $0.48$ compared to the $0.5$ by Massey.
 
 \subsection{Q-PACE III}
 
@@ -1514,30 +1549,29 @@ $}
 \caption{Q-Pace III}
 \end{figure}
 
-Massey's third generation, Q-PACE III, evolved quantum programs, inspired by the Spector\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} results and taking on one of the suggested ``Future Work'' topics.
+Massey's third generation, Q-PACE III, evolved quantum programs, inspired by the Spector\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} results and taking on one of their suggested ``Future Work'' topics.
 Just as with Q-PACE II, Q-PACE III was a Genetic Programming suite.
-The solutions evolved by Q-PACE III were executable programs, 'second order' solutions, which produce as an output a quantum circuit.
-An additional difference between the two suites is the representation.
+% The solutions evolved by Q-PACE III were executable programs, 'second order' solutions, which produce as an output a quantum circuit.
+A major difference between the two suites is the representation.
 Q-PACE III represents programs as trees, rather than lists.
 The execution of the solutions is performed by a pre-order traversal of the solutions tree representation.
-The tree in \ref{QPACEIIIEXTREE} produces the circuit in \ref{QPACEIIIEX}.
+The tree in \ref{QPACEIIIEXTREE} produces the circuit in \ref{QPACEIIIEX} when executed.
 
 Due to the change in representation, the evolutionary operations, mutation and crossover, occur at the second order level.
 As shown in \ref{QPACEIIIEXTREE}, the different non-terminal nodes were of different arity, allowing for more expressive trees.
-Whereas in Q-PACE I and II the fitness of an individual could be calculated directly from the individual, in Q-PACE III the individuals have to be `executed` to produce the quantum circuit before the fitness can be evaluated.
-With this additional step, the fitness evaluation requires more computational resources.
+Whereas in Q-PACE I and II the suitability of an individual could be calculated directly from the individual, in Q-PACE III the individuals have to be executed to produce the quantum circuit before the suitability can be evaluated.
+This is known as a second order representation.
+With this additional step, the suitability evaluation requires more computational resources.
 
-Massey defines the PF Max problem as
+Massey defines the PF Max problem as:
 \begin{quote}
  You are given a permutation function f(x) which operates over the integer range [0..3].
 Using a suitable encoding, evolve a quantum program U which returns the value of x that gives the maximum value of f(x).\cite{masseythesis}
 \end{quote}
 Q-PACE III was used to try find a probabilistic solution to the PF Max problem.
-The experiment was successful.
-When tested against the 8 permutations used as test cases, the correct index was the state with the highest probability of measurement for each test case.
-When tested against the 24 possible permutations, the correct index was the state with the highest probability of measurement for 20 of the 24 test cases.
 
-It was found that if the acceptance requirement was reduced to 0.4, from 0.5, a quantum program was evolved which returns the correct value for all 24 possible permutation exactly $50\%$ of the time.
+It was found that if the probabilistic requirement was reduced to 0.4, from 0.5, a quantum program was evolved which returns the correct value for all 24 possible permutation exactly $50\%$ of the time.
+The value of 0.5 only produced solutions that could perform correctly on $20$ out of the $24$ functions 
 This result was quite remarkable, this probability is twice that of the best classical approach, guessing.
 
 % There is however one major issue with this experiment.
@@ -1552,14 +1586,14 @@ This result was quite remarkable, this probability is twice that of the best cla
 \end{equation}
 
 Q-PACE III was also used to evolve an solution which, when run, produced the circuit for the Quantum Fourier Transform on 3 qubits.
-The Quantum Fourier Transform is an operation defined by equation \ref{QFTeqn} where x, $(x_0, x_1, \ldots, x_{N-1})$ where $N = 2^n$, is the input state and y, $(y_0, y_1, \ldots, y_{N-1})$, is the resulting state.
-It is fundamental for Shor's factorisation algorithm.
+The Quantum Fourier Transform is an operation defined by equation \ref{QFTeqn} where $N = 2^n$, $x=(x_0, x_1, \ldots, x_{N-1})$ is the input state and $y=(y_0, y_1, \ldots, y_{N-1})$ is the resulting state.
+As mentioned in Section \ref{sec:shorsalg} it is fundamental for Shor's factorisation algorithm.
 The problem was approached both deterministically and probabilistically, both were successful.
-The results of the probabilistic experiments were unexpected.
-The definition of the acceptance requirement had to be generalised.
+% The results of the probabilistic experiments were unexpected.
 Whereas for the PF Max problem the correct answer was a single value, the correct answer for the Quantum Fourier Transform is a state vector.
-An acceptance level of $x\%$ was redefined as the requirement that for all fitness cases, each state has a probability of being measured of at least $x\%$ of the probability for the respective state after running a `perfect` Quantum Fourier Transform.
-It was found that for acceptance levels of $75\%$, $50\%$ and even $25\%$, the evolved circuits often had an acceptance value in excess of $99\%$.
+The definition of the acceptance requirement had to be generalised.
+An acceptance level of $x$ is define as when each state is has a probability of being observed of at least $x\times{p}$ where $p$ is the ideal probability for the respective state.
+It was found that for acceptance levels of $0.75$, $0.5$ and even $0.25$, the evolved circuits often had an acceptance value in excess of $0.99$.
 
 \subsection{Q-PACE IV}
 With Q-PACE IV, Massey once again raised the level at which the solutions were represented.
@@ -1571,7 +1605,7 @@ As not all gates require 3 parameters, excess parameters were ignored during eva
 The desire to produce quantum algorithms required the inclusion of an iteration construct, numerical arithmetic and a store of variables so loop variables can be used.
 Several issues were encountered.
 An issue with the numerical arithmetic inclusion was with the possibility to specify a qubit which does not exist.
-In a system of 3 qubits, there is no sixth qubit so the syntactically correct `\emph{Create\_H(MULTIPLY(3, 2, X), X, X)}`\cite{masseythesis}, where X is a don't care symbol, is syntactically correct depending on the system size.
+In a system of 3 qubits, there is no sixth qubit so the instruction ``\emph{Create\_H(MULTIPLY(3, 2, X), X, X)}''\cite{masseythesis}, where X is a don't care symbol, although syntactically correct is semantically undefined.
 It was decided that any number above the system size would be interpreted as the system size.
 A comment in \cite{Stepney07searchingfor} outlines a similar problem when representing gates types using three bits.
 With only 5 gates types there are two extra values that the three bits can express.
@@ -1583,44 +1617,44 @@ The system size is massively over-represented in the search space as it is repre
 % Protection would have to be added into the operator carrying out this operation to ensure the individual with the numerical value is not duplicated each generation. 
 % If the evaluation of numerical nodes was altered to use the modulo of the system size the combination of the two individuals would cover both of the proposed solutions while compensating for the failings of both.
 
-The first test for Q-PACE IV was to try and evolve an algorithm to produce an $n$ qubit Quantum Fourier Transform with 100\% fidelity.
+The major test for Q-PACE IV was to try and evolve an algorithm to produce an $n$ qubit Quantum Fourier Transform with 100\% fidelity.
 There is a known algorithm to produce these circuits, provided as Figure 32 in \cite{masseythesis}, so the test was quantifiable.
-It was also shown that the gate set available to Q-PACE IV was indeed able to express the algorithm.
-Q-PACE IV was unsuccessful using the same fitness function as used by Q-PACE III in its evolution of the 3-qubit Quantum Fourier Transform.
-The fitness function was subsequently changed so that it used the polar representation of the complex numbers indicating the probability amplitude of each state rather than their Cartesian form.
+It was also shown that the instruction set of Q-PACE IV was able to express the algorithm.
+Q-PACE IV was unsuccessful using the same suitability measure as used by Q-PACE III in its evolution of the 3-qubit Quantum Fourier Transform.
+The suitability measure was subsequently changed so that it used the polar form of the complex probability amplitudes of each state rather than their Cartesian form.
 This was more successful and managed to produce an algorithm capable of producing a circuit with 100\% fidelity for 1, 2 and 3 qubits.
 
-However, this algorithm was not entirely system-size independent.
+This algorithm was not entirely system-size independent.
 The problem was due to the requirement of Quantum Fourier Transform to reverse the order of the qubits.
-This required the use of swap gates but the inclusion of these gates have a large effect on the fitness of individuals which include the phase rotation gates, another critical gate for the Quantum Fourier Transform.
-The fitness was once again altered, however this alteration guided the search in the direction of using swap gates.
+This requires the use of swap gates.
+The suitability measure was once again altered, however this alteration guided the search in the direction of using swap gates.
 The alteration provided the ideal number of swap gates, if the circuit does not contain this number of swap gate it is punished.
 A solution was found that was system size independent and produced $100\%$ fidelity.
 
-Both of these Quantum Fourier Transform examples show the importance of the fitness function.
+Both of these Quantum Fourier Transform examples show the importance of the suitability measure.
 Even though the Cartesian and polar form of complex numbers are mathematically equivalent, they produced drastically different results.
 The Cartesian form restricted the search and no solution was found whereas the equivalent polar form had no such restriction.
-It appears to me that the reverse will be true in the search for other problems where the relative phases are not as fundamental as they are in the Quantum Fourier Transform.
-This gives an indication that the search for currently unknown quantum algorithms may require a series of parallel evolution streams using different representation within the fitness function.
-It may also prove helpful to use a series of fitness functions in a collaborative approach.
-
-Evolutionary approaches are commonly used for multi-objective optimisation problems where the multiple objectives are in conflict.
-The use of different representations in fitness functions could be seen in a similar way to these approaches.
-However, different representations of the fitness function would not be a set of conflicting objectives but collaborating objectives.
-This would allow the search to be free from selecting the correct representation of the complex probability amplitudes.
-This would however require several fitness functions which give comparable values as well as a mechanism to chose the `best` fitness value for the individual being evaluated.
-The representation of this also leads to numerous choices, using just a MAX function or an average function or to represent the fitness as an n-dimensional point to optimise for n fitness functions.
+% It appears to me that the reverse will be true in the search for other problems where the relative phases are not as fundamental as they are in the Quantum Fourier Transform.
+% This gives an indication that the search for currently unknown quantum algorithms may require a series of parallel evolution streams using different representation within the fitness function.
+% It may also prove helpful to use a series of fitness functions in a collaborative approach.
+% 
+% Evolutionary approaches are commonly used for multi-objective optimisation problems where the multiple objectives are in conflict.
+% The use of different representations in fitness functions could be seen in a similar way to these approaches.
+% However, different representations of the fitness function would not be a set of conflicting objectives but collaborating objectives.
+% This would allow the search to be free from selecting the correct representation of the complex probability amplitudes.
+% This would however require several fitness functions which give comparable values as well as a mechanism to chose the `best` fitness value for the individual being evaluated.
+% The representation of this also leads to numerous choices, using just a MAX function or an average function or to represent the fitness as an n-dimensional point to optimise for n fitness functions.
 
 \subsection{Williams and Gray}
 None of the approaches presented so far have been used to produce the circuit for the quantum teleportation protocol or any other distributed protocol.
 There is essentially no difference between the circuits required for the quantum teleportation protocol than to produce the Quantum Fourier Transform.
-The main difference is the restriction on communication.
+The main difference is a restriction on communication.
 
 With the quantum teleportation protocol, only classical communication can be used as control when acting on the qubit held by Bob.
-In terms of automatically producing the circuits the restriction can be characterised as \emph{only single qubit gates, controlled or not, can be applied to the qubit held by Bob}.
+In terms of automatically producing the circuits the restriction can be characterised as \emph{only single qubit gates, controlled or uncontrolled, can be applied to the qubit held by Bob}.
 The use of controlled gates can allow the search to loosely represent measurement and communication of the measured value.
 
-Williams and Gray\cite{Williams:1998:ADQ:645812.670824} introduce a GP approach used to tackle the quantum teleportation protocol.
+Williams and Gray\cite{Williams:1998:ADQ:645812.670824} use a genetic programming approach to tackle the quantum teleportation protocol.
 The result required fewer gates than the smallest previously known circuit.
 
 The Williams and Gray approach uses a comparison between the target unitary matrix and the unitary matrices that the produced circuits represent.
@@ -1629,24 +1663,24 @@ The approach also tackled the quantum teleportation protocol in two parts, based
 The use of the target unitary matrix is the major disadvantage of this approach.
 The construction of the target unitary matrix is also usually a significantly difficult task.
 Therefore the approach can only really be used to try reduce the circuit size of problems that already have known solutions or for problems with target matrices that are simple to produce.
-If a solution is known, the target unitary matrix can be easily produced from the unitary operations of the gates in the solution.
-If the target matrix is easy to produce it is also likely that a correct circuit will be easier to produce.
+If a solution is known, the target unitary matrix can be easily produced by the multiplication of the unitary operations in the known solution.
+If the target matrix is easy to produce it is also likely that a correct circuit will be easy to produce.
 
 The other major disadvantage of the use of matrices is that the search is for circuits rather than algorithms.
-A target matrix is specific for a certain number of qubits in a circuit, it is not scalable, requiring a new matrix for $1, 2, 3$ and so on qubits involved in the circuit.
-For problems where the matrix is hard to produce this results in a much less viable approach to circuit construction.
+A target matrix is specific for a certain number of qubits in a circuit, it is not scalable, requiring a new matrix for $1, 2, 3,\dots$  qubits involved in the circuit.
+For problems where the matrix is hard to produce this a much less viable approach.
 
 \subsection{Yabuki}
-A genetic algorithm approach to produce the quantum teleportation protocol is introduced in \cite{Yabuki00geneticalgorithms}.
+A genetic algorithm approach to produce the quantum teleportation protocol is presented by Yakubi\cite{Yabuki00geneticalgorithms}.
 The approach is again a circuit, rather than algorithm, generator.
 
-The use of genetic algorithms rather than genetic programming also has a second dramatic impact on the scaling of the search.
+Compared to the genetic programming approach taken by Williams and Gray, the use of genetic algorithms has a dramatic impact on the scaling of the search.
 With a typical genetic algorithm the length of the chromosome is fixed.
-As a result the number of gates that can be encoded in the chromosome is limited.
+As a result the maximum number of gates that can be encoded in the chromosome is fixed.
 % This means that not only is a new search required for each new system size, but also potentially if the chromosome is not long enough.
-However, it also requires there to be some indication as to how many gates will be required.
+However, this requires some indication as to how many gates will be required.
 The success of a search is likely to be relatively sensitive to the amount of ``excess'' chromosome space.
-This means that for problems where the size of the solution circuit is unknown, setting an arbitrary chromosome size is likely to hinder the search.
+This means that for problems where the size of the solution circuit is unknown, setting an arbitrary chromosome size could hinder the search.
 Another crucial point is that the structure of the system is assumed.
 The assumed structure does not, like in Williams and Gray\cite{Williams:1998:ADQ:645812.670824}, allow separate searches for the structural sections.
 It does however change the interpretation of the genes.
@@ -1655,8 +1689,7 @@ The semantic meaning of a gene is looked up in a table using the three values.
 Each structural section has a different table.
 If the first value is $3$ it indicates the end of a structural section.
 
-The approach was able to find a quantum teleportation circuit.
-The system presented produces a circuit that is ``simpler than ever known''\cite{Yabuki00geneticalgorithms}.
+The approach found a quantum teleportation circuit that was ``simpler than ever known''\cite{Yabuki00geneticalgorithms}.
 However, this result has to be viewed with respect of the restrictions placed on the search and a known solution being able to provide the interpretation tables for each section.
 The assumed structure and changing interpretation between sections allows the system to accurately enforce the result of measurement.
 
@@ -1689,22 +1722,22 @@ Tools are available to visualise circuits.
 Also simulators are available that given a circuit evaluate it on a state.
 However, there are no tools available to provide assistance during the design.
 
-The aim of this project is to provide tool support for the automated synthesis of quantum computational artefact via heuristic search.
-Typically there artefacts will be circuits. programs, algorithms and protocols.
-The support provided will allow its users to rapidly configure and run searches for these artefacts, and also allow its users to visualise simulations of any artefacts produced.
+The aim of this project is to provide tool support for the automated synthesis of quantum artefacts via heuristic search.
+Typically there artefacts will be circuits, programs, algorithms and protocols.
+The support provided will allow its users to rapidly configure and run searches for these artefacts, and also allow its users to visualise simulations of the artefacts produced.
 
 The aim is to free the user from having to develop a great deal of bespoke software.
-Elements such as standard heuristic search algorithms and suitability measures will be provided.
+Elements such as a heuristic search algorithm and several suitability measures will be provided.
 If these do not suffice for the user's needs then other components should easily be assembled into the framework in a plug-and-play style.
 
 The creation of such a toolkit is, to the best of my knowledge, unprecedented.
-All previous work in the area has focussed purely on the discovery of Quantum Algorithms with each researcher working in isolation.
+All previous work in the area has focussed purely on the discovery of quantum artefacts with each researcher working in isolation.
 % Without there being a known ``right way'' to search for Quantum Algorithms it is essential for the framework produced does not limit or promote any search techniques.
 % Despite the literature review focus on evolutionary approaches the framework is not intended solely for such techniques.
-The adoption by researchers of the toolkit could aid research and potentially dramatically improve the productivity of research in this area.
-This toolkit could also provide foundations for a ``state of the art'' quantum algorithm search suite containing implementations of recent search techniques and suitability measures presented in publications.
+The adoption by researchers of the toolkit could aid research and potentially improve the productivity of research in this area.
+% This toolkit could also provide foundations for a ``state of the art'' quantum algorithm search suite containing implementations of recent search techniques and suitability measures presented in publications.
 
-As a demonstration of the software a number of experiments searching for Quantum Algorithm shall be performed as a final part of the project.
+As a demonstration of the toolkit a number of experiments searching for Quantum Algorithm shall be performed as a final part of the project.
 
 % In the first stage of this project I aim to produce a graphical toolkit which will allow users to search for quantum algorithms.
 % The toolkit will allow for various different search methods and be fully extendable so additional search techniques can be added.

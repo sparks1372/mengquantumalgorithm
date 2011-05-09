@@ -2,17 +2,18 @@
  \setcounter{page}{0} 
 \pagenumbering{arabic}
 
-In 1980, Richard Feynman noted `it is impossible to represent the results of quantum mechanics with a classical universal device`\cite{Feynman82simulatingphysics}.
-This statement was a seed for interest in the field of Quantum Computation which uses properties of quantum mechanics to perform computation.
+In 1980, Richard Feynman noted ``it is impossible to represent the results of quantum mechanics with a classical universal device''\cite{Feynman82simulatingphysics}.
+This statement was a seed for interest in the field of Quantum Computation, which uses properties of quantum mechanics to perform computation.
 The true power of quantum computation was not initially realised.
 The discovery of a quantum artefact by David Deutsch\cite{Deutsch85quantumtheory} in 1985 that would perform better than an algorithm running on a classical computer was the first glimpse of the potential power provided by harnessing quantum mechanics.
 The algorithm was able to distinguish between balanced and constant binary functions.
-A balanced binary function evaluates to $0$ for the same number of input values as evaluate to $1$. 
+A balanced binary function evaluates to $0$ for the same number of input values as it evaluates to $1$. 
 The algorithm categorised simple functions with inputs limited to $0$ and $1$ and the advantage over its classical equivalent was the number of times the function needed to be evaluated.
 The classical equivalent requires two evaluations, once for both possible inputs, yet the quantum algorithm proposed by Deutsch performs a single evaluation.
 Deutch's algorithm is explained in detail in Section \ref{sec:DeutAlg}.
 
-However, with slow progress of research into both their implementation and algorithms, the energy behind the research started to decrease.
+However, the following years saw the development of only a few new quantum algorithms.
+The excitement and energy of initial research appeared to be faltering.
 It would take a discovery by Peter Shor\cite{Shor:1994jg} to reignite the excitement surrounding the subject.
 Shor's discovery challenged one of the foundations of many encryption techniques currently used.
 Many cryptographic techniques are based on the belief that factorisation of a large number into its constituent primes would take such a long time that the encrypted information would be useless by the time the factorisation was complete.
@@ -20,21 +21,24 @@ Shor's algorithm challenged that belief and provided a polynomial time solution 
 Shor's algorithm is explained in detail in Section \ref{sec:shorsalg}.
 
 %%heuristic search
-Some researchers have approached the problem of the intuition required by using evolutionary inspired search techniques to design quantum artefacts.
+The discovery of new quantum algorithms seems difficult.
+In many ways we may not currently have the intuition needed to easily identify the opportunities presented by quantum mechanics.
+Some have speculated that evolutionary inspired search techniques might provide a means of discovery that would overcome the lack of human intuition.
 These search techniques take inspiration from biological understanding.
 These techniques are not limited to research into quantum algorithms.
-Many other problems requiring novel inspiration have been solved using evolutionary techniques.
+A variety of problems have been attacked by evolutionary approached and they have been shown, in some instances, to be human competitive.
+These range from optimising the set up of a simulated Formula $1$ car\cite{Wloch04optimisingthe} to the design of a communications antenna\cite{antennades} by NASA.
 
-This project provides a usable toolkit for researchers using search techniques to design quantum artefacts.
-This report outlines the software engineering process undertaken from requirements through to testing.
-The report also contains experimental details and results for a number of preliminary experiments that were undertaken after the toolkit was implemented as part of the evaluation process.
-The software artefact produced by the project is globally available.
+This project provides a usable toolkit for researchers using heuristic search techniques to design quantum artefacts.
+This report records the software engineering process undertaken from requirements through to testing.
+The report also contains experimental details and results for a number of preliminary experiments that were undertaken after the toolkit was implemented.
+The software artefact produced by the project has been made publicly available.
 
 \section{Statement of Ethical Implications}
-This project is not seen to directly result in any severe ethical implications.
+This project is not seen to directly result in any significant ethical implications.
 It is however possible that a result of a successful search could produce an artefact that could have ethical implications.
 The exact nature of such an artefact cannot be predicted.
-It is the ownness of the researcher to act responsibly with any solution found using this toolkit as it is if that researcher were to use any other tool.
+The onus is on the researchers to act responsibly with any solution found using this toolkit as it is if that researcher were to use any other tool.
 
 The publication of any artefact found by this toolkit must also be produced with professional ethics.
 This includes correct citation to this toolkit.
@@ -43,16 +47,16 @@ Any publication must not imply the artefact was manually conceived but must outl
 \section{Report Structure}
 This report has the following structure:
 \begin{itemize}
- \item \textbf{Literature Review - Section \ref{sec:introtoquantcomp}} presents a introduction to quantum computing and previous research using heuristic search to find quantum algorithms.
-The introduction to quantum computing contains all the information required for the remainder of this report.
+ \item \textbf{Literature Review - Section \ref{sec:introtoquantcomp}} presents an introduction to quantum computing and previous research using heuristic search to find quantum algorithms.
+The introduction to quantum computing contains all the information required to understand the remainder of this report.
 It also introduces several well known quantum algorithms.
 The heuristic search techniques used in the research presented are evolutionary approaches.
 A brief overview of these techniques is also provided.
  \item \textbf{Requirements - Section \ref{sec:reqs}} outlines the requirements of the toolkit.
- \item \textbf{Design and Implementation - Section \ref{sec:desandimp}} provides an in-depth review of the design and implementation decisions made.
+ \item \textbf{Design and Implementation - Section \ref{sec:desandimp}} details design and implementation decisions made.
  \item \textbf{Testing - Section \ref{sec:testing}} provides information on the techniques used during the testing phase.
 Individual test cases are not provided but higher level test aims are given.
- \item \textbf{Experimentation - Section \ref{sec:experimentation}} outlines a number of experiments performed using implemented toolkit.
+ \item \textbf{Experimentation - Section \ref{sec:experimentation}} outlines a number of experiments performed using the implemented toolkit.
 The experiments performed were chosen to allow comparison with the research reviewed in Section \ref{sec:introtoquantcomp}.
  \item \textbf{Evaluation and Future Work - Section \ref{sec:evalandfutwork}} concludes this report with an evaluation of both the software artefact produced and the results of the experimentation phase.
 As part of this evaluation functionality that could be added to the toolkit and areas that could be improved are discussed.

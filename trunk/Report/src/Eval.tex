@@ -24,31 +24,33 @@ These use both the modulus and the argument values of the complex number in the 
 
 The third component is a client application that provides the framework with a standalone graphical user interface.
 The framework is not a standalone application and needs to be embedded within another application.
-Without providing this client a third party application that embeds the framework would have to be produced before improved efficiency would be realised.
+Without providing this client a third party application that embeds the framework would have to be produced before improved efficiency could be realised.
 This client provides a number of research aids including rendered circuit visualisation, quantum state visualisation and graphical step-by-step evaluation of quantum circuits.
 
 In Section \ref{sec:reqs}, $27$ requirements for the toolkit were specified.
 Section \ref{sec:tracability} provides a way to trace the requirements into the design and implementation with reference to the tests verifying the requirements.
-The traceability matrix shows that each of the $28$ requirements has been met by the design and implementation and has been verified by the testing process.
+The traceability matrix shows that each of the $27$ requirements has been met by the design and implementation and has been verified by the testing process.
+
+In a formal sense we should conclude that the requirements agreed have been delivered.
+Now it is appropriate to take a step back and carry out a more holistic evaluation, assessing the strengths and weaknesses of the work done.
 
 \section{Strengths of the Toolkit}
 
 There are several strengths of the toolkit produced.
-One of the main goals of the toolkit is extendibility.
-The design of the framework is heavily focused on this extendibility.
+One of the main goals of the toolkit is extendibility; the design of the framework is heavily focused on this.
 
 During the experimentation summarised in Section \ref{sec:experimentation} this flexibility was tested.
 The Zero-Focused Simple suitability measure, explained in Section \ref{sec:simplsuitmeas}, was not originally developed.
 During the experimentation of the Max Permutation problem, see Section \ref{sec:maxproblemexp}, the basic variants of both the Simple and Phase Sensitive suitability measures did not produce any useful results.
-As a result the Zero-Focused Simple suitability measure was developed and added to the prototype.
+As a consequence the Zero-Focused Simple suitability measure was developed and added to the prototype.
 
-The addition of this suitability measure was simple.
+The addition of this suitability measure was straight forward.
 The class implementing the suitability measure was developed and the process required to add the new suitability measure to the configuration file took roughly 2 minutes.
-It is a very simple process.
+It is a very straight forward process.
 
 The experimentation also showed how easy it was to create and edit search problems.
-During the experimentation process, both the client and standalone editor were used to perform these tasks.
-Both methods were simple to use and the reuse of components made the transition between the two very easy.
+During the experimentation process, both the client and standalone editors were used to perform these tasks.
+Both methods were clear to use and the reuse of components made the transition between the two effortless.
 
 \section{Areas of Improvement and Future Work}
 
@@ -72,8 +74,8 @@ $
 which obviously isn't optimal as this sequence can also be removed.
 
 A second addition would assist with understanding.
-When constructing a circuit some of the algorithm instructions are ignored, see Section \ref{sec:quantumcircuits}.
-This results in the reported algorithm containing instructions that are ignored, I refer to these as ``inactive'' instructions.
+When constructing a circuit from an algorithm some of the instructions are ignored, see Section \ref{sec:quantumcircuits}, with the result that the algorithm contains instructions that did not contribute to the specific circuit.
+I refer to these as ``inactive'' instructions.
 I refer to the instructions that are not ignored as ``active'' instructions.
 I use the term ``Active Algorithm'' to refer to an algorithm that only contains ``active'' instructions.
 As the ``Active Algorithm'' produces the evaluated circuits only ``active'' instructions contribute to the proffered solution.
@@ -82,7 +84,7 @@ It is important to note that the ``Active Algorithm'' may be different for each 
 The framework could easily be extended to provide this as part of the result.
 
 A third area of future development would be an extension of the circuit optimisation rules mentioned as the first area of improvement.
-Various problems have certain properties that currently cannot currently be expressed to the framework.
+Various problems have certain properties that cannot currently be expressed to the framework.
 One such search problem is the quantum teleportation protocol, see Section \ref{sec:quantteleproto}.
 Due to the spacial separation of the qubits held by Bob and Alice certain operations cannot be performed by the solution.
 For example a controlled gate acting on Bob's qubit controlled by one of Alice's qubits has to be modelled to represent the required measurement and classical communication to communicate to Bob whether the operation should be applied.
@@ -99,7 +101,7 @@ When enforced by the circuit builder all algorithms are valid and the rules are 
 The fourth area of improvement would be the customisation of suitability measures.
 Currently the search engine is able to provide customisation via either an on-screen dialog or parametrised \emph{search} method.
 Through experimentation it was found that this ability to customise the search engine parameters was very useful.
-However, only being able to configure the suitability measures, such as whether hits were counted or component weighting, at the source code level was quite inconvenient.
+However, being able to configure the suitability measures, such as whether hits were counted or component weighting, only at the source code level was quite inconvenient.
 It is proposed that the suitability measures provide on-screen dialog and dedicated customisation methods.
 
 The final improvement proposed is potentially quite complex.
@@ -107,10 +109,11 @@ The idea of saving algorithms and providing algorithm editing facilities sounds 
 This could be provided by simply using the serialisation provided by Java however this would not match the use of XML throughout the rest of the framework and is potentially less compatible with third party applications.
 Therefore an XML file based solution would be preferable.
 However, this requires a parser to be able to interpret the specification of an arbitrary \emph{expnode} expression.
-Additionally to provide editing facilities an algorithm editor would have to be designed.
-This again sounds quite simple however due to the potentially bloated algorithms produced by search techniques the editor would have to be carefully designed to assist users.
-This would include things such as structure controls found integrated development environments to fold the loop body so that it is hidden.
-Also the provision of available instructions, requiring interaction with the selected search problem for available custom gates, as a drop down list and automatic bracket matching are reasonable expectations.
+Additionally, to provide editing facilities an algorithm editor would have to be designed.
+This again sounds quite simple.
+However due to the potentially bloated algorithms produced by search techniques the editor assist the user with understanding an algorithm in a similar way the Step-By-Step evaluator assists the user to understand a circuit.
+Step-By-Step algorithm evaluation is a possible techniques that could be incorporated.
+It also could include functionality usually found in modern Integrated Development Environments such as structural folding and content assistance such as bracket matching and a dedicated \emph{expnode} expression editor.
 
 \section{Experimentation Summary}
 
@@ -125,19 +128,19 @@ The Quantum Fourier Transform and Max Permutation experiments were impressive bu
 
 All the experiments showed one property that was particularly impressive yet a second that is quite disappointing.
 The impressive property was how minimal the solutions produced were.
-The circuit builder is only implemented with a very simple optimisation rule yet still the circuits produced were still very minimal.
+The circuit builder is only implemented with a very simple optimisation rule yet still the circuits produced were still very small.
 However, the lack of scalability is relatively disappointing.
-The main advantage of an algorithm compared to a program is the parametrisation permitting the scalability.
+The main advantage of an algorithm compared to a program is the application over an arbitrary system size.
 
 It may be that the search problems were defined with too many test cases concentrated in too few test sets.
 Further experimentation would have to be performed to verify this theory.
 
 Future work on the search engine provided in the toolkit could be undertaken to potentially address this issue.
 I suggest the introduction of multiple populations.
-Each population would be concentrating on forming a solution for system sizes up to a value $x$.
+Each population would concentrate on forming a solution for system sizes up to a value $x$.
 The value $x$ would be different subpopulation.
 Migration would be allowed of highly suitable individuals from a subpopulation to a second subpopulation with a higher value of $x$.
-This is a similar idea to coevolution where the problem evolves alongside the population effectively an ``inverse'' suitability measure.
+This is a similar idea to coevolution where the problem evolves alongside the original population with effectively an ``inverse'' suitability measure.
 This is based on the idea that a solution for smaller system sizes can provide useful stepping stones when searching for a solution to cover larger system sizes.
 
 In my opinion this process of effectively increasing the difficulty of the problem would in the majority of cases be more effective than attempting to solve the full problem in a single population.
@@ -153,19 +156,22 @@ The toolkit produced does this.
 With a code base of just under $13000$ lines of code it shows the level of development that is no longer required by each researcher.
 Not only does the toolkit provide the implementations of peripheral tasks but also implements features that are likely to be useful to users that they may not have developed themselves as part of their own bespoke software.
 
-The literature survey highlighted several issues with previous research such as over representation of values in the search space and assumed knowledge.
-Throughout the design and implementation of the toolkit these issues addressed where possible.
-The toolkit was implemented to that irrespective of the system size each qubit is equally represent in the search.
+The literature survey highlighted several issues with previous research such as assumed knowledge and over representation of values in the search space.
+Throughout the design and implementation of the toolkit these issues were addressed where possible.
+The toolkit was implemented so that irrespective of the system size each qubit is equally represent in the search.
 
-Viewed a software engineering project the success is quite evident with a fully implemented toolkit developed on time that meets all the requirements and provides a high level of functionality.
+Viewed as a software engineering project the success is quite evident with a fully implemented toolkit developed on time that meets all the requirements and provides a high level of functionality much greater than envisaged initially.
 The software engineering process was rigorous and as a result the software produced is of a high standard.
 Despite the continually increasing ambition throughout this project the fundamental design of the toolkit was largely unaltered from the start of development.
 Where alterations were made they were not due to functional incompatibility with the original design but to improve the software engineering qualities such as modularity and reuse with the additional functionality.
 
-Viewed a research project the success is also evident from the results of the experiments carried out in Section \ref{sec:experimentation}.
+Viewed as a research project the success is also evident from the results of the experiments carried out in Section \ref{sec:experimentation}.
 These experiments were carried out in a manner that is reproducible and used only generic suitability measures provided with the toolkit.
-As part of this experimentation the $0..3$ permutation experiment that provided the inspiration for a suitability measure that is, to the best of my knowledge,  previously unseen in heuristic search, the Zero Focused suitability measure, see Section \ref{sec:simplsuitmeas}.
-This suitability measure is now included as part of the toolkit and it is thought it will be useful for other problems beside the $0..3$ permutation experiment and also in more general heuristic search problems.
+As part of this experimentation the $0..3$ permutation experiment provided the inspiration for a suitability measure which is, to the best of my knowledge,  previously unseen in heuristic search, the Zero Focused suitability measure, see Section \ref{sec:simplsuitmeas}.
+This suitability measure is now included as part of the toolkit and it is thought it will be useful for other quantum search problems beside the $0..3$ permutation experiment.
 Additionally, several of the results presented are, to the best of my knowledge, unprecedented for heuristic search.
 Not only are the individual results unprecedented but the collection of results produced using the same software is, to the best of my knowledge, unprecedented.
 The different experiments may have used different suitability measures but they were all be specified, configured, run and analysed one after another all from within the same application.
+
+The toolkit has been made freely available at \url{http://code.google.com/p/mengquantumalgorithm/}.
+I hope it facilitates further research in the area of quantum algorithm synthesis via heuristic search.

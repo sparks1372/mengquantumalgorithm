@@ -1,7 +1,8 @@
 \documentclass[authoryearcitations]{UoYCSproject}
 
-\usepackage[driver=pdftex,margin=2cm]{geometry}
+\usepackage[driver=pdftex,top=2cm,inner=2cm,bottom=2cm,outer=1cm]{geometry}
 \usepackage[matrix,frame,arrow]{xypic}
+\usepackage{titlesec}
 \ifx\pdftexversion\undefined
 \usepackage[dvips]{graphicx}
 \else
@@ -20,27 +21,32 @@
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \usepackage[utf8]{inputenc}
+\usepackage{hyperref}
 % \usepackage[upright]{fourier}
 \usepackage{tikz}
 \usetikzlibrary{matrix,arrows,decorations.pathmorphing}
 \input{Qcircuit}
-
+% \renewcommand*\chapterheadendvskip{\vspace}  
 \vfuzz2pt % Don't report over-full v-boxes if over-edge is small
+
+\renewcommand*{\chapterheadstartvskip}{\vspace*{-32pt}} 
+\renewcommand*{\chapterheadendvskip}{\vspace*{2pt}} 
+\titlespacing{\section}{0pt}{3pt}{3pt}
+\titlespacing{\subsection}{0pt}{1pt}{1pt}
 
 \author{Sam Ratcliff}
 \title{A Research Tool for the Automated Synthesis of Quantum Algorithms}
 \date{\today}
 \supervisor{John A Clark}
 \MEng
-\wordcount{8832}
-\setcounter{tocdepth}{3}
+\wordcount{32006}
 \includes{}
 
-\excludes{}
+\excludes{any Appendices}
 
 \abstract{ TO BE DONE
 }
-\setcounter{tocdepth}{2}
+\setcounter{tocdepth}{1}
 \renewcommand\floatpagefraction{.9}
 \begin{document}
 \begin{empfile}

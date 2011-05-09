@@ -5,10 +5,10 @@ This section includes both design decisions and implementation details.
 
 One of the basic implementation choices was the programming language used to implement the software.
 Several properties had to be considered.
-The framework is intended for use by researchers, if it is implemented in a language that is not widely used the adoption of the framework will be affected.
+The framework is intended to be used by researchers, if it is implemented in a language that is not widely used the adoption of the framework will be affected.
 Tool support was also a significant consideration.
 The availablity of tools such as development environments, debuggers and profilers can vastly improve the quality of software.
-With a motivation of the project being to reduce bespoke research software, the libraries that are available must be considered
+With a motivation of the project being to reduce bespoke research software, the libraries that are available must be considered.
 
 After consideration of all three factors outlined Java was selected as the programming language for the implementation.
 Java has good tool support, a high number of available libraries and is used sufficiently in the research community.
@@ -16,13 +16,14 @@ An additional benefit of Java is that requirement Req:POR is made considerably s
 
 \section{Framework}
 In this section I will outline the design decisions that directly effect the framework produced and how it was implemented.
+The architecture of the framwork can be seen in the class diagram in Appendix \ref{sec:archdesign}.
 
 \subsection{Complex Numbers}
-Complex numbers are central to Quantum Computing.
-As such, any attempt to simulate the behaviour of a Quantum Circuit must handle complex numbers.
+Complex numbers are central to quantum computing.
+As such, any attempt to simulate the behaviour of a quantum circuit must handle complex numbers.
 
 There are really only two ways to handle the existence of complex numbers.
-One can represent a complex number explicitly as a pair of floating point numbers, or to encapsulate the representation inside a ``complex number'' data structure.
+One can represent a complex number explicitly as a pair of floating point numbers, or encapsulate the representation inside a ``complex number'' data structure.
 
 The framework uses the second of these options and provides the ``Complex'' class.
 This was chosen for several reasons.
@@ -30,19 +31,20 @@ The primary reason was to reduce the risk of programming errors effecting the si
 If complex multiplication, addition and other operations had to be replicated throughout the framework code base, and the code base of any research work, the likelihood of implementation error is much higher, and the tests required to find the error become more specific.
 It is much better software engineering practice to encapsulate the properties, real and imaginary values, and the operations on those properties, arithmetic etc.
 
-A season reason is that after brief research online, there are complex number libraries already available.
+Brief research online confirmed that complex number libraries are already available.
 This reuse of previously written software can also reduce the likelihood of errors in the code.
 This is not necessarily due to the software being written by people that are more intelligent or that are better programmers, or even that the software has been explicitly tested more thoroughly than if I were to write a complex number class.
-It is due to the size of the deployment footprint.
-The number of times the software has previously been deployed, and therefore the number of times it has been implicitly tested by users.
+The deployment footprint, i.e. the number of times the software has previously been deployed, is directly proportional to the number of times it has been implicitly tested by users.
+An existing library will have a larger deployment footprint that a bespoke solution.
 
 The third reason is that one of the principles behind producing the framework is the attempt to try standardise the research from different researchers.
-Without the provision of this ``Complex'' class one researcher could use Cartesian representation, two floating point values, while a second researcher could use the Polar representation, also two floating point values.
-If the documentation of the software produced by the two researchers did not mention the representation used, a third researcher could try combine, or compare, the two pieces of software using the framework.
-The third researcher is likely to receive very confusing and highly misleading results.
-The provision of a Complex class that is used throughout the framework where complex numbers need to be used will reduce the risk of such an event.
+Without the provision of this ``Complex'' class one researcher could use Cartesian representation while a second researcher could use the Polar representation.
+If the documentation of the software produced by the two researchers did not mention the representation used, a third researcher could try na\"{\i}vely combine the two pieces of software using the framework.
+Both Cartesian and Polar representations are pairs of floating point values.
+This gives no indication to the third researcher they are doing anything wrong until they receive what are likely to be very confusing and highly misleading results when performng operations such as arithmetic.
+The provision of a common Complex class used throughout the framework reduces the risk of such a problem.
 
-The implementation of the Complex class is based on an implementation provided as part of a ``Complex Function Grapher''\cite{compimp}.
+The implementated Complex class is based on an implementation provided as part of a ``Complex Function Grapher''\cite{compimp}.
 The Complex class provides both Cartesian form $real + imaginary$, through \lstinline{real()} and \lstinline{imag()} returning the real and imaginary components respectively, and Polar form $re^{i\theta}$, through \lstinline{mod()} and \lstinline{arg()} returning $r$ and $\theta$ respectively.
 The implementation has been adapted to better suit this application.
 A calculation of the euclidean distance between two complex numbers is provided.
@@ -50,17 +52,17 @@ A second addition is the ability to \lstinline{parseComplex} in a similar way to
 This allows a string such as ``$2+3i$'' to be input by a user and for a Complex object to be created with a real component of $2$ and imaginary component of $3$.
 
 \subsection{Matrices}
-As seen in Equation \ref{eq:notexplanded} the application of a quantum gate is simply the application of a unitary operation, represented as a matrix, to a quantum state.
+As seen in Section \ref{sec:introtoquantcomp} the application of a quantum gate is simply the application of a unitary operation, represented as a matrix, to a quantum state.
 The framework has to implement matrices in some way.
 
 There are several possible representations.
 The framework could either use an explicit representation, two-dimensional arrays, or could provide a Matrix data structure.
 
-The framework has been designed to use the data structure encapsulation as the matrix representation.
+The framework uses the data structure encapsulation as the matrix representation.
 The justification is identical to that discussed above.
-Matrix operations are easy to get wrong in implementation and there are matrix libraries for many languages.
+Matrix operations are easy to get wrong in their implementation and there are existing matrix libraries.
 The incomplete documentation argument also holds with matrices.
-If the framework were to just simply represent matrices as two dimensional arrays, two researchers could order the dimensions differently leading to similar problems to that of conflicting complex representations for the third researcher.
+If the framework were to simply represent matrices as two dimensional arrays, two researchers could order the dimensions differently leading to similar problems to that of conflicting complex representations for the third researcher.
 
 \lstset{language = XML,
 basicstyle=\footnotesize,
@@ -86,61 +88,62 @@ breaklines=true}
 
 The implementation of the Matrix used in the application is based on the JAMA Matrix package\cite{javamatrix}.
 The JAMA Matrix package provides matrices of double values.
-For use in the framework this needed to be updated so that it provides matrices of Complex objects and performs all the required operations as though they are matrices of complex numbers.
+This was updated to provide matrices of Complex objects and all the required operations on these matrices.
 
 The JAMA Matrix package provides extra functionality for matrices of doubles that are not required for the framework.
-In the conversion from double matrices to Complex matrices this additional functionality was removed.
+In the conversion from double matrices to complex matrices this additional functionality was removed.
 
 The JAMA Matrix package does not include the tensor product operation.
-This operation is used heavily when applying single qubit gates to multi-qubit systems and so was specifically developed.
+This operation is used heavily when applying $n$ qubit gates to $n<$ qubit systems and so was specifically developed.
 
 As is explained in Section \ref{sec:testsuitestruc} custom unitary matrices are needed and used as part of the test cases.
 This requires these unitary matrices to be stored in a form that can be distributed between researchers.
 As with all elements of this framework that needs to be distributable, XML is used to store these matrices.
-The XML structure and defined matrix can be seen in Figure \ref{code:pauliixmldef}.
-The use of XML was used rather than the Java Serializable interface to ensure that 3rd party applications can be used to modify the stored matrices if required.
+An example of the XML encoding and the matrix it defines can be seen in Figure \ref{code:pauliixmldef}.
+As can be seen in this example the XML representation only stores non-zero elements so as not to store unnecessary information.
+XML was used rather than the Java Serializable interface to ensure that 3rd party applications can be used to modify the stored matrices if required.
 
 \subsection{State}
-Quantum states are naturally represented as $2^n\times1$ matrices, vectors.
+Quantum states are naturally represented as $2^n\times1$ matrices, generally referred to as a vectors.
 All unitary operators are implemented simply as the application of $2^n\times2^n$ matrices to these quantum state vectors.
 
 \subsection{Test Suite Structures}
 \label{sec:testsuitestruc}
 With most heuristic search problems there are a series of test points that are used to measure the suitability of any proffered solution.
 
-For Quantum Algorithms the expected results are the state vectors produced by circuits constructed by the algorithm.
-As such it was chosen that a test case would be represented as a pair of state vectors, the stating state and the expected state.
+For quantum algorithms the expected results are the state vectors produced by circuits constructed by the algorithm.
+As such it was decided that a test case would be represented as a pair of state vectors, the stating state and the expected state.
 The application of a quantum gate is a simple mapping from a starting state to a resulting state.
-When a circuit can be defined as a single unitary operation, a custom quantum gate, this representation seems a natural choice.
+As a circuit can be defined as a single unitary operation this representation seems a natural choice.
 
-For some problems, such as the Deutsch and Deutsch-Jozsa problems, the starting and final state are not information but pure data, they have no context.
-As is shown in Section \ref{sec:quantumgates} there is no gate $f$ as is used in the Deutsch and Deutsch-Jozsa algorithms.
+For some problems, such as the Deutsch and Deutsch-Jozsa problems, the test cases requires more than the starting and final states.
+As is shown in Section \ref{sec:quantumgates} the gate $f$ used in the Deutsch and Deutsch-Jozsa algorithms is not provided by the framework.
 This may initially seem a rather strange omission.
-However, the $f$ in the Deutsch and Deutsch-Jozsa algorithms are not fixed gates, they are arbitrary unitary operations that are guaranteed to be either constant or balanced.
+However, $f$ in the Deutsch and Deutsch-Jozsa algorithms is not a fixed gate, it is an arbitrary binary function that is guaranteed to be either constant or balanced.
 Therefore it is not sufficient for the test cases to be just the starting and final state but must provide a way for custom unitary matrices to be specified.
-With these custom matrices specified, the starting and final states in the test cases for the Deutsch and Deutsch-Jozsa problems are given context and therefore are transformed into meaningful information.
+With the custom matrices for the modified Controlled-Not gates specifed, the test cases for the Deutsch and Deutsch-Jozsa problems can be defined.
 
-Each circuit produced by quantum algorithm has $n$ qubits.
+Each circuit produced by a quantum algorithm has $n$ qubits.
 This means that it can only be evaluated using test cases for $n$ qubits.
-Test cases for any other number of qubits would not produce useful results, and are potentially incomputatable due to incorrect matrix dimensions for multiplication.
+Simulating test cases for any other number of qubits is incomputatable due to incorrect matrix dimensions for multiplication.
 The notion of a test set was introduced to hold all test cases for a specific $n$.
-A search might well find a circuit suited to a specific $n$ with no clear generalisation possible.
-All test cases are held within a test set.
+% A search might well find a circuit suited to a specific $n$ with no clear generalisation possible.
+% All test cases are held within a test set.
 
-However, the power of a quantum algorithm over a quantum circuit is the generality of the algorithm for any $n$.
+However, the power of a quantum algorithm compared to a quantum circuit is in the generality of the algorithm for any system size, $n$.
 This means that a single test set is not suitable as it would only evaluate the algorithm for test cases for a single $n$.
-The notion of a test suite is introduced.
+The notion of a test suite was introduced.
 A test suite is used to hold all the test sets produced for the same problem.
 There is only one test set for each distinct value of $n$.
 The implemented structure can be seen in Figure \ref{fig:testsuiteclassdiag}.
 
 The number of custom gates that are available to use are constant for all the test cases in the test suite.
 This number cannot vary as the algorithms produced must be able to contain only the gates available.
-If each test case were able to have a different number of custom gates an algorithm produced could contain the instruction to include ``Custom Gate 4'' but a test case could only provide two custom gates.
+If each test case were able to have a different number of custom gates an algorithm produced could contain the instruction to construct ``Custom Gate 4'' but a test case might only provide two custom gates.
 
 The test suite is fully defined in a single XML file.
 The XML in Figure \ref{code:paulixtestset} is a sample of such a file.
-It is easy to see file structure reflects the internal structure of test suites just described.
+It is easy to see how the file structure reflects the internal structure of test suites just described.
 
 \lstset{language = XML,
 basicstyle=\footnotesize,
@@ -185,10 +188,11 @@ breaklines=true}
 \caption{Test Suite Structures}
 \end{figure}
 
-Separate files are used to encapsulate the test suite specifications rather than including these in the Search Problem Manager configuration file, discussed in Section \ref{sec:manclasses}.
+Separate files are used to encapsulate the specification of different test suites.
 This separation follows the software engineering principle of modularity to ensure that the files remain readable and maintainable.
-The framework is intended to improve the ability of researchers to reuse development or other researchers, the creation of test suite specifications can be seen as development.
-With this modularity the distribution and reuse of test suite specifications will be much simpler than if the test suite specifications were embedded in the Search Problem Manager configuration file, discussed in Section \ref{sec:manclasses}.
+The framework is intended to improve the ability of researchers to reuse development of other researchers including defined test suites.
+With this modularity the distribution and reuse of test suite specifications will be much simpler than if the test suites were all defined in a single file
+
 
 % \begin{figure}
 % \centering
@@ -231,26 +235,26 @@ With this modularity the distribution and reuse of test suite specifications wil
 
 The implementation of the test suite structure can be seen in Figure \ref{fig:testsuiteclassdiag}.
 The custom matrices are held both as an array of Strings and of Matrix objects.
-This is for no other reason than trying to recreate a test suite definition XML file in the form shown in Figure \ref{code:paulixtestset} requires the file name of the XML file specifying the custom unitary matrices and creating matrices from file each time they are needed in evaluation is very slow.
-If there were just an array of Matrix objects the file names would be lost or require an additional array.
+This is because when creating a test suite definition XML file the file names of the custom gate XML files are required but creating matrices from file every evaluation is very slow.
+If there were just an array of Matrix objects the file names would be lost.
 The inclusion of a second array was initially discounted as it would introduce an unnecessary source of potential bugs concerning the two arrays being ``out of sync''.
-This would mean the Matrix objects may not represent the matrix encoded in the respective file as the Matrix objects are able to be modified and altered by the program without the file being updated.
-To remove the potential for the two arrays to be out of sync, the matrix array is externally inaccessible and is only created by the constructors and the matrices are only able to be retrieved by index.
-When the custom matrices are retrieved, the matrices are copied to ensure the matrix held in the test case cannot be altered by a malfunctioning component.
+This would mean the Matrix objects may not represent the matrix encoded in the respective file.
+To remove the potential for the two arrays to be out of sync, the matrix array is externally inaccessible and is only created by the constructors while the matrices are only retrievable using their index index.
+When the custom matrices are retrieved, the matrices are copied to ensure the matrices held in the test case cannot be altered.
 
 Alongside the framework, an independent test suite graphical editor is provided.
-A user can use this to produce the XML file and therefore do not need to explicitly create the XML file.
+A user can use this to produce the XML file and therefore does not need to explicitly create the XML file.
 The design and implementation of the graphical editor can be found in Section \ref{sec:indtestsuiteeditor}.
 
 The contents of a test suite are not fixed.
 If a user finds an error or wishes to add test cases, either a third party application or the provided test suite graphical editor can be used to update the respective test suite elements.
-These changes need to be reflected in the XML file to become persistent so to ensure that the updated XML file is well formed the framework provides a class to produce from a given test suite.
-This class is used in the independent test suite graphical editor and is recommended for use by any third party application.
+These changes need to be reflected in the XML file to become persistent so to ensure that the updated XML file is well-formed the framework provides a class to output the XML of a given test suite.
+This class is used in the independent test suite graphical editor and is recommended for use by any third party applications.
 
-When editing a test suite, if a test set for $n$ qubits is added to the test suite and the test suite already contains a test set for $n$ qubits, the two test sets are merged.
+When editing a test suite, if a test set for $n$ qubits is added to the test suite that already contains a test set for $n$ qubits, the two test sets are merged.
 The test cases of the test set being added have their ID and labels modified so that they continue the sequence of the existing test cases already in the test suite.
-When the test sets have to be merged the test cases are cloned.
-This is in case the test set is used in a different test suite.
+During this merge process the test cases are cloned.
+This is in case the added test set is used in a different test suite.
 If this were not done, when the ID and label were modified they would also be updated in the second test suite.
 This would cause unpredictable behaviour.
 
@@ -258,14 +262,13 @@ This would cause unpredictable behaviour.
 \label{sec:manclasses}
 As can be seen in the architecture diagram of the framework, Appendix \ref{sec:archdesign}, there are several classes with names suffixed with ``Manager''.
 These classes provide access to the extendible areas of the framework.
-There is a Manager class for the Suitability Measures, the Search Engines and the Search Problems.
+There is a Manager class for the suitability measures, the search engines and the search problems.
 Each of these are a specific site of expansion.
 
 Each Manager is configured using an XML file specifying all options for the specific Manager.
-The Fitness Function Manager will be configured for all the available Suitability Measures, the Search Engine Manager for all the available Search Engines, and the Problem manager for all the available Search Problems.
-The Search Problem Manager class is outlined in detail in Section \ref{sec:problemman}.
+The suitability measure Manager will be configured for all the available suitability measures, the search engine Manager for all the available search engines, and the problem Manager for all the available search problems.
 
-The three managers are configured at runtime not at compile time.
+The three managers are configured at runtime, not at compile time.
 This allows researchers to add suitability measures, search engines and search problems without recompiling the framework.
 This runtime configuration provides a better plug-and-play design, a key foundation of the framework, compared to compile time configuration.
 % Such knowledge separation encourages the use of the standardised interfaces specified for each expansion site.
@@ -285,11 +288,11 @@ This runtime configuration provides a better plug-and-play design, a key foundat
 \label{code:fitfuntmanconfig}
 \end{figure}
 
-Figure \ref{code:fitfuntmanconfig} shows an outline of the XML file used to specify the available Suitability Measures.
-The XML files specifying the available Search Engines and the available Problems can be found in Appendix \ref{sec:semanspecxml} and \ref{sec:probmanspecxml}.
+Figure \ref{code:fitfuntmanconfig} shows an outline of the XML file used to specify the available suitability measures.
+The XML files specifying the available search engines and the available search problems can be found in Appendix \ref{sec:semanspecxml} and \ref{sec:probmanspecxml}.
 
 These XML files are used to register the available implementations with the respective Managers.
-The Manager classes use these registrations to provide the choice of available instantiations of Search Engines and Suitability Measures.
+The Manager classes use these registrations to provide the choice of available instantiations.
 
 \begin{figure}
 \centering
@@ -307,30 +310,30 @@ clink(association)(F, E);
 \label{fig:mantagclassdiag}
 \end{figure}
 
-Both the Search Engine and Search Problem Manager classes are implemented in the same way.
+The search problem Manager class is outlined in detail in Section \ref{sec:problemman}.
+Both the search engine and suitability measure Manager classes are implemented in the same way.
 The class diagram in Figure \ref{fig:mantagclassdiag} shows the Manager design.
 A mapping between the Name of the registered options and Tag objects is held in each Manager.
 A Tag contains the information within the \lstinline{<XYTag> </XYTag>} element of the XML file.
 \lstset{language=Java}
 The \lstinline{getAvailableXYs()} method returns a set of strings, the registered names, rather than the XY Tags to ensure the Manager classes have full control over the creation of the managed elements.
-To provide an XY object when requested using \lstinline{thegetXY(key)} method, the Manager classes use reflection to instantiate an object of the respective class, the value of the ClassName variable of the Tag registered with $Name=key$.
+To provide an XY object when requested using the \lstinline{getXY(key)} method, the Manager classes use reflection to instantiate an object of the respective class, the value of the ClassName variable of the Tag registered with $Name=key$.
 
 \subsection{Multiple Search Engines}
 \label{sec:mulsearchen}
-It is hoped the framework will be widely adopted by quantum algorithm researchers.
-The framework is also aimed at researchers focussed on search techniques.
+It is hoped the framework will be widely adopted by quantum algorithm researchers, who may use different search techniques.
 To perform comparisons between search techniques the framework needs to be able to use different search engine implementations.
 
-Providing a simple interface that allows each researcher to potentially use a different search technique is likely to increase the tools applicability.
+Providing a simple interface that allows each researcher to potentially use a different search technique is likely to increase the tool's applicability.
 The simple interface allows a user to:
 \begin{itemize}
- \item retrieve the names, used as the search engine identifier, of all registered Search Engines
- \item retrieve the instantiation of the specified Search Engine instantiation
- \item retrieve the description of the specified Search Engine
+ \item retrieve the names, used as the search engine identifier, of all registered search engines
+ \item retrieve the instantiation of the specified search engine instantiation
+ \item retrieve the description of the specified search engine
 \end{itemize}
 
-All registered Search Engines must implement the supplied interface.
-The Search Engines are not restricted to evolutionary approaches.
+All registered search engines must implement a specific interface.
+The search engines are not restricted to evolutionary approaches.
 The internal workings of the different search engines are unrestricted.
 
 The alternative approach would have been to implement a series of search engines based on several different techniques and provide researchers this choice.
@@ -338,14 +341,14 @@ This was not accepted as it moved the tool away from the plug-and-play framework
 
 \subsection{Multiple Fitness Functions}
 \label{sec:mulsuitmeas}
-As was noted by Massey\cite{masseythesis}, different Fitness Functions can have a dramatic impact on the success of a Quantum Algorithm search.
-The inclusion of a choice of Fitness Functions is to account for this.
-As with Search Engines, the choice of Fitness Functions is provided by the Manager class through a simple interface with methods synonymous to those provided for the Search Engine selection.
-A Fitness Function interface is provided to ensure that all Fitness Functions are able to be used universally within the tool and are not specific to any particular Search Engine for example.
+As was noted by Massey\cite{masseythesis}, different suitability measures can have a dramatic impact on the success of a quantum algorithm search.
+The inclusion of a choice of suitability measures is to account for this.
+As with search sngines, the choice of suitability measures is provided by the Manager class through a simple interface with methods synonymous to those provided for the search engine selection.
+A suitability measure interface is provided to ensure that all suitability measures are able to be used interchangeably within the tool and are not specific to any particular search engine for example.
 
-Similarly to the Search Engine, a series of Fitness Functions could have been implemented and provided without provision for extension.
-The justification for the approach taken is the same as listed for the multiple Search Engines.
-It was deemed detrimental and in contradiction of the frameworks purpose to limit the Fitness Functions to those provided by the tool.
+Similarly to the search engine, a series of suitability measures could have been implemented and provided without provision for extension.
+The justification for the approach taken is the same as listed for the multiple search engines.
+It was deemed detrimental and in contradiction of the frameworks purpose to limit the suitability measures to just those provided by the tool.
 
 
 \subsection{Multiple Problems and Problem Specification}
@@ -353,19 +356,19 @@ It was deemed detrimental and in contradiction of the frameworks purpose to limi
 % As has been mentioned on several occasions, one of the foundation principles of the framework is the ability to ``Plug and Play'' the work of other researchers without the problem of integration.
 % With Search Engines and Fitness Functions developed to adhere to the respective interfaces, a user should be able to work with the tool kit and treat it as a ``Black Box''.
 
-Section \ref{sec:testsuitestruc} describes how test suites and all their contained test cases are specified in XML.
+Section \ref{sec:testsuitestruc} describes how test suites and all their contained test cases are specified in XML files.
 The use of XML files does however increase the effort required from the user.
 The user needs to specify, each time they use the framework, the location of the XML file containing the correct test suite.
 To reduce this effort the problem container is introduced alongside its manager.
 
-The problem manager allows multiple problems to be defined within a single XML file so the user need not provide the test suite XML each time the framework is used.
+The problem manager allows multiple problems to be defined within a single XML file while maintaining the separate files for each test suite.
 This single XML file contains the definition of multiple problems.
 An example of these XML files can be seen in Figure \ref{code:probmanconfig}.
 A problem has a name, description and file name for the respective test suite XML file.
 The name and description are used to provide a human readable explanation of the problem represented by the test suite XML file.
 The use of a separate XML file to collate all defined problems makes maintenance much simpler.
 
-Providing a problem manager allows the framework to be used for different problems without having to restart the system and without any external software needing to provide different problems explicitly.
+Providing a problem manager allows the framework to be used for different problems without having to restart the system or the third party software in which the framework is embedded providing different problems directly.
 
 \lstset{language=XML}
 \begin{figure}
@@ -382,20 +385,20 @@ Providing a problem manager allows the framework to be used for different proble
 \label{code:probmanconfig}
 \end{figure}
 
-The Search Problem Manager works in a similar way to the Search Engine and Suitability Measure Managers detailed in Section \ref{sec:manclasses}.
-However, the difference between the registered Search Problems is the test suite configuration XML file rather than the implementing class.
-A second difference is that the registered options are not static, a third party application can interact with the Manager to create new Search Problems and update the already registered Search Problems.
-Therefore, the Search Problem Manager has to be able to produce an updated Search Problem Manager configuration file so the changes made are persistent.
-The changes that the Search Problem Manager is concerned with is only updates to the values in the Search Problem Manager configuration file.
-Any changes made to the set of Test Cases are not maintained by the Search Problem Manager.
+The search problem Manager works in a similar way to the search engine and suitability measure Managers detailed in Section \ref{sec:manclasses}.
+However, the difference between the registered search problems is the test suite configuration XML file rather than the implementing class.
+A second difference is that the registered options are not static, a third party application can interact with the Manager to create new search problems and update the already registered search problems.
+Therefore, the search problem Manager has to be able to produce an updated search problem Manager configuration file so the changes made are persistent.
+The changes managed by the search problem Manager are updates to the values in the search problem Manager configuration file.
+Any changes made to the set of test cases are not maintained by the search problem Manager.
 This ensures that the different concerns are separated.
-The update of Test Cases is detailed in Section \ref{sec:testsuitestruc}.
+The update of test suite XML file is detailed in Section \ref{sec:testsuitestruc}.
 
 \subsection{Quantum Algorithms}
 \label{sec:quantalgs}
-The result of the searches are quantum algorithms.
+The results of the searches are quantum algorithms.
 To maintain the ``Plug and Play'' nature of the framework, the representation of these algorithms needed to be specified and standardised.
-However, the representation also had to ensure that it was not limiting the search engines.
+However, the representation also had to allow easy manipulation by a variety of search techniques.
 
 To provide a standardised and non-limiting representation the framework provides an internal quantum algorithm structure that can be simply built by any search engine.
 This allows the search engines to have a different internal representation that is then used to build the standardised algorithm.
@@ -421,10 +424,10 @@ QuantumInstruction(Enumeration)&expnode&expnode&expnode&QuantumAlgorithm[]\\
 \hline
 $exp \rightarrow e + e$ & $e \rightarrow exp$ \\
 $exp \rightarrow e - e$ &  $e \rightarrow SystemSize$ \\
-$exp \rightarrow e * e$ &  $e \rightarrow Value$ \\
+$exp \rightarrow e * e$ &  $e \rightarrow Value [1..10]$ \\
 $exp \rightarrow \frac{e}{e}$ &   \\
 $exp \rightarrow e^e$ &   \\
-$exp \rightarrow \frac{\pi}{2^{e\%10}}$ &   \\
+$exp \rightarrow \frac{\pi}{2^{e(mod10)}}$ &   \\
 $exp \rightarrow LoopVars[e]$ &   \\
 \hline
  \end{tabular}
@@ -435,19 +438,19 @@ $exp \rightarrow LoopVars[e]$ &   \\
 An algorithm is a list of instructions.
 The instructions that are used in the standardised quantum algorithms take the form shown in Figure \ref{tab:quantinststruct}.
 The list of values that the Instruction element can take can be found in Appendix \ref{sec:alginstructionlist}.
-When the algorithm is reported to the user, it is reported as a list of instructions in the same form as is shown in Figure \ref{tab:quantinststruct}.
-To improve readability, if a gate does not have a second gate, or use a phase or sub algorithms they are not reported to the user.
-The textual form is also improved with the use of \{ and \} characters to denote the body of iterate instructions.
-The $\frac{\pi}{2^{e\%10}}$ rule has the exponent modulo $10$ to improve the performance and also is to produce algorithms that are feasible.
-Higher accuracy would require high presision hardware.
-This value could be altered in the future to reflect the available hardware precision at any given time in the future.
+When the algorithm is reported to the user, it is reported as a list of instructions.
+To improve readability, for instructions that do not use the Gate2, Phase or sub algorithm elements they are omitted.
+The textual form is also improved with the use of \{ and \} characters to denote the body of control structure instructions.
+The $\frac{\pi}{2^{e\%10}}$ rule has the exponent modulo $10$.
+This modulo term was added for pragmatic reasons.
+During initial experimentation it was found that without this term the search techniques could produce large exponents, requiring high levels of resources but did not provide any interesting results
 
 $Gate1$, $Gate2$ and $Phase$ are all listed as being of type \emph{expnode}.
 The type after evaluation for $Gate1$ and $Gate2$ is integer and for $Phase$ is double.
 The \emph{expnode} type is required for these values to depend on value variables such as the system size and also loop variables.
 The grammar that defines the \emph{expnode} type can be seen in Table \ref{tab:expnodecontext}.
 The \emph{expnode} type is needed so that the algorithms can react to the parametrisation that provides the increased power when compared to quantum circuits.
-As the circuit size is a variable a constant cannot be used for $Gate1$, $Gate2$ or $Phase$ as the value may depend on the circuit size and have to be calculated when a circuit is being built using the algorithm.
+A constant cannot be used for $Gate1$, $Gate2$ or $Phase$ as the value may depend on the system size and have to be calculated when a circuit is being built using the algorithm.
 
 \begin{algorithm}
 \begin{algorithmic}
@@ -476,33 +479,34 @@ As the circuit size is a variable a constant cannot be used for $Gate1$, $Gate2$
 % \end{tabular}
 % \end{center}
 
-With the inclusion of an loop control construct in the form of the \emph{iterate} and \emph{reviterate} instructions additional parameters are introduced.
-In Java and many programming languages, as can be seen in the example of Java code above, when using nested loops access to all loop variables is provided, as shown in Algorithm \ref{alg:nestloopvars}.
-This means that at line 2 the loop variable $i$ is able to be used but at line 4 both loop variable $i$ and $j$ can be used.
+With the inclusion of a loop control construct in the form of the \emph{iterate} and \emph{reviterate} instructions additional parameters are introduced.
+In Java and many programming languages when using nested loops access to all loop variables is provided.
+Such a structure is shown in Algorithm \ref{alg:nestloopvars}.
+This means after the first \textbf{for} statement the loop variable $i$ is able to be used but after the second \textbf{for} statement both loop variable $i$ and $j$ can be used.
 This nesting is quite a powerful language feature.
-With the inclusion of the iterate instructions and therefore the possibility of nested iterations this loop variable access could be implemented in one of two ways.
+With the inclusion of the iterate instructions, and therefore the possibility of nested iterations, this loop variable access could be implemented in one of two ways.
 The most na\"{\i}ve implementation would be to just allow access to the ``closest'' loop variable.
-This would mean that the code at line 2 wouldn't be effected but the code at line 4 would no longer be able to use the $i$ variable.
-The more sophisticated option, that is implemented, is to provide access to all loop variables.
-This is a second parameter that requires the use of the \emph{expnode} type.
+This would mean that the code at after the first \textbf{for} statement wouldn't be effected but the code at after the second \textbf{for} statement would no longer be able to use the $i$ variable.
+The more sophisticated option is implemented to provide access to all loop variables.
+This is a second set of variables, alongside the system side, that necessitated the use of the \emph{expnode} type.
 All current iteration variables are provided in a \emph{LoopVars} array.
 As can be seen in Table \ref{tab:expnodecontext} the array is indexed by the value of a sub-expression.
 To ensure that all indices requested are valid the value of the sub-expression is calculated using modulus \emph{LoopVars.length()}.
 If the \emph{LoopVars} array has a of length $0$ the result is $0$ irrespective of the index requested.
 
 The difference between the \emph{iterate} and \emph{reviterate} instructions is that \emph{iterate} counts from $1$ to $Gate1$ and \emph{reviterate} counts from $Gate1$ to $1$.
-As is explained in Section \ref{sec:qubitnum}, the qubits are numbered from $1$ to $n$ which is why the iteration instructions count to and from $1$ rather than $0$ as is normal in Computer Science.
-The two different iterate instructions are needed as they can express some looping constructs in a much simpler form that would be possible with just one of them.
+As is explained in Section \ref{sec:qubitnum}, the qubits are numbered from $1$ to $n$ which is why the iteration instructions count to and from $1$ rather than $0$as is normal in many parts of Computer Science.
+The two different iterate instructions are needed as they can express some looping constructs in a much simpler form than would be possible with just one of them.
 
-For all \emph{Create\_*} instructions, $Gate1$ is used to index the qubit the actual gate should be assigned to.
+For all \emph{Create\_*} instructions, $Gate1$ is used to index the target qubit the gate.
 Gate2 is only used by \emph{Create\_C*} and \emph{Create\_SWAP} instructions to index the control qubit and second qubit respectively.
-For the \emph{Iteration} instruction, Gate1 is used for the number of iterations, $n$.
-For the \emph{Create\_R*}, \emph{Create\_CR*}, \emph{Create\_P} and  \emph{Create\_CP} instructions, the Phase element is used to parameterise those gate to specify the amount of rotation applied by the resulting gate.
+For the \emph{iterate} and \emph{reviterate} instructions, Gate1 is used to provide number of iterations, $n$.
+For the \emph{Create\_R*}, \emph{Create\_CR*}, \emph{Create\_R} and  \emph{Create\_CR} instructions, the Phase element is used to specify the value of $\theta$ used by the gate.
 
 \subsection{Qubit Numbering}
 \label{sec:qubitnum}
 One of the major decisions made was way in which the qubits should be numbered.
-The two options in respect to significance.
+% The two options in respect to significance.
 
 The chosen approach was that the identifiers increase with significance.
 This means that for state $\ket{zy{\dots}ba}$ the qubit represented by $a$ would always have the identifier $1$ and the qubit represented by $z$ will always have the identifier equal to the system size.
@@ -535,12 +539,12 @@ There is no manager class provided for circuit builders.
 This was due to an assessment of the intended uses of the framework.
 It is intended that the framework would be used primarily to perform the following:
 \begin{itemize}
-  \item Perform research into the effect of different fitness functions on the search for quantum algorithms
+  \item Perform research into the affect of different suitability measures on the search for quantum algorithms
   \item Perform research into different search techniques that could be used to produce quantum algorithms
   \item Perform research to produce new quantum algorithms for a specific problem
 \end{itemize}
 
-It is not seen as a priority of the system to provide the same level of flexibility to the circuit building as the search engines and fitness functions.
+It is not seen as a priority of the system to provide the same level of flexibility to the circuit building as the search engines and suitability measures.
 
 The provided circuit builder has several rules.
 Firstly, for $Gate1$ and $Gate2$ the absolute value of the \emph{expnode} expression is used as there are no qubits with negative indices.
@@ -559,17 +563,17 @@ $
 \Qcircuit @C=1.0em @R=.7em {&\gate{H}&\gate{H}&\qw}
 $
 that do not have any affect on the state.
-However it cannot perform these improvements if there are any gates, even on different qubits, between the gate pairs that could be remove.
+However it cannot perform these improvements if there are any gates, even on different qubits, between the removable gates.
 
 The circuits that are produced by a circuit builder are hidden behind an interface.
-This is to allow third party circuit builders to use their own internal representation and also to allow any future optimisations made in future work on this framework to be made without impacting the work of researchers.
+This is to allow third party circuit builders to use their own internal circuit representation and also to allow any optimisations made in future work on this framework to be made without impacting the work of researchers.
 
-The circuits produced provide the represented quantum circuit as an ordered iterator of quantum gates.
+The circuit implementations produced provide the quantum circuit as an ordered iterator of quantum gates.
 The use of an ordered iterator rather than a specific data structure is to ensure that any future optimisation or third party circuit representation is not limited.
 It also reduced the potential errors involving the interpretation of a more complex data structure.
 
 The circuits also provide a Latex representation to allow the circuit to be visualised.
-The Latex representation uses the QCircuit package that can be freely obtained at \cite{QCsite}.
+The Latex representation uses the QCircuit package which can be freely obtained at \cite{QCsite}.
 
 The circuit implementation, \emph{basiccircuit}, provided in the framework is implemented as a simple ordered list.
 It uses the Java provided \emph{LinkedList} implementation.
@@ -585,12 +589,12 @@ This is to ensure that any future optimisation of any gate's implementation cann
 
 Each quantum gate is required to provide a unitary matrix but it is not required that the matrix must be used in the application of the gate.
 For quantum circuits with a high number of qubits, the cost of simulation increases rapidly.
-This is mainly due to the increase in state vector and unitary matrix sizes.
-Matrix multiplication is used to apply a unitary operation to a state vector, yet it is a very expensive operation.
+This is mainly due to the increase in the size of state vectors and unitary matrices.
+Matrix multiplication is usually used to apply a unitary operation to a state vector, yet it is a very expensive operation.
 
 To improve the performance optimisations can be applied for several gate types.
 This is most obvious when analysing the operation of the Pauli X gate.
-Figure \ref{eq:paulixcheaptrickvisual} shows, with the help of colour, that the application of a Pauli X gate on Qubit 1 is essentially a flip of neighbouring values.
+Figure \ref{eq:paulixcheaptrickvisual} shows, with the help of coloured arrows, that the application of a Pauli X gate on Qubit 1 is essentially a flip of ``neighbouring'' values.
 This is also true for a Pauli X gate on any other qubit, just the definition of a state's ``neighbour'' is modified with respect to the identifier of the qubit on which the gate is applied.
 
 % l' unite
@@ -748,11 +752,11 @@ This is also true for a Pauli X gate on any other qubit, just the definition of 
 \caption{Visual Representation of Direct Vector Manipulation Equivalent of Pauli X Operation}
 \end{figure}
 
-The use of these tricks is not specified but the interface has been designed to ensure that the gate implementations can use such tricks or matrix multiplication interchangeably.
+The use of these tricks is not required but the interface has been designed to ensure that the gate implementations can use such tricks or matrix multiplication interchangeably.
 The interface includes an \emph{apply} method that takes an initial state and returns the state after the application of the gate.
 This ensures that only the gate implementation needs to understand how the circuit should be applied.
 
-Each gate must also provide a QCircuit \cite{QCsite} representation to produce the QCircuit representation of the entire circuit.
+Each gate must also provide a QCircuit \cite{QCsite} representation of itself in order for the QCircuit representation of the entire circuit to be produced.
 
 The implementations for gates that affect two qubits are hidden by an extended interface to provide access to the identifier of the second qubit but ensures that all standard gate operations are also available.
 
@@ -775,7 +779,7 @@ V Gate && \\ \hline
 
 As has been mentioned, a number of the gates shown in Table \ref{tab:providedgates} can be implemented either as a matrix multiplication or a direct vector manipulation.
 Several of the gate implementations in the framework use the direct vector manipulation and others use the matrix multiplication.
-The table in Table \ref{tab:gateimps} shows which of the provided gates are implemented using the matrix manipulation and which use the direct vector manipulation.
+Table \ref{tab:gateimps} shows which of the provided gates are implemented using the matrix manipulation and which use the direct vector manipulation.
 Some of the algorithms used by to perform the direct vector manipulation were based on those used in jQuantum\cite{jquantum}.
 For all gates that use matrix multiplication their equivalent unitary is based on those listed in Table \ref{tab:providedgates} but has to adapt to the qubit they are applied to and the system size.
 The equivalent matrix is calculated in two sections.
@@ -784,14 +788,13 @@ This initial section is calculated in the constructor of each gate.
 The gate on which the gate is applied is provided as an argument to the constructor of the gate.
 Unfortunately a Java interface cannot specify the signature of the constructor of implementing classes and abstract classes require the constructor to be fully defined which is not possible when the constructor needs to perform this first section.
 As a result this cannot be ensured but is expected as part of implementing the interface.
-The second section is the combination of the matrix constructed in the initial phase and identity matrices for all qubits not effected by the gate.
-This second section is performed as part of the \emph{apply} method.
-The second section carried out in the \emph{apply} method does not impose any restriction on the system size.
+The second section is the tensor product of the matrix constructed in the initial phase and identity matrices for all qubits not effected by the gate.
+This second section is performed as part of the \emph{apply} method and does not impose any restriction on the system size.
 
 % There are several gate implementations that deserve a more detailed summary.
 To produce the unitary matrices shown in Table \ref{tab:providedgates} for the RX, RY and RZ gates the matrices of other gates are used.
 Equations \ref{eq:rxcalc} - \ref{eq:rzcalc} shows the details of these matrix calculations.
-These equations are taken directly from Lecture 9 of \cite{QIPLect}.
+These equations are taken directly from Lecture 9 of QIP\cite{QIPLect}.
 \begin{eqnarray}
 \label{eq:rxcalc}
  R_x(\theta)&=&\cos{\frac{\theta}{2}}I-i\sin{\frac{\theta}{2}}X \\
@@ -802,7 +805,7 @@ These equations are taken directly from Lecture 9 of \cite{QIPLect}.
 \end{eqnarray}
 
 The second gate implementation that requires a more detailed summary is the Controlled U Gate.
-The implementation of the gates cannot assume that the circuit that is produced by an algorithm is correct.
+The implementation of the gates cannot assume that the circuit that is produced by an algorithm is ``correct''.
 Placing all the restrictions on the search process that need to be placed on the circuit would have a serious impact on certain search processes.
 Therefore all the restrictions need to be handled by elements of the framework.
 If the U gate affects more that a single qubit, possible with custom matrices, it would be possible for the U operation to affect the qubit specified as the control qubit.
@@ -817,17 +820,19 @@ The calculation changes depending on the relative position of control qubit.
 If the control qubit is a higher significant qubit the calculation is different than if the control bit is a lower significant qubit.
 Equation \ref{eq:clu} is the calculation if the control qubit is a lower significant qubit.
 Equation \ref{eq:chu} is the calculation if the control qubit is a higher significant qubit.
-$S1$ is an identity matrix of the size $2^n$ where $n$ is the number of lower significant qubits that aren't the target or control bits or between the control qubits and effected gates.
-$S2$ is an identity matrix of the size $2^n$ where $n$ is the number of higher significant qubits that aren't affected by the Controlled U gate, a control bit or between the control qubits and effected gates.
+
+
+$S1$ is an identity matrix of the size $2^a$ where $a$ is the number of qubits that are between the control qubit and effected qubits.
+$S2$ is an identity matrix of the size $2^b$ where $b$ is the number of qubits with lower significance than the target and control qubits.
+$S3$ is an identity matrix of the size $2^c$ where $c$ is the number of qubits with higher significance than the target and control qubits.
 U is the matrix that defines the operation of the gate under control.
 This unitary matrix is retrieved using the \emph{getUnitary} operation on an object of the correct class.
 The \emph{getUnitary} operation returns the matrix created by the first section explained previously in this section.
-
 \begin{eqnarray}
 \label{eq:clu}
- CU&=& ((\begin{pmatrix}1&0\\0&0\end{pmatrix}\otimes S1)+(\begin{pmatrix}0&0\\0&1\end{pmatrix}\otimes U) \otimes S2) \\
+ CU&=& (S3 \otimes ((I\otimes S1\otimes\begin{pmatrix}1&0\\0&0\end{pmatrix})+(U\otimes S1\otimes\begin{pmatrix}0&0\\0&1\end{pmatrix})) \otimes S2) \\
 \label{eq:chu}
- CU&=& (( S1 \otimes \begin{pmatrix}1&0\\0&0\end{pmatrix})+(U \otimes \begin{pmatrix}0&0\\0&1\end{pmatrix}) \otimes S2)
+ CU&=& (S3 \otimes ((\begin{pmatrix}1&0\\0&0\end{pmatrix}\otimes S1\otimes I)+(\begin{pmatrix}0&0\\0&1\end{pmatrix}\otimes S1\otimes U)) \otimes S2)
 \end{eqnarray}
 
 Equations \ref{eq:clu} and \ref{eq:chu} are generalisations of the Controlled-U gate that have not previously been published.
@@ -836,8 +841,9 @@ With the calculation being flexible for any gate U there is an additional  scena
 When the control qubit would be affected by the application of the gate, due to the gates size being greater that $1$ or the control and target qubit identifiers being equal, the control is removed.
 This results in a standard U gate without any controlling qubits.
 
-As with standard gates, the calculation of the full matrix is performed in two stages as previously described in this section.
-If U is a Custom gate then the full matrix is performed in a single stage as described in Section \ref{sec:custgates}.
+As with standard gates, the calculation of the full matrix is performed in two stages.
+For non-custom gates the matrix calculations in Equations \ref{eq:clu} and \ref{eq:chu} can be performed by the constructor up until the matrix $S3$ which is then performed when the operation is applied to a state.
+If U is a custom gate then the full matrix is performed in a single stage as described in Section \ref{sec:custgates}.
 
 \subsection{Custom Gates}
 \label{sec:custgates}
@@ -849,21 +855,20 @@ Each custom gate has an identifier between $0$ and $n-1$ where $n$ is the number
 To use these custom unitary matrices, the framework provides a gate implementation called \emph{Custom\_Gate}.
 This is significantly different from all other gates in one particular feature.
 All gates listed in Table \ref{tab:providedgates} have a fixed unitary matrix and only have to adapt for the number of higher significant qubits that are not effected by the gate.
-This is not so for custom gates, their operation change on a test case by test case basis and therefore both the ``phases'' mentioned in Section \ref{sec:quantumgates} are performed during the \emph{apply} method.
+This is not so for custom gates, their operation change on a test case by test case basis and therefore both the unitary construction sections mentioned in Section \ref{sec:quantumgates} are performed by the \emph{apply} method.
 
 The \emph{apply} method in the Gate interface has two parameters, one is the quantum state on which the custom operation is applied and one that is the test case.
-The test case is provided to extract the custom matrix for the custom gate's identifier.
+The test case is provided to extract the custom matrix for the custom gate's identifier set by the constructor.
 If the custom gate identifier is invalid, $<0$ or $n\geq$, an array out of bounds exception is thrown.
 If this exception is caught, both the \emph{apply} and \emph{getUnitary} methods behave as though the matrix returned were the identity matrix.
 
-Using the test case that is supplied as an argument, the \emph{apply} method uses an argument provided to the constructor of the gate as in parameter to the \emph{getCustomGate} method of the test case.
 The full unitary matrix, including identity padding for unaffected qubits, is produced using the matrix retrieved from the test case.
 The state is multiplied by this unitary matrix to produce the return state.
 
 The \emph{getUnitary} method also uses the test case provided to retrieve the matrix from the test case using the custom gate identifier.
 
 The unitary matrices that each test case provides are not guaranteed to affect the same number of qubits.
-As a result the production of the QCircuit representation cannot be guaranteed to represent the exact affect of a custom gate.
+As a result the production of the QCircuit\cite{QCsite} representation cannot be guaranteed to represent the exact affect of a custom gate.
 The framework therefore treats all custom gates as equal.
 The lowest number of qubits they can affect is $1$.
 As a result the framework shows all custom gates as single qubit gates on the lowest significant qubit that they affect.
@@ -880,11 +885,11 @@ This is an array with a length equal to the number of gates in the \emph{Quantum
 The value at each index indicates whether the element of the \emph{QuantumInstructionEnum} enumeration with the same index should be included in the search and therefore allowed in the result.
 The second is an Object array.
 This second array is provided to allow search engine researchers to have search engine parameters that are configured by a third party application.
-The array more cannot be more specific that an Object array.
-If the array were more specific, a String array for example, all parameters would have to be expressible in the chosen representation.
+The array cannot be more specific than an Object array.
+If the array were more specific, a String array for example, all parameters would have to be expressible in the chosen type.
 This could restrict the parameters available for the researchers to provide.
-An Object array is so general that any parameters can be expressible.
-However, it places responsibility on the researcher to provide adequate documentation and explicit error messages with regards to the ordering and the type of the parameters required by the individual search engine.
+An Object array is so general that any parameters can be expressed.
+However, it places responsibility on the researcher to provide adequate documentation and explicit error messages with regards to the ordering and the type of the parameters required by the individual search engines.
 
 The second \emph{search} method takes no arguments.
 It is intended to either launch a search parameter dialog to modify the search parameters.
@@ -896,7 +901,7 @@ This second method ensures the parameter dialog is entirely in under the control
 It is assumed that the person with best understanding of the parameters provided by a search engine is the implementer.
 This aims to improve the user interface with respect to the structure principle, see Section \ref{sec:provgui}, as the search engine implementer can structure the dialog to group similar parameters.
 The ordering of parameters in the Object array of the first \emph{search} method cannot be assumed to be a good indication of grouping and there is no explicit separation of groups.
-As a result if the framework, or a third party client, were to provide an the automated dialog generator the similar parameters may not be grouped.
+As a result if the framework, or a third party client, were to provide an the automated dialog generator the similar parameters may not be correctly grouped.
 
 A second justification is the aim of a ``Plug and Play'' framework.
 If the dialog was included as part of third party software, or even by the framework, it would have to be adapted for each search engine implementation or be generated automatically.
@@ -919,9 +924,9 @@ This improves the modularity and reduces the coupling between these internal mod
 When an algorithm is produced by a search engine, the circuit is built for each test set.
 This circuit then needs to be evaluated against all test cases held in the respective test set.
 As mentioned in Section \ref{sec:testsuitestruc} the framework uses a start and final state pair to define the desired operation of the algorithm.
-Therefore the framework must provide the simulation of an arbitrary circuit on and arbitrary start state.
+Therefore the framework must provide the simulation of an arbitrary circuit on an arbitrary start state.
 
-Due to the design decisions taken previously all the functionality is provided and just needs a simple management process, this is provided by a class implementing the \emph{circuitevaluator} interface.
+Due to the design decisions taken previously all the simulation functionality is provided and just needs orchestrating, this is provided by a class implementing the \emph{circuitevaluator} interface.
 A basic implementation is provided and third party implementations can also be used.
 
 With the circuit interface providing an ordered iterator over the gates in the circuit, and each gate providing an \emph{apply} method the circuit evaluator just needs to work through all the gates in the iterator and calling the \emph{apply} method with the returned state of the previous call.
@@ -934,11 +939,11 @@ They only provide a method to retrieve the name of the suitability measure and a
 Using the selected suitability measure the final state produced by the circuit is compared to the expected final state defined in the test case.
 Repeating this process for all available test cases in the current test suite, a numerical and therefore comparable suitability value can be assigned to any algorithm produced by the search engine.
 
-This is one example where the design of the framework ensures that the when combining all the elements of the framework (the gate, the circuit, the test cases etc) the logic required is simple.
+This is one example where the design of the framework ensures that when combining all the elements of the framework (the gate, the circuit, the test cases etc) the logic required is simple.
 This improves the readability of the code and therefore is likely to improve the quality of the code.
 With higher readability the number of software bugs are likely to be reduced due to higher levels of understanding.
 
-It is assumed that when a researcher creates a test suite, the test cases that are included are those that the have a higher interest in.
+It is assumed that when a researcher creates a test suite, the test cases that are included are those that they have a higher interest in.
 As a results it can also be assumed that the researcher would be interested in the final state produced by the best solution found by the search engine for all the start states provided by the test suite.
 The circuit evaluator interface provides a simple method call to produce these.
 The \emph{getResults} method returns a test suite data structure that is almost identical to that provided by the search problem used in the search.
@@ -963,7 +968,7 @@ The main advantage of the second alternative is that to move forward, and also t
 This results in the requests from the user to move forward and backward in the circuit taking approximately constant time irrespective of the stepped over gate's complexity.
 A second advantage is that taking a step backward in the evaluation never requires the inverse of a gate to be calculated.
 For gates such as the Pauli gates this is not an issue as they are their own inverse.
-However this is not the case for arbitrary gates requiring the inverse of arbitrary matrices to be calculated.
+However this is not the case for arbitrary gates which would require the inverse of arbitrary matrices to be calculated.
 The main disadvantage of the trace method is that the memory requirements are not constant, they are linear with respect to the number of gates in the circuit but exponentially with respect to the number of qubits in the system.
 The second disadvantage is that although stepping through a circuit does not require the application of gates to the ``current state'', the full trace has to be produced before the step-by-step evaluation can be performed.
 This means that if the circuit produced is large and complex, the start up and initialisation time could be significant.
@@ -980,7 +985,7 @@ The initial state could either be provided by the user explicitly or the test ca
 
 The decision was made to combine the two options.
 The framework accepts as an input to the step-by-step tracer a test suite data structure.
-The test suite can either be the same that was provided by the Search Problem and used by the suitability measure or can be a new test suite that has been created.
+The test suite can either be the same that was provided by the search problem and used by the suitability measure or can be a new test suite that has been created.
 This allows the client or third party application to provide either or both of the options.
 
 The circuit evaluator interface provides the \emph{getTrace} method that provides a list of test sets.
@@ -988,20 +993,21 @@ The step-by-step evaluation is performed on a circuit rather than an algorithm.
 This means that only test cases for a specific number of qubits can be stepped through together, this is why the list is of test sets rather than test suites.
 It would have been possible to produce the traces for all test sets in the test suite and then returned a list of test suites.
 This was not implemented as it is likely that a researcher would try and understand each circuit in turn and then look for how they related as a second phase.
-The step-by-step evaluation is expected to aid in the understanding of the circuits rather than the comparisons.
+The step-by-step evaluation is expected to aid in the semantic understanding of the circuits rather than the syntactic comparison.
+Using the QCircuit representation would be easier to perform syntactic comparisons.
 Therefore if a researcher had produced a large test suite, and is only concerned with the understanding of a particular circuit, the wait for the trace to be produced for the full test suite is likely to be significantly longer than for just the relevant test set.
 
 The implementation of the circuit evaluator that provides this trace runs through each test case in turn.
-After each gate has been applied, the ``current state'' is set as the final state attribute of a cloned version of the current test case that is subsequently added to the returned data structure.
-The implementation is purely concerned with providing the trace, not suitability measure evaluation is performed.
+After each gate has been applied, the ``current state'' is set as the final state attribute of a clone of the current test case and is added to the returned data structure.
+The implementation is purely concerned with providing the trace, no suitability evaluation is performed.
 
 As mentioned in Section \ref{sec:cireval}, the design of the framework makes the creation of this trace much simpler.
 The separation of concerns makes the tracing logic much simpler and much less obscured than it would have been if design decisions regarding the gate and circuit interfaces had not been made.
 
 \subsection{Batch and Distributed Processing}
-The framework produced is not expected to be used solely for Quantum Algorithm research.
-It is also expected to be used for research into the search techniques themselves.
-Therefore, the framework had to provide a managed solution to perform multiple jobs, a batch, and for the results to be collated for statistical analysis.
+The framework produced is not expected to be used solely for quantum algorithm research but for research into the search techniques used for quantum algorithm discovery.
+The evaluation of search techniques usually require analysis multiple runs of the same experiment.
+The framework provides a managed solution to perform multiple jobs, a batch, and for the results to be collated for statistical analysis.
 
 The search engine interface provides a \emph{getResults} method that returns an array of search results produced by the last call to a \emph{search} method.
 The \emph{search} methods do not return the array themselves so the method is not a blocking call.
@@ -1059,8 +1065,7 @@ The limit is not imposed by the framework but by the editor.
 Any test suite containing test cases of greater than ten qubits, the final state is likely to have been calculated by a third party application and manual input of $2^{11}$ complex numbers for both a starting and final state is likely to introduce errors.
 Therefore it is recommended that time is spent integrating the third party software and the framework so the test suite can be automatically generated.
 
-A user can add and remove test sets and test cases.
-Each test set is provided on a separate tab.
+A user can add and remove test sets and test set is presented on a separate tab.
 The state is represented by a $2^n\times{1}$ matrix.
 This makes the simple tabular visualisation used to edit the starting and final states the natural choice.
 Two tables are used, one to edit the starting state and one to edit the final state.
@@ -1070,7 +1075,7 @@ The XML file is one that matches the format defined in Section \ref{sec:problemm
 
 The design of the editor follows the user interface design principles, see Section \ref{sec:provgui}.
 The editor is very simple with no extraneous functionality.
-The use of tabs ensures that the editor design is structured, all related test cases are shown together and all user controls are also grouped whether they act on the test suite as a whole or the current test set and test case.
+The use of tabs ensures that the editor design is structured, all related test cases are shown together and all user controls are also grouped whether they act on the test suite as a whole, the current test set or a test case.
 The two tables use the same class and each tab is also of the same class ensuring consistent visual representation and component reuse.
 
 \subsection{Graphical Matrix Editor}
@@ -1091,13 +1096,13 @@ This limit on the editor is to try and increase the integration with third party
 
 \section{Search Engine Implementations}
 \label{sec:provsearcheng}
-\subsection{Q-Pace Based Search Engine}
-Alongside the framework, a search engine based on the Q-Pace IV search engine featured in \cite{masseythesis} has been developed.
+\subsection{Q-Pace Inspired Search Engine}
+Alongside the framework, a search engine inspired by the Q-Pace IV search engine featured in \cite{masseythesis} has been developed.
 This is a Genetic Programming based search engine using the Java-based Evolutionary Computation Research System ECJ\cite{ecjtool}.
 
 The search engine is provided in both local and distributed versions.
-The local version uses separate threads to serially perform iterations.
-The distributed version uses the JPPF Framework\cite{jppfweb} to perform iterations in parallel using all resources available.
+The local version uses separate threads to serially perform jobs.
+The distributed version uses the JPPF Framework\cite{jppfweb} to perform jobs in parallel using all resources available.
 To ensure that the function of both the local and distributed versions are the same, the two versions are based on the same code parametrised by the container class for the processing, Thread or JPPFJob.
 The processing unit is implemented as a search engine core that implements the JPPFTask interface, which inherits the Runnable interface.
 This allows the processing unit to be used both for the local and distributed version ensuring consistency.
@@ -1106,9 +1111,9 @@ The JPPF Framework was chosen for the distribution as it is very simple to confi
 There are many other frameworks available as well as producing a bespoke distribution system.
 The bespoke solution was rejected as it is completely opposed to the philosophy behind the framework.
 Other open source frameworks, including Apache Hadoop\cite{apahadoop}, were not chosen as they provided much more functionality than is required and as a result were more complex.
-They also required significantly more additional statements within the functional source code to orchestrate the distribution and therefore more intrusive.
+They also required significantly more additional statements within the functional source code to orchestrate the distribution and therefore are more intrusive.
 
-The statistics panel provided by the search engine reports the generation that the ``ideal'' solution was found for each job of the batch operation in the form of a graph.
+The statistics panel provided by the search engine reports the generation that the ideal solution was found for each job of the batch operation in the form of a graph.
 If an ideal solution is not found the value is set as the last generation for that job.
 An average fitness of the most suitable individual found by each job in the batch is presented alongside the average time it took each job to complete
 The search engine also provides the facility to email the user when the search process is complete.
@@ -1118,11 +1123,11 @@ This can be very useful when running large batch operations.
 \label{sec:provsuitmeas}
 
 There are several suitability measures provided with the framework.
-The three main measures are outlined in this section.
-Formal definitions can be seen in Section \ref{sec:suitmeasdefs}.
+The two main measures are outlined in this section.
+Formal definitions can be found in Section \ref{sec:suitmeasdefs}.
 
 It can be seen that neither of the suitability measures introduce parsimony.
-An implicit property of an algorithm is that its size is constant however size of the produced circuits can vary depending on the system size.
+An implicit property of an algorithm is that its size is constant while the size of the produced circuits can vary depending on the system size.
 % This is due to the design of the framework.
 With the suitability measure called on each test case parsimony cannot be embedded in the suitability measure.
 If it were included in the suitability measure it would be included in the quantitative value $N$ times where $N$ is the number of test cases in the entire test suite whereas it should only be included once.
@@ -1161,7 +1166,7 @@ A test set for a system system size of $n$ has $2^n$ simple input states, where 
 This means that test sets of different system sizes are likely to vary in the number of test cases they contain.
 This raises the question as to whether test sets should be equally weighted or test cases of the different test sets should be equally weighted.
 If test cases of different test sets should be equally weighted no additional scaling needs to be performed by the circuit evaluator.
-However, if instead test sets should be equally weighted the circuit evaluator needs to scale the quantitative values produced for each test case in a test set by the number of test cases in teat test set.
+However, if instead test sets should be equally weighted the circuit evaluator needs to scale the quantitative values produced for each test case in a test set by the number of test cases in the test set.
 This will produce a value that is comparable for each test set.
 
 The circuit evaluator implementations provided with the framework weight the test cases equally rather than the test sets therefore not additional scaling is performed.
@@ -1172,7 +1177,7 @@ The circuit evaluator implementations provided with the framework weight the tes
 The simple suitability is a exactly that, it is very na\"{\i}ve and looks purely at the probabilities for each state.
 The phase, the argument of the complex number, is ignored entirely.
 This emulates measurement where only the probability, the absolute value of the complex number, is taken into account.
-As the phase, both global and relative, cannot be observed it could be seen as irrelevant for measurement based problems.
+As the phase, both global and relative, cannot be directly observed it could be seen as irrelevant for measurement based problems.
 A good example of this is the Deutsch problem.
 The output of both the original Deutsch, see Section \ref{sec:DeutAlg}, and the Deutsch-Jozsa, see Section \ref{sec:DeutJozsaAlg}, algorithms are the result of measuring a number of the qubits.
 These measurements can only produce a state.
@@ -1193,7 +1198,7 @@ To the best of my knowledge this suitability measure is novel and previously uns
 This variant focuses purely on the elements that are expected to be zero.
 All non-zero elements are ignored by the suitability measure.
 This may appear slightly unusual.
-However, with problems such as the Max Problem, as used in the User Guide see Section \ref{sec:userguide}, it makes much more sense than more traditional, all encompassing, suitability measures.
+However, with problems such as the Max Problem, as used in the User Guide in Section \ref{sec:userguide}, it makes much more sense than more traditional, all encompassing, suitability measures.
 
 The Max problem is a permutation problem of $[0..3]$ that returns the index of the maximum value, $3$.
 There are four possible output states that would be correct.
@@ -1216,8 +1221,8 @@ The search problem can be defined so that the twelve incorrect states have proba
 
 \subsection{Phase Aware Suitability Measure}
 \label{sec:phaseawaresuitmeas}
-This suitability measure is less na\"{\i}ve that the Simple suitability measure and includes the phase in the calculation.
-For some search problems do are not based on the result of measurement.
+This suitability measure is less na\"{\i}ve than the Simple suitability measures and includes the phase in the calculation.
+Some search problems are not based on the result of measurement.
 For example, the Quantum Teleportation protocol, see Section \ref{sec:quantteleproto}, is not based on the probability of observation.
 The expected result of the protocol is the teleportation of a quantum state, both probability amplitudes and the phases.
 The same is true for the Quantum Fourier Transform, see Section \ref{sec:shorsalg}.
@@ -1234,7 +1239,7 @@ With additional emphasis on correct $r$ values, this variant promotes searching 
 \section{Provided Search Problems}
 \label{sec:provsearchprobs}
 With the framework intended to be used for research into algorithm search techniques as well as research to discover new algorithms several search problems are included with the framework.
-This is so researchers focusing on the search techniques have a standard set of search problems to use without needing to invest time into creating their own search problem.
+This is so researchers focusing on the search techniques have a standard set of search problems to use without needing to invest time into creating their own search problems.
 The search problems that are included are:
 \begin{itemize}
  \item Pauli X gate on qubit $1$
@@ -1268,7 +1273,7 @@ Based on those outlined in \cite{constantine1999software}
 Where additional principles are used they are explained alongside the design element they refer to.
 
 The design of the main screen of the GUI can be seen in Figure \ref{fig:MainGUIDesign}.
-The figure shows the main screen after a a search has been completed.
+The figure shows the main screen after a search has been completed.
 
 \begin{figure}
  \includegraphics[width=\textwidth]{GUIDesign.png}
@@ -1294,8 +1299,8 @@ This is a issue with standard monitors also but in my opinion is exacerbated by 
 Although it isn't directly related to any of the design principles it is an important property of a GUI to appear well balanced across the available screen area.
 
 With the two menu panels the separation of the configuration options allows for a simple layout of configuration.
-On the main window the only configuration that is available is the selection of the Search Engine, Suitability Measure and Search Problem.
-The configuration of the Search Engine and the definition of the Search Problem is not handled by the main window.
+On the main window the only configuration that is available is the selection of the search engine, suitability measure and search problem.
+The configuration of the search engine and the definition of the search problem is not handled by the main window.
 This is to ensure that the display does not become overly cluttered, it maintains a simple and clean appearance.
 This is a result of both the \emph{simplicity} and the \emph{visibility} principles.
 
@@ -1303,32 +1308,32 @@ This is a result of both the \emph{simplicity} and the \emph{visibility} princip
 \label{sec:seselecdes}
 \label{sec:smselecdes}
 \label{sec:spselecdes}
-Before a search can be started, selections have to be made for the Search Engine, Suitability Measure and Search Problem.
+Before a search can be started, selections have to be made for the search engine, suitability measure and search problem.
 The selection of these are provided by three drop down lists.
-The available options for a user to select are limited to the Search Engines and Suitability Measures that are registered in the respective managers in the framework.
-For a user to add a new Search Engine or Suitability Measure the respective XML configuration file needs to be updated.
+The available options for a user to select are limited to the search engines and suitability measures that are registered in the respective managers in the framework.
+For a user to add a new search engine or suitability measure the respective XML configuration file needs to be manually updated.
 This was done so as to follow the \emph{simplicity} and \emph{tolerance} principles.
 It ensures that any selection made by the user is a valid selection.
 
-The selection of the Search Problem is again provided by a drop down list, following the \emph{simplicity} and \emph{tolerance} principles.
-The difference is that the creation of a new problem from scratch and using a predefined test suite held in an XML file can be performed within the GUI.
+The selection of the search problem is again provided by a drop down list, following the \emph{simplicity} and \emph{tolerance} principles.
+The difference is that the creation of a new problem from scratch and using a predefined test suite can be performed within the GUI.
 Despite this difference, the use of the drop down list still ensures that any selection made by the user is a valid selection.
-The validity of each individual Search Problem is checked by the editor dialogs described next.
+The validity of each individual search problem is checked by the editor dialog boxes described next.
 
 All three of these selections are performed in the same way and ensure that the GUI maintains a level of consistency, meeting the \emph{reuse} principle.
 When a selection is made, it is shown as selected and its description is displayed in the text area below, provided in the relevant configuration XML file, is shown.
-The description areas are included to meet the \emph{feedback} principles and allow developers of Search Engines, Suitability Measures and indeed Search Problems to provide full text descriptions to the users from within the GUI.
+The description areas are included to meet the \emph{feedback} principles and allow developers of sarch engines, suitability measures and indeed search problems to provide full text descriptions to the users from within the GUI.
 
 \subsection{Search Problem Creator and Editor}
 \label{sec:guisearchcreateed}
-As mentioned above, the creation of Search Problems is provided by an on-screen dialog box.
-The creation and editing of Search Problems is also provided by a standalone application, see Section \ref{sec:indtestsuiteeditor}.
+As mentioned above, the creation of search problems is provided by an on-screen dialog box.
+The creation and editing of search problems is also provided by a standalone application, see Section \ref{sec:indtestsuiteeditor}.
 The interface to includes an \emph{import from file} function.
-This allows the user to register a new Search Problem using an XML file to define the test suite.
-This allows researchers to easily register Search Problems created and distributed by other researchers.
+This allows the user to register a new search problem using a predefined the test suite.
+This allows researchers to easily register search problems created and distributed by other researchers.
 
 The integrated editor and the standalone application use the same components and overall design.
-The same components are also used when creating a new Search Problem and when editing an existing Search Problem.
+The same components are also used when creating a new search problem as when editing an existing search problem.
 
 Not only are the individual components reused but each dialog box follows the same design layout.
 This promotes the \emph{reuse} and \emph{structure} principles.
@@ -1350,25 +1355,25 @@ This follows the \emph{tolerance} principle.
 \caption{Accurate State Readout}
 \label{fig:AccStateReadOut}
 \end{figure}
-When a Search Problem is selected, in the central area a visual representation of the test suite is produced.
+When a search problem is selected, in the central area a visual representation of the test suite is produced.
 This representation can be seen in Figure \ref{fig:MainGUIDesignProg}.
 
 After a search has been completed, the final states produced by the realised algorithm are shown using the same representation.
 This can be seen in Figure \ref{fig:MainGUIDesign}.
-Using a simple visualisation like this makes the comparison between ``desired'' final states and the final state produced by the algorithm found by the search.
+Using a simple visualisation like this makes the comparison between ``desired'' final states and the final state produced by the algorithm.
 It is true that the visualisation could be too simple for small differences to be noticed.
 To counter this problem the visualisation allows the user to hover the mouse over each column to get an actual value.
 This can be seen in Figure \ref{fig:AccStateReadOut}.
 
-This provides users with both a quick, simple and visual way to compare final states as well as an accurate way to compare final states.
+This provides users with both a quick, simple and visual way as well as a more accurate way to compare final states.
 The accurate comparison method provided was implemented rather than a value table as part of following the \emph{simplicity} principle.
 
 The result of a search is the quantum algorithm found by the search, rather than the final states for the test cases described so far.
 The GUI provides the user 3 different ways to see the search result.
 A simple textual listing of the algorithm is provided in the same format as the framework produces on its own.
-To help with the users understanding of what the algorithm means a circuit diagram is produced for a user controlled number of Qubits.
+To help with the user's understanding of what the algorithm means a circuit diagram is produced for a user controlled number of qubits.
 The diagram is produced using the symbols that are shown in Table \ref{tab:providedgates}.
-The circuits produced are not just provided as a circuit diagram but also in QCircuit representation so that the circuits can be placed into any publication produced in Latex simply with the use of the QCircuit package.
+The circuits produced are not just provided as a rendered circuit diagram but also in QCircuit\cite{QCsite} representation so that the circuits can be placed into any publication produced in Latex simply with the use of the QCircuit package.
 
 Providing the three representations meet the \emph{simplicity}, \emph{feedback} and \emph{reuse} principles.
 The \emph{simplicity} principle is met as the result of the search is simplified to a human readable algorithm and circuits can be created to help the user understand how the algorithm is working.
@@ -1388,7 +1393,7 @@ I feel the use of QCircuit is a better choice as the user then has control and i
 The way in which quantum algorithms and the circuits they produce work is usually subtle and can be hard to understand by simply looking at the circuit.
 The framework provides a step-by-step evaluation trace when provided with the input states.
 The input states are provided to the framework in a test suite structure.
-It was decided that the provided GUI would provide the test suite of the respective Search Problem.
+It was decided that the provided GUI would provide the test suite of the respective search problem.
 This means that an evaluation trace is produced for each of the test cases, in each of the test suites.
 
 The step-by-step evaluator is provided in a dialog box rather than integrated in the main frame.
