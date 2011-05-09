@@ -68,7 +68,7 @@ The states that this project is concerned with are those that lie on the surface
 In quantum mechanics, a Ket is used to indicate a state, for example $\ket{0}$ is the state equivalent to logical $0$ whereas $\ket{1}$ is the state equivalent to logical $1$.
 
 A dual to the Ket notation is the Bra notation, $\bra{a}$.
-This notation is used to denote the 'dual vector' of the corresponding Ket.
+This notation is used to denote the ``dual vector'' of the corresponding Ket.
 For a state vector represented by Equation \ref{ket_explanation_example} there is a dual vector representing its Hermitian Conjugate, Equation \ref{bra_explanation_example}.
 The Hermitian Conjugate of a vector is the transpose of the vector after each entry is replaced by its complex conjugate.
 \begin{equation}
@@ -182,7 +182,7 @@ U == UU^{\dagger} = I_n
 %%REWORDED
 Unitary transformations are physically reversible.
 Some classical gates are not.
-For example, the AND function looses information about the inputs and can be represented as the function $AND(a,b)\rightarrow{a\wedge{b}}$.
+For example, the AND operation looses information about the inputs and can be represented as the function $AND(a,b)\rightarrow{a\wedge{b}}$.
 However, for practical purposes it is possible to produce physically reversible versions by incorporating supplementary information in the output.
 For the AND operation both inputs have to be provided in the output so the function becomes $AND(a,b)\rightarrow{(a,b,a\wedge{b})}$.
 %%
@@ -230,7 +230,7 @@ After sealing the box the liveness state of the cat is not known.
 The cat could be alive if the vial has not broken but could just as likely be dead.
 Only by looking inside the box will the state of the cat be known.
 Until this time the cat could be thought of as both alive and dead at the same time.
-If we assign 'dead' to the state $\ket{0}$ and 'alive' to the state $\ket{1}$ the situation looks very similar to the state in Equation \ref{superposition_explanaiton} where both both $\alpha$ and $\beta$ equal $\frac{1}{\sqrt{2}}$.
+If we assign ``dead'' to the state $\ket{0}$ and ``alive'' to the state $\ket{1}$ the situation looks very similar to the state in Equation \ref{superposition_explanaiton} where both both $\alpha$ and $\beta$ equal $\frac{1}{\sqrt{2}}$.
 Therefore, just as the cat can be thought of as both dead and alive at the same time, a qubit in the superposition $\frac{1}{\sqrt{2}}\vert0\rangle+\frac{1}{\sqrt{2}}\vert1\rangle$ can be thought of both in the $\ket{0}$ and $\ket{1}$ states at the same time.
 This leads to a very powerful property of quantum computers.
 With $n$ classical bits, a single number in the range $0$ to $2^n-1$ can be expressed at any one time.
@@ -495,7 +495,7 @@ These can't be applied to the state individually for that same reason as before.
 
 To produce a $4\times{4}$ matrix for the circuit, the two $2\times{2}$ matrices have to be combined.
 The matrix operation that is used for this is the Tensor Product.
-The tensor produce is a simple matrix operation that is denoted using the $\otimes$ symbol.
+The tensor product is a simple matrix operation that is denoted using the $\otimes$ symbol.
 The result of the tensor product operation is shown in Equation \ref{eq:tensorop}.
 
 \begin{eqnarray}
@@ -562,7 +562,7 @@ The tensor product cannot however be used in this same way to produce unitary ma
 It can only be used when the action on each qubit is independent.
 
 More than two matrices be combined by the tensor product operation, $A\otimes{B}\otimes{C}$.
-The operation is broken down from right to left into a number of two qubit operations, $A\otimes(B\otimes{C}$.
+The operation is broken down from right to left into a number of two qubit operations, $A\otimes(B\otimes{C})$.
 The ordering of the matrices is important.
 Assuming $A$, $B$ and $C$ are single qubit quantum operations the operation encoded by $A$ would operate on the highest significant qubit while the operation encoded by $C$ would operate on the lowest significant qubit.
 The operation encoded by $B$ would operate on the middle qubit.
@@ -658,7 +658,7 @@ This gives three artefacts, each at a different level of abstraction that can be
  \item An algorithm
 \end{itemize}
 
-The same is true for quantum processing design.
+The same is true for quantum artefact design.
 The design can either be done at the circuit level, program level or parametrisable algorithm level.
 
 Currently there are very few problems for which a quantum solution is known.
@@ -668,7 +668,7 @@ The first was ``that there might really be only a few problems for which quantum
 This would indeed make the discovery of useful quantum algorithms difficult.
 However, I feel this is rather pessimistic.
 The main focus of the paper published by Feynman\cite{Feynman82simulatingphysics} was the problem of simulating the physics of quantum mechanics on a classical computer.
-This suggests there would be the potential of many applications of quantum computers, even if they aren't analogous to classical computational applications.
+This suggests there the potential of many applications for quantum computers, even if they aren't analogous to classical computational applications.
 
 The second reason was ``that quantum computers operate in a manner so non-intuitive, and so different from classical computers''\cite{Shor:2004:PQA:1032132.1032149} that our current algorithm knowledge is close to useless.
 This, in my opinion, is a much more significant obstacle.
@@ -701,13 +701,13 @@ The ``promise'' is that the function $f$ is guaranteed to be either balanced or 
 \end{quote}
 The algorithm's major breakthrough was that it only required a single invocation of the function $f$ to decide in which category it belonged.
 The best classical approach requires two invocations.
-This was the first algorithm to exploit quantum mechanics to compute the solution to a problem provably more efficiently, with efficiency defined as the number of invocation of $f$, than a classical solution.
+This was the first algorithm to exploit quantum mechanics to compute the solution to a problem provably more efficiently, with efficiency defined as the number of evaluations of $f$, than a classical solution.
 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
 &			&  1 &		&  2 &				&  3 &		&  4 &		\\
-& \lstick{\ket{0}} 	& \qw& \gate{H} & \qw& \gate{\mathcal{f}} 	& \qw& \gate{H} &\qw& \meter \\
+& \lstick{\ket{0}} 	& \qw& \gate{H} & \qw& \gate{f} 	& \qw& \gate{H} &\qw& \meter \\
 & \lstick{\ket{1}} 	& \qw& \gate{H} & \qw& \targ\qwx 		& \qw& \qw	&\qw& \rstick{\ket{0}-\ket{1}}\qw  
 }
 \]
@@ -717,7 +717,7 @@ This was the first algorithm to exploit quantum mechanics to compute the solutio
 
 The circuit for this algorithm is presented in Figure \ref{Deutsch-Cir}.
 Despite this being known as the Deutsch Algorithm, the solution is a circuit rather than a parametrisable list of instruction.
-The maths does not scale to functions with greater than a single input qubit.
+The mathematical reasoning does not scale to functions with greater than a single input qubit.
 Between points $2$ and $3$ in Figure \ref{Deutsch-Cir} is a modified Controlled-Not gate.
 The standard Controlled-Not gate uses the value of the control qubit to decide whether to perform the Pauli-X operation.
 This modified gate does not use the control qubit value, $x$, but the result of the $f(x)$ to decide whether to perform the Pauli-X operation.
@@ -802,14 +802,14 @@ However, just as with the standard Controlled-Not gate, this modified version do
 % However, when this is passed through the final Hadamard it produces Equation \ref{eqn:deutschpoint4const}.
 % This means that using just a single query to the function $f(x)$, the algorithm can provide an answer to the problem.
 
-When the modified Controlled-Not operation is activated by $f(\ket{0})$ it can be seen as a phase flip on the state $\ket{0}$.
+However in the circuit shown in Figure \ref{Deutsch-Cir}, when the modified Controlled-Not operation is activated by $f(\ket{0})$ it can be seen as a phase flip on the state $\ket{0}$.
 The same is true for the state $\ket{1}$.
-This doesn't seem to follow the operation previously given for the Pauli-X gate or the statement just made that the control qubit is not affected.
-However, as he state of the lower qubit at label $2$ is $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ when the Pauli-X operation is applied the state is transformed to $\frac{1}{\sqrt{2}}(\ket{1}-\ket{0})$ which can be rewritten as $\frac{-1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+This doesn't seem to follow either the operation previously given for the Pauli-X gate or the statement just made that the control qubit is not affected.
+However, as the state of the lower qubit at label $2$ is $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ when the Pauli-X operation is applied the state is transformed to $\frac{1}{\sqrt{2}}(\ket{1}-\ket{0})$ which can be rewritten as $\frac{-1}{\sqrt{2}}(\ket{0}-\ket{1})$.
 The negative sign propagates through the maths and can be viewed as acting on the upper qubit.
 
-If the function is balanced only one of the two states in the superposition of the upper qubit will activate the Pauli-X operation.
-This results in the effective phase flip applying only on one of the states inside the superposition
+If the function is balanced only one of the two states of the upper qubit in the superposition will activate the Pauli-X operation.
+This results in the effective phase flip applying on only one of the states inside the superposition
 The resulting upper qubit state is equivalent to $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ regardless of whether $\ket{0}$ or $\ket{1}$ activates the Pauli-X operation as $-1$ can be factored out as unobservable global phase.
 When the final Hadamard gate is applied to the state $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ the state of the upper qubit is $\ket{1}$.
 
