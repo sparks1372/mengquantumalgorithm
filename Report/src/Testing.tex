@@ -226,4 +226,17 @@ The effort invested in testing would appear to have been worthwhile.
 The level of testing is consistent with a severe attempt to use a software engineering processes to develop the software artefact.
 As part of this a traceability matrix was produced and is presented in Section \ref{sec:tracability}.
 
+One error has not been fixed.
+% However it is thought to be a problem with ECJ\cite{ecjtool}.
+The first search run after the client is launch does not use the fixed seeds even if time option is disabled.
+To work around this a search has to be run with the time disabled, once completed enable and then disable the time option again and start the search.
+$95\%$ subsequent searches using the fixed seeds work as expected until the client is closed and reopened.
+Without the work around performed only $4$ out of $10$ repetitions of the Deutsch experiment, see Section \ref{sec:deutschexperiment}, produced the expected result.
+With this work around performed $19$ out of $20$ subsequent iterations of the same Deutsch experiment produced the expected result.
+
+The cause of this error is unknown.
+The ECJ configuration files automatically produced for both the first and second search in the work around are identical.
+As only these files should affect the value of the seeds used by the random number generators the cause is unknown and could possibly be an error within ECJ\cite{ecjtool}.
+
+
 \input{Tracability}

@@ -1,8 +1,9 @@
 \documentclass[authoryearcitations]{UoYCSproject}
 
-\usepackage[driver=pdftex,top=2cm,inner=2cm,bottom=2cm,outer=1cm]{geometry}
+\usepackage[includefoot,driver=pdftex,footskip=8mm,top=2cm,inner=2cm,bottom=1cm,outer=1cm]{geometry}
 \usepackage[matrix,frame,arrow]{xypic}
 \usepackage{titlesec}
+\usepackage{scrpage}
 \ifx\pdftexversion\undefined
 \usepackage[dvips]{graphicx}
 \else
@@ -30,21 +31,39 @@
 \vfuzz2pt % Don't report over-full v-boxes if over-edge is small
 
 \renewcommand*{\chapterheadstartvskip}{\vspace*{-32pt}} 
-\renewcommand*{\chapterheadendvskip}{\vspace*{2pt}} 
+\renewcommand*{\chapterheadendvskip}{\vspace*{8pt}} 
 \titlespacing{\section}{0pt}{3pt}{3pt}
-\titlespacing{\subsection}{0pt}{1pt}{1pt}
+\titlespacing{\subsection}{0pt}{3pt}{3pt}
+\titlespacing{\subsubsection}{0pt}{3pt}{3pt}
+
+\deftripstyle{mengheadings}{\hfill}{\hfill}{\hfill}{\headmark}{\hfill}{\hfill\pagemark}
+\pagestyle{mengheadings}
+
+% \setlength\footskip{5mm}
 
 \author{Sam Ratcliff}
 \title{A Research Tool for the Automated Synthesis of Quantum Algorithms}
 \date{\today}
 \supervisor{John A Clark}
 \MEng
-\wordcount{32006}
-\includes{}
+\wordcount{32169}
+\includes{Abstract}
 
 \excludes{any Appendices}
 
-\abstract{ TO BE DONE
+\abstract{
+Quantum computation provides massively parallel processing power.
+However, artefacts that can exploit this power are hard to design.
+Heuristic search has been employed to assist with research into the discovery of these artefacts.
+The search techniques used in this research vary.
+Common to most of this research is the phase of bespoke development to implement peripheral utilities such as simulation and visualisation.
+The software developed and subsequently used in this research is rarely released to the wider community.
+This project tries to tackle the problem of this inefficient research practice.
+This report presents the design and development of a toolkit to assist research into quantum artefacts.
+The toolkit provides implementations of the peripheral utilities researchers currently develop without wider reuse.
+Using the toolkit, researchers can focus on developing new search techniques or discovering new artefacts without the large preparatory development process previously required.
+The toolkit produced includes an implemented search techniques and several suitability measures based on previous research and developed as part of this project.
+Lastly, the toolkit was used to attack several problems in an attempt to indicate the advantages the toolkit provides and the discovery power of the implemented search techniques and suitability measures.
 }
 \setcounter{tocdepth}{1}
 \renewcommand\floatpagefraction{.9}

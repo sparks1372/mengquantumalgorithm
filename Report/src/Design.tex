@@ -479,7 +479,7 @@ A constant cannot be used for $Gate1$, $Gate2$ or $Phase$ as the value may depen
 % \end{tabular}
 % \end{center}
 
-With the inclusion of a loop control construct in the form of the \emph{iterate} and \emph{reviterate} instructions additional parameters are introduced.
+With the inclusion of a loop control construct in the form of the \emph{Iterate} and \emph{RevIterate} instructions additional parameters are introduced.
 In Java and many programming languages when using nested loops access to all loop variables is provided.
 Such a structure is shown in Algorithm \ref{alg:nestloopvars}.
 This means after the first \textbf{for} statement the loop variable $i$ is able to be used but after the second \textbf{for} statement both loop variable $i$ and $j$ can be used.
@@ -494,13 +494,13 @@ As can be seen in Table \ref{tab:expnodecontext} the array is indexed by the val
 To ensure that all indices requested are valid the value of the sub-expression is calculated using modulus \emph{LoopVars.length()}.
 If the \emph{LoopVars} array has a of length $0$ the result is $0$ irrespective of the index requested.
 
-The difference between the \emph{iterate} and \emph{reviterate} instructions is that \emph{iterate} counts from $1$ to $Gate1$ and \emph{reviterate} counts from $Gate1$ to $1$.
+The difference between the \emph{Iterate} and \emph{RevIterate} instructions is that \emph{Iterate} counts from $1$ to $Gate1$ and \emph{RevIterate} counts from $Gate1$ to $1$.
 As is explained in Section \ref{sec:qubitnum}, the qubits are numbered from $1$ to $n$ which is why the iteration instructions count to and from $1$ rather than $0$as is normal in many parts of Computer Science.
 The two different iterate instructions are needed as they can express some looping constructs in a much simpler form than would be possible with just one of them.
 
 For all \emph{Create\_*} instructions, $Gate1$ is used to index the target qubit the gate.
 Gate2 is only used by \emph{Create\_C*} and \emph{Create\_SWAP} instructions to index the control qubit and second qubit respectively.
-For the \emph{iterate} and \emph{reviterate} instructions, Gate1 is used to provide number of iterations, $n$.
+For the \emph{Iterate} and \emph{RevIterate} instructions, Gate1 is used to provide number of iterations, $n$.
 For the \emph{Create\_R*}, \emph{Create\_CR*}, \emph{Create\_R} and  \emph{Create\_CR} instructions, the Phase element is used to specify the value of $\theta$ used by the gate.
 
 \subsection{Qubit Numbering}
@@ -1386,7 +1386,7 @@ I feel the use of QCircuit is a better choice as the user then has control and i
 \label{sec:sbse}
 
 \begin{figure}
- \includegraphics[width=\textwidth]{StepByStepEval.jpg}
+ \includegraphics[width=\textwidth]{StepByStepEval.png}
 \caption{Step-By-Step Evaluation Dialog}
 \label{fig:StepByStepEval}
 \end{figure}
