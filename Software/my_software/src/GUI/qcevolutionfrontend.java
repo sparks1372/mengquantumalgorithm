@@ -16,16 +16,25 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import Core.qcevolutionbackend;
-import Core.CircuitEvaluator.fitnessfunctionmanager;
+import Core.CircuitBuilder.Implementation.basiccircuitbuilder;
+import Core.CircuitEvaluator.SuitabilityMeasureManager;
+import Core.CircuitEvaluator.Implementation.basiccircuitevaluator;
+import Core.CircuitEvaluator.Implementation.parsimoniouscircuitevaluator;
 import Core.CircuitEvolution.searchenginemanager;
 import Core.Problem.Problem_Manager;
-import GUI.CircuitVisualiser.circuitvisualiser;
-import GUI.ProblemEditor.problemeditor;
 
 import com.seaglasslookandfeel.SeaGlassLookAndFeel;
 
 class ClockLabel extends JLabel implements ActionListener {
+
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 5343051834033522827L;
 
 	public ClockLabel() {
 		super("" + new Date());
@@ -44,12 +53,21 @@ class ClockLabel extends JLabel implements ActionListener {
  */
 public class qcevolutionfrontend extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -8691589783757188933L;
+
 	public static void main(final String[] args) {
+
+		PropertyConfigurator.configure("config/log4j.properties");
+
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				qcevolutionfrontend frame = new qcevolutionfrontend("Test",
-						args[0], args[1], args[2]);
+						args[0], args[1], args[2], Boolean
+								.parseBoolean(args[3]));
 				frame.setVisible(true);
 			}
 		});
@@ -61,22 +79,14 @@ public class qcevolutionfrontend extends JFrame {
 	 */
 	private qcevolutionbackend	backend	= new Core.qcevolutionbackend();
 
-	/**
-	 * @uml.property name="cvisualiser" readOnly="true"
-	 */
-	private circuitvisualiser	cvisualiser;
-
-	/**
-	 * @uml.property name="peditor" readOnly="true"
-	 */
-	private problemeditor		peditor;
-
 	private final String		se_file;
 	private final String		ff_file;
 	private final String		prob_file;
+	private static final Logger	logger	= Logger.getLogger(qcevolutionfrontend.class
+												.getClass());
 
 	public qcevolutionfrontend(String title, String sef, String fff,
-			String probf) {
+			String probf, boolean parsimonious) {
 		super(title);
 
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -84,13 +94,21 @@ public class qcevolutionfrontend extends JFrame {
 		try {
 			UIManager.setLookAndFeel(new SeaGlassLookAndFeel());
 		} catch (UnsupportedLookAndFeelException ex) {
+			logger.info("Error when setting the look and feal to sea glass");
 		}
 
 		se_file = sef;
 		ff_file = fff;
 		prob_file = probf;
 
-		backend.setFfmanager(new fitnessfunctionmanager(ff_file));
+		backend.setCirbui(new basiccircuitbuilder());
+		if (parsimonious) {
+			backend.setCireval(new parsimoniouscircuitevaluator(backend
+					.getCirbui()));
+		} else {
+			backend.setCireval(new basiccircuitevaluator(backend.getCirbui()));
+		}
+		backend.setFfmanager(new SuitabilityMeasureManager(ff_file));
 		backend.setSemanager(new searchenginemanager(se_file));
 		backend.setProbmanager(new Problem_Manager(prob_file));
 
@@ -130,26 +148,6 @@ public class qcevolutionfrontend extends JFrame {
 	 */
 	public qcevolutionbackend getBackend() {
 		return backend;
-	}
-
-	/**
-	 * Getter of the property <tt>cvisualiser</tt>
-	 * 
-	 * @return Returns the cvisualiser.
-	 * @uml.property name="cvisualiser"
-	 */
-	public circuitvisualiser getCvisualiser() {
-		return cvisualiser;
-	}
-
-	/**
-	 * Getter of the property <tt>peditor</tt>
-	 * 
-	 * @return Returns the peditor.
-	 * @uml.property name="peditor"
-	 */
-	public problemeditor getPeditor() {
-		return peditor;
 	}
 
 	/**
