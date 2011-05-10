@@ -1,17 +1,18 @@
 \chapter{Experimentation}
 \label{sec:experimentation}
 
-The majority of this report concentrates on the details of the design of the toolkit and however so far no experimentation has been performed using the implemented toolkit.
+The majority of this report concentrates on the development of the toolkit and so far no experimentation has been performed using the implemented toolkit.
 This section is solely focused on using the toolkit in a series of experiments aimed at solving a selection of previously solved quantum problems.
 The results reported here are the final results.
 
 The experiments were carried out on a Linux platform and all search parameters were found through the experimentation.
-For genetic programming there is not a widely accepted ``rule of thumb'' to base the mutation rate on.
+The work around detailed in Section \ref{sec:testsum} was performed before the experiments were started.
+For genetic programming there is not a widely accepted ``rule of thumb'' on which to base the mutation rate.
 However for genetic algorithms there is ``rule of thumb'' which is $\frac{1}{genome length}$\cite{Ochoa}.
 Values around $0.003846154$ are used for the mutation rate during some experiments.
 This is $\frac{0.1}{26}$ which is roughly $\frac{0.1}{number of instructions}$.
 This was initially experimented with as an analogy to the ``rule of thumb'' for genetic algorithms.
-For some problems it worked particularly well even if the $\frac{0.1}{26}$ value was only used as an initial value that was altered through experimentation.
+For some problems it worked particularly well even if the $\frac{0.1}{26}$ value was only used as an initial value that was altered slightly through experimentation.
 
 \section{Deutsch Algorithm}
 \label{sec:deutschexperiment}
@@ -25,7 +26,7 @@ The problem is provided with a single ancillary qubit resulting in a system size
 The input state for each test case is $\ket{10}$.
 
 Using this input state could be seen as cheating slightly as the solution is hinted at by the input state.
-However, analysing the solutions to similar quantum problems, such as the Deutsch-Jozsa or even the one out of four algorithm, it is the input state $\ket{10}$ is a sensible suggestion.
+However, by analysing the solutions to similar quantum problems, such as the Deutsch-Jozsa or Grover's algorithm, it can be argued that $\ket{10}$ is a sensible suggestion for the input state.
 
 \begin{figure}
 \centering
@@ -77,7 +78,7 @@ $
 \[
 \Qcircuit @C=1.0em @R=.7em {
  & \targ & \qw \\
- & \gate{\mathcal{F}}\qwx & \qw
+ & \gate{\mathcal{f}}\qwx & \qw
 }
 \]
 \caption{Matrix Circuit}
@@ -91,7 +92,7 @@ The matrices are the two qubit unitary operations of a controlled not acting on 
 However, the control is not provided by the value of the lower significant qubit, $x$, but the value $f(x)$.
 They effectively represent the circuit shown in Figure \ref{fig:matrepresentation}.
 It can be seen that the circuit of the Deutsch Algorithm, Figure \ref{Deutsch-Cir}, includes the circuit represented by the matrices.
-The circuit in Figure \ref{fig:matrepresentation} is inverted due to the numbering of the qubit identifiers and significance in the framework.
+The circuit in Figure \ref{fig:matrepresentation} is inverted compared to Figure \ref{Deutsch-Cir} due to the numbering of the qubit identifiers and significance in the framework.
 The matrices have been created taking into account the different qubit numbering so the semantics of the circuit in Figure \ref{fig:matrepresentation} and the respective section of the Deutsch Algorithm circuit in Figure \ref{Deutsch-Cir} are the same.
 
 The start state for each test case is $\ket{10}$.
@@ -100,7 +101,7 @@ For functions $3$ and $4$, which are balanced, the expected final state is $\fra
 It is simple to see that, taking into account the different qubit numbering, these are the same output states that are produced by the Deutsch Algorithm in Section \ref{sec:DeutAlg}.
 
 After creating the custom matrices using the provided matrix editor, see Section \ref{sec:indmatrixeditor}, and the test suite using the integrated search problem creator, all elements required for the search were complete.
-The search engine that was used was the genetic programming search engine, using local threads rather than the JPPF distribution, provided by the prototype implementation, see Section \ref{sec:provsearcheng}.
+The search engine that was used was the Q-Pace inspired search engine, using local threads rather than the JPPF distribution, provided by the prototype implementation, see Section \ref{sec:provsearcheng}.
 The suitability measure that was used was the Simple suitability measure variant that only reports a ``hit'' for non-zero expected values, see Section \ref{sec:simplsuitmeas}.
 
 All instructions were included in the search except Create\_SWAP and Create\_Zero.
@@ -161,8 +162,7 @@ $
 It is obvious that the search process has found, shown in Figure \ref{fig:evodeutschcir}, is very similar to the circuit that was published by Cleve et al\cite{Cleve98quantumalgorithms} and is a deterministic solution.
 However, through hand manual optimisation the circuit is transformed into Figure \ref{fig:evodeutschcirhand}.
 This can be done as the $C0$ gate on qubit 2 is evaluated as a Pauli-I gate as there are not enough qubits with higher significance for the 2 qubit custom gates to be applied.
-The first Controlled-$C0$ can be removed as qubit 1 is not in superposition.
-This means that if $f(x)$ causes a phase flip it will be applied to all states, resulting in a global phase flip which is not observable.
+It can be shown that the first Controlled-$C0$ can be removed as qubit 1 is not in superposition.
 This is an unprecedented result.
 To the best of my knowledge, this circuit has not been produced using heuristic search by previous research.
 This is also, to the best of my knowledge, the first time a deterministic algorithm has been found, using heuristic search, for the original Deutsch, single input qubit oracles, problem.
@@ -176,8 +176,7 @@ However, unlike when the input cardinality is $1$ there exist functions with inp
 The Deutsch-Jozsa algorithm only applies when $f$ is guaranteed to be either balanced or constant.
 
 In this experiment, the test suite used includes the test cases with oracle functions on $1$ and $2$ qubits.
-There are twelve test cases for the Deutsch-Jozsa algorithm.
-$6$ balanced two qubit function, $2$ constant two qubit functions, $2$ balanced single qubit functions and $2$ constant single qubit functions.
+There are twelve test cases for the Deutsch-Jozsa algorithm; $6$ balanced two qubit function, $2$ constant two qubit functions, $2$ balanced single qubit functions and $2$ constant single qubit functions.
 After conducting the previous experiment, genetic programming is known to produce a solution to the single qubit problem and it is expected that including these test cases will assist the search for a more general solution.
 
 Custom matrices were made to represent the oracle functions.
@@ -188,7 +187,7 @@ For the two qubit oracles, the test cases that are used all have a staring state
 For $f_1$ and $f_2$ the expected final state is set to $\frac{1}{\sqrt{2}}(\ket{000}-\ket{100})$.
 For $f_3$, $f_4$ ,$f_5$, $f_6$, $f_7$ and $f_8$ the expected final state is set to $\frac{1}{\sqrt{6}}(\ket{001}+\ket{010}+\ket{011}-\ket{101}-\ket{110}-\ket{111})$.
 
-The search engine that was used was the genetic programming search engine provided by the prototype implementation, see Section \ref{sec:provsearcheng}.
+The search engine that was used was the Q-Pace inspired search engine provided by the prototype implementation, see Section \ref{sec:provsearcheng}.
 The suitability measure that was used was the Simple suitability measure variant that only reports a ``hit'' for non-zero expected values.
 
 Initial experimentation showed that this search problem was significantly harder than the previous experiment.
@@ -238,6 +237,7 @@ The full circuits in Section \ref{sec:DeutschJozsaExpAppFullCirs} are exactly as
 The controls shown in the circuits of Section \ref{sec:DeutschJozsaExpAppFullCirs} are also removed as they cannot be on a qubit affected by $C0$, see Section \ref{sec:quantumgates}.
 The algorithm is almost scalable.
 The circuit produced for a system size of $4$ is shown in Figure \ref{fig:evodeutschjozsafourq} in Section \ref{sec:DeutschJozsaExpAppFullCirs}.
+The only problem is that the Hadamard hate on the most significant qubit is the wrong side of $C0$.
 
 
 \begin{figure}
@@ -288,7 +288,7 @@ $
 % \end{figure}
 
 The solution found to this problem is quite remarkable.
-The circuits produced are exactly the same as those created by the solution presented by Cleve et al\cite{Cleve98quantumalgorithms}.
+The circuits produced are exactly the same as those presented by Cleve et al\cite{Cleve98quantumalgorithms}.
 This is also unprecedented.
 To the best of my knowledge this solution has not been found through heuristic search.
 The previous attempt made by Spector \emph{et al.}\cite{LSpectorGPforQC,LSpectorANDOR,Spector:1999:QCA:316573.317112} also only used a single call to the oracle.
@@ -328,11 +328,12 @@ Only a probabilistic solution was discovered.
 This is the first experiment where a probabilistic solution is expected.
 Massey specifically searched for a probabilistic solution with a fitness function designed as such.
 
-The search engine that was used was the genetic programming search engine provided by the prototype implementation, see Section \ref{sec:provsearcheng}.
+The search engine that was used was the Q-Pace inspired search engine provided by the prototype implementation, see Section \ref{sec:provsearcheng}.
 Initially, the suitability measure that was used was the basic Simple suitability measure variant.
+The search problem was specified with all $24$ test cases defined in Figure \ref{fig:maxprobtcs}.
 
 Initial results were disappointing and provided little useful information.
-The solution that is presented by Massey includes the use of the Controlled-Controlled-Not(CCN) gate that is not included in the requirements and therefore could not be produced by the framework.
+The solution that is presented by Massey includes the use of the Controlled-Controlled-Not(CCN) gate that is not included in the requirements and therefore was not implemented.
 The decision was made to extend the framework past the original requirements and include the CCN gate.
 To reduce the impact on the existing framework, the gate was implemented as a Controlled-U gate where U was a Controlled Pauli-X gate.
 The CCN gate obviously requires 3 qubits identifiers, the third qubit identifier was provided by casting the phase value to an integer.
@@ -346,14 +347,13 @@ Reflecting on the difficulties encountered when specifying the desired output st
 The difficulties encountered and the Zero Focussed variant are described fully in Section \ref{sec:simplsuitmeas}.
 With the new suitability measure implemented the results were astounding.
 
-
 The final search parameters used are shown in Figure \ref{fig:maxpermparams} in Section \ref{sec:maxpermsearchparams}.
 % All instructions were included in the search except \emph{Create\_SWAP}, \emph{Create\_Zero} and \emph{RevIterate}.
 % % These were removed when the search was not making progress.
 % The search parameters were the defaults except the mutation rate was set to $0.003846154$, $\frac{0.1}{26}$, and time was not used as the seeds so this experiment is reproducible.
 
 Algorithm \ref{alg:03permalg} was proffered as the solution.
-The circuit produced when \emph{System\_Size} is $4$ is shown in Figure \ref{fig:03circuitsol}.
+The circuit produced when \emph{System\_Size} is $4$ is shown in Figure \ref{fig:03circuitsolframe}.
 This circuit contains the gate 
 $
 \Qcircuit @C=1.0em @R=.7em {&\gate{X T 4}&\qw&\\&\ctrl{-1}&\qw}
@@ -363,6 +363,7 @@ The symbols inside this gate indicate certain properties of the CCN gate.
 The $X$ symbol indicates that the operation under control is the Pauli-X gate.
 The $T 4$ shows that the target of the CCN is qubit $4$ that means that qubit $2$, the qubit on which the gate is shown, is a control qubit.
 If this were $C 4$ instead it would indicate that the second control qubit would be qubit $4$ and qubit $2$ would be the target of the CCN gate.
+The circuit shown in Figure \ref{fig:03circuitsolman} is manually redrawn to show the circuit with both control qubits and the target qubit shown.
 
 \begin{algorithm}
  \begin{algorithmic}
@@ -386,6 +387,8 @@ If this were $C 4$ instead it would indicate that the second control qubit would
 
 \begin{figure}
 \centering
+\subfigure[Framework Output]{
+\label{fig:03circuitsolframe}
 $
 \Qcircuit @C=1.0em @R=.7em {
 &\gate{X}&\qw&\qw&\\%4
@@ -394,12 +397,26 @@ $
 &\qw&\ctrl{-1} \qwx&\qw&\\%1
 }
 $
+}
+\hspace{2cm}
+\subfigure[Manually Redrawn]{
+\label{fig:03circuitsolman}
+$
+\Qcircuit @C=1.0em @R=.7em {
+&\qw&\gate{X}&\gate{X}&\qw&\qw&\\%4
+&\qw&\qw&\qw\qwx&\qw&\qw&\\%3
+&\qw&\qw&\ctrl{-2}\qwx&\qw&\qw&\\%2
+&\qw&\qw&\ctrl{-1} \qwx&\qw&\qw&\\%1
+}
+$
+}
 \caption{0..3 Max Permutation Solution}
 \label{fig:03circuitsol}
 \end{figure}
 
 The solution in Figure \ref{fig:03circuitsol} is identical to that found by Massey\cite{masseythesis}.
 However, the solution found by Massey has been hand optimised whereas the solution in Figure \ref{fig:03circuitsol} is how the framework found it without any manual optimisation required.
+Figure \ref{fig:03circuitsolman} has been redrawn but no optimisation has been performed.
 
 The measurement probabilities for each index can be found in Section \ref{sec:maxpermmeasprobs}.
 
@@ -408,7 +425,7 @@ The measurement probabilities for each index can be found in Section \ref{sec:ma
 \section{Quantum Fourier Transform}
 \label{sec:evoqft}
 
-The most impressive result presented in Massey's thesis\cite{masseythesis} and subject of the subsequent paper\cite{Massey:2005:EHQ:1068009.1068288} was the evolution of a human competetive algorithm to produce the Quantum Fourier Transform(QFT).
+The most impressive result presented in Massey's thesis\cite{masseythesis} and subject of the subsequent paper\cite{Massey:2005:EHQ:1068009.1068288} was the evolution of a human competitive algorithm to produce the Quantum Fourier Transform(QFT).
 With the QFT acting as such a central part of Shor's Algorithm, see Section \ref{sec:shorsalg}, it is a very important element for quantum algorithms.
 
 To try reproduce the results found by Massey, the test cases for QFT acting on two and three qubits were initially used.
@@ -416,7 +433,7 @@ These were created using Octave\cite{octweb} using Quantum Computing Functions(Q
 The input states that were used were all twelve possible non-superpositional states.
 All test states are provided in Section \ref{sec:quantfourtransexp}.
 
-The search engine that was used was the Q-Pace based search engine provided with the framework, see Section \ref{sec:provsearcheng}.
+The search engine that was used was the Q-Pace inspired search engine provided with the framework, see Section \ref{sec:provsearcheng}.
 The suitability measure that was used was the ``Phase Sensitive'' suitability measure, see Section \ref{sec:phaseawaresuitmeas}.
 The final search parameters used are shown in Figure \ref{fig:qftparams} in Section \ref{sec:qftsearchparams}.
 
@@ -450,9 +467,9 @@ However, the suitability measure used by Massey was specifically for the QFT and
 The suitability measure used in this experiment was not modified for the QFT in any way.
 
 The algorithm produced as the result of the search can be found in Algorithm \ref{alg:qftfullalg} in Section \ref{sec:evoqftalgo}.
-This algorithm has been slightly optimised by removing control structures with empty bodies so it will fit on a single.
+This algorithm has been slightly optimised by removing control structures with empty bodies so it will fit on a single page.
 The circuits produced by this algorithm for system sizes of $2$ and $3$ qubits can be seen in Figure \ref{fig:evoqftsol}.
-These circuits have not been manually optimised but are exactly as the algorithm produced them.
+These circuits have not been manually optimised and are exactly as the algorithm produced them.
 
 These circuits reproduce the action of the QFT correctly for system sizes of $2$ and $3$ qubits.
 However, it does not correctly scale to a system size of $4$.
@@ -470,7 +487,7 @@ This was unsuccessful and further experimentation is required.
 The experimentation also showed how easy the framework makes creating and editing search problems both within in the client and using the standalone editor.
 During the experimentation each method provided by the toolkit to create a new search problem and the respective test suite were used as part of this evaluation.
 Some test sets were only partially specified so the test suite editing facility could also be used.
-Each of these methods were very simple to use showing the extendibility of the framework with respect to search problems.
+Each of these methods were very simple to use showing how easy the toolkit makes configuring search problems.
 
 During the experimentation the Step-By-Step Evaluation facility, see Section \ref{sec:sbsecireval}, was found to provide additional unintended functionality.
 A piece of functionality that was going be put as a potential area of future work was post-search evaluation of additional test cases not included in the test suite used during the search.
@@ -499,13 +516,13 @@ Additionally genetic programming normally produces massively bloated solutions.
 Admittedly the algorithms can be seen to fit the bloated description but the circuits are relatively minimal.
 This is quite surprising with the simplicity of the optimisation performed by the circuit builder.
 
-The results of the experimentation include several solutions that have, to the best of my knowledge, not previously been produced by heuristic search.
+The results of the experimentation include several solutions (Deutsch an Deutsch-Jozsa) that, to the best of my knowledge, have not previously been produced by heuristic search.
 These are very impressive results.
 
 Not only are these results impressive, the experimentation process has highlighted several successes of the toolkit.
 The toolkit was intended to be easily extendible and for configuration to be simple.
 Through experimentation these intentions were seen to be realised by the toolkit.
-The addition of the zero focused suitability measure and even the addition of the Controlled-Controlled-Not gate during the $0\dots{3}$ Permutation Max experiment was very simple.
+The addition of the zero focused suitability measure and even the addition of the Controlled-Controlled-Not gate during the $0..3$ Permutation Max experiment was very simple.
 To reach the configurations presented for each experiment in this report required additional experimentation with different configurations.
 The on-screen dialog made this very simple, much easier than directly editing configuration files.
 

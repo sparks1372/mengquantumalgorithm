@@ -36,8 +36,8 @@
 \titlespacing{\subsection}{0pt}{3pt}{3pt}
 \titlespacing{\subsubsection}{0pt}{3pt}{3pt}
 
-\deftripstyle{mengheadings}{\hfill}{\hfill}{\hfill}{\headmark}{\hfill}{\hfill\pagemark}
-\pagestyle{mengheadings}
+% \deftripstyle{mengheadings}{\hfill}{\hfill}{\hfill}{\headmark}{\hfill}{\hfill\pagemark}
+% \pagestyle{mengheadings}
 
 % \setlength\footskip{5mm}
 
@@ -46,7 +46,7 @@
 \date{\today}
 \supervisor{John A Clark}
 \MEng
-\wordcount{32169}
+\wordcount{32359}
 \includes{Abstract}
 
 \excludes{any Appendices}
@@ -55,15 +55,19 @@
 Quantum computation provides massively parallel processing power.
 However, artefacts that can exploit this power are hard to design.
 Heuristic search has been employed to assist with research into the discovery of these artefacts.
-The search techniques used in this research vary.
+Various search techniques are used.
+% The search techniques used in this research vary.
 Common to most of this research is the phase of bespoke development to implement peripheral utilities such as simulation and visualisation.
-The software developed and subsequently used in this research is rarely released to the wider community.
-This project tries to tackle the problem of this inefficient research practice.
-This report presents the design and development of a toolkit to assist research into quantum artefacts.
-The toolkit provides implementations of the peripheral utilities researchers currently develop without wider reuse.
-Using the toolkit, researchers can focus on developing new search techniques or discovering new artefacts without the large preparatory development process previously required.
-The toolkit produced includes an implemented search techniques and several suitability measures based on previous research and developed as part of this project.
-Lastly, the toolkit was used to attack several problems in an attempt to indicate the advantages the toolkit provides and the discovery power of the implemented search techniques and suitability measures.
+This software is rarely released to the wider community.
+This seems an inefficient use of resources.
+% This project tries to tackle the problem of this inefficient research practice.
+% This report presents the design and development of a toolkit to assist research into quantum artefacts.
+The toolkit developed in this project provides implementations of a comprehensive set of such peripheral utilities.
+Using the toolkit, researchers can focus on developing new search technique or discovering new artefacts without the large preparatory development process previously required.
+The toolkit includes an implemented search technique and several suitability measures based on previous research or otherwise developed as part of this project.
+% Lastly, the toolkit was used to attack several problems in an attempt to indicate the advantages the toolkit provides and the discovery power of the implemented search techniques and suitability measures.
+The toolkit is used to search for solutions to several identified quantum computation problems.
+Some problems are solved by heuristic search for the very first time.
 }
 \setcounter{tocdepth}{1}
 \renewcommand\floatpagefraction{.9}
@@ -80,6 +84,7 @@ input metauml;
 \listoftables
 % \renewcommand*{\lstlistlistingname}{List of Listings}
 % \lstlistoflistings
+\cleardoublepage
 \input{Introduction}
 % \chapter{Introduction}
 %  \setcounter{page}{0} 

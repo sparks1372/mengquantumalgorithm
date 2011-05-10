@@ -699,7 +699,7 @@ The Deutsch algorithm is intended to solve the following problem:
 Given a function $f:\{0,1\}\to\{0,1\}$, state whether it is either a balanced, or constant function.
 The ``promise'' is that the function $f$ is guaranteed to be either balanced or constant.
 \end{quote}
-The algorithm's major breakthrough was that it only required a single invocation of the function $f$ to decide in which category it belonged.
+The algorithm's major breakthrough was that it only required a single invocation of the function $f$ to decide in which category the function belongs belonged.
 The best classical approach requires two invocations.
 This was the first algorithm to exploit quantum mechanics to compute the solution to a problem provably more efficiently, with efficiency defined as the number of evaluations of $f$, than a classical solution.
 
@@ -708,7 +708,7 @@ This was the first algorithm to exploit quantum mechanics to compute the solutio
 \Qcircuit @C=1.0em @R=.7em {
 &			&  1 &		&  2 &				&  3 &		&  4 &		\\
 & \lstick{\ket{0}} 	& \qw& \gate{H} & \qw& \gate{f} 	& \qw& \gate{H} &\qw& \meter \\
-& \lstick{\ket{1}} 	& \qw& \gate{H} & \qw& \targ\qwx 		& \qw& \qw	&\qw& \rstick{\ket{0}-\ket{1}}\qw  
+& \lstick{\ket{1}} 	& \qw& \gate{H} & \qw& \targ\qwx 		& \qw& \qw	&\qw&\qw  
 }
 \]
 \caption{Deutsch Circuit}
@@ -716,121 +716,125 @@ This was the first algorithm to exploit quantum mechanics to compute the solutio
 \end{figure}
 
 The circuit for this algorithm is presented in Figure \ref{Deutsch-Cir}.
-Despite this being known as the Deutsch Algorithm, the solution is a circuit rather than a parametrisable list of instruction.
-The mathematical reasoning does not scale to functions with greater than a single input qubit.
+Despite this being known as the Deutsch Algorithm, the solution is a circuit rather than a parametrisable list of instructions.
+The mathematical reasoning does not directly scale to functions with greater than a single input qubit.
 Between points $2$ and $3$ in Figure \ref{Deutsch-Cir} is a modified Controlled-Not gate.
 The standard Controlled-Not gate uses the value of the control qubit to decide whether to perform the Pauli-X operation.
 This modified gate does not use the control qubit value, $x$, but the result of the $f(x)$ to decide whether to perform the Pauli-X operation.
-However, just as with the standard Controlled-Not gate, this modified version does not affect the value of the qubits used by the control function.
+However, as with the standard Controlled-Not gate, this modified version does not affect the value of the qubits used by the control function.
+The circuit contains the symbol $
+\Qcircuit @C=1.0em @R=.7em {
+& \meter
+}$
+which represents an observation.
 
-% Before the maths of the algorithm can be introduced, a few equivalences and definitions need to be introduced.
-% These are formally stated in Equations \ref{target_qubit_identity} to \ref{eqn:deutschevalgen}.
-% 
-% \begin{equation}
-% \ket{a}(\ket{c}-\ket{b})\equiv\ket{a}(-1(\ket{b}-\ket{c}))\equiv-1\ket{a}(\ket{b}-\ket{c})
-% \label{target_qubit_identity}
-% \end{equation}
-% \begin{equation}
-% \label{eqn:deutschevalzero}
-%  \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-% \end{equation}
-% \begin{equation}
-% \label{eqn:deutschevalone}
-%  \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} -\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-% \end{equation}
-% \begin{equation}
-% \label{eqn:deutschevalgen}
-%  \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} (-1)^{f(x)}\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-% \end{equation}
-% 
-% \begin{list}{}{\topsep=0cm,\itemsep=0cm}
-%   \item Equation \ref{target_qubit_identity} is used to simplify Equations \ref{eqn:deutschevalzero} and \ref{eqn:deutschevalone} so the state of the second qubit remains as $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
-%   \item Equation \ref{eqn:deutschevalzero} is the effect $f$ has on state $\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ when $f(x)=0$.
-%   \item Equation \ref{eqn:deutschevalone} is the effect $f$ has on state $\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ when $f(x)=1$.
-%   \item Equation \ref{eqn:deutschevalgen} is the combination of Equations \ref{eqn:deutschevalzero} and \ref{eqn:deutschevalone} to produce the generalised equation for the effect $f$ has on state $\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
-% \end{list}
-% 
-% Equations \ref{eqn:deutschstart} to \ref{Deutsch_final_state} provide full details of the maths behind the way the circuit in Figure \ref{Deutsch-Cir} produces its result.
-% 
-% \begin{equation}
-% \label{eqn:deutschstart}
-% \ket{01} \xrightarrow{H\otimes{H}} \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-% \end{equation}
-% \begin{equation}
-% \label{eqn:deutschevalsuper1}
-%  \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} \frac{1}{\sqrt{2}}((-1)^{f(0)}\ket{0}+(-1)^{f(1)}\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-% \end{equation}
-% \begin{equation}
-% \label{eqn:deutschevalsuper2}
-%  \frac{1}{\sqrt{2}}((-1)^{f(0)}\ket{0}+(-1)^{f(1)}\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \equiv (-1)^{f(0)}\frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-% \end{equation}
-% \begin{equation}
-%  \frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1})
-% \label{Deutsch_final_state}
-% \end{equation}
-% 
-% \begin{list}{}{\topsep=0cm,\itemsep=0cm}
-%   \item Equation \ref{eqn:deutschstart} is the transition between the points labelled $1$ and $2$ in Figure \ref{Deutsch-Cir}.
-%   \item Equation \ref{eqn:deutschevalsuper1} is the transition between the points labelled $2$ and $3$ in Figure \ref{Deutsch-Cir}. This is simplified using the generalisation made in Equation \ref{eqn:deutschevalgen}.
-%   \item Equation \ref{eqn:deutschevalsuper2} is the some algebraic manipulation of Equation \ref{eqn:deutschevalsuper1}.
-%   \item Equation \ref{Deutsch_final_state} is the simplification of Equation \ref{eqn:deutschevalsuper2}.
-% As only the higher significant qubit is ever observed and the global phase factor $(-1)^{f(0)}$ cannot be observed, neither affect the observation so can be omitted from the equation.
-% This simplification is made easier by all the previous steps being simplified with Equation \ref{target_qubit_identity} where possible as the state of the lower significant qubit is the same as at the point labelled $1$ in Figure \ref{Deutsch-Cir}.
-% \end{list}
-% 
-% \begin{equation}
-%  \frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1}) \equiv \frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
-% \label{eqn:deutschpoint3bal}
-% \end{equation}
-% \begin{equation}
-%  \frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{H} \ket{1}
-% \label{eqn:deutschpoint4bal}
-% \end{equation}
-% \begin{equation}
-%  \frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1}) \equiv \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})
-% \label{eqn:deutschpoint3const}
-% \end{equation}
-% \begin{equation}
-%  \frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) \xrightarrow{H} \ket{0}
-% \label{eqn:deutschpoint4const}
-% \end{equation}
-% 
-% When f is balanced the state at the point labelled $3$ in Figure \ref{Deutsch-Cir} is Equation \ref{eqn:deutschpoint3bal} as $f(0) \oplus f(1) = 1$ due to either $f(0)$ or $f(1)$ evaluating to $1$ but not both.
-% When this is passed through the final Hadamard it produces Equation \ref{eqn:deutschpoint4bal}.
-% 
-% When f is constant the state at the point labelled $3$ in Figure \ref{Deutsch-Cir} is Equation \ref{eqn:deutschpoint3const} as $f(0) \oplus f(1) = 0$ due to $f(0)$ and $f(1)$ both evaluating to $0$ or both evaluating to $1$.
-% However, when this is passed through the final Hadamard it produces Equation \ref{eqn:deutschpoint4const}.
-% This means that using just a single query to the function $f(x)$, the algorithm can provide an answer to the problem.
+% % % % % % % % % Before the maths of the algorithm can be introduced, a few equivalences and definitions need to be introduced.
+% % % % % % % % % These are formally stated in Equations \ref{target_qubit_identity} to \ref{eqn:deutschevalgen}.
+% % % % % % % % % 
+% % % % % % % % % \begin{equation}
+% % % % % % % % % \ket{a}(\ket{c}-\ket{b})\equiv\ket{a}(-1(\ket{b}-\ket{c}))\equiv-1\ket{a}(\ket{b}-\ket{c})
+% % % % % % % % % \label{target_qubit_identity}
+% % % % % % % % % \end{equation}
+% % % % % % % % % \begin{equation}
+% % % % % % % % % \label{eqn:deutschevalzero}
+% % % % % % % % %  \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+% % % % % % % % % \end{equation}
+% % % % % % % % % \begin{equation}
+% % % % % % % % % \label{eqn:deutschevalone}
+% % % % % % % % %  \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} -\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+% % % % % % % % % \end{equation}
+% % % % % % % % % \begin{equation}
+% % % % % % % % % \label{eqn:deutschevalgen}
+% % % % % % % % %  \ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} (-1)^{f(x)}\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+% % % % % % % % % \end{equation}
+% % % % % % % % % 
+% % % % % % % % % \begin{list}{}{\topsep=0cm,\itemsep=0cm}
+% % % % % % % % %   \item Equation \ref{target_qubit_identity} is used to simplify Equations \ref{eqn:deutschevalzero} and \ref{eqn:deutschevalone} so the state of the second qubit remains as $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+% % % % % % % % %   \item Equation \ref{eqn:deutschevalzero} is the effect $f$ has on state $\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ when $f(x)=0$.
+% % % % % % % % %   \item Equation \ref{eqn:deutschevalone} is the effect $f$ has on state $\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ when $f(x)=1$.
+% % % % % % % % %   \item Equation \ref{eqn:deutschevalgen} is the combination of Equations \ref{eqn:deutschevalzero} and \ref{eqn:deutschevalone} to produce the generalised equation for the effect $f$ has on state $\ket{x}\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+% % % % % % % % % \end{list}
+% % % % % % % % % 
+% % % % % % % % % Equations \ref{eqn:deutschstart} to \ref{Deutsch_final_state} provide full details of the maths behind the way the circuit in Figure \ref{Deutsch-Cir} produces its result.
+% % % % % % % % % 
+% % % % % % % % % \begin{equation}
+% % % % % % % % % \label{eqn:deutschstart}
+% % % % % % % % % \ket{01} \xrightarrow{H\otimes{H}} \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+% % % % % % % % % \end{equation}
+% % % % % % % % % \begin{equation}
+% % % % % % % % % \label{eqn:deutschevalsuper1}
+% % % % % % % % %  \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{f} \frac{1}{\sqrt{2}}((-1)^{f(0)}\ket{0}+(-1)^{f(1)}\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+% % % % % % % % % \end{equation}
+% % % % % % % % % \begin{equation}
+% % % % % % % % % \label{eqn:deutschevalsuper2}
+% % % % % % % % %  \frac{1}{\sqrt{2}}((-1)^{f(0)}\ket{0}+(-1)^{f(1)}\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \equiv (-1)^{f(0)}\frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1})\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+% % % % % % % % % \end{equation}
+% % % % % % % % % \begin{equation}
+% % % % % % % % %  \frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1})
+% % % % % % % % % \label{Deutsch_final_state}
+% % % % % % % % % \end{equation}
+% % % % % % % % % 
+% % % % % % % % % \begin{list}{}{\topsep=0cm,\itemsep=0cm}
+% % % % % % % % %   \item Equation \ref{eqn:deutschstart} is the transition between the points labelled $1$ and $2$ in Figure \ref{Deutsch-Cir}.
+% % % % % % % % %   \item Equation \ref{eqn:deutschevalsuper1} is the transition between the points labelled $2$ and $3$ in Figure \ref{Deutsch-Cir}. This is simplified using the generalisation made in Equation \ref{eqn:deutschevalgen}.
+% % % % % % % % %   \item Equation \ref{eqn:deutschevalsuper2} is the some algebraic manipulation of Equation \ref{eqn:deutschevalsuper1}.
+% % % % % % % % %   \item Equation \ref{Deutsch_final_state} is the simplification of Equation \ref{eqn:deutschevalsuper2}.
+% % % % % % % % % As only the higher significant qubit is ever observed and the global phase factor $(-1)^{f(0)}$ cannot be observed, neither affect the observation so can be omitted from the equation.
+% % % % % % % % % This simplification is made easier by all the previous steps being simplified with Equation \ref{target_qubit_identity} where possible as the state of the lower significant qubit is the same as at the point labelled $1$ in Figure \ref{Deutsch-Cir}.
+% % % % % % % % % \end{list}
+% % % % % % % % % 
+% % % % % % % % % \begin{equation}
+% % % % % % % % %  \frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1}) \equiv \frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+% % % % % % % % % \label{eqn:deutschpoint3bal}
+% % % % % % % % % \end{equation}
+% % % % % % % % % \begin{equation}
+% % % % % % % % %  \frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \xrightarrow{H} \ket{1}
+% % % % % % % % % \label{eqn:deutschpoint4bal}
+% % % % % % % % % \end{equation}
+% % % % % % % % % \begin{equation}
+% % % % % % % % %  \frac{1}{\sqrt{2}}(\ket{0}+(-1)^{f(0)\oplus{f(1)}}\ket{1}) \equiv \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})
+% % % % % % % % % \label{eqn:deutschpoint3const}
+% % % % % % % % % \end{equation}
+% % % % % % % % % \begin{equation}
+% % % % % % % % %  \frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) \xrightarrow{H} \ket{0}
+% % % % % % % % % \label{eqn:deutschpoint4const}
+% % % % % % % % % \end{equation}
+% % % % % % % % % 
+% % % % % % % % % When f is balanced the state at the point labelled $3$ in Figure \ref{Deutsch-Cir} is Equation \ref{eqn:deutschpoint3bal} as $f(0) \oplus f(1) = 1$ due to either $f(0)$ or $f(1)$ evaluating to $1$ but not both.
+% % % % % % % % % When this is passed through the final Hadamard it produces Equation \ref{eqn:deutschpoint4bal}.
+% % % % % % % % % 
+% % % % % % % % % When f is constant the state at the point labelled $3$ in Figure \ref{Deutsch-Cir} is Equation \ref{eqn:deutschpoint3const} as $f(0) \oplus f(1) = 0$ due to $f(0)$ and $f(1)$ both evaluating to $0$ or both evaluating to $1$.
+% % % % % % % % % However, when this is passed through the final Hadamard it produces Equation \ref{eqn:deutschpoint4const}.
+% % % % % % % % % This means that using just a single query to the function $f(x)$, the algorithm can provide an answer to the problem.
 
-However in the circuit shown in Figure \ref{Deutsch-Cir}, when the modified Controlled-Not operation is activated by $f(\ket{0})$ it can be seen as a phase flip on the state $\ket{0}$.
-The same is true for the state $\ket{1}$.
-This doesn't seem to follow either the operation previously given for the Pauli-X gate or the statement just made that the control qubit is not affected.
-However, as the state of the lower qubit at label $2$ is $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ when the Pauli-X operation is applied the state is transformed to $\frac{1}{\sqrt{2}}(\ket{1}-\ket{0})$ which can be rewritten as $\frac{-1}{\sqrt{2}}(\ket{0}-\ket{1})$.
-The negative sign propagates through the maths and can be viewed as acting on the upper qubit.
+It can be shown that for a balanced function the observed state is $\ket{1}$ and that for a constant function the observed state is $\ket{0}$.
+This works as the modified Controlled-Not gate acts on the lower qubit in a superposition with non-zero relative phases which results in the action of the modified Controlled-Not gate affecting the upper qubit.
+% This doesn't seem to follow either the operation previously given for the Pauli-X gate or the statement just made that the control qubit is not affected.
+% However, as the state of the lower qubit at label $2$ is $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ when the Pauli-X operation is applied the state is transformed to $\frac{1}{\sqrt{2}}(\ket{1}-\ket{0})$ which can be rewritten as $\frac{-1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+% The negative sign propagates through the maths and can be viewed as acting on the upper qubit.
+% 
+% 9th May commented
+% If the function is balanced only one of the two states of the upper qubit in the superposition will activate the Pauli-X operation.
+% This results in the effective phase flip applying on only one of the states inside the superposition
+% The resulting upper qubit state is equivalent to $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ regardless of whether $\ket{0}$ or $\ket{1}$ activates the Pauli-X operation as $-1$ can be factored out as unobservable global phase.
+% When the final Hadamard gate is applied to the state $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ the state of the upper qubit is $\ket{1}$.
+% 
+% If the function is constant both or neither of the states in the superposition, $\ket{0}$ and $\ket{1}$, activate Pauli-X operation.
+% If both activate the operation, the effective phase flip is applied to both the states inside the superposition resulting in a global, and therefore unobservable, phase flip.
+% This results in the upper qubit being in state $\frac{-1}{\sqrt{2}}(\ket{0}+\ket{1})$.
+% If neither activate the operation the upper qubit remains in the state $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+% The application of the final Hadamard gate on these states produces on the upper qubit the state $\pm\ket{0}$, with only $\ket{0}$ observable.
+% 
+% These two results are distinct.
+For the mathematics please refer to Lectures $11$ and $12$ of QIP\cite{QIPLect}.
 
-If the function is balanced only one of the two states of the upper qubit in the superposition will activate the Pauli-X operation.
-This results in the effective phase flip applying on only one of the states inside the superposition
-The resulting upper qubit state is equivalent to $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ regardless of whether $\ket{0}$ or $\ket{1}$ activates the Pauli-X operation as $-1$ can be factored out as unobservable global phase.
-When the final Hadamard gate is applied to the state $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$ the state of the upper qubit is $\ket{1}$.
-
-If the function is constant both or neither of the states in the superposition, $\ket{0}$ and $\ket{1}$, activate Pauli-X operation.
-If both activate the operation, the effective phase flip is applied to both the states inside the superposition resulting in a global, and therefore unobservable, phase flip.
-This results in the upper qubit being in state $\frac{-1}{\sqrt{2}}(\ket{0}+\ket{1})$.
-If neither activate the operation the upper qubit remains in the state $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
-The application of the final Hadamard gate on these states produces on the upper qubit the state $\pm\ket{0}$, with only $\ket{0}$ observable.
-
-These two results are distinct.
-A balanced function results in $\ket{1}$ and a constant function results in $\ket{0}$.
-
-This algorithm is very neat and simple.
-It performs in a deterministic manner and outperforms the classical equivalent.
-It does however reinforce the statement made by Shor\cite{Shor:2004:PQA:1032132.1032149} regarding the lack of background knowledge that can be drawn upon to create these algorithms.
+This algorithm reinforces the statement made by Shor\cite{Shor:2004:PQA:1032132.1032149} regarding the lack of background knowledge that can be drawn upon to create these algorithms.
 The construction of such an algorithm cannot be produced simply by understanding the concepts of classical algorithm design.
 
-The main observation that should be taken from this algorithm is how the output is observed on the quibit that is not physically acted on by the modified CNOT gate.
-As mentioned above, if the circuit between points $3$ and $4$ in Figure \ref{Deutsch-Cir} were analysed by hand as a classical circuit, the input qubit would not be affected.
-However, when it becomes a quantum circuit with the addition of phase, the control qubit is affected.
-This is a prime example where the solution requires the understanding of the subtle implications of complex probability amplitudes in superposition and the vision to exploit it.
+A notable feature of this algorithm is that the observation is made on the control qubit of the modified Controlled-Not gate.
+If the circuit between points $3$ and $4$ in Figure \ref{Deutsch-Cir} were analysed by hand without the upper qubit in superposition the upper qubit would not be affected.
+However, when the upper qubit is placed into superposition it is affected by the modified Controlled-Not gate.
+This is a prime example where the solution requires the understanding of the subtle implications of complex probability amplitudes and superposition, and the vision to exploit it.
 
 \subsection{Deutsch-Jozsa Algorithm}
 \label{sec:DeutJozsaAlg}
@@ -851,11 +855,11 @@ This is again an improvement over the classical algorithm which requires in the 
 \begin{figure}
 \[
 \Qcircuit @C=1.0em @R=.7em {
-& \lstick{\ket{0}} & \gate{H} & \multigate{3}{\mathcal{F}} & \gate{H} & \meter \\
-& \lstick{\ket{0}} & \gate{H} & \ghost{\mathcal{F}} & \gate{H} & \meter \\
-& \lstick{\ket{0}} & \gate{H} & \ghost{\mathcal{F}} & \gate{H} & \meter \\
-& \lstick{\ket{0}} & \gate{H} & \ghost{\mathcal{F}}  & \gate{H} & \meter \\
-& \lstick{\ket{1}} & \gate{H} & \targ\qwx & \rstick{\ket{0}-\ket{1}}\qw   
+& \lstick{\ket{0}} & \gate{H} & \multigate{3}{f} & \gate{H} & \meter \\
+& \lstick{\ket{0}} & \gate{H} & \ghost{f} & \gate{H} & \meter \\
+& \lstick{\ket{0}} & \gate{H} & \ghost{f} & \gate{H} & \meter \\
+& \lstick{\ket{0}} & \gate{H} & \ghost{f}  & \gate{H} & \meter \\
+& \lstick{\ket{1}} & \gate{H} & \targ\qwx & \qw   
 }
 \]
 \caption{Deutsch-Jozsa Circuit}
@@ -864,6 +868,7 @@ This is again an improvement over the classical algorithm which requires in the 
 
 The circuit that is produced by this algorithm is shown in Figure \ref{Deutsch-Jozsa-Cir}.
 The algorithm requires $n$ input qubits and a single ancillary qubit.
+The gate labelled $f$ is analogous to the modified Controlled-Not gate in the Deutsch algorithm.
 
 % The $n$ input qubits are initialised to $\ket{0}$.
 % The ancillary qubit is initialised to $\ket{1}$.
@@ -917,15 +922,17 @@ The algorithm requires $n$ input qubits and a single ancillary qubit.
 % This gives a clear deterministic distinction between when $f$ is constant or balanced requiring just a single invocation of $f$.
 % If the observation is $\ket{0}^{\otimes{n}}$ then $f(x)$ is constant, if the observation is any other state $f(x)$ is balanced.
 
-The algorithm effectively works in the same way.
-The only difference is that the state produced by each balanced function is potentially different.
+The algorithm effectively works in the same way as the Deutsch algorithm.
+However, due to the increase in $n$ some of the mathematical reasoning has a different result.
+The only observable difference is that if $f$ is balanced functions the observation will not always result in the same state.
 % All that can be said for certain is that only a constant function can produce the observed state $\ket{0}^{\otimes{n}}$.
 % As it is promised that the function is either constant or balanced this results in two distinct cases.
-If the observed state is $\ket{0}^{\otimes{n}}$ the function $f$ is constant.
-If the observed state is any other state the function $f$ is balanced.
+Just as with the Deutsch algorithm it can be shown that if the function $f$ is constant the observed state will be $\ket{0}^{\otimes{n}}$.
+However, if the function $f$ is balanced the observed state will be any state other than $\ket{0}^{\otimes{n}}$, i.e. any state orthogonal to $\ket{0}^{\otimes{n}}$.
+For the mathematics please refer to Lectures $11$ and $12$ of QIP\cite{QIPLect} or Section B.1 in \cite{Stepney07searchingfor}.
 
-The similarities between the original Deutsch algorithm and the more general Deutsch-Jozsa algorthim are quite apparent.
-The Deutsch-Jozsa algorithm again uses superposition $\ket{0}-\ket{1}$ to cause an affect on the state of the input qubit when the action is physically performed on the ancillary qubit.
+The similarities between the circuits of the Deutsch and Deutsch-Jozsa algorithms are quite apparent.
+As with the Deutsch algorithm, the Deutsch-Jozsa algorithm uses a superposition containing non-zero relative phases to cause an affect on the qubits  providing the input to the control function $f$ despite the modified Controlled-Not gate physically acting on the ancillary qubit.
 
 \subsection{Grover's Search Algorithm}	
 \label{sec:grovers}
@@ -972,26 +979,32 @@ $}
 \end{figure}
 
 
-The algorithm works for one or more solutions.
-The number of solutions shall be represented by $M$.
-Any state whose observation will provide one of the $M$ solutions solves the search problem.
+The algorithm works for predicates with one or more solutions, referred to as the correct states.
+The number of solutions shall be represented by $M$ .
+Any state which under observation will with high probability provide one of the $M$ solutions solves the search problem.
+The remaining $N-M$ states are referred to as the incorrect states.
 
 The mechanisms used within the algorithm to produce a solution to the problem are more subtle than those used but the Deutsch-Jozsa algorithm.
 The algorithm does not perform the computation in a single step.
-After the initialisation circuit has been applied, see Firgure \ref{fig:groversinit}, the circuit shown in Figure \ref{Grovers-Search-Cir} is repeated in $O(\sqrt{N})$ times.
+After the initialisation circuit has been applied, see Figure \ref{fig:groversinit}, the circuit shown in Figure \ref{Grovers-Search-Cir} is repeated in $O(\sqrt{N})$ times.
 The actual number of times depends on $N$ and the number of solutions, $M$.
 
-The algorithm works on amplification.
+What is important about this algorithm is that it works on amplification.
 Each time the circuit is applied the probability amplitude of the desired solution is increased.
 
-The application of Figure \ref{Grovers-Search-Cir} can be seen as rotating by $\sqrt{\frac{M}{N}}$ Radians around the Bloch Sphere of the $n$ qubit system, see Figure \ref{BlochSphere}.
-The state $\ket{1}$ would represent the state in which only solutions have non-zero probability amplitudes.
-The state $\ket{1}$ would represent the state in which only solutions have zero probability amplitudes.
-After $\frac{\pi\sqrt{N}}{4\sqrt{M}}$ repetitions the probability of observing the correct state is the same as the combined probabilities of all other states after the circuit in Figure \ref{fig:groversinit} was initially applied.
+The application of Figure \ref{Grovers-Search-Cir} can be seen as rotating by $\sqrt{\frac{M}{N}}$ Radians around a Bloch Sphere of the $1$ qubit system, see Figure \ref{BlochSphere}.
+The state $\ket{1}$ of the Bloch Sphere represents the desired states in which only the $M$ correct states have non-zero probability amplitudes.
+I.e. an observation made on the $n$ input qubits would always result in one of the $M$ correct states and would never result in one of the $N-M$ incorrect states.
+The state $\ket{0}$ of the Bloch Sphere represents the state in which only the $N-M$ incorrect states have non-zero probability amplitudes.
+I.e. an observation,made on the $n$ input qubits would always result in one of the $N-M$ incorrect states and would never result in one of the $M$ correct states.
+After $\frac{\pi\sqrt{N}}{4\sqrt{M}}$ repetitions the probability of observing the a correct state is $\sqrt{\frac{N-M}{N}}$, the same as the probability of observing an incorrect state after the circuit in Figure \ref{fig:groversinit} was initially applied.
+This state is very close to that represented by the $\ket{1}$ on the Bloch Sphere.
 The value of $M$ is required to calculate the number of repetitions to perform.
-With the it being a sphere, the repeated rotations around a fixed axis shall always be cyclical.
-Therefore the probability amplitude of the desired state is cyclical.
-If Figure \ref{Grovers-Search-Cir} is repeated more than $\frac{\pi\sqrt{N}}{4\sqrt{M}}$ times the probability amplitude of observing the correct state starts decreasing by $\sqrt{\frac{M}{N}}$ Radians.
+As the Bloch Sphere is spherical the repeated application of a rotation about a fixed axis is cyclical.
+This means if Figure \ref{Grovers-Search-Cir} is repeated more than $\frac{\pi\sqrt{N}}{4\sqrt{M}}$ times the state starts rotating away from the state $\ket{1}$ of the Bloch Sphere and back towards state $\ket{0}$ of the Bloch Sphere.
+Therefore, the $n$ qubit state of Grover's algorithm is periodic.
+
+For the mathematics please refer to Lectures $16$, $17$ and $18$ of QIP\cite{QIPLect} or Section 7.1 of \cite{2000:IQC:367701.367709}.
 
 % 
 % The algorithm is to initialise the state, $\Psi_1$, using n Hadamard gates.
@@ -1119,9 +1132,10 @@ However, the function $f$ in the circuit shown in Figure \ref{shorcirc} could be
 
 For example, the Grovers search algorithm in Section \ref{sec:grovers} requires the number of solutions, $M$, to be known.
 If $M$ is initially unknown, Shor's algorithm can be used to find it.
-Grovers algorithm is can be explained as rotations by a fixed angle around a Bloch sphere representing the $n$ qubit system.
+% Grovers algorithm is can be explained as rotations by a fixed angle around a Bloch Sphere representing the $n$ qubit system.
 % For $n$ greater than $1$ the Bloch sphere becomes a hypersphere.
-Rotation around a hypersphere by a fixed angle is periodic. 
+% Rotation around a hypersphere by a fixed angle is periodic. 
+As is explained in Section \ref{sec:grovers}, Grovers algorithm is periodic.
 With this period known for a certain instance of Grovers algorithm the value of $M$ can be calculated as each rotation is $\sqrt{\frac{M}{N}}$ Radians.
 This is known as Quantum Counting\cite{Brassard:1998vj}.
 
@@ -1142,6 +1156,7 @@ The action of applying the Quantum Fourier Transform and the inverse can be seen
 The use of the QFT is important as it exploits the complex nature or the probability amplitudes.
 This allows algorithms to harness the affects of constructive and destructive interference.
 
+For the mathematics please refer to Lectures $14$ and $15$ of QIP\cite{QIPLect} or Section 6 of \cite{2000:IQC:367701.367709}.
 
 % The algorithm utilises the complex nature of the probability amplitudes.
 % This means that the relative phase of the states is important.
@@ -1628,22 +1643,22 @@ This algorithm was not entirely system-size independent.
 The problem was due to the requirement of Quantum Fourier Transform to reverse the order of the qubits.
 This requires the use of swap gates.
 The suitability measure was once again altered, however this alteration guided the search in the direction of using swap gates.
-The alteration provided the ideal number of swap gates, if the circuit does not contain this number of swap gate it is punished.
+The alteration provided the ideal number of swap gates, if the circuit does not contain this number it is punished.
 A solution was found that was system size independent and produced $100\%$ fidelity.
 
 Both of these Quantum Fourier Transform examples show the importance of the suitability measure.
-Even though the Cartesian and polar form of complex numbers are mathematically equivalent, they produced drastically different results.
-The Cartesian form restricted the search and no solution was found whereas the equivalent polar form had no such restriction.
-% It appears to me that the reverse will be true in the search for other problems where the relative phases are not as fundamental as they are in the Quantum Fourier Transform.
-% This gives an indication that the search for currently unknown quantum algorithms may require a series of parallel evolution streams using different representation within the fitness function.
-% It may also prove helpful to use a series of fitness functions in a collaborative approach.
-% 
-% Evolutionary approaches are commonly used for multi-objective optimisation problems where the multiple objectives are in conflict.
-% The use of different representations in fitness functions could be seen in a similar way to these approaches.
-% However, different representations of the fitness function would not be a set of conflicting objectives but collaborating objectives.
-% This would allow the search to be free from selecting the correct representation of the complex probability amplitudes.
-% This would however require several fitness functions which give comparable values as well as a mechanism to chose the `best` fitness value for the individual being evaluated.
-% The representation of this also leads to numerous choices, using just a MAX function or an average function or to represent the fitness as an n-dimensional point to optimise for n fitness functions.
+% Even though the Cartesian and polar form of complex numbers are mathematically equivalent, they produced drastically different results.
+% The Cartesian form restricted the search and no solution was found whereas the equivalent polar form had no such restriction.
+% % % It appears to me that the reverse will be true in the search for other problems where the relative phases are not as fundamental as they are in the Quantum Fourier Transform.
+% % % This gives an indication that the search for currently unknown quantum algorithms may require a series of parallel evolution streams using different representation within the fitness function.
+% % % It may also prove helpful to use a series of fitness functions in a collaborative approach.
+% % % 
+% % % Evolutionary approaches are commonly used for multi-objective optimisation problems where the multiple objectives are in conflict.
+% % % The use of different representations in fitness functions could be seen in a similar way to these approaches.
+% % % However, different representations of the fitness function would not be a set of conflicting objectives but collaborating objectives.
+% % % This would allow the search to be free from selecting the correct representation of the complex probability amplitudes.
+% % % This would however require several fitness functions which give comparable values as well as a mechanism to chose the `best` fitness value for the individual being evaluated.
+% % % The representation of this also leads to numerous choices, using just a MAX function or an average function or to represent the fitness as an n-dimensional point to optimise for n fitness functions.
 
 \subsection{Williams and Gray}
 None of the approaches presented so far have been used to produce the circuit for the quantum teleportation protocol or any other distributed protocol.
@@ -1706,9 +1721,9 @@ It cannot easily be generalised to be applicable to other problems.
 \section{The Focus of this Project}
 \label{sec:focusofproject}
 The sections above summarise current research into the use of evolutionary computation to design quantum computational artefacts such as circuits, programs, protocols and algorithms.
-Each of these repeatedly include the software development of bespoke research software of peripheral tasks such as the circuit simulation and state representation.
+All reviewed research appears to have required the bespoke development of software to carry out peripheral tasks such as the circuit simulation and state representation.
 % Circuit simulation and state representation are not the focus of the research and have no impact on the search process as two different implementations would still produce the same results if they were correctly implemented.
-The software produced in the research summarised in the sections above, including the source code, is generally not available to researchers.
+This software is generally not publicly available.
 This clearly impedes progress in this area.
 
 % When looking at all the papers that include the use an evolutionary approach there is one thing that they all have in common.
@@ -1723,8 +1738,8 @@ Also simulators are available that given a circuit evaluate it on a state.
 However, there are no tools available to provide assistance during the design.
 
 The aim of this project is to provide tool support for the automated synthesis of quantum artefacts via heuristic search.
-Typically there artefacts will be circuits, programs, algorithms and protocols.
-The support provided will allow its users to rapidly configure and run searches for these artefacts, and also allow its users to visualise simulations of the artefacts produced.
+Typically these artefacts will be circuits, programs, algorithms and protocols.
+The support provided will allow users to rapidly configure and run searches for these artefacts, and also allow them to visualise simulations of the artefacts produced.
 
 The aim is to free the user from having to develop a great deal of bespoke software.
 Elements such as a heuristic search algorithm and several suitability measures will be provided.
@@ -1734,10 +1749,10 @@ The creation of such a toolkit is, to the best of my knowledge, unprecedented.
 All previous work in the area has focussed purely on the discovery of quantum artefacts with each researcher working in isolation.
 % Without there being a known ``right way'' to search for Quantum Algorithms it is essential for the framework produced does not limit or promote any search techniques.
 % Despite the literature review focus on evolutionary approaches the framework is not intended solely for such techniques.
-The adoption by researchers of the toolkit could aid research and potentially improve the productivity of research in this area.
+The adoption by researchers of the toolkit could improve the productivity of research in this area.
 % This toolkit could also provide foundations for a ``state of the art'' quantum algorithm search suite containing implementations of recent search techniques and suitability measures presented in publications.
 
-As a demonstration of the toolkit a number of experiments searching for Quantum Algorithm shall be performed as a final part of the project.
+As a demonstration of the toolkit a number of experiments searching for quantum algorithm will be performed as a final part of the project.
 
 % In the first stage of this project I aim to produce a graphical toolkit which will allow users to search for quantum algorithms.
 % The toolkit will allow for various different search methods and be fully extendable so additional search techniques can be added.

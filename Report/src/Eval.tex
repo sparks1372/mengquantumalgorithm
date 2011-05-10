@@ -14,21 +14,21 @@ The framework provides the orchestration between implementations of the peripher
 The framework provides two standalone graphical applications to create and edit test suites, and to create and edit matrices used to define custom unitary operations.
 
 The second component is a prototype that provides implementations of a genetic programming based search engine, multiple suitability measures and multiple search problems.
-The search engine is based on Q-Pace IV\cite{masseythesis} and written using the Java-based Evolutionary Computation Research System ECJ\cite{ecjtool}.
+The search engine is inspired by Q-Pace IV\cite{masseythesis} and Implemented using the Java-based Evolutionary Computation Research System ECJ\cite{ecjtool}.
 A total of $10$ suitability measures are provided.
 The suitability measures are from two main categories.
 The first category contains all the Simple suitability measures, see Section \ref{sec:simplsuitmeas} for more details.
-These only use the modulus of the complex numbers in the state vectors being compared.
+These consider only the probabilities for each state being compared.
 The second category contains all the Phase Aware suitability measures, see Section \ref{sec:phaseawaresuitmeas} for more details.
-These use both the modulus and the argument values of the complex number in the state vectors being compared.
+These include both the probabilities and phase for each state the state vectors being compared.
 
 The third component is a client application that provides the framework with a standalone graphical user interface.
 The framework is not a standalone application and needs to be embedded within another application.
-Without providing this client a third party application that embeds the framework would have to be produced before improved efficiency could be realised.
+Without providing this client a third party application that embeds the framework would have to be produced before any improved efficiency could be realised.
 This client provides a number of research aids including rendered circuit visualisation, quantum state visualisation and graphical step-by-step evaluation of quantum circuits.
 
 In Section \ref{sec:reqs}, $27$ requirements for the toolkit were specified.
-Section \ref{sec:tracability} provides a way to trace the requirements into the design and implementation with reference to the tests verifying the requirements.
+Section \ref{sec:tracability} provides a method to trace the requirements into the design and implementation with reference to the tests verifying the requirements.
 The traceability matrix shows that each of the $27$ requirements has been met by the design and implementation and has been verified by the testing process.
 
 In a formal sense we should conclude that the requirements agreed have been delivered.
@@ -46,7 +46,7 @@ As a consequence the Zero-Focused Simple suitability measure was developed and a
 
 The addition of this suitability measure was straight forward.
 The class implementing the suitability measure was developed and the process required to add the new suitability measure to the configuration file took roughly 2 minutes.
-It is a very straight forward process.
+% It is a straight forward process.
 
 The experimentation also showed how easy it was to create and edit search problems.
 During the experimentation process, both the client and standalone editors were used to perform these tasks.
@@ -56,8 +56,8 @@ Both methods were clear to use and the reuse of components made the transition b
 
 There are areas of the framework that could be the focus of future work.
 
-Some of the circuits produced during the experimentation phase contained sequences of gates that didn't result in any change to the state.
-This is not ideal and require manual optimisation to produce a circuit with only functional gates.
+Some of the circuits produced during the initial experimentation phase contained sequences of gates that didn't result in any change to the state.
+This is not ideal and would require manual optimisation to produce a circuit with only functional gates.
 There are a few rules that could be included in an higher efficiency circuit builder to reduce the redundancy of circuits built.
 The provided circuit builder can perform simple improvements by removing sequences such as
 $
@@ -73,14 +73,13 @@ $
 $
 which obviously isn't optimal as this sequence can also be removed.
 
-A second addition would assist with understanding.
+The second area would assist with understanding.
 When constructing a circuit from an algorithm some of the instructions are ignored, see Section \ref{sec:quantumcircuits}, with the result that the algorithm contains instructions that did not contribute to the specific circuit.
-I refer to these as ``inactive'' instructions.
-I refer to the instructions that are not ignored as ``active'' instructions.
+I refer to these as ``inactive'' instructions and to the instructions that are not ignored as ``active'' instructions.
 I use the term ``Active Algorithm'' to refer to an algorithm that only contains ``active'' instructions.
 As the ``Active Algorithm'' produces the evaluated circuits only ``active'' instructions contribute to the proffered solution.
 For a researcher, understanding the ``Active Algorithm'' is more important than the full algorithm.
-It is important to note that the ``Active Algorithm'' may be different for each system size.
+It is important to note that the ``Active Algorithm'' is likely be different for each system size.
 The framework could easily be extended to provide this as part of the result.
 
 A third area of future development would be an extension of the circuit optimisation rules mentioned as the first area of improvement.
@@ -92,7 +91,7 @@ As a result any superposition that contained the controlling qubit is effectivel
 To model this without explicit measurement would require rules to ensure further operations cannot be applied to but can be controlled by Alice's qubit used to control the operation on Bob's qubit.
 
 It is important to note that any rules to improve efficiency or enforce properties of individual problems should only be applied at the circuit construction phase.
-Enforcing these rules at the search phase could remove vital areas of the search space.
+Enforcing these rules at the search phase, for example through strongly typed genetic programming, could prune useful areas of the search space.
 Although certain algorithms would not meet the restrictions they could form part of the search path to a desired solution.
 When enforced by the circuit builder all algorithms are valid and the rules are applied to ensure all circuits produced are also valid.
 % If search engines were to enforce arbitrary user specified restrictions all search engines would have to include the restrictions.
@@ -113,7 +112,7 @@ Additionally, to provide editing facilities an algorithm editor would have to be
 This again sounds quite simple.
 However due to the potentially bloated algorithms produced by search techniques the editor assist the user with understanding an algorithm in a similar way the Step-By-Step evaluator assists the user to understand a circuit.
 Step-By-Step algorithm evaluation is a possible techniques that could be incorporated.
-It also could include functionality usually found in modern Integrated Development Environments such as structural folding and content assistance such as bracket matching and a dedicated \emph{expnode} expression editor.
+It also could include functionality usually found in modern Integrated Development Environments like structural folding, content assistance such as bracket matching, and a dedicated \emph{expnode} expression editor.
 
 \section{Experimentation Summary}
 
@@ -123,11 +122,11 @@ The results were very encouraging.
 The Deutsch and Deutsch-Jozsa experiments produced results that were particularly impressive, see Sections \ref{sec:deutschexperiment} and \ref{sec:deutschjozsaexperiment}.
 The algorithms that were produced had not previously been produced by heuristic search.
 Both resulted in deterministic results, the best previous heuristic search result for the Deutsch-Jozsa problem was a probabilistic circuit and the single qubit Deutsch problem had never previously been tackled by heuristic search.
-These results are human competitive and previously unseen results from heuristic search.
+These results are human competitive and previously unseen as the result of heuristic search.
 The Quantum Fourier Transform and Max Permutation experiments were impressive but not unprecedented.
 
 All the experiments showed one property that was particularly impressive yet a second that is quite disappointing.
-The impressive property was how minimal the solutions produced were.
+The impressive property was how small the solutions produced were.
 The circuit builder is only implemented with a very simple optimisation rule yet still the circuits produced were still very small.
 However, the lack of scalability is relatively disappointing.
 The main advantage of an algorithm compared to a program is the application over an arbitrary system size.
@@ -143,9 +142,9 @@ Migration would be allowed of highly suitable individuals from a subpopulation t
 This is a similar idea to coevolution where the problem evolves alongside the original population with effectively an ``inverse'' suitability measure.
 This is based on the idea that a solution for smaller system sizes can provide useful stepping stones when searching for a solution to cover larger system sizes.
 
-In my opinion this process of effectively increasing the difficulty of the problem would in the majority of cases be more effective than attempting to solve the full problem in a single population.
+In my opinion this process of effectively increasing the difficulty of the problem would, in the many cases, be more effective than attempting to solve the full problem in a single population.
 This opinion is based on my theory that this subpopulation idea would effectively use the ``lower'' subpopulations to prune the search space for the ``higher'' subpopulations.
-As the search space increases each time a qubit is added it would be easier to perform this pruning on the search spaces of lower system sizes.
+With the search space increases each time a qubit is added it would be easier to perform this pruning on the search spaces of lower system sizes.
 Despite the search space increasing with system size it would already be partially pruned due to the results of ``lower'' subpopulations.
 
 \section{Project Evaluation}
@@ -163,7 +162,7 @@ The toolkit was implemented so that irrespective of the system size each qubit i
 Viewed as a software engineering project the success is quite evident with a fully implemented toolkit developed on time that meets all the requirements and provides a high level of functionality much greater than envisaged initially.
 The software engineering process was rigorous and as a result the software produced is of a high standard.
 Despite the continually increasing ambition throughout this project the fundamental design of the toolkit was largely unaltered from the start of development.
-Where alterations were made they were not due to functional incompatibility with the original design but to improve the software engineering qualities such as modularity and reuse with the additional functionality.
+Where alterations were made they were not due to functional incompatibility with the original design but to improve the software engineering qualities such as modularity and reuse with respect to the additional functionality.
 
 Viewed as a research project the success is also evident from the results of the experiments carried out in Section \ref{sec:experimentation}.
 These experiments were carried out in a manner that is reproducible and used only generic suitability measures provided with the toolkit.
