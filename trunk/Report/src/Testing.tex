@@ -4,7 +4,7 @@
 \label{sec:unittests}
 Many of the components created for the framework were tested by unit testing.
 With the framework created in Java, JUnit 4\cite{junitweb} was used to produce and run the unit tests.
-Not all components were suitable for unit testing, e.g. those clases providing higher level control rather than simple encapsulated functionality.
+Not all components were suitable for unit testing, e.g. those classes providing higher level control rather than simple encapsulated functionality.
 
 % In the unit tests the test values were chosen in accordance with partition testing to ensure that the test were more complete and tested for the incorrect and the correct partitions with equal weight.
 
@@ -160,7 +160,7 @@ These classes in particular were:
 
 The approach that was taken was a bottom-up approach.
 The tests were also performed in the order they are listed.
-This is becuase the circuit builder is used by the circuit evaluator and therefore it imposes a dependency.
+This is because the circuit builder is used by the circuit evaluator and therefore it imposes a dependency.
 
 \subsection{Circuit Builder Integration Tests}
 The circuit builder integration test combined:
@@ -207,9 +207,10 @@ The test oracles were test suites and arrays of test suites respectively.
 \label{sec:clientguitests}
 The client GUI that is provided alongside the framework was tested using scenario based testing.
 A scenario was created to verify each of the client requirements.
-These scenaroios were carried out on both Linux and Windows.
+These scenarios were carried out on both Linux and Windows.
 
 \section{Summary}
+\label{sec:testsum}
 
 The above summarises the levels of testing carried out.
 Although most the software did indeed work as intended testing did reveal errors.
@@ -217,14 +218,6 @@ For example, originally the Controlled-U gate was implemented using only Equatio
 This was found to be a bug as the Controlled-U gate only worked when the control bit was of a lower significant qubit than the target qubit.
 Other tests found a bug where with the QCircuit representation when a Controlled-U gate has at least one qubit in-between the control and target qubits.
 The additional vertical lines to bridge the addition qubits were not originally included.
-
-With almost $13000$ lines of code it is reasonable to expect that some bugs remain undiscovered.
-Additional testing cound be carried out, especially focussing on non-functional aspects that were not tested in the process explained above.
-
-It is intended that the toolkit shall be released to the research community.
-The effort invested in testing would appear to have been worthwhile.
-The level of testing is consistent with a severe attempt to use a software engineering processes to develop the software artefact.
-As part of this a traceability matrix was produced and is presented in Section \ref{sec:tracability}.
 
 One error has not been fixed.
 % However it is thought to be a problem with ECJ\cite{ecjtool}.
@@ -235,8 +228,15 @@ Without the work around performed only $4$ out of $10$ repetitions of the Deutsc
 With this work around performed $19$ out of $20$ subsequent iterations of the same Deutsch experiment produced the expected result.
 
 The cause of this error is unknown.
-The ECJ configuration files automatically produced for both the first and second search in the work around are identical.
+The ECJ configuration files automatically produced for both the pre and post work around searches are identical.
 As only these files should affect the value of the seeds used by the random number generators the cause is unknown and could possibly be an error within ECJ\cite{ecjtool}.
 
+With almost $13000$ lines of code it is reasonable to expect that some bugs remain undiscovered.
+Additional testing should be carried out, especially focussing on non-functional aspects that were not tested in the process explained above.
+
+It is intended that the toolkit shall be released to the research community.
+The effort invested in testing would appear to have been worthwhile.
+The level of testing is consistent with a severe attempt to use a software engineering processes to develop the software artefact.
+As part of this a traceability matrix was produced and is presented in Section \ref{sec:tracability}.
 
 \input{Tracability}

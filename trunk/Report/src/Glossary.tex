@@ -1,11 +1,20 @@
 \chapter{Glossary}
+
+\noindent\textbf{Basis State} is a quantum that can be used in conjunction with other basis states to define any other quantum state, e.g. $\ket{0}$ and $\ket{1}$ are basis states and can define all other single qubit state by $\alpha\ket{0}+\beta\ket{1}$. When a superposition is observed it collapses to one of the basis states that define it based on their probability amplitudes.
+
+\noindent\textbf{Bra} denote the 'dual vector' of the corresponding Ket.
+
+\noindent\textbf{Hermitian Conjugate} is the matrix produced when each element in the matrix U is replaced by its complex conjugate and then the resulting matrix is transposed.
+
+\noindent\textbf{Ket} represents a basis state of an $n$ dimensional vector space.
+
+\noindent\textbf{Quantum Algorithm} is an ordered sequence of instructions that when followed create a quantum circuit.
+The instructions can use variables such as the system size resulting in different circuits for different values.
+
 \noindent\textbf{Quantum Artefact} is the general term used for a solution to a problem using quantum computation.
 Quantum algorithms and quantum circuits are both types of quantum artefacts.
 
 \noindent\textbf{Quantum Circuit} is an ordered sequence of quantum gate that affects a fixed number of qubits.
-
-\noindent\textbf{Quantum Algorithm} is an ordered sequence of instructions that when followed create a quantum circuit.
-The instructions can use variables such as the system size resulting in different circuits for different values.
 
 \noindent\textbf{Quantum Gate} is a physical implementation that performs a specific unitary operation.
 
@@ -13,10 +22,11 @@ The instructions can use variables such as the system size resulting in differen
 
 \noindent\textbf{System Size} is the number of qubits that a quantum circuit affects.
 
-\noindent\textbf{Ket} represents a basis function of the respective Hilbert Space, $\mathcal{H}$, as a column vector.
-
-\noindent\textbf{Bra} denote the 'dual vector' of the corresponding Ket.
 
 % \noindent\textbf{Hilbert Space} extend the simple Euclidean vector space into a potentially infinite dimension function space.
 
-\noindent\textbf{Hermitian Conjugate} is the matrix produced when each element in the matrix U is replaced by its complex conjugate and then the resulting matrix is transposed.
+\noindent\textbf{Suitability Measure} - A function that assigns a quantitative measure of how well a proffered solution performs.
+A value of $0$ indicates ideal functionality with increasingly higher values of the function indicating ever poorer performance.
+
+\noindent\textbf{Search Target} - Every search has a target which is a representation of the area of the search space that contains solutions to the search problem.
+For example, in a search for $x$ in a list the search target could be the indices of all occurrences of $x$ in the list and in a search for $x=\sqrt{4}$ the search target would be $x=\pm2$.
