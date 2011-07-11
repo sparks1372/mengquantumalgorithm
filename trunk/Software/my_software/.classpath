@@ -3,37 +3,38 @@
 	<classpathentry excluding="Jama/examples/|Jama/test/|Jama/CholeskyDecomposition.java|Jama/EigenvalueDecomposition.java|Jama/LUDecomposition.java|Jama/QRDecomposition.java|Jama/SingularValueDecomposition.java|QPACEIV/" kind="src" path="src"/>
 	<classpathentry kind="src" path="test_src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="ecj/libraries/itext-1.2.jar"/>
-	<classpathentry kind="lib" path="ecj/libraries/jcommon-1.0.0.jar"/>
-	<classpathentry kind="lib" path="ecj/libraries/jfreechart-1.0.1.jar"/>
 	<classpathentry kind="lib" path="ecj/libraries/jzlib-1.0.7.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-1.1.1/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-1.1.1/commons-logging-api-1.1.1.jar"/>
-	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/resolver.jar"/>
 	<classpathentry kind="lib" path="lib/serializer.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
-	<classpathentry kind="lib" path="lib/seaglasslookandfeel-0.1.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/jppf-client-src.jar"/>
 	<classpathentry kind="lib" path="lib/jppf-client.jar"/>
 	<classpathentry kind="lib" path="lib/jppf-common-node-src.jar"/>
 	<classpathentry kind="lib" path="lib/jppf-common-node.jar"/>
 	<classpathentry kind="lib" path="lib/jppf-common-src.jar"/>
 	<classpathentry kind="lib" path="lib/jppf-common.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.8.1.jar"/>
 	<classpathentry kind="con" path="com.soyatec.uml.CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ecj"/>
-	<classpathentry kind="lib" path="/home/sam/Project/javamail-1.4.4/mail.jar"/>
-	<classpathentry kind="lib" path="/home/sam/Project/javamail-1.4.4/lib/dsn.jar"/>
-	<classpathentry kind="lib" path="/home/sam/Project/javamail-1.4.4/lib/imap.jar"/>
-	<classpathentry kind="lib" path="/home/sam/Project/javamail-1.4.4/lib/mailapi.jar"/>
-	<classpathentry kind="lib" path="/home/sam/Project/javamail-1.4.4/lib/pop3.jar"/>
-	<classpathentry kind="lib" path="/home/sam/Project/javamail-1.4.4/lib/smtp.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="src" path="srcTest"/>
+	<classpathentry kind="lib" path="lib/commons-logging-adapters.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-api.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/dsn.jar"/>
+	<classpathentry kind="lib" path="lib/imap.jar"/>
+	<classpathentry kind="lib" path="lib/jzlib.jar"/>
+	<classpathentry kind="lib" path="lib/mail.jar"/>
+	<classpathentry kind="lib" path="lib/mailapi.jar"/>
+	<classpathentry kind="lib" path="lib/pop3.jar"/>
+	<classpathentry kind="lib" path="lib/smtp.jar"/>
+	<classpathentry kind="lib" path="lib/seaglasslookandfeel-0.1.7.3.jar"/>
+	<classpathentry kind="lib" path="lib/itext.jar"/>
+	<classpathentry kind="lib" path="lib/jcommon.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart.jar"/>
+	<classpathentry kind="lib" path="lib/log4j.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
