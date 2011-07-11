@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -16,6 +17,8 @@ import org.xml.sax.SAXException;
 import Jama.Matrix;
 
 public class MatrixUtils {
+	private static final Logger	logger	= Logger.getLogger(MatrixUtils.class
+												.getClass());
 
 	public synchronized static Matrix fromFile(String filename) {
 		Document dom;
@@ -76,7 +79,7 @@ public class MatrixUtils {
 		Matrix a = Matrix.identity(2, 2);
 		toFile(a, "test.xml");
 		Matrix b = fromFile("test.xml");
-		b.print(0, 0);
+		b.printState();
 	}
 
 	public synchronized static Matrix tensor_prod(Matrix A, Matrix B) {
@@ -122,7 +125,9 @@ public class MatrixUtils {
 			for (int r = 0; r < m.getRowDimension(); r++) {
 				for (int c = 0; c < m.getColumnDimension(); c++) {
 					Complex e = m.get(r, c);
-					if (!((e.real() == 0.0) && (e.imag() == 0.0))) {
+					if (!(((Math.abs(e.real())) < 0.000001)
+
+					&& ((Math.abs(e.imag())) < 0.000001))) {
 						out.write("<MatrixElement Row=\"" + Integer.toString(r)
 								+ "\" Column=\"" + Integer.toString(c)
 								+ "\">\n");
@@ -135,6 +140,9 @@ public class MatrixUtils {
 			out.write("</Matrix>\n");
 			out.close();
 		} catch (IOException e) {
+			logger.error(
+					"IOException caught when trying to write matrix to file : "
+							+ filename, e);
 		}
 
 	}
