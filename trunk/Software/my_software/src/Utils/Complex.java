@@ -177,7 +177,7 @@ public class Complex extends Object implements Serializable {
 	}
 
 	public boolean equal(Complex w) {
-		return (x == w.real()) && (y == w.imag());
+		return ((Math.abs(x - w.real()) < 0.00001) && (Math.abs(y - w.imag()) < 0.00001));
 	}
 
 	/**
