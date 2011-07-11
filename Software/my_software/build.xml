@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<project name="JMeter" default="download_jars" basedir=".">
+  <description>
+
+  N.B. To build JMeter from a release you need both the binary and source archives,
+  and these must be unpacked into the same directory structure.
+  [The required external jars are only included in the binary release]
+
+    To build JMeter from source:
+      ant [install]
+
+    To rebuild:
+      ant clean install
+
+    To update documentation
+      ant docs-site
+      ant docs-printable
+    To build API documentation (Javadoc)
+      ant docs-api
+    To build all the docs
+      ant docs-all
+
+    To build all and package up the files for distribution
+      ant distribution -Djmeter.version=vvvv [-Dsvn.revision=nnnnn]
+
+    To create a nightly build (separate bin/src/lib jars):
+      ant nightly [-Dsvn.revision=nnnnn]
+
+    To create tar and tgz of the web-site documentation (docs and api)
+      ant site [ -Djmeter.version=vvvv ]
+
+
+    For more info:
+      ant -projecthelp
+
+    To diagnose usage of deprecated APIs:
+      ant -Ddeprecation=on clean compile
+  </description>
+
+  <!--
+
+  Note
+  ====
+  As with most other Jakarta projects, Gump (http://jakarta.apache.org/gump/) is used to
+  perform automated builds and tests on JMeter.
+
+  Gump uses its project/jakarta-jmeter.xml file to determine which target to use.
+  The current setting is: <ant target="dist">
+
+  Any changes to the dependency list for dist may affect Gump.
+
+  Now the dist target depends on "assume-libs-present", so if additional libraries are added to that,
+  the Gump project file for JMeter must also be updated.
+
+  Jars that are not required by the dist target do not need to be added to the Gump project file.
+
+  -->
+
+  <!-- Directory where these 3rd party libraries live -->
+  <property name="lib.dir" value="lib"/>
+  <property name="build.dir" value="temp"/>
+
+  <!-- 3rd party libraries to be included in the binary distribution -->
+  <property file="build.properties"/> <!-- defines the library version numbers -->
+
+    <!-- Macro is needed to be able to perform indirect evaluation of property names -->
+	<macrodef name="process_jarfile">
+  	    <attribute name="jarname"/>
+  	    <attribute name="dest.dir" default="${lib.dir}"/>
+  	    <sequential>
+  	        <!-- Call all possible targets; these are only executed if the appropriate property is set -->
+  	        <antcall target="_check_exists">
+  	            <param name="file" value="@{dest.dir}/${@{jarname}.jar}"/>
+                <param name="loc" value="${@{jarname}.loc}"/>
+                <param name="jar" value="${@{jarname}.jar}"/>
+                <param name="path" value="@{dest.dir}"/>
+                <param name="md5"  value="${@{jarname}.md5}"/>
+        	    <param name="_checkMD5" value="true"/>
+  	        </antcall>
+            <antcall target="_check_jarfile">
+                <param name="loc" value="${@{jarname}.loc}"/>
+                <param name="jar" value="${@{jarname}.jar}"/>
+                <param name="path" value="@{dest.dir}"/>
+                <param name="md5"  value="${@{jarname}.md5}"/>
+        	    <param name="_checkMD5" value="true"/>
+                <param name="zip" value="${@{jarname}.zip}"/>
+                <param name="ent" value="${@{jarname}.ent}"/>
+                <param name="zipprop" value="@{jarname}.zip"/>
+            </antcall>
+        </sequential>
+      </macrodef>
+
+	<!-- Check if jarfile exists, and set properties for calling zip or jar download -->
+    <target name="_check_jarfile" if="_get_file">
+  	    <!-- Check if file exists -->
+  	    <fail message="Error in build file or calling sequence" if="file.exists"/>
+        <echo level="info">Checking ${jar}</echo>
+        <available file="${path}/${jar}" property="file.exists"/>
+        <condition property="_get_zipfile">
+            <isset property="${zipprop}"/>
+        </condition>
+        <condition property="_get_jarfile">
+            <not>
+                <isset property="${zipprop}"/>
+            </not>
+        </condition>
+    	<!-- Emulate conditional execution; targets use if/unless to suppress execution -->
+        <antcall target="_get_jarfile"/>
+        <antcall target="_get_zipfile"/>
+    </target>
+
+	<!-- Get a zip file and unpack it -->
+	<target name="_get_zipfile" if="_get_zipfile" unless="file.exists">
+        <get src="${loc}/${zip}"
+        	 dest="${build.dir}/${zip}"
+        	 usetimestamp="true" ignoreerrors="false"/>
+		<unzip dest="${build.dir}" src="${build.dir}/${zip}">
+		    <patternset>
+		        <include name="**/${ent}"/>
+		    </patternset>
+		    <mapper type="flatten"/>
+		</unzip>
+        <antcall target="_checkMD5">
+            <param name="file" value="${ent}"/>
+            <param name="path" value="${build.dir}"/>
+            <param name="md5"  value="${md5}"/>
+        </antcall>
+		<move preservelastmodified="true" overwrite="true" 
+			file="${build.dir}/${ent}" tofile="${path}/${jar}" verbose="true"/>
+    </target>
+
+	<!-- Download a jar file and check its hash; if correct, move to correct directory -->
+	<target name="_get_jarfile" if="_get_jarfile" unless="file.exists">
+        <echo message="Fetching: ${path}/${jar}" level="info"/>
+        <get src="${loc}/${jar}" 
+             dest="${build.dir}/${jar}" 
+             usetimestamp="false" ignoreerrors="false" verbose="true"/>
+        <antcall target="_checkMD5">
+            <param name="file" value="${jar}"/>
+            <param name="path" value="${build.dir}"/>
+            <param name="md5"  value="${md5}"/>
+        </antcall>
+        <move preservelastmodified="true" overwrite="true" 
+        	file="${build.dir}/${jar}" tofile="${path}/${jar}" verbose="true"/>
+    </target>
+
+    <!-- Ant subroutine, required to localise MD5OK property -->
+    <target name="_checkMD5" if="_checkMD5">
+  	    <!--
+  	    @param path - location of file
+        @param file - file name
+  	    -->
+        <checksum algorithm="MD5" file="${path}/${file}" property="MD5"/>
+        <condition property="MD5OK">
+            <equals arg1="${MD5}" arg2="${md5}" casesensitive="false"/>
+        </condition>
+		<length file="${path}/${file}" property="size"/>
+        <echo message="Fetching: ${size} ${file}" level="info"/>
+        <fail unless="MD5OK">Bad Checksum: for ${path}/${file}
+        expected ${md5} 
+        actual   ${MD5}</fail>
+        <echo level="info" message="Checksum OK: ${file}"/>
+    </target>
+
+	<!--
+	Generic target to process all external jars.
+	The "process_jarfile" macro resolves the properties that begin with the jarname
+	and calls all the possible targets. The targets use "if" and "unless" to provide
+	conditional execution (it would be a lot easier if antcall supported if/unless). 
+	-->
+    <target name="_process_all_jars">
+        <process_jarfile jarname="commons-logging"/>
+        <process_jarfile jarname="commons-logging-adapters"/>
+        <process_jarfile jarname="commons-logging-api"/>
+        <process_jarfile jarname="itext"/>
+        <process_jarfile jarname="jcommon"/>
+        <process_jarfile jarname="jfreechart"/>
+        <process_jarfile jarname="jzlib"/>
+        <process_jarfile jarname="serializer"/>
+        <process_jarfile jarname="resolver"/>
+        <process_jarfile jarname="xerces"/>
+    	<process_jarfile jarname="xml-apis"/>
+        <process_jarfile jarname="mail"/>
+        <process_jarfile jarname="dsn"/>
+        <process_jarfile jarname="imap"/>
+        <process_jarfile jarname="mailapi"/>
+        <process_jarfile jarname="pop3"/>
+        <process_jarfile jarname="smtp"/>
+        <process_jarfile jarname="seaglass"/>
+        <process_jarfile jarname="junit"/>
+        <process_jarfile jarname="log4j"/>
+    </target>
+
+	<!-- Download all missing jars.-->
+    <target name="download_jars" description="Download any missing jar files">
+    	<!-- build.dir may be needed as a temporary work area -->
+    	<mkdir dir="${build.dir}" />
+        <antcall target="_process_all_jars">
+            <param name="_get_file" value="true"/>
+        </antcall>
+    </target>
+
+    <target name="_check_exists" if="_check_exists">
+	        <echo level="info">Checking ${jar}</echo>
+        <fail message="Invalid call sequence - file.exists should not be defined" if="file.exists"/>
+        <available file="${file}" property="file.exists"/>
+        <fail message="Could not find file ${file}" unless="file.exists"/>
+        <antcall target="_checkMD5">
+            <param name="file" value="${jar}"/>
+            <param name="path" value="${path}"/>
+            <param name="md5"  value="${md5}"/>
+        </antcall>
+        <!--echo level="info" message="Found ${file}"/-->
+    </target>
+
+    <target name="check_jars" description="Check that all required jar files are present" unless="no_check_jars">
+        <antcall target="_process_all_jars">
+            <param name="_check_exists" value="true"/>
+        </antcall>
+    </target>
+</project>
