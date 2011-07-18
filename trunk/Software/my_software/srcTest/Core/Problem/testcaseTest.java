@@ -284,26 +284,6 @@ public class testcaseTest {
 	}
 
 	/**
-	 * Run the String[] getCustomGates() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 29/03/11 17:19
-	 */
-	@Test
-	public void testGetCustomGates_1()
-		throws Exception {
-		testcase fixture = new testcase(1, "", new String[] {});
-		fixture.setStartingstate(new Matrix(1, 1));
-
-		String[] result = fixture.getCustomGates();
-
-		// add additional test code here
-		assertNotNull(result);
-		assertEquals(0, result.length);
-	}
-
-	/**
 	 * Run the Matrix getFinalStateCopy() method test.
 	 *
 	 * @throws Exception

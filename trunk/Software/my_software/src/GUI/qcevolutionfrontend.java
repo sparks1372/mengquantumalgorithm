@@ -91,11 +91,11 @@ public class qcevolutionfrontend extends JFrame {
 
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		try {
-			UIManager.setLookAndFeel(new SeaGlassLookAndFeel());
-		} catch (UnsupportedLookAndFeelException ex) {
-			logger.info("Error when setting the look and feal to sea glass");
-		}
+//		try {
+//			UIManager.setLookAndFeel(new SeaGlassLookAndFeel());
+//		} catch (UnsupportedLookAndFeelException ex) {
+//			logger.info("Error when setting the look and feal to sea glass");
+//		}
 
 		se_file = sef;
 		ff_file = fff;
