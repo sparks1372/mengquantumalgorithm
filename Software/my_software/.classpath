@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="Jama/examples/|Jama/test/|Jama/CholeskyDecomposition.java|Jama/EigenvalueDecomposition.java|Jama/LUDecomposition.java|Jama/QRDecomposition.java|Jama/SingularValueDecomposition.java|QPACEIV/" kind="src" path="src"/>
-	<classpathentry kind="src" path="test_src"/>
+	<classpathentry kind="src" path="srcTest"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="ecj/libraries/jzlib-1.0.7.jar"/>
 	<classpathentry kind="lib" path="lib/resolver.jar"/>
@@ -18,9 +18,7 @@
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.8.1.jar"/>
 	<classpathentry kind="con" path="com.soyatec.uml.CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/ecj"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="src" path="srcTest"/>
 	<classpathentry kind="lib" path="lib/commons-logging-adapters.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-api.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
@@ -36,5 +34,6 @@
 	<classpathentry kind="lib" path="lib/jcommon.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart.jar"/>
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
+	<classpathentry kind="lib" path="lib/ecj"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

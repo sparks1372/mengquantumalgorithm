@@ -106,6 +106,52 @@
         </sequential>
       </macrodef>
 
+
+    <!-- Macro is needed to be able to perform indirect evaluation of property names -->
+	<macrodef name="process_zipfile">
+  	    <attribute name="zipname"/>
+  	    <attribute name="dest.dir" default="${lib.dir}"/>
+  	    <sequential>
+  	        <!-- Call all possible targets; these are only executed if the appropriate property is set -->
+  	        <antcall target="_check_exists">
+  	            <param name="file" value="@{dest.dir}/${@{zipname}}"/>
+                <param name="loc" value="${@{zipname}.loc}"/>
+                <param name="jar" value="${@{zipname}.zip}"/>
+                <param name="path" value="@{dest.dir}"/>
+                <param name="md5"  value="${@{zipname}.md5}"/>
+        	    <param name="_checkMD5" value="false"/>
+  	        </antcall>
+            <antcall target="_check_zipfile">
+                <param name="loc" value="${@{zipname}.loc}"/>
+                <param name="dir" value="${@{zipname}.dir}"/>
+                <param name="path" value="@{dest.dir}"/>
+                <param name="md5"  value="${@{zipname}.md5}"/>
+        	    <param name="_checkMD5" value="true"/>
+                <param name="zip" value="${@{zipname}.zip}"/>
+                <param name="ent" value="${@{zipname}.ent}"/>
+                <param name="zipprop" value="@{zipname}.zip"/>
+            </antcall>
+        </sequential>
+      </macrodef>
+	
+	<!-- Check if jarfile exists, and set properties for calling zip or jar download -->
+    <target name="_check_zipfile" if="_get_file">
+  	    <!-- Check if file exists -->
+  	    <fail message="Error in build file or calling sequence" if="file.exists"/>
+        <echo level="info">Checking ${dir}</echo>
+        <available file="${path}/${zip}" property="file.exists"/>
+        <condition property="_get_zipfile">
+            <isset property="${zipprop}"/>
+        </condition>
+        <condition property="_get_jarfile">
+            <not>
+                <isset property="${zipprop}"/>
+            </not>
+        </condition>
+    	<!-- Emulate conditional execution; targets use if/unless to suppress execution -->
+        <antcall target="_get_fullzipfile"/>
+    </target>
+	
 	<!-- Check if jarfile exists, and set properties for calling zip or jar download -->
     <target name="_check_jarfile" if="_get_file">
   	    <!-- Check if file exists -->
@@ -125,6 +171,22 @@
         <antcall target="_get_zipfile"/>
     </target>
 
+
+	<!-- Get a zip file and unpack it -->
+	<target name="_get_fullzipfile" if="_get_zipfile" unless="file.exists">
+        <get src="${loc}/${zip}"
+        	 dest="${build.dir}/${zip}"
+        	 usetimestamp="true" ignoreerrors="false"/>
+		<unzip dest="${build.dir}" src="${build.dir}/${zip}"/>
+        <antcall target="_checkMD5">
+            <param name="file" value="${zip}"/>
+            <param name="path" value="${build.dir}"/>
+            <param name="md5"  value="${md5}"/>
+        </antcall>
+		<move preservelastmodified="true" overwrite="true" 
+			file="${build.dir}/${ent}" tofile="${path}/${dir}" verbose="true"/>
+    </target>
+	
 	<!-- Get a zip file and unpack it -->
 	<target name="_get_zipfile" if="_get_zipfile" unless="file.exists">
         <get src="${loc}/${zip}"
@@ -137,7 +199,7 @@
 		    <mapper type="flatten"/>
 		</unzip>
         <antcall target="_checkMD5">
-            <param name="file" value="${ent}"/>
+            <param name="file" value="${zip}"/>
             <param name="path" value="${build.dir}"/>
             <param name="md5"  value="${md5}"/>
         </antcall>
@@ -184,6 +246,16 @@
 	and calls all the possible targets. The targets use "if" and "unless" to provide
 	conditional execution (it would be a lot easier if antcall supported if/unless). 
 	-->
+    <target name="_process_all_zips">
+        <process_zipfile zipname="ecj"/>
+    </target>
+
+	<!--
+	Generic target to process all external jars.
+	The "process_jarfile" macro resolves the properties that begin with the jarname
+	and calls all the possible targets. The targets use "if" and "unless" to provide
+	conditional execution (it would be a lot easier if antcall supported if/unless). 
+	-->
     <target name="_process_all_jars">
         <process_jarfile jarname="commons-logging"/>
         <process_jarfile jarname="commons-logging-adapters"/>
@@ -212,6 +284,9 @@
     	<!-- build.dir may be needed as a temporary work area -->
     	<mkdir dir="${build.dir}" />
         <antcall target="_process_all_jars">
+            <param name="_get_file" value="true"/>
+        </antcall>
+        <antcall target="_process_all_zips">
             <param name="_get_file" value="true"/>
         </antcall>
     </target>
