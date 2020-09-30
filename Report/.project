@@ -8,6 +8,7 @@
 		<buildCommand>
 			<name>net.sourceforge.texlipse.builder.TexlipseBuilder</name>
 			<arguments>
+ <!-- Here we can write arguments -->
 			</arguments>
 		</buildCommand>
 	</buildSpec>
